@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./CalendarMonthCell.module.css";
 import CalendarEvent from "../../../CalendarEvent";
+import { EVENT_TYPE } from "../../../../types";
 
 const style = {
   width: `${100 / 7}%`
@@ -14,6 +16,11 @@ const CalendarMonthCell = ({ date, events }) => {
         events.map(event => <CalendarEvent event={event} />)}
     </div>
   );
+};
+
+CalendarMonthCell.propTypes = {
+  date: PropTypes.number.isRequired,
+  events: PropTypes.arrayOf(EVENT_TYPE).isRequired
 };
 
 export default CalendarMonthCell;

@@ -1,5 +1,4 @@
 import getMonthGrid from "./getMonthGrid";
-import isEqual from "lodash/isEqual";
 import moment from "moment";
 
 const getTestInfo = ({ dateString, firstDay }) => {
@@ -14,8 +13,8 @@ describe("The monthly grid function", () => {
       firstDay: 0
     });
 
-    expect(result.length === 6).toBeTruthy();
-    expect([].concat.apply([], result).length === 42).toBeTruthy();
+    expect(result.length).toEqual(6);
+    expect([].concat.apply([], result).length).toEqual(42);
   });
 
   it("should have the correct grid for Sunday as the first day", () => {
@@ -31,7 +30,7 @@ describe("The monthly grid function", () => {
       [27, 28, 29, 30, 31, 1, 2],
       [3, 4, 5, 6, 7, 8, 9]
     ];
-    expect(isEqual(result, expected)).toBeTruthy();
+    expect(result).toEqual(expected);
   });
 
   it("should have the correct grid for Monday as the first day", () => {
@@ -48,7 +47,7 @@ describe("The monthly grid function", () => {
       [4, 5, 6, 7, 8, 9, 10]
     ];
 
-    expect(isEqual(result, expected)).toBeTruthy();
+    expect(result).toEqual(expected);
   });
 
   it("should have the correct grid for Friday as the first day", () => {
@@ -64,7 +63,7 @@ describe("The monthly grid function", () => {
       [29, 30, 31, 1, 2, 3, 4],
       [5, 6, 7, 8, 9, 10, 11]
     ];
-    expect(isEqual(result, expected)).toBeTruthy();
+    expect(result).toEqual(expected);
   });
 
   it("should have the correct grid for Sunday as the first day on leap year", () => {
@@ -81,6 +80,6 @@ describe("The monthly grid function", () => {
       [1, 2, 3, 4, 5, 6, 7]
     ];
 
-    expect(isEqual(result, expected)).toBeTruthy();
+    expect(result).toEqual(expected);
   });
 });

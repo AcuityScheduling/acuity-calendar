@@ -76,7 +76,7 @@ const getEndOfGrid = totalDates => {
  * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
  * @returns {number[]}
  */
-const getDayGrid = ({ date, firstDay = 0 }) => {
+const getMonthGrid = ({ date, firstDay = 0 }) => {
   const startOfGrid = getStartOfGrid({ date, firstDay });
   const middleOfGrid = getArrayOfDays(date);
   const endOfGrid = getEndOfGrid(startOfGrid.length + middleOfGrid.length);
@@ -84,4 +84,4 @@ const getDayGrid = ({ date, firstDay = 0 }) => {
   return [].concat(startOfGrid, middleOfGrid, endOfGrid);
 };
 
-export default getDayGrid;
+export default getMonthGrid;

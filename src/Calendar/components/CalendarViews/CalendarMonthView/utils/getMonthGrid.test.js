@@ -1,11 +1,11 @@
-import getDayGrid, { getArrayOfDays } from "./getDayGrid";
+import getMonthGrid, { getArrayOfDays } from "./getMonthGrid";
 import isEqual from "lodash/isEqual";
 import moment from "moment";
 
 const getTestInfo = ({ dateString, firstDay }) => {
   const date = moment(dateString);
   const arrayOfDays = getArrayOfDays(date);
-  const result = getDayGrid({ date, firstDay });
+  const result = getMonthGrid({ date, firstDay });
   return {
     result,
     arrayOfDays

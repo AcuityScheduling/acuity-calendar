@@ -1,0 +1,8 @@
+.wrapper {
+  width: 50%;
+}
+
+.column {
+  display: flex;
+  width: 100%;
+}

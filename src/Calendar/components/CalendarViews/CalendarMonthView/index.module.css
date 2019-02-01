@@ -2,7 +2,7 @@
   width: 50%;
 }
 
-.column {
+.row {
   display: flex;
   width: 100%;
 }

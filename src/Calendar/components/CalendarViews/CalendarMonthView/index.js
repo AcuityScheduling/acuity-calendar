@@ -7,15 +7,15 @@ const CalendarMonthView = ({ selectedDate }) => {
   const monthGrid = getMonthGrid({ date: selectedDate });
 
   let countDays = 0;
-  let countColumns = 0;
+  let countRows = 0;
   return (
     <div className={styles.wrapper}>
-      {monthGrid.map(column => {
-        countColumns += 1;
+      {monthGrid.map(row => {
+        countRows += 1;
 
         return (
-          <div className={styles.column} key={`monthColumn${countColumns}`}>
-            {column.map(day => {
+          <div className={styles.row} key={`monthColumn${countRows}`}>
+            {row.map(day => {
               countDays += 1;
               return (
                 <CalendarMonthCell

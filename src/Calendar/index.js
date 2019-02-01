@@ -10,10 +10,10 @@ import { CALENDAR_VIEWS } from "./constants";
 
 const Calendar = ({
   events,
-  currentView,
+  view,
   selectedDate,
-  setSelectedDate,
-  setCurrentView,
+  onNavigate,
+  onViewChange,
   ...restProps
 }) => {
   const getView = () => {
@@ -23,7 +23,7 @@ const Calendar = ({
       [week]: () => <CalendarWeekView />,
       [day]: () => <CalendarDayView />
     };
-    return views[currentView];
+    return views[view];
   };
 
   const View = getView();
@@ -32,9 +32,9 @@ const Calendar = ({
     <Fragment>
       <CalendarToolbar
         selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        onNavigate={onNavigate}
+        view={view}
+        onViewChange={onViewChange}
       />
       <View events={events} selectedDate={selectedDate} {...restProps} />
     </Fragment>
@@ -42,7 +42,7 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-  currentView: PropTypes.oneOfType(Object.keys(CALENDAR_VIEWS))
+  currentView: PropTypes.oneOf(Object.keys(CALENDAR_VIEWS))
 };
 
 export default Calendar;

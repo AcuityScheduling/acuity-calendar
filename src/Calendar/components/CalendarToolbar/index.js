@@ -1,34 +1,41 @@
 import React from "react";
-import { getRangeTitle } from "../../utils";
+import { getRangeTitle, getNavigateDate } from "../../utils";
 import { CALENDAR_VIEWS } from "../../constants";
 
-const CalendarToolbar = ({
-  selectedDate,
-  setSelectedDate,
-  currentView,
-  setCurrentView
-}) => {
-  const { month, week, day } = CALENDAR_VIEWS;
+const { month, week, day } = CALENDAR_VIEWS;
+
+const CalendarToolbar = ({ selectedDate, onNavigate, view, onViewChange }) => {
+  const prevDate = getNavigateDate({
+    view,
+    direction: -1,
+    currentDate: selectedDate
+  });
+
+  const nextDate = getNavigateDate({
+    view,
+    direction: 1,
+    currentDate: selectedDate
+  });
 
   return (
     <div>
-      <h1>{getRangeTitle({ date: selectedDate, view: currentView })}</h1>
+      <h1>{getRangeTitle({ date: selectedDate, view })}</h1>
       <div>
-        <button type="button" onClick={() => setCurrentView(month)}>
+        <button type="button" onClick={() => onViewChange(month)}>
           Month
         </button>
-        <button type="button" onClick={() => setCurrentView(week)}>
+        <button type="button" onClick={() => onViewChange(week)}>
           Week
         </button>
-        <button type="button" onClick={() => setCurrentView(day)}>
+        <button type="button" onClick={() => onViewChange(day)}>
           Day
         </button>
       </div>
       <div>
-        <button type="button" onClick={() => setSelectedDate()}>
+        <button type="button" onClick={() => onNavigate(prevDate)}>
           Back
         </button>
-        <button type="button" onClick={() => setSelectedDate()}>
+        <button type="button" onClick={() => onNavigate(nextDate)}>
           Next
         </button>
       </div>

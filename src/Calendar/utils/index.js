@@ -1,3 +1,4 @@
 import getRangeTitle from "./getRangeTitle";
+import getNavigateDate from "./getNavigateDate";
 
-export { getRangeTitle };
+export { getRangeTitle, getNavigateDate };

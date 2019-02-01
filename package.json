@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "razzle": "^2.4.1",
     "react": "^16.8.0-alpha.1",

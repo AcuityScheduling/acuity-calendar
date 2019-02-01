@@ -33,7 +33,8 @@ const Calendar = ({
       <CalendarToolbar
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
-        onViewChange={setCurrentView}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
       />
       <View events={events} selectedDate={selectedDate} {...restProps} />
     </Fragment>

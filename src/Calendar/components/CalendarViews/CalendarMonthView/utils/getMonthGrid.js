@@ -36,11 +36,13 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
  * @returns {number[]}
  */
 const getStartOfGrid = ({ date, firstDay }) => {
-  const monthStartPadding =
-    date
+  const monthStartPadding = getMonthStartPadding({
+    firstDateDay: date
       .clone()
       .startOf("month")
-      .day() - firstDay;
+      .day(),
+    firstDay
+  });
 
   const lastDayOfLastMonth = date
     .clone()
@@ -48,16 +50,33 @@ const getStartOfGrid = ({ date, firstDay }) => {
     .endOf("month")
     .date();
 
+  const firstDayOfPadding = lastDayOfLastMonth - monthStartPadding + 1;
+
   const startOfGrid = [];
-  for (
-    let i = lastDayOfLastMonth - monthStartPadding + 1;
-    i <= lastDayOfLastMonth;
-    i += 1
-  ) {
+  for (let i = firstDayOfPadding; i <= lastDayOfLastMonth; i += 1) {
     startOfGrid.push(i);
   }
 
   return startOfGrid;
+};
+
+/**
+ * Get the total padding BEFORE the dates start
+ *
+ * @param {Object} params
+ * @param {0|1|2|3|4|5|6} params.firstDateDay - The day of the first date of the month
+ * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
+ * @returns {number}
+ */
+const getMonthStartPadding = ({ firstDateDay, firstDay }) => {
+  let totalPadding = 0;
+  for (let i = firstDay; i < firstDay + 7; i += 1) {
+    if (i === firstDateDay || (i > 6 && i === firstDateDay + 7)) {
+      return totalPadding;
+    }
+    totalPadding += 1;
+  }
+  return totalPadding;
 };
 
 /**

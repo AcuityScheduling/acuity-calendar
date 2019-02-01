@@ -24,7 +24,7 @@ const App = () => {
       onViewChange={setView}
       selectedDate={selectedDate}
       onNavigate={setSelectedDate}
-      firstDay={4}
+      firstDay={0}
       onSelectEvent={event => {
         console.log(`Selected ${event.title}`);
       }}

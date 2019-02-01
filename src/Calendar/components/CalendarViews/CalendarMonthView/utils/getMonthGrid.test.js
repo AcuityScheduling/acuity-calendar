@@ -66,6 +66,22 @@ describe("The monthly grid function", () => {
     expect(result).toEqual(expected);
   });
 
+  it("should have the correct grid for Thursday as the first day", () => {
+    const result = getTestInfo({
+      dateString: "2019-01-15",
+      firstDay: 4
+    });
+    const expected = [
+      [27, 28, 29, 30, 31, 1, 2],
+      [3, 4, 5, 6, 7, 8, 9],
+      [10, 11, 12, 13, 14, 15, 16],
+      [17, 18, 19, 20, 21, 22, 23],
+      [24, 25, 26, 27, 28, 29, 30],
+      [31, 1, 2, 3, 4, 5, 6]
+    ];
+    expect(result).toEqual(expected);
+  });
+
   it("should have the correct grid for Sunday as the first day on leap year", () => {
     const result = getTestInfo({
       dateString: "2020-02-15",

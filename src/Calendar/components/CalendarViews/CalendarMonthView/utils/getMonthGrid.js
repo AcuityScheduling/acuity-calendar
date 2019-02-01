@@ -2,6 +2,31 @@
 // eslint-disable-next-line no-unused-vars
 import moment from "moment";
 
+// A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
+const totalGridSize = 42;
+
+/**
+ * Get an array of the grid for a month based on a given first day and date
+ *
+ * @param {Object} params
+ * @param {moment} params.date - the selected date we want the month grid for
+ * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
+ * @returns {number[]}
+ */
+const getMonthGrid = ({ date, firstDay = 0 }) => {
+  const startOfGrid = getStartOfGrid({ date, firstDay });
+  const middleOfGrid = getArrayOfDays(date);
+  const endOfGrid = getEndOfGrid(startOfGrid.length + middleOfGrid.length);
+
+  const grid = [].concat(startOfGrid, middleOfGrid, endOfGrid);
+
+  const nestedGrid = [];
+  for (let i = 0; i < totalGridSize; i += 7) {
+    nestedGrid.push(grid.slice(i, i + 7));
+  }
+  return nestedGrid;
+};
+
 /**
  * Get the start of the array grid. Last months dates, something like: [28, 29, 30, 31]
  *
@@ -58,30 +83,12 @@ export const getArrayOfDays = date => {
  * @param {number} params.totalDates - the total amount of dates we have so far
  */
 const getEndOfGrid = totalDates => {
-  // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
-  const totalGridSize = 42;
   const remainingDates = totalGridSize - totalDates;
   const days = [];
   for (let i = 1; i <= remainingDates; i += 1) {
     days.push(i);
   }
   return days;
-};
-
-/**
- * Get an array of the grid for a month based on a given first day and date
- *
- * @param {Object} params
- * @param {moment} params.date - the selected date we want the month grid for
- * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
- * @returns {number[]}
- */
-const getMonthGrid = ({ date, firstDay = 0 }) => {
-  const startOfGrid = getStartOfGrid({ date, firstDay });
-  const middleOfGrid = getArrayOfDays(date);
-  const endOfGrid = getEndOfGrid(startOfGrid.length + middleOfGrid.length);
-
-  return [].concat(startOfGrid, middleOfGrid, endOfGrid);
 };
 
 export default getMonthGrid;

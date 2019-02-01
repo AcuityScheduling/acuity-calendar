@@ -5,8 +5,8 @@ import { CALENDAR_VIEWS } from "./Calendar/constants";
 
 const events = [
   {
-    start: new Date(),
-    end: new Date(),
+    start: moment(),
+    end: moment(),
     allDay: false,
     title: "My awesome new event"
   }
@@ -24,7 +24,7 @@ const App = () => {
       onViewChange={setView}
       selectedDate={selectedDate}
       onNavigate={setSelectedDate}
-      firstDay={0}
+      firstDay={4}
       onSelectEvent={event => {
         console.log(`Selected ${event.title}`);
       }}

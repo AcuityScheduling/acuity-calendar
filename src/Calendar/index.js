@@ -52,6 +52,7 @@ const Calendar = ({
         onSelectEvent={onSelectEvent}
         onSelecting={onSelecting}
         onSelectSlot={onSelectSlot}
+        firstDay={firstDay}
       />
     </Fragment>
   );

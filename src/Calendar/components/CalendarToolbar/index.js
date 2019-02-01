@@ -2,17 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getRangeTitle, getNavigateDate } from "../../utils";
 import { CALENDAR_VIEWS } from "../../constants";
-import { CALENDAR_VIEW_TYPE, FIRST_DAY_TYPE, MOMENT_TYPE } from "../../types";
+import { CALENDAR_VIEW_TYPE, MOMENT_TYPE } from "../../types";
 
 const { month, week, day } = CALENDAR_VIEWS;
 
-const CalendarToolbar = ({
-  view,
-  onViewChange,
-  selectedDate,
-  onNavigate,
-  firstDay
-}) => {
+const CalendarToolbar = ({ view, onViewChange, selectedDate, onNavigate }) => {
   const prevDate = getNavigateDate({
     view,
     direction: -1,
@@ -55,8 +49,7 @@ CalendarToolbar.propTypes = {
   view: CALENDAR_VIEW_TYPE.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
-  onNavigate: PropTypes.func.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired
+  onNavigate: PropTypes.func.isRequired
 };
 
 export default CalendarToolbar;

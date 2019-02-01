@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import {
   CalendarMonthView,
   CalendarWeekView,
@@ -19,9 +20,9 @@ const Calendar = ({
   const getView = () => {
     const { month, week, day } = CALENDAR_VIEWS;
     const views = {
-      [month]: () => <CalendarMonthView />,
-      [week]: () => <CalendarWeekView />,
-      [day]: () => <CalendarDayView />
+      [month]: CalendarMonthView,
+      [week]: CalendarWeekView,
+      [day]: CalendarDayView
     };
     return views[view];
   };
@@ -42,7 +43,8 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-  currentView: PropTypes.oneOf(Object.keys(CALENDAR_VIEWS))
+  selectedDate: PropTypes.instanceOf(moment),
+  view: PropTypes.oneOf(Object.keys(CALENDAR_VIEWS))
 };
 
 export default Calendar;

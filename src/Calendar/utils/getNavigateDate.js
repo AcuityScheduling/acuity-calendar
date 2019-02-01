@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import moment from "moment";
 import { CALENDAR_VIEWS } from "../constants";
 
@@ -7,13 +8,13 @@ import { CALENDAR_VIEWS } from "../constants";
  * @param {object} params
  * @param {string} params.view - The calendar view
  * @param {number} params.direction - 1 for next -1 for previous
- * @param {object} params.currentDate - the current date we're using to navigate
+ * @param {moment} params.currentDate - the current date we're using to navigate
  */
 const getNavigateDate = ({ view, direction, currentDate }) => {
   const { month, week, day } = CALENDAR_VIEWS;
 
   const getDate = time => {
-    return new Date(moment(currentDate).add(direction, time));
+    return currentDate.clone().add(direction, time);
   };
 
   const viewMap = {

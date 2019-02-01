@@ -1,5 +1,5 @@
 import React from "react";
-import CalendarEvent from "../components/CalendarEvent";
+import CalendarEvent from "../../../CalendarEvent";
 
 const CalendarMonthCell = ({ date, events }) => {
   return (

@@ -1,3 +1,3 @@
-import getDayGrid from "./getDayGrid";
+import getMonthGrid from "./getMonthGrid";
 
-export { getDayGrid };
+export { getMonthGrid };

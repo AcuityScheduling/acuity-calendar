@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import Calendar from "./Calendar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
 
@@ -14,7 +15,7 @@ const events = [
 const App = () => {
   const { week } = CALENDAR_VIEWS;
   const [view, setView] = useState(week);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(moment());
 
   return (
     <Calendar

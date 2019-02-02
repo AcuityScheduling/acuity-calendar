@@ -6,7 +6,7 @@ import CalendarEvent from "../../../CalendarEvent";
 import { MOMENT_TYPE } from "../../../../types";
 import { cellWidth } from "../utils";
 
-const CalendarMonthCell = ({ date, events, isInRange }) => {
+const CalendarMonthCell = ({ date, events, isInRange, onSelectEvent }) => {
   const eventsForCell = get(events, date.format("YYYY-MM-DD"), []);
 
   return (
@@ -14,7 +14,11 @@ const CalendarMonthCell = ({ date, events, isInRange }) => {
       <h2>{date.date()}</h2>
       {eventsForCell.length > 0 &&
         eventsForCell.map(event => (
-          <CalendarEvent event={event} key={event.id} />
+          <CalendarEvent
+            event={event}
+            key={event.id}
+            onSelectEvent={onSelectEvent}
+          />
         ))}
     </div>
   );
@@ -23,7 +27,8 @@ const CalendarMonthCell = ({ date, events, isInRange }) => {
 CalendarMonthCell.propTypes = {
   date: MOMENT_TYPE.isRequired,
   events: PropTypes.object.isRequired,
-  isInRange: PropTypes.bool.isRequired
+  isInRange: PropTypes.bool.isRequired,
+  onSelectEvent: PropTypes.func.isRequired
 };
 
 export default CalendarMonthCell;

@@ -6,7 +6,12 @@ import { getDayNames } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
 
-const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
+const CalendarMonthView = ({
+  selectedDate,
+  firstDay,
+  onSelectEvent,
+  events
+}) => {
   const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
   const dayNames = getDayNames({ firstDay });
 
@@ -38,6 +43,7 @@ const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
                     isInRange={dayDetails.isInRange}
                     events={events}
                     key={`monthCell${countDays}`}
+                    onSelectEvent={onSelectEvent}
                   />
                 );
               })}
@@ -52,7 +58,8 @@ const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
 CalendarMonthView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  events: PropTypes.object.isRequired
+  events: PropTypes.object.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
 };
 
 export default CalendarMonthView;

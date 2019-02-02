@@ -24,13 +24,16 @@ const CalendarMonthCell = ({
     >
       <h2>{date.date()}</h2>
       {eventsForCell.length > 0 &&
-        eventsForCell.map(event => (
-          <CalendarEvent
-            event={event}
-            key={event.id}
-            onSelectEvent={onSelectEvent}
-          />
-        ))}
+        eventsForCell.map(
+          event =>
+            isInRange && (
+              <CalendarEvent
+                event={event}
+                key={event.id}
+                onSelectEvent={onSelectEvent}
+              />
+            )
+        )}
     </div>
   );
 };

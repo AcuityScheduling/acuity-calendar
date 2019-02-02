@@ -28,7 +28,7 @@ export const event4 = {
   id: 4,
   start: moment("2019-03-07T14:00:00+00:00"),
   end: moment("2019-03-07T16:00:00+00:00"),
-  title: "March 3rd at 2pm",
+  title: "March 7th at 2pm",
   allDay: false
 };
 

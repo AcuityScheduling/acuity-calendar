@@ -7,6 +7,7 @@ import {
 } from "./components/CalendarViews";
 import CalendarToolbar from "./components/CalendarToolbar";
 import { CALENDAR_VIEWS } from "./constants";
+import { getEventsByDate } from "./utils";
 import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
@@ -47,7 +48,7 @@ const Calendar = ({
         firstDay={firstDay}
       />
       <View
-        events={events}
+        events={getEventsByDate(events)}
         selectedDate={selectedDate}
         onSelectEvent={onSelectEvent}
         onSelecting={onSelecting}

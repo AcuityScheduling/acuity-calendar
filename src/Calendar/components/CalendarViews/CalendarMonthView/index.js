@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./index.module.css";
 import { getMonthGrid, cellWidth } from "./utils";
 import { getDayNames } from "../../../utils";
-import { FIRST_DAY_TYPE, MOMENT_TYPE, EVENT_TYPE } from "../../../types";
+import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
 
 const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
@@ -52,7 +52,7 @@ const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
 CalendarMonthView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired
+  events: PropTypes.object.isRequired
 };
 
 export default CalendarMonthView;

@@ -5,6 +5,13 @@ import moment from "moment";
 // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
 const totalGridSize = 42;
 
+/**
+ * Get a month grid with details about each date
+ *
+ * @param {Object} params
+ * @param {moment} params.date - the selected date
+ * @param {0|1|2|3|4|5|6} params.firstDay - the firstDay of the week
+ */
 const getMonthGrid = ({ date, firstDay = 0 }) => {
   const grid = getGrid({ date, firstDay });
 
@@ -48,6 +55,15 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
   });
 };
 
+/**
+ * Get the details of a day (day, date, and whether it's in the range of the month or not)
+ *
+ * @param {Object} params
+ * @param {moment} params - the date moment object
+ * @param {number} params - the day of the month
+ * @param {boolean} params.isInRange - whether or not the date is in the range of the calendar view
+ * @param {'last'|'current'|'next'} params.type - Which set of dates we're looking for
+ */
 const getDetails = ({ date, day, isInRange, type }) => {
   const details = {
     day,

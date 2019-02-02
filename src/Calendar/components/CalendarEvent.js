@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 
 const CalendarEvent = ({ event, onSelectEvent }) => {
   return (
-    <div role="button" onClick={() => onSelectEvent(event)}>
+    <div
+      role="button"
+      onClick={e => {
+        e.stopPropagation();
+        onSelectEvent(event);
+      }}
+    >
       {event.title}
     </div>
   );

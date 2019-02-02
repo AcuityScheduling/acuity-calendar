@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./index.module.css";
 import { getMonthGrid, cellWidth } from "./utils";
 import { getDayNames } from "../../../utils";
-import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
+import { FIRST_DAY_TYPE, MOMENT_TYPE, EVENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
 
-const CalendarMonthView = ({ selectedDate, firstDay }) => {
+const CalendarMonthView = ({ selectedDate, firstDay, events }) => {
   const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
   const dayNames = getDayNames({ firstDay });
 
@@ -28,12 +29,14 @@ const CalendarMonthView = ({ selectedDate, firstDay }) => {
 
           return (
             <div className={styles.row} key={`monthColumn${countRows}`}>
-              {row.map(day => {
+              {row.map(dayDetails => {
                 countDays += 1;
+
                 return (
                   <CalendarMonthCell
-                    date={day}
-                    events={[]}
+                    date={dayDetails.date}
+                    isInRange={dayDetails.isInRange}
+                    events={events}
                     key={`monthCell${countDays}`}
                   />
                 );
@@ -48,7 +51,8 @@ const CalendarMonthView = ({ selectedDate, firstDay }) => {
 
 CalendarMonthView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired
+  firstDay: FIRST_DAY_TYPE.isRequired,
+  events: PropTypes.arrayOf(EVENT_TYPE).isRequired
 };
 
 export default CalendarMonthView;

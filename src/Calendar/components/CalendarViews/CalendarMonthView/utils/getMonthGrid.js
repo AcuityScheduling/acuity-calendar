@@ -5,6 +5,76 @@ import moment from "moment";
 // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
 const totalGridSize = 42;
 
+const getMonthGrid = ({ date, firstDay = 0 }) => {
+  const grid = getGrid({ date, firstDay });
+
+  const lastDayOfLastMonth = date
+    .clone()
+    .subtract(1, "months")
+    .endOf("month")
+    .date();
+
+  const lastDayOfMonth = date
+    .clone()
+    .endOf("month")
+    .date();
+
+  let isLastMonth = true;
+  let isCurrentMonth = false;
+  let isNextMonth = false;
+  return grid.map(row => {
+    return row.map(day => {
+      if (isLastMonth) {
+        if (day === lastDayOfLastMonth) {
+          isLastMonth = false;
+          isCurrentMonth = true;
+          return getDetails({ date, day, isInRange: false, type: "last" });
+        }
+        return getDetails({ date, day, isInRange: false, type: "last" });
+      }
+      if (isCurrentMonth) {
+        if (day === lastDayOfMonth) {
+          isCurrentMonth = false;
+          isNextMonth = true;
+          return getDetails({ date, day, isInRange: true, type: "current" });
+        }
+        return getDetails({ date, day, isInRange: true, type: "current" });
+      }
+      if (isNextMonth) {
+        return getDetails({ date, day, isInRange: false, type: "next" });
+      }
+      return null;
+    });
+  });
+};
+
+const getDetails = ({ date, day, isInRange, type }) => {
+  const details = {
+    day,
+    isInRange
+  };
+  let newDate = null;
+  if (type === "last") {
+    newDate = date
+      .clone()
+      .subtract(1, "months")
+      .date(day);
+  }
+  if (type === "current") {
+    newDate = date.clone().date(day);
+  }
+  if (type === "next") {
+    newDate = date
+      .clone()
+      .add(1, "months")
+      .date(day);
+  }
+  return {
+    ...details,
+    date: newDate
+  };
+};
+
 /**
  * Get an array of the grid for a month based on a given first day and date
  *
@@ -13,7 +83,7 @@ const totalGridSize = 42;
  * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
  * @returns {number[]}
  */
-const getMonthGrid = ({ date, firstDay = 0 }) => {
+export const getGrid = ({ date, firstDay }) => {
   const startOfGrid = getStartOfGrid({ date, firstDay });
   const middleOfGrid = getArrayOfDays(date);
   const endOfGrid = getEndOfGrid(startOfGrid.length + middleOfGrid.length);

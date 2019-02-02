@@ -1,9 +1,9 @@
-import getMonthGrid from "./getMonthGrid";
+import { getGrid } from "./getMonthGrid";
 import moment from "moment";
 
 const getTestInfo = ({ dateString, firstDay }) => {
   const date = moment(dateString);
-  return getMonthGrid({ date, firstDay });
+  return getGrid({ date, firstDay });
 };
 
 describe("The monthly grid function", () => {

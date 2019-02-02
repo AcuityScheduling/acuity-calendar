@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CalendarDayView = ({ eventOverlap }) => {
+const CalendarDayView = ({ selectedDate, eventOverlap }) => {
   return <div>Day View</div>;
 };
 

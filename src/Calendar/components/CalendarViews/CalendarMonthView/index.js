@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./index.module.css";
-import { getMonthGrid, cellWidth } from "./utils";
-import { getDayNames } from "../../../utils";
+import { getMonthGrid } from "./utils";
+import { getDayNames, cellWidth } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
 

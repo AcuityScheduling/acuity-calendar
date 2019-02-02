@@ -4,7 +4,7 @@ import get from "lodash/get";
 import styles from "./CalendarMonthCell.module.css";
 import CalendarEvent from "../../../CalendarEvent";
 import { MOMENT_TYPE } from "../../../../types";
-import { cellWidth } from "../utils";
+import { cellWidth } from "../../../../utils";
 
 const CalendarMonthCell = ({
   date,

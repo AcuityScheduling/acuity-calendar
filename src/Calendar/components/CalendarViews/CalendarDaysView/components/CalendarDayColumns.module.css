@@ -4,6 +4,7 @@
   position: relative;
   /* Width of the time gutter */
   left: 100px;
+  margin-left: -100px;
   /* Height of header */
   margin-top: 28px;
 }
@@ -13,8 +14,8 @@
   width: 100%;
   background: white;
   position: absolute;
-  z-index: 1;
-  margin-left: 100px;
+  z-index: 2;
+  left: 100px;
   text-align: center;
 }
 

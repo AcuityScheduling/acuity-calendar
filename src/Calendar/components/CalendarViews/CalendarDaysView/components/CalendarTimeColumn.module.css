@@ -1,9 +1,10 @@
 .column {
   background: white;
   position: absolute;
-  z-index: 2;
   width: 100px;
   text-align: center;
+  border-right: 1px solid black;
+  margin-top: 28px;
 }
 
 .times {
@@ -13,11 +14,14 @@
 .hour_label {
   text-align: right;
   height: 84px;
+  border-bottom: 1px solid black;
 }
 
 .corner {
-  min-width: 100px;
+  width: 100px;
   background: white;
+  position: relative;
+  z-index: 2;
 }
 
 .corner h2 {

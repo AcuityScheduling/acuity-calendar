@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
+import CalendarCorner from "./components/CalendarCorner";
 import styles from "./index.module.css";
 import {
   CALENDAR_VIEW_TYPE,
@@ -12,10 +13,14 @@ const CalendarDaysView = ({ view, selectedDate, firstDay }) => {
   const wrapperEl = useRef(null);
   const timeRef = useRef(null);
   const daysHeaderRef = useRef(null);
+  const cornerRef = useRef(null);
 
   const adjustPositions = e => {
     timeRef.current.style.left = `${e.target.scrollLeft}px`;
     daysHeaderRef.current.style.top = `${e.target.scrollTop}px`;
+
+    cornerRef.current.style.left = `${e.target.scrollLeft}px`;
+    cornerRef.current.style.top = `${e.target.scrollTop}px`;
   };
 
   useEffect(() => {
@@ -27,6 +32,7 @@ const CalendarDaysView = ({ view, selectedDate, firstDay }) => {
 
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
+      <CalendarCorner ref={cornerRef} />
       <CalendarTimeColumn ref={timeRef} />
       <CalendarDayColumns
         selectedDate={selectedDate}

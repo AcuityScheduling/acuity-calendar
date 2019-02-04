@@ -19,10 +19,7 @@ const CalendarTimeColumn = React.forwardRef((props, ref) => {
 
   return (
     <div className={styles.column} ref={ref}>
-      <div className={styles.corner}>
-        <h2>C</h2>
-      </div>
-      <div>{renderTimes()}</div>
+      {renderTimes()}
     </div>
   );
 });

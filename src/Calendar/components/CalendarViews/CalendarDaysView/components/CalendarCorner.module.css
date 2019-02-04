@@ -1,0 +1,11 @@
+.wrapper {
+  position: relative;
+  width: 100px;
+  z-index: 3;
+  background: white;
+  height: 28px;
+}
+
+.wrapper h2 {
+    margin: 0;
+}

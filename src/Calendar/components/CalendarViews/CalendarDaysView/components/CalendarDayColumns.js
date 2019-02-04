@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { getWeekList } from "../utils";
 import styles from "./CalendarDayColumns.module.css";
@@ -12,14 +12,32 @@ const CalendarDayColumns = React.forwardRef(
       dateList = getWeekList({ date: selectedDate, firstDay });
     }
     return (
-      <div className={styles.days_wrapper} ref={ref}>
-        {dateList.map(dayDate => {
-          return <CalendarDay date={dayDate} />;
-        })}
-      </div>
+      <Fragment>
+        <div className={styles.header} ref={ref}>
+          {dateList.map(date => {
+            return (
+              <h2
+                key={`dayHeader${date.date()}`}
+                style={{
+                  minWidth: `${100 / 7}%`
+                }}
+              >
+                {date.format("dddd, MMM D")}
+              </h2>
+            );
+          })}
+        </div>
+        <div className={styles.day_wrapper}>
+          {dateList.map(date => {
+            return <CalendarDay date={date} key={`timeBlocks${date.date()}`} />;
+          })}
+        </div>
+      </Fragment>
     );
   }
 );
+
+CalendarDayColumns.displayName = "CalendarDayColumns";
 
 CalendarDayColumns.defaultProps = {
   view: "day"

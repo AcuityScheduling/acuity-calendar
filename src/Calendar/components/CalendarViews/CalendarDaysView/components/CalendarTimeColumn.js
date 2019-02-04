@@ -7,7 +7,7 @@ const CalendarTimeColumn = React.forwardRef((props, ref) => {
     const times = [];
     for (let i = 0; i < 24; i += 1) {
       times.push(
-        <div className={styles.hourLabel} key={`dayTime${i}`}>
+        <div className={styles.hour_label} key={`dayTime${i}`}>
           {moment()
             .hour(i)
             .format("ha")}

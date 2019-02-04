@@ -2,8 +2,8 @@
   text-align: center;
 }
 
-.header {
-  background: white;
-  text-align: center;
-  margin: 0;
+.time_block {
+  height: 84px;
+  width: 100%;
+  border: 1px solid black;
 }

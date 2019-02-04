@@ -3,14 +3,37 @@
   display: flex;
   height: 400px;
   overflow-y: scroll;
+  position: relative;
+}
+
+.days_wrapper {
+  display: flex;
+  width: 100%;
+  left: 100px;
+  position: absolute;
 }
 
 .column {
-  border: 1px solid black;
   text-align: center;
-  height: 2000px;
 }
 
-.day-header {
-  position: fixed;
+.times_column {
+  background: white;
+  position: absolute;
+  width: 100px;
+}
+
+.header {
+  background: white;
+  text-align: center;
+}
+
+.times {
+  margin-top: 70px;
+  width: 50px;
+}
+
+.time {
+  text-align: right;
+  height: 55px;
 }

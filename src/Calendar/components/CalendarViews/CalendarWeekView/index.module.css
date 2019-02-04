@@ -9,8 +9,16 @@
 .days_wrapper {
   display: flex;
   width: 100%;
-  left: 100px;
   position: absolute;
+}
+
+.corner {
+  min-width: 100px;
+  background: white;
+}
+
+.corner h2 {
+    margin: 0;
 }
 
 .column {
@@ -20,16 +28,17 @@
 .times_column {
   background: white;
   position: absolute;
+  top: 100px;
   width: 100px;
 }
 
 .header {
   background: white;
   text-align: center;
+  margin: 0;
 }
 
 .times {
-  margin-top: 70px;
   width: 50px;
 }
 

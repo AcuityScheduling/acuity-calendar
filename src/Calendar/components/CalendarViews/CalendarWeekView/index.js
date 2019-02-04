@@ -11,15 +11,15 @@ const CalendarWeekView = ({ eventOverlap, selectedDate, firstDay }) => {
   const timesEl = useRef(null);
   const daysHeaderEl = useRef(null);
 
-  const scrollLogic = stuff => {
-    timesEl.current.style.left = `${stuff.target.scrollLeft}px`;
-    daysHeaderEl.current.style.top = `${stuff.target.scrollTop}px`;
+  const adjustPositions = e => {
+    timesEl.current.style.left = `${e.target.scrollLeft}px`;
+    daysHeaderEl.current.style.top = `${e.target.scrollTop}px`;
   };
 
   useEffect(() => {
-    wrapperEl.current.addEventListener("scroll", scrollLogic);
+    wrapperEl.current.addEventListener("scroll", adjustPositions);
     return () => {
-      wrapperEl.current.removeEventListener("scroll", scrollLogic);
+      wrapperEl.current.removeEventListener("scroll", adjustPositions);
     };
   });
 
@@ -37,31 +37,15 @@ const CalendarWeekView = ({ eventOverlap, selectedDate, firstDay }) => {
     return times;
   };
 
-  const renderTimesColumn = (element = null) => {
-    let style = {};
-    if (!element) {
-      style = {
-        visibility: "hidden"
-      };
-    }
-
-    return (
-      <div
-        style={style}
-        className={`${styles.column} ${styles.times_column}`}
-        ref={element}
-      >
-        <h2 className={styles.header}>C</h2>
-        <div className={styles.times}>{renderTimes()}</div>
-      </div>
-    );
-  };
-
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
-      {renderTimesColumn(timesEl)}
-      {renderTimesColumn()}
+      <div className={`${styles.column} ${styles.times_column}`} ref={timesEl}>
+        <div className={styles.times}>{renderTimes()}</div>
+      </div>
       <div className={styles.days_wrapper} ref={daysHeaderEl}>
+        <div className={styles.corner}>
+          <h2>C</h2>
+        </div>
         {dayNames.map(dayName => {
           return (
             <div

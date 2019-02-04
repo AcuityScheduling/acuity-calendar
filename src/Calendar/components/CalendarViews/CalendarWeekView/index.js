@@ -2,11 +2,10 @@ import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import styles from "./index.module.css";
-// import useElementScroll from "../../useElementScroll";
-import { getDayNames } from "../../../utils";
+import { getWeekList } from "./utils";
 
 const CalendarWeekView = ({ eventOverlap, selectedDate, firstDay }) => {
-  const dayNames = getDayNames({ firstDay });
+  const weekList = getWeekList({ date: selectedDate, firstDay });
   const wrapperEl = useRef(null);
   const timesEl = useRef(null);
   const daysHeaderEl = useRef(null);
@@ -46,17 +45,17 @@ const CalendarWeekView = ({ eventOverlap, selectedDate, firstDay }) => {
         <div className={styles.corner}>
           <h2>C</h2>
         </div>
-        {dayNames.map(dayName => {
+        {weekList.map(dayDate => {
           return (
             <div
               className={styles.column}
-              key={`weekView${dayName}`}
+              key={`weekView${dayDate.day()}`}
               style={{
                 minWidth: `${100 / 7}%`,
                 width: "200px"
               }}
             >
-              <h2 className={styles.header}>{dayName}</h2>
+              <h2 className={styles.header}>{dayDate.format("dddd, MMM D")}</h2>
             </div>
           );
         })}

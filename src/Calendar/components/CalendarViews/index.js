@@ -1,5 +1,4 @@
 import CalendarMonthView from "./CalendarMonthView";
-import CalendarWeekView from "./CalendarWeekView";
-import CalendarDayView from "./CalendarDayView";
+import CalendarDaysView from "./CalendarDaysView";
 
-export { CalendarMonthView, CalendarWeekView, CalendarDayView };
+export { CalendarMonthView, CalendarDaysView };

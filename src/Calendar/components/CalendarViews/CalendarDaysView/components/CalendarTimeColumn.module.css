@@ -1,0 +1,25 @@
+.column {
+  background: white;
+  position: absolute;
+  z-index: 2;
+  width: 100px;
+  text-align: center;
+}
+
+.times {
+  width: 50px;
+}
+
+.time {
+  text-align: right;
+  height: 84px;
+}
+
+.corner {
+  min-width: 100px;
+  background: white;
+}
+
+.corner h2 {
+  margin: 0;
+}

@@ -1,0 +1,7 @@
+.days_wrapper {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  margin-left: 100px;
+}

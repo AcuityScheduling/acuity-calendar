@@ -2,8 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import {
   CalendarMonthView,
-  CalendarWeekView,
-  CalendarDayView
+  CalendarDaysView
 } from "./components/CalendarViews";
 import CalendarToolbar from "./components/CalendarToolbar";
 import { CALENDAR_VIEWS } from "./constants";
@@ -30,8 +29,8 @@ const Calendar = ({
     const { month, week, day } = CALENDAR_VIEWS;
     const views = {
       [month]: CalendarMonthView,
-      [week]: CalendarWeekView,
-      [day]: CalendarDayView
+      [week]: CalendarDaysView,
+      [day]: CalendarDaysView
     };
     return views[view];
   };
@@ -48,6 +47,7 @@ const Calendar = ({
         firstDay={firstDay}
       />
       <View
+        view={view}
         events={getEventsByDate(events)}
         selectedDate={selectedDate}
         onSelectEvent={onSelectEvent}

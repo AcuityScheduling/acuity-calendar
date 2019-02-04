@@ -1,0 +1,7 @@
+.wrapper {
+  width: 80%;
+  display: flex;
+  height: 400px;
+  overflow-y: scroll;
+  position: relative;
+}

@@ -39,12 +39,12 @@ const CalendarWeekView = ({ eventOverlap, selectedDate, firstDay }) => {
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
       <div className={`${styles.column} ${styles.times_column}`} ref={timesEl}>
-        <div className={styles.times}>{renderTimes()}</div>
-      </div>
-      <div className={styles.days_wrapper} ref={daysHeaderEl}>
         <div className={styles.corner}>
           <h2>C</h2>
         </div>
+        <div className={styles.times}>{renderTimes()}</div>
+      </div>
+      <div className={styles.days_wrapper} ref={daysHeaderEl}>
         {weekList.map(dayDate => {
           return (
             <div

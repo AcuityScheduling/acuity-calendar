@@ -27,6 +27,7 @@ const App = () => {
       onSelectSlot={start =>
         console.log(`Selected a slot for creating event at ${start}`)
       }
+      stepMinutes={30}
     />
   );
 };

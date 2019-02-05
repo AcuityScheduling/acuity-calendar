@@ -1,12 +1,16 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import get from "lodash/get";
 import { getWeekList } from "../utils";
 import styles from "./CalendarDayColumns.module.css";
 import CalendarDay from "./CalendarDay";
 import { MOMENT_TYPE, FIRST_DAY_TYPE } from "../../../../types";
 
 const CalendarDayColumns = React.forwardRef(
-  ({ selectedDate, firstDay, view }, ref) => {
+  (
+    { selectedDate, firstDay, view, events, totalStepsPerBlock, stepHeight },
+    ref
+  ) => {
     let dateList = [selectedDate];
     if (view === "week") {
       dateList = getWeekList({ date: selectedDate, firstDay });
@@ -29,7 +33,16 @@ const CalendarDayColumns = React.forwardRef(
         </div>
         <div className={styles.day_wrapper}>
           {dateList.map(date => {
-            return <CalendarDay date={date} key={`timeBlocks${date.date()}`} />;
+            const eventsForDay = get(events, date.format("YYYY-MM-DD"), []);
+            return (
+              <CalendarDay
+                events={eventsForDay}
+                date={date}
+                key={`timeBlocks${date.date()}`}
+                totalStepsPerBlock={totalStepsPerBlock}
+                stepHeight={stepHeight}
+              />
+            );
           })}
         </div>
       </Fragment>
@@ -46,7 +59,9 @@ CalendarDayColumns.defaultProps = {
 CalendarDayColumns.propTypes = {
   type: PropTypes.oneOf(["week", "day"]),
   selectedDate: MOMENT_TYPE.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired
+  firstDay: FIRST_DAY_TYPE.isRequired,
+  totalStepsPerBlock: PropTypes.number.isRequired,
+  stepHeight: PropTypes.number.isRequired
 };
 
 export default CalendarDayColumns;

@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
+import { getStepHeight } from "./utils";
 import styles from "./index.module.css";
 import {
   CALENDAR_VIEW_TYPE,
@@ -9,13 +11,19 @@ import {
   FIRST_DAY_TYPE
 } from "../../../types";
 
-const CalendarDaysView = ({ view, selectedDate, firstDay }) => {
+const CalendarDaysView = ({
+  view,
+  selectedDate,
+  firstDay,
+  events,
+  stepMinutes
+}) => {
   const wrapperEl = useRef(null);
   const timeRef = useRef(null);
   const daysHeaderRef = useRef(null);
   const cornerRef = useRef(null);
 
-  const adjustPositions = e => {
+  const makePositionsSticky = e => {
     timeRef.current.style.left = `${e.target.scrollLeft}px`;
     daysHeaderRef.current.style.top = `${e.target.scrollTop}px`;
 
@@ -24,21 +32,30 @@ const CalendarDaysView = ({ view, selectedDate, firstDay }) => {
   };
 
   useEffect(() => {
-    wrapperEl.current.addEventListener("scroll", adjustPositions);
+    wrapperEl.current.addEventListener("scroll", makePositionsSticky);
     return () => {
-      wrapperEl.current.removeEventListener("scroll", adjustPositions);
+      wrapperEl.current.removeEventListener("scroll", makePositionsSticky);
     };
   });
+
+  const stepHeight = getStepHeight(stepMinutes);
+  const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
       <CalendarCorner ref={cornerRef} />
-      <CalendarTimeColumn ref={timeRef} />
+      <CalendarTimeColumn
+        blockHeight={totalStepsPerBlock * stepHeight}
+        ref={timeRef}
+      />
       <CalendarDayColumns
         selectedDate={selectedDate}
         firstDay={firstDay}
         ref={daysHeaderRef}
         view={view}
+        events={events}
+        totalStepsPerBlock={totalStepsPerBlock}
+        stepHeight={stepHeight}
       />
     </div>
   );
@@ -51,7 +68,8 @@ CalendarDaysView.defaultProps = {
 CalendarDaysView.propTypes = {
   view: CALENDAR_VIEW_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired
+  firstDay: FIRST_DAY_TYPE.isRequired,
+  stepMinutes: PropTypes.number.isRequired
 };
 
 export default CalendarDaysView;

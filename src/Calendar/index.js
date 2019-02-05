@@ -23,7 +23,8 @@ const Calendar = ({
   firstDay,
   onSelectEvent,
   onSelecting,
-  onSelectSlot
+  onSelectSlot,
+  stepMinutes
 }) => {
   const getView = () => {
     const { month, week, day } = CALENDAR_VIEWS;
@@ -54,9 +55,14 @@ const Calendar = ({
         onSelecting={onSelecting}
         onSelectSlot={onSelectSlot}
         firstDay={firstDay}
+        stepMinutes={stepMinutes}
       />
     </Fragment>
   );
+};
+
+Calendar.defaultProps = {
+  steps: 60
 };
 
 Calendar.propTypes = {
@@ -68,7 +74,8 @@ Calendar.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelecting: PropTypes.func.isRequired,
-  onSelectSlot: PropTypes.func.isRequired
+  onSelectSlot: PropTypes.func.isRequired,
+  stepMinutes: PropTypes.number
 };
 
 export default Calendar;

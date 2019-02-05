@@ -5,7 +5,14 @@ import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import CalendarEvent from "../../../CalendarEvent";
 
-const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
+const CalendarDay = ({
+  events,
+  date,
+  totalStepsPerBlock,
+  stepMinutes,
+  onSelectEvent,
+  onSelectSlot
+}) => {
   // We need to remove the height added by borders to get everything to line
   // up correctly
   const extraBorderHeight =
@@ -26,6 +33,15 @@ const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
           style={{
             height: stepHeightNoBorder
           }}
+          role="button"
+          onClick={() => {
+            onSelectSlot(
+              date
+                .clone()
+                .startOf("day")
+                .add(stepMinutes * i, "minutes")
+            );
+          }}
         >
           {i}
         </div>
@@ -41,6 +57,7 @@ const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
           key={event.id}
           event={event}
           style={{ top: `${event.top}px`, height: `${event.height}px` }}
+          onSelectEvent={onSelectEvent}
         />
       );
     });
@@ -64,7 +81,9 @@ CalendarDay.propTypes = {
   totalStepsPerBlock: PropTypes.number.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
   date: MOMENT_TYPE.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE
+  stepMinutes: STEP_MINUTES_TYPE,
+  onSelectEvent: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func.isRequired
 };
 
 export default CalendarDay;

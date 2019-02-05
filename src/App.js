@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import moment from "moment";
 import Calendar from "./Calendar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
-import { eventsMocked } from "./Calendar/utils";
+import { eventsMocked, getEventsByDateAndDetail } from "./Calendar/utils";
+
+const stepMinutes = 30;
+const events = getEventsByDateAndDetail({
+  events: eventsMocked,
+  stepMinutes
+});
 
 const App = () => {
   const { week } = CALENDAR_VIEWS;
@@ -11,7 +17,7 @@ const App = () => {
 
   return (
     <Calendar
-      events={eventsMocked}
+      events={events}
       view={view}
       onViewChange={setView}
       selectedDate={selectedDate}
@@ -27,7 +33,7 @@ const App = () => {
       onSelectSlot={start =>
         console.log(`Selected a slot for creating event at ${start}`)
       }
-      stepMinutes={30}
+      stepMinutes={stepMinutes}
     />
   );
 };

@@ -6,12 +6,10 @@ import {
 } from "./components/CalendarViews";
 import CalendarToolbar from "./components/CalendarToolbar";
 import { CALENDAR_VIEWS } from "./constants";
-import { getEventsByDateAndDetail } from "./utils";
 import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
-  EVENT_TYPE,
   STEP_MINUTES_TYPE
 } from "./types";
 
@@ -50,7 +48,7 @@ const Calendar = ({
       />
       <View
         view={view}
-        events={getEventsByDateAndDetail({ events, stepMinutes })}
+        events={events}
         selectedDate={selectedDate}
         onSelectEvent={onSelectEvent}
         onSelecting={onSelecting}
@@ -67,7 +65,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.object.isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,

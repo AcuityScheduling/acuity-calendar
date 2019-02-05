@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
@@ -17,7 +18,9 @@ const CalendarDaysView = ({
   selectedDate,
   firstDay,
   events,
-  stepMinutes
+  stepMinutes,
+  onSelectEvent,
+  onSelectSlot
 }) => {
   const wrapperEl = useRef(null);
   const timeColumnRef = useRef(null);
@@ -50,6 +53,8 @@ const CalendarDaysView = ({
         events={events}
         totalStepsPerBlock={totalStepsPerBlock}
         stepMinutes={stepMinutes}
+        onSelectEvent={onSelectEvent}
+        onSelectSlot={onSelectSlot}
       />
     </div>
   );
@@ -63,7 +68,9 @@ CalendarDaysView.propTypes = {
   view: CALENDAR_VIEW_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func.isRequired
 };
 
 export default CalendarDaysView;

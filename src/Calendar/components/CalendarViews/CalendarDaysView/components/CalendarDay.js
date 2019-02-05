@@ -43,6 +43,7 @@ const CalendarDay = ({
         minWidth: `${100 / 7}%`,
         height: `${totalHeight}px`
       }}
+      onSelectSlot={onSelectSlot}
     >
       {renderEvents()}
     </div>

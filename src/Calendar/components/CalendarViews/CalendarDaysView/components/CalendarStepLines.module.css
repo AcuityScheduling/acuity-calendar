@@ -6,3 +6,10 @@
   pointer-events: none;
   margin-top: -1px;
 }
+
+.wrapper {
+  position: absolute;
+  top: 70px;
+  left: 100px;
+  width: 100%;
+}

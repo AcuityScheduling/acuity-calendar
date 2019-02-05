@@ -2,11 +2,7 @@ import React from "react";
 import styles from "./CalendarStepLines.module.css";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 
-const CalendarStepLines = ({
-  totalStepsPerBlock,
-  stepMinutes,
-  onSelectSlot
-}) => {
+const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
@@ -21,23 +17,11 @@ const CalendarStepLines = ({
           height: stepHeightWithBorder
         }}
         role="button"
-        onClick={onSelectSlot}
       />
     );
   }
 
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: "70px",
-        left: "100px",
-        width: "100%"
-      }}
-    >
-      {times}
-    </div>
-  );
+  return <div className={styles.wrapper}>{times}</div>;
 };
 
 export default CalendarStepLines;

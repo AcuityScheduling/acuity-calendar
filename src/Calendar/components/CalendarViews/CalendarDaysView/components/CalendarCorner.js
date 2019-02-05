@@ -4,7 +4,7 @@ import styles from "./CalendarCorner.module.css";
 const CalendarCorner = React.forwardRef((props, ref) => {
   return (
     <div className={styles.wrapper} ref={ref}>
-      <h2>C</h2>
+      <h2>Calender Timer</h2>
     </div>
   );
 });

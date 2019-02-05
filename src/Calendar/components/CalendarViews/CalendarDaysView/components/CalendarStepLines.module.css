@@ -1,0 +1,8 @@
+.time_block:after {
+  width: 100%;
+  content: "";
+  border-bottom: 1px solid black;
+  position: absolute;
+  pointer-events: none;
+  margin-top: -1px;
+}

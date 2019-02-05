@@ -6,7 +6,7 @@
   left: 100px;
   margin-left: -100px;
   /* Height of header */
-  margin-top: 28px;
+  margin-top: 70px;
 }
 
 .header {
@@ -17,6 +17,7 @@
   z-index: 2;
   left: 100px;
   text-align: center;
+  height: 70px;
 }
 
 .header h2 {

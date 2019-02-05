@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./CalendarDay.module.css";
-import CalendarTimeBlocks from "./CalendarTimeBlocks";
 import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 import CalendarEvent from "../../../CalendarEvent";
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 
 const CalendarDay = ({
   events,
@@ -26,21 +26,25 @@ const CalendarDay = ({
     });
   };
 
+  const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
+
+  const totalHeight = useMemo(
+    () =>
+      STEP_HEIGHTS[stepMinutes] * totalStepsPerBlock * 24 +
+      (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25),
+    [stepMinutes]
+  );
+
   return (
     <div
       className={styles.column}
       key={`weekView${date.day()}`}
       style={{
-        minWidth: `${100 / 7}%`
+        minWidth: `${100 / 7}%`,
+        height: `${totalHeight}px`
       }}
     >
       {renderEvents()}
-      <CalendarTimeBlocks
-        totalStepsPerBlock={totalStepsPerBlock}
-        stepMinutes={stepMinutes}
-        date={date}
-        onSelectSlot={onSelectSlot}
-      />
     </div>
   );
 };

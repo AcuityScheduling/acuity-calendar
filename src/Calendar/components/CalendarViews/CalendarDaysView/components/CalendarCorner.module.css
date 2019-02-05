@@ -3,9 +3,10 @@
   width: 100px;
   z-index: 3;
   background: white;
-  height: 28px;
+  height: 70px;
 }
 
 .wrapper h2 {
     margin: 0;
+    background: white;
 }

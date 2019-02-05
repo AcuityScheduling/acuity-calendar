@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
+import CalendarStepLines from "./components/CalendarStepLines";
 import { STEP_HEIGHTS } from "./constants";
 import { getOnScroll } from "./utils";
 import styles from "./index.module.css";
@@ -41,9 +42,15 @@ const CalendarDaysView = ({
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
       <CalendarCorner ref={cornerRef} />
+      <div className={styles.current_time_indicator} />
       <CalendarTimeColumn
         blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
         ref={timeColumnRef}
+      />
+      <CalendarStepLines
+        totalStepsPerBlock={totalStepsPerBlock}
+        stepMinutes={stepMinutes}
+        onSelectSlot={onSelectSlot}
       />
       <CalendarDayColumns
         selectedDate={selectedDate}

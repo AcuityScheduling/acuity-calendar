@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import { getWeekList } from "../utils";
+import { getWeekList, getTodayColumnStyles } from "../utils";
 import styles from "./CalendarDayColumns.module.css";
 import CalendarDay from "./CalendarDay";
 import {
@@ -36,7 +36,8 @@ const CalendarDayColumns = React.forwardRef(
               <h2
                 key={`dayHeader${date.date()}`}
                 style={{
-                  minWidth: `${100 / 7}%`
+                  minWidth: `${100 / 7}%`,
+                  ...getTodayColumnStyles(date)
                 }}
               >
                 {date.format("dddd, MMM D")}

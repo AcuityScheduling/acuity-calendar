@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import moment from "moment";
 import Calendar from "./Calendar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
 import { eventsMocked, getEventsByDateAndDetail } from "./Calendar/utils";
 
-const stepMinutes = 30;
-const events = getEventsByDateAndDetail({
-  events: eventsMocked,
-  stepMinutes
-});
-
 const App = () => {
   const { week } = CALENDAR_VIEWS;
   const [view, setView] = useState(week);
   const [selectedDate, setSelectedDate] = useState(moment());
+
+  const stepMinutes = 30;
+  const events = useMemo(
+    () =>
+      getEventsByDateAndDetail({
+        events: eventsMocked,
+        stepMinutes
+      }),
+    [eventsMocked, stepMinutes]
+  );
 
   return (
     <Calendar

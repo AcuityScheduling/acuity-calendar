@@ -1,13 +1,13 @@
 import getRangeTitle from "./getRangeTitle";
 import getNavigateDate from "./getNavigateDate";
-import getEventsByDate from "./getEventsByDate";
+import getEventsByDateAndDetail from "./getEventsByDateAndDetail";
 import eventsMocked from "./eventsMocked";
 import cellWidth from "./cellWidth";
 
 export {
   getRangeTitle,
   getNavigateDate,
-  getEventsByDate,
+  getEventsByDateAndDetail,
   eventsMocked,
   cellWidth
 };

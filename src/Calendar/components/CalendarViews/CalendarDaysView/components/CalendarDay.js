@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./CalendarDay.module.css";
 import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
-import { STEP_HEIGHTS } from "../constants";
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import CalendarEvent from "../../../CalendarEvent";
 
-const borderWidth = 1;
 const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
   // We need to remove the height added by borders to get everything to line
   // up correctly
   const extraBorderHeight =
-    (totalStepsPerBlock * borderWidth - borderWidth) / totalStepsPerBlock;
+    (totalStepsPerBlock * STEP_BORDER_WIDTH - STEP_BORDER_WIDTH) /
+    totalStepsPerBlock;
 
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const stepHeightNoBorder = `${stepHeight - extraBorderHeight}px`;
@@ -36,9 +36,9 @@ const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
 
   const renderEvents = () => {
     return events.map(event => {
-      console.log('event.height: ', event.height);
       return (
         <CalendarEvent
+          key={event.id}
           event={event}
           style={{ top: `${event.top}px`, height: `${event.height}px` }}
         />

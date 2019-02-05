@@ -1,6 +1,9 @@
 import get from "lodash/get";
 import { getMinutesSinceMidnight } from "../components/CalendarViews/CalendarDaysView/utils";
-import { STEP_HEIGHTS } from "../components/CalendarViews/CalendarDaysView/constants";
+import {
+  STEP_HEIGHTS,
+  STEP_BORDER_WIDTH
+} from "../components/CalendarViews/CalendarDaysView/constants";
 
 export const getEventDetails = ({ event, stepMinutes }) => {
   const detailedEvent = Object.assign({}, event);
@@ -12,7 +15,10 @@ export const getEventDetails = ({ event, stepMinutes }) => {
   const duration = event.end.clone().diff(event.start, "minutes");
 
   detailedEvent.height = duration * pixelsPerMinute;
-  detailedEvent.top = minutesSinceMidnight * pixelsPerMinute;
+  detailedEvent.top =
+    minutesSinceMidnight * pixelsPerMinute +
+    event.start.hour() * STEP_BORDER_WIDTH;
+
   return detailedEvent;
 };
 

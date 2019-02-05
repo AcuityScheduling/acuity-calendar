@@ -12,15 +12,7 @@ import {
 
 const CalendarDayColumns = React.forwardRef(
   (
-    {
-      selectedDate,
-      firstDay,
-      view,
-      events,
-      totalStepsPerBlock,
-      stepMinutes,
-      stepHeight
-    },
+    { selectedDate, firstDay, view, events, totalStepsPerBlock, stepMinutes },
     ref
   ) => {
     let dateList = [selectedDate];
@@ -53,7 +45,6 @@ const CalendarDayColumns = React.forwardRef(
                 key={`timeBlocks${date.date()}`}
                 totalStepsPerBlock={totalStepsPerBlock}
                 stepMinutes={stepMinutes}
-                stepHeight={stepHeight}
               />
             );
           })}
@@ -74,7 +65,6 @@ CalendarDayColumns.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   totalStepsPerBlock: PropTypes.number.isRequired,
-  stepHeight: PropTypes.number.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired
 };
 

@@ -10,3 +10,4 @@ export const EVENT_TYPE = PropTypes.shape({
   end: MOMENT_TYPE.isRequired,
   title: PropTypes.string
 });
+export const STEP_MINUTES_TYPE = PropTypes.oneOf([5, 10, 15, 20, 30, 60]);

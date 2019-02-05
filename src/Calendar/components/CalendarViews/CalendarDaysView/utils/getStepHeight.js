@@ -3,7 +3,7 @@
  * this was really trial and error. Making this bigger or smaller
  * will make every other size for the stepMinutes bigger and smaller
  */
-const timeBlockBaseHeight = 50;
+const timeBlockBaseHeight = 51;
 
 const getStepHeight = stepMinutes => {
   const totalSteps = 60 / stepMinutes;

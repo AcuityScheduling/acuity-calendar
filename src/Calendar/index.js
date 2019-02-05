@@ -11,7 +11,8 @@ import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
-  EVENT_TYPE
+  EVENT_TYPE,
+  STEP_MINUTES_TYPE
 } from "./types";
 
 const Calendar = ({
@@ -75,7 +76,7 @@ Calendar.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
   onSelecting: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
-  stepMinutes: PropTypes.number
+  stepMinutes: STEP_MINUTES_TYPE
 };
 
 export default Calendar;

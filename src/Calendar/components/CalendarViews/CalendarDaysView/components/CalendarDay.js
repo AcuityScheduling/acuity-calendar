@@ -2,10 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import styles from "./CalendarDay.module.css";
-import { EVENT_TYPE, MOMENT_TYPE } from "../../../../types";
+import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 // import { getMinutesSinceMidnight } from "../utils";
 
-const CalendarDay = ({ events, date, totalStepsPerBlock, stepHeight }) => {
+const CalendarDay = ({
+  events,
+  date,
+  totalStepsPerBlock,
+  stepHeight,
+  stepMinutes
+}) => {
   const borderWidth = 1;
   // We need to remove the height added by borders to get everything to line
   // up correctly
@@ -58,7 +64,8 @@ CalendarDay.propTypes = {
   totalStepsPerBlock: PropTypes.number.isRequired,
   stepHeight: PropTypes.number.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
-  date: MOMENT_TYPE.isRequired
+  date: MOMENT_TYPE.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE
 };
 
 export default CalendarDay;

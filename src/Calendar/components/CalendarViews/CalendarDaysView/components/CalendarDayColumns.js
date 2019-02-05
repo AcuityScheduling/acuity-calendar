@@ -4,11 +4,23 @@ import get from "lodash/get";
 import { getWeekList } from "../utils";
 import styles from "./CalendarDayColumns.module.css";
 import CalendarDay from "./CalendarDay";
-import { MOMENT_TYPE, FIRST_DAY_TYPE } from "../../../../types";
+import {
+  MOMENT_TYPE,
+  FIRST_DAY_TYPE,
+  STEP_MINUTES_TYPE
+} from "../../../../types";
 
 const CalendarDayColumns = React.forwardRef(
   (
-    { selectedDate, firstDay, view, events, totalStepsPerBlock, stepHeight },
+    {
+      selectedDate,
+      firstDay,
+      view,
+      events,
+      totalStepsPerBlock,
+      stepMinutes,
+      stepHeight
+    },
     ref
   ) => {
     let dateList = [selectedDate];
@@ -40,6 +52,7 @@ const CalendarDayColumns = React.forwardRef(
                 date={date}
                 key={`timeBlocks${date.date()}`}
                 totalStepsPerBlock={totalStepsPerBlock}
+                stepMinutes={stepMinutes}
                 stepHeight={stepHeight}
               />
             );
@@ -61,7 +74,8 @@ CalendarDayColumns.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   totalStepsPerBlock: PropTypes.number.isRequired,
-  stepHeight: PropTypes.number.isRequired
+  stepHeight: PropTypes.number.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired
 };
 
 export default CalendarDayColumns;

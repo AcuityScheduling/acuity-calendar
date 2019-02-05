@@ -23,18 +23,38 @@ const CalendarDaysView = ({
   const daysHeaderRef = useRef(null);
   const cornerRef = useRef(null);
 
-  const makePositionsSticky = e => {
-    timeRef.current.style.left = `${e.target.scrollLeft}px`;
-    daysHeaderRef.current.style.top = `${e.target.scrollTop}px`;
+  let latestKnownScrollY = 0;
+  let latestKnownScrollX = 0;
+  let ticking = false;
 
-    cornerRef.current.style.left = `${e.target.scrollLeft}px`;
-    cornerRef.current.style.top = `${e.target.scrollTop}px`;
+  const update = () => {
+    // reset the tick so we can
+    // capture the next onScroll
+    ticking = false;
+
+    daysHeaderRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
+    timeRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+    cornerRef.current.style.left = `${latestKnownScrollX}px`;
+    cornerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
+  };
+
+  const onScroll = e => {
+    latestKnownScrollY = e.target.scrollTop;
+    latestKnownScrollX = e.target.scrollLeft;
+    requestTick();
+  };
+
+  const requestTick = () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+    }
+    ticking = true;
   };
 
   useEffect(() => {
-    wrapperEl.current.addEventListener("scroll", makePositionsSticky);
+    wrapperEl.current.addEventListener("scroll", onScroll, false);
     return () => {
-      wrapperEl.current.removeEventListener("scroll", makePositionsSticky);
+      wrapperEl.current.removeEventListener("scroll", onScroll, false);
     };
   });
 

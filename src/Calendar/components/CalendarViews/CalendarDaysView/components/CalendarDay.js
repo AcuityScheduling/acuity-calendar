@@ -19,6 +19,7 @@ const CalendarDay = ({ events, date, totalStepsPerBlock, stepMinutes }) => {
         .clone()
         .startOf("day")
         .add(stepMinutes * i, "minutes");
+
       times.push(
         <div
           className={styles.time_block}

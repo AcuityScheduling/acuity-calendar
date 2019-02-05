@@ -1,7 +1,8 @@
 import moment from "moment";
 
 const styles = {
-  background: "grey"
+  background: "grey",
+  borderRight: 0
 };
 
 const getTodayColumnStyles = date => {

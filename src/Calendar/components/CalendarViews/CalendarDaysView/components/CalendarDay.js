@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
 import styles from "./CalendarDay.module.css";
 import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 // import { getMinutesSinceMidnight } from "../utils";
@@ -21,6 +20,10 @@ const CalendarDay = ({
   const renderTimeBlocks = () => {
     const times = [];
     for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
+      const timeBlockTime = date
+        .clone()
+        .startOf("day")
+        .add(stepMinutes * i, "minutes");
       times.push(
         <div
           className={styles.time_block}
@@ -29,9 +32,7 @@ const CalendarDay = ({
             height: `${stepHeight - extraBorderHeight}px`
           }}
         >
-          {moment()
-            .hour(i)
-            .format("ha")}
+          {timeBlockTime.format("h:mma")}
         </div>
       );
     }

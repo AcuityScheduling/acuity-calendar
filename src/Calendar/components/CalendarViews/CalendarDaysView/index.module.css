@@ -6,20 +6,3 @@
   position: relative;
 }
 
-.current_time_indicator_wrapper {
-  width: 100%;
-  position: absolute;
-  z-index: 3;
-  left: 100px;
-}
-
-.current_time_indicator {
-  height: 1px;
-  background: blue;
-}
-
-.current_time_indicator_time {
-  position: absolute;
-  top: -10px;
-  left: -50px;
-}

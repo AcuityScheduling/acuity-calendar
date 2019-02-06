@@ -1,0 +1,17 @@
+.wrapper {
+  width: 100%;
+  position: absolute;
+  z-index: 3;
+  left: 100px;
+}
+
+.line {
+  height: 1px;
+  background: blue;
+}
+
+.time {
+  position: absolute;
+  top: -10px;
+  left: -50px;
+}

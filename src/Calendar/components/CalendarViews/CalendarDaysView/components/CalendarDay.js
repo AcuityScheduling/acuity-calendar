@@ -11,7 +11,8 @@ const CalendarDay = ({
   totalStepsPerBlock,
   stepMinutes,
   onSelectEvent,
-  onSelectSlot
+  onSelectSlot,
+  selectMinutes
 }) => {
   const renderEvents = () => {
     return events.map(event => {
@@ -55,7 +56,10 @@ const CalendarDay = ({
           .startOf("day")
           .add(minutesFromMidnight, "minutes");
 
-        const rounded = Math.round(selectedTime.clone().minute() / 15) * 15;
+        const rounded =
+          Math.round(selectedTime.clone().minute() / selectMinutes) *
+          selectMinutes;
+
         const newTime = selectedTime
           .clone()
           .minute(rounded)
@@ -75,7 +79,8 @@ CalendarDay.propTypes = {
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,
-  onSelectSlot: PropTypes.func.isRequired
+  onSelectSlot: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE
 };
 
 export default CalendarDay;

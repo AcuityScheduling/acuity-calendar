@@ -42,12 +42,10 @@ const CalendarDaysView = ({
     };
   });
 
-  const setTimeoutCurrentTime = () => setCurrentTime(moment());
-
   useEffect(() => {
-    setTimeout(setTimeoutCurrentTime, 1000 * 60);
+    const timeout = setTimeout(() => setCurrentTime(moment()), 1000 * 60);
     return () => {
-      clearTimeout(setTimeoutCurrentTime);
+      clearTimeout(timeout);
     };
   });
 

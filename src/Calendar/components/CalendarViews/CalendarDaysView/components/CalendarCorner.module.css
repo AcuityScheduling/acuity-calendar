@@ -1,7 +1,7 @@
 .wrapper {
   position: absolute;
   width: 100px;
-  z-index: 3;
+  z-index: 5;
   background: white;
   height: 70px;
   border-right: 1px solid black;

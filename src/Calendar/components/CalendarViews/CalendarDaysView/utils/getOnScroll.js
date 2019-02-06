@@ -9,13 +9,22 @@ let latestKnownScrollY = 0;
 let latestKnownScrollX = 0;
 let ticking = false;
 
-const update = ({ daysHeaderRef, timeColumnRef, cornerRef }) => () => {
+const update = ({
+  daysHeaderRef,
+  timeColumnRef,
+  cornerRef,
+  timeIndicatorRef
+}) => () => {
   // reset the tick so we can
   // capture the next onScroll
   ticking = false;
 
   daysHeaderRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
   timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+
+  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX +
+    100}px)`;
+  timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
 
   // For some reason translateX doesn't work here. I'm not sure why but whatever
   cornerRef.current.style.left = `${latestKnownScrollX}px`;

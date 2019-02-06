@@ -26,26 +26,35 @@ const CalendarDaysView = ({
   onSelectSlot,
   selectMinutes
 }) => {
-  const wrapperEl = useRef(null);
+  const wrapperRef = useRef(null);
   const timeColumnRef = useRef(null);
   const daysHeaderRef = useRef(null);
   const cornerRef = useRef(null);
+  const timeIndicatorRef = useRef(null);
 
-  const onScroll = getOnScroll({ daysHeaderRef, timeColumnRef, cornerRef });
+  const onScroll = getOnScroll({
+    daysHeaderRef,
+    timeColumnRef,
+    cornerRef,
+    timeIndicatorRef
+  });
 
   useEffect(() => {
-    wrapperEl.current.addEventListener("scroll", onScroll, false);
+    wrapperRef.current.addEventListener("scroll", onScroll, false);
     return () => {
-      wrapperEl.current.removeEventListener("scroll", onScroll, false);
+      wrapperRef.current.removeEventListener("scroll", onScroll, false);
     };
   });
 
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
-    <div className={styles.wrapper} ref={wrapperEl}>
+    <div className={styles.wrapper} ref={wrapperRef}>
       <CalendarCorner ref={cornerRef} />
-      <CalendarCurrentTimeIndicator stepMinutes={stepMinutes} />
+      <CalendarCurrentTimeIndicator
+        ref={timeIndicatorRef}
+        stepMinutes={stepMinutes}
+      />
       <CalendarTimeColumn
         blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
         ref={timeColumnRef}

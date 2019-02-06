@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
@@ -14,6 +15,7 @@ import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE
 } from "../../../types";
+import { getTopOffset } from "../../../utils";
 
 const CalendarDaysView = ({
   view,
@@ -25,6 +27,7 @@ const CalendarDaysView = ({
   onSelectSlot,
   selectMinutes
 }) => {
+  const [currentTime, setCurrentTime] = useState(moment());
   const wrapperEl = useRef(null);
   const timeColumnRef = useRef(null);
   const daysHeaderRef = useRef(null);
@@ -39,12 +42,31 @@ const CalendarDaysView = ({
     };
   });
 
+  const setTimeoutCurrentTime = () => setCurrentTime(moment());
+
+  useEffect(() => {
+    setTimeout(setTimeoutCurrentTime, 1000 * 60);
+    return () => {
+      clearTimeout(setTimeoutCurrentTime);
+    };
+  });
+
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
     <div className={styles.wrapper} ref={wrapperEl}>
       <CalendarCorner ref={cornerRef} />
-      <div className={styles.current_time_indicator} />
+      <div
+        className={styles.current_time_indicator_wrapper}
+        style={{
+          top: `${getTopOffset({ stepMinutes, date: currentTime }) + 70}px`
+        }}
+      >
+        <span className={styles.current_time_indicator_time}>
+          {moment().format("h:mma")}
+        </span>
+        <div className={styles.current_time_indicator} />
+      </div>
       <CalendarTimeColumn
         blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
         ref={timeColumnRef}

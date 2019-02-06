@@ -13,7 +13,8 @@ const CalendarDay = ({
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
-  selectMinutes
+  selectMinutes,
+  renderCurrentTimeIndicator
 }) => {
   const renderEvents = () => {
     return events.map(event => {
@@ -37,6 +38,27 @@ const CalendarDay = ({
     [stepMinutes]
   );
 
+  const getClickedTime = e => {
+    const rect = e.target.getBoundingClientRect();
+    const verticalClick = e.clientY - rect.top;
+
+    const stepHeight = STEP_HEIGHTS[stepMinutes];
+    const pixelsPerMinute = stepHeight / stepMinutes;
+    const minutesFromMidnight = verticalClick / pixelsPerMinute;
+    const selectedTime = date
+      .clone()
+      .startOf("day")
+      .add(minutesFromMidnight, "minutes");
+
+    const rounded =
+      Math.round(selectedTime.clone().minute() / selectMinutes) * selectMinutes;
+
+    return selectedTime
+      .clone()
+      .minute(rounded)
+      .second(0);
+  };
+
   return (
     <div
       className={styles.column}
@@ -47,32 +69,17 @@ const CalendarDay = ({
         ...getTodayColumnStyles(date)
       }}
       onClick={e => {
-        const rect = e.target.getBoundingClientRect();
-        const verticalClick = e.clientY - rect.top;
-
-        const stepHeight = STEP_HEIGHTS[stepMinutes];
-        const pixelsPerMinute = stepHeight / stepMinutes;
-        const minutesFromMidnight = verticalClick / pixelsPerMinute;
-        const selectedTime = date
-          .clone()
-          .startOf("day")
-          .add(minutesFromMidnight, "minutes");
-
-        const rounded =
-          Math.round(selectedTime.clone().minute() / selectMinutes) *
-          selectMinutes;
-
-        const newTime = selectedTime
-          .clone()
-          .minute(rounded)
-          .second(0);
-
-        onSelectSlot(newTime);
+        onSelectSlot(getClickedTime(e));
       }}
     >
+      {renderCurrentTimeIndicator}
       {renderEvents()}
     </div>
   );
+};
+
+CalendarDay.defaultProps = {
+  renderCurrentTimeIndicator: null
 };
 
 CalendarDay.propTypes = {
@@ -82,7 +89,8 @@ CalendarDay.propTypes = {
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE
+  selectMinutes: STEP_MINUTES_TYPE,
+  renderCurrentTimeIndicator: PropTypes.node
 };
 
 export default CalendarDay;

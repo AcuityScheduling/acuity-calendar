@@ -2,12 +2,20 @@
   width: 100%;
   position: absolute;
   z-index: 3;
+}
+
+.full {
   transform: translateX(100px);
 }
 
 .line {
   height: 1px;
   background: blue;
+}
+
+.line_today {
+  height: 1px;
+  background: green;
 }
 
 .time {

@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
@@ -7,7 +8,7 @@ import CalendarDay from "./components/CalendarDay";
 import CalendarStepLines from "./components/CalendarStepLines";
 import CalendarCurrentTimeIndicator from "./components/CalendarCurrentTimeIndicator";
 import { STEP_HEIGHTS } from "./constants";
-import { getOnScroll } from "./utils";
+import { useCalendarSticky, useCurrentTime } from "./utils";
 import styles from "./index.module.css";
 import {
   CALENDAR_VIEW_TYPE,
@@ -26,25 +27,14 @@ const CalendarDaysView = ({
   onSelectSlot,
   selectMinutes
 }) => {
-  const wrapperRef = useRef(null);
-  const timeColumnRef = useRef(null);
-  const daysHeaderRef = useRef(null);
-  const cornerRef = useRef(null);
-  const timeIndicatorRef = useRef(null);
-
-  const onScroll = getOnScroll({
-    daysHeaderRef,
+  const {
+    wrapperRef,
     timeColumnRef,
+    daysHeaderRef,
     cornerRef,
     timeIndicatorRef
-  });
-
-  useEffect(() => {
-    wrapperRef.current.addEventListener("scroll", onScroll, false);
-    return () => {
-      wrapperRef.current.removeEventListener("scroll", onScroll, false);
-    };
-  });
+  } = useCalendarSticky();
+  const currentTime = useCurrentTime();
 
   const totalStepsPerBlock = 60 / stepMinutes;
 
@@ -54,6 +44,7 @@ const CalendarDaysView = ({
       <CalendarCurrentTimeIndicator
         ref={timeIndicatorRef}
         stepMinutes={stepMinutes}
+        currentTime={currentTime}
       />
       <CalendarTimeColumn
         blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
@@ -79,6 +70,16 @@ const CalendarDaysView = ({
             selectMinutes={selectMinutes}
             onSelectEvent={onSelectEvent}
             onSelectSlot={onSelectSlot}
+            currentTime={currentTime}
+            renderCurrentTimeIndicator={
+              date.isSame(moment(), "day") && (
+                <CalendarCurrentTimeIndicator
+                  stepMinutes={stepMinutes}
+                  currentTime={currentTime}
+                  isToday
+                />
+              )
+            }
           />
         )}
       />

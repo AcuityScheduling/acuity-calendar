@@ -4,6 +4,7 @@ import styles from "./CalendarDay.module.css";
 import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 import CalendarEvent from "../../../CalendarEvent";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
+import { getTodayColumnStyles } from "../utils";
 
 const CalendarDay = ({
   events,
@@ -42,7 +43,8 @@ const CalendarDay = ({
       key={`weekView${date.day()}`}
       style={{
         minWidth: `${100 / 7}%`,
-        height: `${totalHeight}px`
+        height: `${totalHeight}px`,
+        ...getTodayColumnStyles(date)
       }}
       onClick={e => {
         const rect = e.target.getBoundingClientRect();

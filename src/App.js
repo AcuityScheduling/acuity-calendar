@@ -34,10 +34,11 @@ const App = () => {
         console.log(`Selecting ${start} - ${end}`)
       }
       // A callback fired when a date selection is made
-      onSelectSlot={start =>
-        console.log(`Selected a slot for creating event at ${start}`)
-      }
+      onSelectSlot={start => console.log(start.toDate())}
       stepMinutes={stepMinutes}
+      // What range of minutes is selectable - for new events
+      // and for drag and drop
+      selectMinutes={15}
     />
   );
 };

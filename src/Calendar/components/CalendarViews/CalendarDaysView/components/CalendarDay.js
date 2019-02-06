@@ -43,7 +43,26 @@ const CalendarDay = ({
         minWidth: `${100 / 7}%`,
         height: `${totalHeight}px`
       }}
-      onSelectSlot={onSelectSlot}
+      onClick={e => {
+        const rect = e.target.getBoundingClientRect();
+        const verticalClick = e.clientY - rect.top;
+
+        const stepHeight = STEP_HEIGHTS[stepMinutes];
+        const pixelsPerMinute = stepHeight / stepMinutes;
+        const minutesFromMidnight = verticalClick / pixelsPerMinute;
+        const selectedTime = date
+          .clone()
+          .startOf("day")
+          .add(minutesFromMidnight, "minutes");
+
+        const rounded = Math.round(selectedTime.clone().minute() / 15) * 15;
+        const newTime = selectedTime
+          .clone()
+          .minute(rounded)
+          .second(0);
+
+        onSelectSlot(newTime);
+      }}
     >
       {renderEvents()}
     </div>

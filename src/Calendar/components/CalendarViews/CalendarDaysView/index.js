@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CalendarTimeColumn from "./components/CalendarTimeColumn";
 import CalendarDayColumns from "./components/CalendarDayColumns";
 import CalendarCorner from "./components/CalendarCorner";
+import CalendarDay from "./components/CalendarDay";
 import CalendarStepLines from "./components/CalendarStepLines";
 import { STEP_HEIGHTS } from "./constants";
 import { getOnScroll } from "./utils";
@@ -21,7 +22,8 @@ const CalendarDaysView = ({
   events,
   stepMinutes,
   onSelectEvent,
-  onSelectSlot
+  onSelectSlot,
+  selectMinutes
 }) => {
   const wrapperEl = useRef(null);
   const timeColumnRef = useRef(null);
@@ -50,7 +52,6 @@ const CalendarDaysView = ({
       <CalendarStepLines
         totalStepsPerBlock={totalStepsPerBlock}
         stepMinutes={stepMinutes}
-        onSelectSlot={onSelectSlot}
       />
       <CalendarDayColumns
         selectedDate={selectedDate}
@@ -58,10 +59,18 @@ const CalendarDaysView = ({
         ref={daysHeaderRef}
         view={view}
         events={events}
-        totalStepsPerBlock={totalStepsPerBlock}
-        stepMinutes={stepMinutes}
-        onSelectEvent={onSelectEvent}
-        onSelectSlot={onSelectSlot}
+        renderCalendarDays={({ date, eventsForDay }) => (
+          <CalendarDay
+            events={eventsForDay}
+            date={date}
+            key={`timeBlocks${date.date()}`}
+            totalStepsPerBlock={totalStepsPerBlock}
+            stepMinutes={stepMinutes}
+            selectMinutes={selectMinutes}
+            onSelectEvent={onSelectEvent}
+            onSelectSlot={onSelectSlot}
+          />
+        )}
       />
     </div>
   );
@@ -77,7 +86,8 @@ CalendarDaysView.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
-  onSelectSlot: PropTypes.func.isRequired
+  onSelectSlot: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired
 };
 
 export default CalendarDaysView;

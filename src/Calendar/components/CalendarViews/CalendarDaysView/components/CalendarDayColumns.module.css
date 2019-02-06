@@ -4,7 +4,6 @@
   position: relative;
   /* Width of the time gutter */
   left: 100px;
-  margin-left: -100px;
   /* Height of header */
   margin-top: 70px;
 }
@@ -18,8 +17,10 @@
   left: 100px;
   text-align: center;
   height: 70px;
+  border-bottom: 1px solid black;
 }
 
 .header h2 {
   margin: 0;
+  border-right: 1px solid black;
 }

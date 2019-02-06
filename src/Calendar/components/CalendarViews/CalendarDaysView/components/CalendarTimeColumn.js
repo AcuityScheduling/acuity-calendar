@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import styles from "./CalendarTimeColumn.module.css";
+import { STEP_BORDER_WIDTH } from "../constants";
 
 const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
   const renderTimes = () => {
@@ -11,7 +12,7 @@ const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
           className={styles.hour_label}
           key={`dayTime${i}`}
           style={{
-            height: `${blockHeight}px`
+            height: `${blockHeight + STEP_BORDER_WIDTH}px`
           }}
         >
           {moment()

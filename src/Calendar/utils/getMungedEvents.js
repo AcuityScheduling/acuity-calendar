@@ -1,6 +1,89 @@
 import get from "lodash/get";
+import moment from "moment";
 import getTopOffset from "./getTopOffset";
 import { STEP_HEIGHTS } from "../components/CalendarViews/CalendarDaysView/constants";
+
+/**
+ * Get all the events keyed by date for easy lookup - and add some
+ * details that are needed when displaying - we're doing it all here
+ * so we don't have to do more than one loop
+ *
+ * @param {Object[]} events
+ * @returns {Object}
+ */
+const getMungedEvents = ({ events, stepMinutes }) => {
+  const eventsWithDates = getEventsWithDates(events);
+  const sortedEvents = getSortedEvents(eventsWithDates);
+
+  let currentColumn = 1;
+  return sortedEvents.reduce((eventsKeyed, event, index) => {
+    let newEvent = event;
+    newEvent = addEventLocation({
+      event: newEvent,
+      stepMinutes
+    });
+
+    const eventColumn = getEventColumn({
+      event,
+      lastEvent: index !== 0 ? sortedEvents[index - 1] : null,
+      currentColumn
+    });
+    if (eventColumn !== currentColumn) {
+      currentColumn = eventColumn;
+    }
+
+    return setNestedObject({ eventsKeyed, event: newEvent, eventColumn });
+  }, {});
+};
+
+/**
+ * The events come in with start and end as strings we need them as moment objects
+ *
+ * @param {Object[]} events
+ */
+const getEventsWithDates = events => {
+  return events.map(event => {
+    return Object.assign(event, {
+      start: moment(new Date(event.start)),
+      end: moment(new Date(event.end))
+    });
+  });
+};
+
+/**
+ * The events must be sorted by start time for the rest of the logic to work
+ *
+ * @param {Object[]} events
+ */
+const getSortedEvents = events => {
+  return events.sort((a, b) => {
+    if (a.start.isAfter(b.start)) return 1;
+    if (a.start.isBefore(b.start)) return -1;
+    return 0;
+  });
+};
+
+/**
+ * Get the offset position (top) of the event for day view
+ * and the height of the event
+ *
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {5|10|15|20|25|30|60} params.stepMinutes
+ */
+const addEventLocation = ({ event, stepMinutes }) => {
+  const stepHeight = STEP_HEIGHTS[stepMinutes];
+  const pixelsPerMinute = stepHeight / stepMinutes;
+
+  const duration = event.end.clone().diff(event.start, "minutes");
+
+  const location = {
+    height: duration * pixelsPerMinute,
+    top: getTopOffset({ stepMinutes, date: event.start })
+  };
+
+  return Object.assign(event, location);
+};
 
 /**
  * Add a column key for each event to say which
@@ -27,69 +110,53 @@ const getEventColumn = ({ event, lastEvent, currentColumn }) => {
 };
 
 /**
- * Get the offset position (top) of the event for day view
- * and the height of the event
+ * This function creates the special function with all the nested objects. It should look like this:
+ *
+ * {
+ *   5(this is the calendar_id):  {
+ *    2019-01-02: {
+ *     column_1: [
+ *       {
+ *         start: moment(),
+ *         end: moment(),
+ *         title: 'My New event'
+ *       },
+ *       {
+ *         start: moment(),
+ *         end: moment(),
+ *         title: 'My New event'
+ *       }
+ *     ]
+ *    }
+ *   }
+ * }
  *
  * @param {Object} params
- * @param {Object} params.event
- * @param {5|10|15|20|25|30|60} params.stepMinutes
+ * @param {Object} params.eventsKeyed - the last set of events in their keyed form
+ * @param {Object} params.event - the new event with location
+ * @param {number} params.eventColumn - the column this event will appear in
  */
-const getEventLocation = ({ event, stepMinutes }) => {
-  const stepHeight = STEP_HEIGHTS[stepMinutes];
-  const pixelsPerMinute = stepHeight / stepMinutes;
+const setNestedObject = ({ eventsKeyed, event, eventColumn }) => {
+  const newEventsKeyed = Object.assign({}, eventsKeyed);
 
-  const duration = event.end.clone().diff(event.start, "minutes");
+  const thisDate = event.start.format("YYYY-MM-DD");
 
-  return {
-    height: duration * pixelsPerMinute,
-    top: getTopOffset({ stepMinutes, date: event.start })
-  };
-};
+  const eventsForColumn = get(
+    eventsKeyed,
+    `${event.calendar_id}.${thisDate}.column_${eventColumn}`,
+    []
+  );
+  eventsForColumn.push(event);
 
-/**
- * Get all the events keyed by date for easy lookup - and add some
- * details that are needed when displaying - we're doing it all here
- * so we don't have to do more than one loop
- *
- * @param {Object[]} events
- * @returns {Object}
- */
-const getMungedEvents = ({ events, stepMinutes }) => {
-  // Sort the events by start time - this is necessary for
-  // a lot of logic later. If the events are not sorted everything
-  // is going to get all funky
-  const sortedEvents = events.sort((a, b) => {
-    if (a.start.isAfter(b.start)) return 1;
-    if (a.start.isBefore(b.start)) return -1;
-    return 0;
-  });
+  const columns = get(eventsKeyed, `${event.calendar_id}.${thisDate}`, {});
+  columns[`column_${eventColumn}`] = eventsForColumn;
 
-  let currentColumn = 1;
-  return sortedEvents.reduce((eventsByDate, event, index) => {
-    const eventLocation = getEventLocation({ event, stepMinutes });
-    const eventColumn = getEventColumn({
-      event,
-      lastEvent: index !== 0 ? events[index - 1] : null,
-      currentColumn
-    });
-    if (eventColumn !== currentColumn) {
-      currentColumn = eventColumn;
-    }
+  const dates = get(eventsKeyed, `${event.calendar_id}`, {});
+  dates[thisDate] = columns;
 
-    const newEvent = Object.assign(event, eventLocation, {
-      column: eventColumn
-    });
+  newEventsKeyed[event.calendar_id] = dates;
 
-    const eventsThisDay = get(
-      eventsByDate,
-      event.start.format("YYYY-MM-DD"),
-      []
-    );
-    eventsThisDay.push(newEvent);
-    eventsByDate[event.start.format("YYYY-MM-DD")] = eventsThisDay;
-
-    return eventsByDate;
-  }, {});
+  return newEventsKeyed;
 };
 
 export default getMungedEvents;

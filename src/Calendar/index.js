@@ -10,8 +10,7 @@ import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
-  STEP_MINUTES_TYPE,
-  EVENT_TYPE
+  STEP_MINUTES_TYPE
 } from "./types";
 import { getMungedEvents } from "./utils";
 
@@ -70,7 +69,13 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      start: PropTypes.string.isRequired,
+      end: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
+    })
+  ).isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,

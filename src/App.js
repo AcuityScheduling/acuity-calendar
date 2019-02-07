@@ -18,6 +18,7 @@ const App = () => {
       }),
     [eventsMocked, stepMinutes]
   );
+  console.log('events: ', events);
 
   return (
     <Calendar

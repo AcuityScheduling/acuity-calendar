@@ -33,7 +33,7 @@ export const event4 = {
 };
 
 const event5 = {
-  id: 3,
+  id: 5,
   start: moment(new Date("2019-02-07 09:15:00")),
   end: moment(new Date("2019-02-07 09:30:00")),
   title: "Feb 7th - 9:15-9:30am",
@@ -41,7 +41,7 @@ const event5 = {
 };
 
 const event6 = {
-  id: 3,
+  id: 6,
   start: moment(new Date("2019-02-07 09:29:00")),
   end: moment(new Date("2019-02-07 09:50:00")),
   title: "Feb 7th - 9:29-9:50am",

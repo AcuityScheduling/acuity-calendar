@@ -10,13 +10,17 @@ import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
-  STEP_MINUTES_TYPE
+  STEP_MINUTES_TYPE,
+  CALENDAR_TYPE
 } from "./types";
-import { getMungedEvents } from "./utils";
+import { getMungedEvents, getEventsWithSelectedCalendars } from "./utils";
 
 const Calendar = ({
   events,
   view,
+  calendars,
+  selectedCalendars,
+  setSelectedCalendars,
   onViewChange,
   selectedDate,
   onNavigate,
@@ -44,6 +48,15 @@ const Calendar = ({
     stepMinutes
   ]);
 
+  const eventsWithSelectedCalendars = useMemo(
+    () =>
+      getEventsWithSelectedCalendars({
+        mungedEvents,
+        selectedCalendars
+      }),
+    [mungedEvents, selectedCalendars]
+  );
+
   return (
     <Fragment>
       <CalendarToolbar
@@ -52,10 +65,13 @@ const Calendar = ({
         selectedDate={selectedDate}
         onNavigate={onNavigate}
         firstDay={firstDay}
+        calendars={calendars}
+        selectedCalendars={selectedCalendars}
+        setSelectedCalendars={setSelectedCalendars}
       />
       <View
         view={view}
-        events={mungedEvents}
+        events={eventsWithSelectedCalendars}
         selectedDate={selectedDate}
         onSelectEvent={onSelectEvent}
         onSelecting={onSelecting}
@@ -76,7 +92,10 @@ Calendar.propTypes = {
       title: PropTypes.string.isRequired
     })
   ).isRequired,
+  calendars: PropTypes.arrayOf(CALENDAR_TYPE),
   view: CALENDAR_VIEW_TYPE.isRequired,
+  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setSelectedCalendars: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   onNavigate: PropTypes.func.isRequired,

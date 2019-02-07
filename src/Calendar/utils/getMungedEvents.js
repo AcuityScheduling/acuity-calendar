@@ -41,9 +41,9 @@ const getMungedEvents = ({ events, stepMinutes }) => {
  *
  * @param {Object[]} events
  */
-const getEventsWithDates = events => {
-  return events.map(event => {
-    return Object.assign(event, {
+const getEventsWithDates = newEvents => {
+  return newEvents.map(event => {
+    return Object.assign({}, event, {
       start: moment(new Date(event.start)),
       end: moment(new Date(event.end))
     });

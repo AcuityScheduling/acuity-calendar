@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import moment from "moment";
 import Calendar from "./Calendar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
-import { eventsMocked } from "./Calendar/utils";
+import { eventsMocked, calendarsMocked } from "./Calendar/utils";
 
 const App = () => {
   const { week } = CALENDAR_VIEWS;
   const [view, setView] = useState(week);
   const [selectedDate, setSelectedDate] = useState(moment());
+  const [selectedCalendars, setSelectedCalendars] = useState([]);
 
   const stepMinutes = 30;
 
@@ -15,6 +16,9 @@ const App = () => {
     <Calendar
       events={eventsMocked}
       view={view}
+      calendars={calendarsMocked}
+      selectedCalendars={selectedCalendars}
+      setSelectedCalendars={setSelectedCalendars}
       onViewChange={setView}
       selectedDate={selectedDate}
       onNavigate={setSelectedDate}

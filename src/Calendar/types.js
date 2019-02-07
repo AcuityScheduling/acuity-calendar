@@ -11,3 +11,7 @@ export const EVENT_TYPE = PropTypes.shape({
   title: PropTypes.string
 });
 export const STEP_MINUTES_TYPE = PropTypes.oneOf([5, 10, 15, 20, 30, 60]);
+export const CALENDAR_TYPE = PropTypes.shape({
+  name: PropTypes.string,
+  id: PropTypes.number
+});

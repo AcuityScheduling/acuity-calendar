@@ -4,7 +4,7 @@ import get from "lodash/get";
 import styles from "./CalendarMonthCell.module.css";
 import CalendarEvent from "../../../CalendarEvent";
 import { MOMENT_TYPE } from "../../../../types";
-import { cellWidth } from "../../../../utils";
+import { cellWidth, getEventsWithoutColumns } from "../../../../utils";
 
 const CalendarMonthCell = ({
   date,
@@ -14,6 +14,7 @@ const CalendarMonthCell = ({
   onSelectSlot
 }) => {
   const eventsForCell = get(events, date.format("YYYY-MM-DD"), []);
+  const eventsWithoutColumns = getEventsWithoutColumns(eventsForCell);
 
   return (
     <div
@@ -23,8 +24,8 @@ const CalendarMonthCell = ({
       onClick={() => onSelectSlot(date)}
     >
       <h2>{date.date()}</h2>
-      {eventsForCell.length > 0 &&
-        eventsForCell.map(
+      {eventsWithoutColumns.length > 0 &&
+        eventsWithoutColumns.map(
           event =>
             isInRange && (
               <CalendarEvent

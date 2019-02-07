@@ -20,7 +20,7 @@ const CalendarDay = ({
     return Object.keys(events).map(columnKey => {
       const thisColumnEvents = events[columnKey];
       return (
-        <div className="COLUMN" key={columnKey}>
+        <div className={styles.event_column} key={columnKey}>
           {thisColumnEvents.map(event => {
             return (
               <CalendarEvent
@@ -80,7 +80,7 @@ const CalendarDay = ({
       }}
     >
       {renderCurrentTimeIndicator}
-      {renderEvents()}
+      <div className={styles.event_wrapper}>{renderEvents()}</div>
     </div>
   );
 };

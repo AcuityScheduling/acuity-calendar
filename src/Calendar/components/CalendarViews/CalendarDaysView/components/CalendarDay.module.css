@@ -3,3 +3,13 @@
   border-right: 1px solid black;
   position: relative;
 }
+
+.event_column {
+  position: relative;
+  width: 100%;
+}
+
+.event_wrapper {
+  position: relative;
+  display: flex;
+}

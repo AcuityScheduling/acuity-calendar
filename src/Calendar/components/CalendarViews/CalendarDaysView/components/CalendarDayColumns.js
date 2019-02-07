@@ -30,7 +30,7 @@ const CalendarDayColumns = React.forwardRef(
         </div>
         <div className={styles.day_wrapper}>
           {dateList.map(date => {
-            const eventsForDay = get(events, date.format("YYYY-MM-DD"), []);
+            const eventsForDay = get(events, date.format("YYYY-MM-DD"), {});
             return renderCalendarDays({ date, eventsForDay });
           })}
         </div>

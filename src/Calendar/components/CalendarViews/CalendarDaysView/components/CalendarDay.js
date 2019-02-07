@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./CalendarDay.module.css";
-import { EVENT_TYPE, MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
+import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 import CalendarEvent from "../../../CalendarEvent";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayColumnStyles } from "../utils";
@@ -17,14 +17,21 @@ const CalendarDay = ({
   renderCurrentTimeIndicator
 }) => {
   const renderEvents = () => {
-    return events.map(event => {
+    return Object.keys(events).map(columnKey => {
+      const thisColumnEvents = events[columnKey];
       return (
-        <CalendarEvent
-          key={event.id}
-          event={event}
-          style={{ top: `${event.top}px`, height: `${event.height}px` }}
-          onSelectEvent={onSelectEvent}
-        />
+        <div className="COLUMN" key={columnKey}>
+          {thisColumnEvents.map(event => {
+            return (
+              <CalendarEvent
+                key={event.id}
+                event={event}
+                style={{ top: `${event.top}px`, height: `${event.height}px` }}
+                onSelectEvent={onSelectEvent}
+              />
+            );
+          })}
+        </div>
       );
     });
   };
@@ -84,7 +91,7 @@ CalendarDay.defaultProps = {
 
 CalendarDay.propTypes = {
   totalStepsPerBlock: PropTypes.number.isRequired,
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.object.isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,

@@ -26,7 +26,7 @@ const getEventColumn = ({ event, lastEvent, currentColumn }) => {
   return 1;
 };
 
-export const getEventLocation = ({ event, stepMinutes }) => {
+const getEventLocation = ({ event, stepMinutes }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const pixelsPerMinute = stepHeight / stepMinutes;
 

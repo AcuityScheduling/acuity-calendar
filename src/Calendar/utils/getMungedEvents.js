@@ -26,6 +26,14 @@ const getEventColumn = ({ event, lastEvent, currentColumn }) => {
   return 1;
 };
 
+/**
+ * Get the offset position (top) of the event for day view
+ * and the height of the event
+ *
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {5|10|15|20|25|30|60} params.stepMinutes
+ */
 const getEventLocation = ({ event, stepMinutes }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const pixelsPerMinute = stepHeight / stepMinutes;

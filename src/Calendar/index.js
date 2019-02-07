@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   CalendarMonthView,
@@ -10,8 +10,10 @@ import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
-  STEP_MINUTES_TYPE
+  STEP_MINUTES_TYPE,
+  EVENT_TYPE
 } from "./types";
+import { getMungedEvents } from "./utils";
 
 const Calendar = ({
   events,
@@ -38,6 +40,11 @@ const Calendar = ({
 
   const View = getView();
 
+  const mungedEvents = useMemo(() => getMungedEvents({ events, stepMinutes }), [
+    events,
+    stepMinutes
+  ]);
+
   return (
     <Fragment>
       <CalendarToolbar
@@ -49,7 +56,7 @@ const Calendar = ({
       />
       <View
         view={view}
-        events={events}
+        events={mungedEvents}
         selectedDate={selectedDate}
         onSelectEvent={onSelectEvent}
         onSelecting={onSelecting}
@@ -63,7 +70,7 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-  events: PropTypes.object.isRequired,
+  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,

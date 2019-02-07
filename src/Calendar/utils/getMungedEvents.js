@@ -6,32 +6,24 @@ import { STEP_HEIGHTS } from "../components/CalendarViews/CalendarDaysView/const
  * Add a column key for each event to say which
  * column it should belong in in its respective day
  *
- * @param {array} eventsForDay - all events for a given day
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {Object} params.lastEvent
+ * @param {number} params.currentColumn
  */
 const getEventColumn = ({ event, lastEvent, currentColumn }) => {
-  // let column = 1;
-  // let columnEnd = "";
-  // return eventsForDay.reduce((accumulator, event, index) => {
-  //   if (index === 0) {
-  //     const newEvent = addColumnToEvent({ event, column });
-  //     columnEnd = event.end;
-  //     return [newEvent];
-  //   }
-  //   if (event.start.isBefore(columnEnd)) {
-  //     columnEnd = event.end;
-  //     column += 1;
-  //     const newEvent = addColumnToEvent({ event, column });
-  //     accumulator.push(newEvent);
-  //     return accumulator;
-  //   }
-  //   columnEnd = event.end;
-  //   const newEvent = addColumnToEvent({ event, column: 1 });
-  //   accumulator.push(newEvent);
-  //   return accumulator;
-  // }, []);
-  return {
-    column: 1
-  };
+  // If first event OR this event is on a different day then
+  // the last event start at column 1 again
+  if (!lastEvent || !event.start.isSame(lastEvent.start, "day")) return 1;
+
+  // These come in sorted by start date, so we only need to check if the start
+  // of this event is BEFORE the last event. If it is it needs a new column
+  // otherwise we're still in column 1
+  if (event.start.isBefore(lastEvent.end)) {
+    return currentColumn + 1;
+  }
+
+  return 1;
 };
 
 export const getEventLocation = ({ event, stepMinutes }) => {
@@ -54,20 +46,31 @@ export const getEventLocation = ({ event, stepMinutes }) => {
  * @param {Object[]} events
  * @returns {Object}
  */
-const getEventsByDateAndDetails = ({ events, stepMinutes }) => {
-  let currentColumn = 1;
+const getMungedEvents = ({ events, stepMinutes }) => {
+  // Sort the events by start time - this is necessary for
+  // a lot of logic later. If the events are not sorted everything
+  // is going to get all funky
+  const sortedEvents = events.sort((a, b) => {
+    if (a.start.isAfter(b.start)) return 1;
+    if (a.start.isBefore(b.start)) return -1;
+    return 0;
+  });
 
-  return events.reduce((eventsByDate, event, index) => {
+  let currentColumn = 1;
+  return sortedEvents.reduce((eventsByDate, event, index) => {
     const eventLocation = getEventLocation({ event, stepMinutes });
     const eventColumn = getEventColumn({
       event,
-      lastEvent: events[index - 1],
+      lastEvent: index !== 0 ? events[index - 1] : null,
       currentColumn
     });
     if (eventColumn !== currentColumn) {
       currentColumn = eventColumn;
     }
-    const newEvent = Object.assign(event, eventLocation, eventColumn);
+
+    const newEvent = Object.assign(event, eventLocation, {
+      column: eventColumn
+    });
 
     const eventsThisDay = get(
       eventsByDate,
@@ -81,4 +84,4 @@ const getEventsByDateAndDetails = ({ events, stepMinutes }) => {
   }, {});
 };
 
-export default getEventsByDateAndDetails;
+export default getMungedEvents;

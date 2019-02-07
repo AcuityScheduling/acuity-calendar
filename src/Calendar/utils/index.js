@@ -1,6 +1,6 @@
 import getRangeTitle from "./getRangeTitle";
 import getNavigateDate from "./getNavigateDate";
-import getEventsByDateAndDetail from "./getEventsByDateAndDetail";
+import getMungedEvents from "./getMungedEvents";
 import eventsMocked from "./eventsMocked";
 import cellWidth from "./cellWidth";
 import getTopOffset from "./getTopOffset";
@@ -8,7 +8,7 @@ import getTopOffset from "./getTopOffset";
 export {
   getRangeTitle,
   getNavigateDate,
-  getEventsByDateAndDetail,
+  getMungedEvents,
   eventsMocked,
   cellWidth,
   getTopOffset

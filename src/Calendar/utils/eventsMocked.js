@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export const event1 = {
+const event1 = {
   id: 1,
   start: moment(new Date("2019-01-02 12:00:00")),
   end: moment(new Date("2019-01-02 12:30:00")),
@@ -8,7 +8,7 @@ export const event1 = {
   allDay: false
 };
 
-export const event2 = {
+const event2 = {
   id: 2,
   start: moment(new Date("2019-01-02 19:00:00")),
   end: moment(new Date("2019-01-02 19:25:25")),
@@ -16,7 +16,7 @@ export const event2 = {
   allDay: false
 };
 
-export const event3 = {
+const event3 = {
   id: 3,
   start: moment(new Date("2019-02-07 09:00:00")),
   end: moment(new Date("2019-02-07 09:30:00")),
@@ -24,7 +24,7 @@ export const event3 = {
   allDay: false
 };
 
-export const event4 = {
+const event4 = {
   id: 4,
   start: moment(new Date("2019-03-07 14:00:00")),
   end: moment(new Date("2019-03-07 15:00:00")),
@@ -48,6 +48,14 @@ const event6 = {
   allDay: false
 };
 
-const eventsMocked = [event1, event2, event3, event4, event5, event6];
+const event7 = {
+  id: 7,
+  start: moment(new Date("2019-02-07 10:00:00")),
+  end: moment(new Date("2019-02-07 11:00:00")),
+  title: "Feb 7th - 10:00-11:00am",
+  allDay: false
+};
+
+const eventsMocked = [event1, event2, event3, event4, event5, event6, event7];
 
 export default eventsMocked;

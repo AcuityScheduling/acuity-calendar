@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./index.module.css";
+import styles from "./index.scss";
 import { getMonthGrid, getDayNames } from "./utils";
 import { cellWidth } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
@@ -19,8 +19,8 @@ const CalendarMonthView = ({
   let countDays = 0;
   let countRows = 0;
   return (
-    <div className={styles.wrapper}>
-      <div className={styles["day-name-row"]}>
+    <div className="wrapper">
+      <div className="day-name-row">
         {dayNames.map(dayName => {
           return (
             <div style={cellWidth} key={dayName}>
@@ -34,7 +34,7 @@ const CalendarMonthView = ({
           countRows += 1;
 
           return (
-            <div className={styles.row} key={`monthColumn${countRows}`}>
+            <div className="row" key={`monthColumn${countRows}`}>
               {row.map(dayDetails => {
                 countDays += 1;
 

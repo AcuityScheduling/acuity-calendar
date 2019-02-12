@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import moment from "moment";
 import { CALENDAR_VIEWS } from "../../Calendar/constants";
-import { getWeekList } from "../../Calendar/components/CalendarViews/CalendarDaysView/utils";
+import { getWeekList } from "../../Calendar/components/CalendarViews/CalendarWeekView/utils";
 
 const { month, week, calendar } = CALENDAR_VIEWS;
 
@@ -15,15 +15,15 @@ const { month, week, calendar } = CALENDAR_VIEWS;
  * @param {0|1|2|3|4|5|6} params.firstDay
  */
 const getRangeTitle = ({ date, view, firstDay }) => {
-	const weekList = getWeekList({ firstDay, date });
+  const weekList = getWeekList({ firstDay, date });
 
-	const viewMap = {
-		[month]: date.format("MMMM YYYY"),
-		[week]: `Week of ${weekList[0].format("MMMM D, YYYY")}`,
-		[calendar]: date.format("MMMM D, YYYY"),
-	};
+  const viewMap = {
+    [month]: date.format("MMMM YYYY"),
+    [week]: `Week of ${weekList[0].format("MMMM D, YYYY")}`,
+    [calendar]: date.format("MMMM D, YYYY")
+  };
 
-	return viewMap[view];
+  return viewMap[view];
 };
 
 export default getRangeTitle;

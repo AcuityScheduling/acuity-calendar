@@ -59,9 +59,9 @@ const CalendarTimes = ({
       />
 
       <div className={makeClass("days__header")} ref={headerRef}>
-        {renderHeader}
+        {renderHeader()}
       </div>
-      <div className={makeClass("days__columns")}>{renderColumns}</div>
+      <div className={makeClass("days__columns")}>{renderColumns()}</div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import { MOMENT_TYPE, CALENDAR_TYPE } from "../../../../types";
+import { MOMENT_TYPE, CALENDAR_TYPE } from "Calendar/types";
 import { makeClass } from "../../../../utils";
 import "./CalendarDayColumns.scss";
 

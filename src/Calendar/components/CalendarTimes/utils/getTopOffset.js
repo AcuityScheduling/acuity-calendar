@@ -1,8 +1,5 @@
-import {
-  STEP_HEIGHTS,
-  STEP_BORDER_WIDTH
-} from "../components/CalendarViews/CalendarDaysView/constants";
-import { getMinutesSinceMidnight } from "../components/CalendarViews/CalendarDaysView/utils";
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
+import getMinutesSinceMidnight from "./getMinutesSinceMidnight";
 
 const getTopOffset = ({ stepMinutes, date }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];

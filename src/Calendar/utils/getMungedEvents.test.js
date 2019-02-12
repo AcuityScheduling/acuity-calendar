@@ -22,7 +22,7 @@ describe("Munged Event Object", () => {
     const calendar6 = mungedEvents[6];
 
     expect(calendar5).toHaveProperty("2019-01-02");
-    expect(calendar6).toHaveProperty("2019-02-07");
+    expect(calendar6).toHaveProperty("2019-02-12");
     expect(calendar6).toHaveProperty("2019-03-07");
   });
 

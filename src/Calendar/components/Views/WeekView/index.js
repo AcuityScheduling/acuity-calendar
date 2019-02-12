@@ -46,7 +46,7 @@ const WeekView = ({
       }
       renderColumns={({ currentTime }) =>
         dateList.map(date => {
-          const eventsForDay = get(events, date.format("YYYY-MM-DD"), {});
+          const eventsForDay = get(events, date.format("YYYY-MM-DD"), []);
           return (
             <Day
               events={eventsForDay}

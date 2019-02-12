@@ -54,7 +54,7 @@ const CalendarsView = ({
       }
       renderColumns={({ currentTime }) => {
         return selectedCalendars.map(calendarId => {
-          const eventsForDay = get(events, `${calendarId}.${selectedDate}`, {});
+          const eventsForDay = get(events, `${calendarId}.${selectedDate}`, []);
           return (
             <Day
               events={eventsForDay}

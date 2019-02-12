@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 /**
  * Flatten the object of munged events to ONLY selected calendar events
  *
@@ -18,7 +20,14 @@ const getEventsWithSelectedCalendars = ({
 
   const selectedCalendarEvents = Object.keys(newEvents).reduce(
     (accumulator, calendarId) => {
-      return Object.assign(accumulator, newEvents[calendarId]);
+      const datesWithEvents = Object.keys(newEvents[calendarId]);
+      datesWithEvents.forEach(date => {
+        accumulator[date] = [
+          ...get(accumulator, date, []),
+          ...newEvents[calendarId][date]
+        ];
+      });
+      return accumulator;
     },
     {}
   );

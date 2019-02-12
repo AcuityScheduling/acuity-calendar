@@ -1,10 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  MonthView,
-  CalendarsView,
-  WeekView
-} from "./components/Views";
+import { MonthView, CalendarsView, WeekView } from "./components/Views";
 import { CALENDAR_VIEWS } from "./constants";
 import {
   FIRST_DAY_TYPE,

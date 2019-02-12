@@ -1,7 +1,6 @@
 {
-  "name": "my-razzle-app",
+  "name": "acuity-calendar",
   "version": "0.1.0",
-  "license": "MIT",
   "scripts": {
     "start": "razzle start",
     "build": "razzle build",

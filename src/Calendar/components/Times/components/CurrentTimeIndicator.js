@@ -4,11 +4,11 @@ import moment from "moment";
 import { makeClass } from "../../../utils";
 import { STEP_MINUTES_TYPE, MOMENT_TYPE } from "../../../types";
 import { getTopOffset } from "../utils";
-import "./CalendarCurrentTimeIndicator.scss";
+import "./CurrentTimeIndicator.scss";
 
 const block = makeClass("times__current-time-indicator");
 
-const CalendarCurrentTimeIndicator = React.forwardRef(
+const CurrentTimeIndicator = React.forwardRef(
   ({ stepMinutes, currentTime, isToday }, ref) => {
     if (!isToday) {
       return (
@@ -38,14 +38,14 @@ const CalendarCurrentTimeIndicator = React.forwardRef(
   }
 );
 
-CalendarCurrentTimeIndicator.defaultProps = {
+CurrentTimeIndicator.defaultProps = {
   isToday: false
 };
 
-CalendarCurrentTimeIndicator.propTypes = {
+CurrentTimeIndicator.propTypes = {
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   currentTime: MOMENT_TYPE.isRequired,
   isToday: PropTypes.bool
 };
 
-export default CalendarCurrentTimeIndicator;
+export default CurrentTimeIndicator;

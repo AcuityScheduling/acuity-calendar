@@ -6,7 +6,7 @@ import { CALENDAR_VIEW_TYPE, MOMENT_TYPE, FIRST_DAY_TYPE, CALENDAR_TYPE } from "
 
 const { month, week, calendar } = CALENDAR_VIEWS;
 
-const CalendarToolbar = ({
+const Toolbar = ({
 	view,
 	onViewChange,
 	selectedDate,
@@ -78,7 +78,7 @@ const CalendarToolbar = ({
 	);
 };
 
-CalendarToolbar.propTypes = {
+Toolbar.propTypes = {
 	view: CALENDAR_VIEW_TYPE.isRequired,
 	onViewChange: PropTypes.func.isRequired,
 	selectedDate: MOMENT_TYPE.isRequired,
@@ -89,4 +89,4 @@ CalendarToolbar.propTypes = {
 	setSelectedCalendars: PropTypes.func.isRequired,
 };
 
-export default CalendarToolbar;
+export default Toolbar;

@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { EVENT_TYPE } from "../types";
 import { makeClass } from "../utils";
-import "./CalendarEvent.scss";
+import "./Event.scss";
 
-const CalendarEvent = ({ event, onSelectEvent, ...restProps }) => {
+const Event = ({ event, onSelectEvent, ...restProps }) => {
   return (
     <div
       className={makeClass("times__event")}
@@ -20,9 +20,9 @@ const CalendarEvent = ({ event, onSelectEvent, ...restProps }) => {
   );
 };
 
-CalendarEvent.propTypes = {
+Event.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
   event: EVENT_TYPE.isRequired
 };
 
-export default CalendarEvent;
+export default Event;

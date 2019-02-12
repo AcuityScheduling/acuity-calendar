@@ -1,9 +1,9 @@
 import React from "react";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { makeClass } from "../../../utils";
-import "./CalendarStepLines.scss";
+import "./StepLines.scss";
 
-const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
+const StepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
@@ -25,4 +25,4 @@ const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   return <div className={makeClass("times__step-lines")}>{times}</div>;
 };
 
-export default CalendarStepLines;
+export default StepLines;

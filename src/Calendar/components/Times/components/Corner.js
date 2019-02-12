@@ -1,8 +1,8 @@
 import React from "react";
-import "./CalendarCorner.scss";
+import "./Corner.scss";
 import { makeClass } from "../../../utils";
 
-const CalendarCorner = React.forwardRef((props, ref) => {
+const Corner = React.forwardRef((props, ref) => {
   return (
     <div className={makeClass("times__corner")} ref={ref}>
       <h2>Calender Timer</h2>
@@ -10,4 +10,4 @@ const CalendarCorner = React.forwardRef((props, ref) => {
   );
 });
 
-export default CalendarCorner;
+export default Corner;

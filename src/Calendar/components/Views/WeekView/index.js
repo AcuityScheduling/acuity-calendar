@@ -1,19 +1,19 @@
 import React from "react";
 import get from "lodash/get";
 import moment from "moment";
-import CalendarTimes from "../../CalendarTimes";
-import CalendarDay from "../../CalendarTimes/components/CalendarDay";
-import CalendarCurrentTimeIndicator from "../../CalendarTimes/components/CalendarCurrentTimeIndicator";
-import { getWeekList } from "./utils";
+import Times from "../../Times";
+import Day from "../../Times/components/Day";
+import CurrentTimeIndicator from "../../Times/components/CurrentTimeIndicator";
+import { getWeekList, } from "./utils";
 import { makeClass, cellWidth } from "../../../utils";
-import { getTodayClass } from "../../CalendarTimes/utils";
+import { getTodayClass } from "../../Times/utils";
 // import PropTypes from 'prop-types';
 
 const columnStyles = {
   minWidth: cellWidth
 };
 
-const CalendarWeekView = ({
+const WeekView = ({
   selectedDate,
   firstDay,
   events,
@@ -23,7 +23,7 @@ const CalendarWeekView = ({
   const dateList = getWeekList({ date: selectedDate, firstDay });
 
   return (
-    <CalendarTimes
+    <Times
       selectedDate={selectedDate}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
@@ -47,7 +47,7 @@ const CalendarWeekView = ({
         dateList.map(date => {
           const eventsForDay = get(events, date.format("YYYY-MM-DD"), {});
           return (
-            <CalendarDay
+            <Day
               events={eventsForDay}
               date={date}
               key={`weekColumn${date.date()}`}
@@ -55,7 +55,7 @@ const CalendarWeekView = ({
               stepMinutes={stepMinutes}
               renderCurrentTimeIndicator={
                 date.isSame(moment(), "day") && (
-                  <CalendarCurrentTimeIndicator
+                  <CurrentTimeIndicator
                     stepMinutes={stepMinutes}
                     currentTime={currentTime}
                     isToday
@@ -71,6 +71,6 @@ const CalendarWeekView = ({
   );
 };
 
-CalendarWeekView.propTypes = {};
+WeekView.propTypes = {};
 
-export default CalendarWeekView;
+export default WeekView;

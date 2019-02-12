@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  CalendarMonthView,
-  CalendarCalendarsView,
-  CalendarWeekView
-} from "./components/CalendarViews";
+  MonthView,
+  CalendarsView,
+  WeekView
+} from "./components/Views";
 import { CALENDAR_VIEWS } from "./constants";
 import {
   FIRST_DAY_TYPE,
@@ -33,9 +33,9 @@ const Calendar = ({
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
     const views = {
-      [month]: CalendarMonthView,
-      [week]: CalendarWeekView,
-      [calendar]: CalendarCalendarsView
+      [month]: MonthView,
+      [week]: WeekView,
+      [calendar]: CalendarsView
     };
     return views[view];
   };

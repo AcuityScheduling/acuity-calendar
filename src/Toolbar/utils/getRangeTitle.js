@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import moment from "moment";
 import { CALENDAR_VIEWS } from "../../Calendar/constants";
-import { getWeekList } from "../../Calendar/components/CalendarViews/CalendarWeekView/utils";
+import { getWeekList } from "../../Calendar/components/Views/WeekView/utils";
 
 const { month, week, calendar } = CALENDAR_VIEWS;
 

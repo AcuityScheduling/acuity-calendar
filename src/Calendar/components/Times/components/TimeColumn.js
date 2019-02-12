@@ -2,9 +2,9 @@ import React from "react";
 import moment from "moment";
 import { STEP_BORDER_WIDTH } from "../constants";
 import { makeClass } from "../../../utils";
-import "./CalendarTimeColumn.scss";
+import "./TimeColumn.scss";
 
-const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
+const TimeColumn = React.forwardRef(({ blockHeight }, ref) => {
   const renderTimes = () => {
     const times = [];
     for (let i = 0; i < 24; i += 1) {
@@ -32,4 +32,4 @@ const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
   );
 });
 
-export default CalendarTimeColumn;
+export default TimeColumn;

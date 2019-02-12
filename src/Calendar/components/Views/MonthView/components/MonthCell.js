@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import CalendarEvent from "../../../CalendarEvent";
+import Event from "../../../Event";
 import { MOMENT_TYPE } from "../../../../types";
 import {
   cellWidth,
@@ -13,7 +13,7 @@ const monthCellStyles = {
   width: cellWidth
 };
 
-const CalendarMonthCell = ({
+const MonthCell = ({
   date,
   events,
   isInRange,
@@ -35,7 +35,7 @@ const CalendarMonthCell = ({
         eventsWithoutColumns.map(
           event =>
             isInRange && (
-              <CalendarEvent
+              <Event
                 event={event}
                 key={event.id}
                 onSelectEvent={onSelectEvent}
@@ -46,11 +46,11 @@ const CalendarMonthCell = ({
   );
 };
 
-CalendarMonthCell.propTypes = {
+MonthCell.propTypes = {
   date: MOMENT_TYPE.isRequired,
   events: PropTypes.object.isRequired,
   isInRange: PropTypes.bool.isRequired,
   onSelectEvent: PropTypes.func.isRequired
 };
 
-export default CalendarMonthCell;
+export default MonthCell;

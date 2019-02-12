@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
-import CalendarEvent from "../../CalendarEvent";
+import Event from "../../Event";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayClass } from "../utils";
-import "./CalendarDay.scss";
+import "./Day.scss";
 import { makeClass, cellWidth } from "../../../utils";
 
-const CalendarDay = ({
+const Day = ({
   events,
   date,
   stepMinutes,
@@ -25,7 +25,7 @@ const CalendarDay = ({
         <div className={makeClass("times__event-column")} key={columnKey}>
           {thisColumnEvents.map(event => {
             return (
-              <CalendarEvent
+              <Event
                 key={event.id}
                 event={event}
                 style={{ top: `${event.top}px`, height: `${event.height}px` }}
@@ -86,11 +86,11 @@ const CalendarDay = ({
   );
 };
 
-CalendarDay.defaultProps = {
+Day.defaultProps = {
   renderCurrentTimeIndicator: null
 };
 
-CalendarDay.propTypes = {
+Day.propTypes = {
   events: PropTypes.object.isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
@@ -100,4 +100,4 @@ CalendarDay.propTypes = {
   renderCurrentTimeIndicator: PropTypes.node
 };
 
-export default CalendarDay;
+export default Day;

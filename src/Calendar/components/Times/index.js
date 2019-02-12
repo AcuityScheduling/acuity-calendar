@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CalendarTimeColumn from "./components/CalendarTimeColumn";
-import CalendarCorner from "./components/CalendarCorner";
-import CalendarStepLines from "./components/CalendarStepLines";
-import CalendarCurrentTimeIndicator from "./components/CalendarCurrentTimeIndicator";
+import TimeColumn from "./components/TimeColumn";
+import Corner from "./components/Corner";
+import StepLines from "./components/StepLines";
+import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
 import { STEP_HEIGHTS } from "./constants";
 import { useCalendarSticky, useCurrentTime } from "./utils";
 import {
@@ -16,7 +16,7 @@ import {
 import { makeClass } from "../../utils";
 import "./index.scss";
 
-const CalendarTimes = ({
+const Times = ({
   view,
   selectedDate,
   calendars,
@@ -43,17 +43,17 @@ const CalendarTimes = ({
 
   return (
     <div className={makeClass("times")} ref={wrapperRef}>
-      <CalendarCorner ref={cornerRef} />
-      <CalendarCurrentTimeIndicator
+      <Corner ref={cornerRef} />
+      <CurrentTimeIndicator
         ref={timeIndicatorRef}
         stepMinutes={stepMinutes}
         currentTime={currentTime}
       />
-      <CalendarTimeColumn
+      <TimeColumn
         blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
         ref={timeColumnRef}
       />
-      <CalendarStepLines
+      <StepLines
         totalStepsPerBlock={totalStepsPerBlock}
         stepMinutes={stepMinutes}
       />
@@ -68,11 +68,11 @@ const CalendarTimes = ({
   );
 };
 
-CalendarTimes.defaultProps = {
+Times.defaultProps = {
   eventOverlap: false
 };
 
-CalendarTimes.propTypes = {
+Times.propTypes = {
   view: CALENDAR_VIEW_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
@@ -86,4 +86,4 @@ CalendarTimes.propTypes = {
   renderColumns: PropTypes.func.isRequired
 };
 
-export default CalendarTimes;
+export default Times;

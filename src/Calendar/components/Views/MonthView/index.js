@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { getMonthGrid, getDayNames } from "./utils";
 import { cellWidth, makeClass } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
-import CalendarMonthCell from "./components/CalendarMonthCell";
+import MonthCell from "./components/MonthCell";
 import "./index.scss";
 
 const dayStyles = {
   width: cellWidth
 };
 
-const CalendarMonthView = ({
+const MonthView = ({
   events,
   selectedDate,
   firstDay,
@@ -50,7 +50,7 @@ const CalendarMonthView = ({
                 countDays += 1;
 
                 return (
-                  <CalendarMonthCell
+                  <MonthCell
                     date={dayDetails.date}
                     isInRange={dayDetails.isInRange}
                     events={events}
@@ -68,7 +68,7 @@ const CalendarMonthView = ({
   );
 };
 
-CalendarMonthView.propTypes = {
+MonthView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   events: PropTypes.object.isRequired,
@@ -76,4 +76,4 @@ CalendarMonthView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired
 };
 
-export default CalendarMonthView;
+export default MonthView;

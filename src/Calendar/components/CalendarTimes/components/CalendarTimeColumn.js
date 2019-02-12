@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { STEP_BORDER_WIDTH } from "../constants";
-import { makeClass } from "../../../../utils";
+import { makeClass } from "../../../utils";
 import "./CalendarTimeColumn.scss";
 
 const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {

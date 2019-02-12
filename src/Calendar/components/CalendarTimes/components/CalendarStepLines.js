@@ -1,6 +1,6 @@
 import React from "react";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
-import { makeClass } from "../../../../utils";
+import { makeClass } from "../../../utils";
 import "./CalendarStepLines.scss";
 
 const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {

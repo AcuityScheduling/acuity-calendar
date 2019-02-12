@@ -1,6 +1,6 @@
 import React from "react";
 import "./CalendarCorner.scss";
-import { makeClass } from "../../../../utils";
+import { makeClass } from "../../../utils";
 
 const CalendarCorner = React.forwardRef((props, ref) => {
   return (

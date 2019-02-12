@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { getTopOffset, makeClass } from "../../../../utils";
-import { STEP_MINUTES_TYPE, MOMENT_TYPE } from "../../../../types";
+import { getTopOffset, makeClass } from "../../../utils";
+import { STEP_MINUTES_TYPE, MOMENT_TYPE } from "../../../types";
 import "./CalendarCurrentTimeIndicator.scss";
 
 const block = makeClass("days__current-time-indicator");

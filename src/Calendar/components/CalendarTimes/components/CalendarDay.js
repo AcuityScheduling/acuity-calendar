@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
-import CalendarEvent from "../../../CalendarEvent";
+import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
+import CalendarEvent from "../../CalendarEvent";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayColumnStyles } from "../utils";
 import "./CalendarDay.scss";
-import { makeClass } from "../../../../utils";
+import { makeClass } from "../../../utils";
 
 const CalendarDay = ({
   events,

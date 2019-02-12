@@ -6,6 +6,10 @@ import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
 import "./index.scss";
 
+const dayStyles = {
+  width: cellWidth
+};
+
 const CalendarMonthView = ({
   events,
   selectedDate,
@@ -25,7 +29,7 @@ const CalendarMonthView = ({
           return (
             <div
               className={makeClass("month__day-name")}
-              style={cellWidth}
+              style={dayStyles}
               key={dayName}
             >
               {dayName}

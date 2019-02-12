@@ -9,6 +9,10 @@ import {
   makeClass
 } from "../../../../utils";
 
+const monthCellStyles = {
+  width: cellWidth
+};
+
 const CalendarMonthCell = ({
   date,
   events,
@@ -22,7 +26,7 @@ const CalendarMonthCell = ({
   return (
     <div
       className={makeClass("month__cell")}
-      style={cellWidth}
+      style={monthCellStyles}
       role="button"
       onClick={() => onSelectSlot(date)}
     >

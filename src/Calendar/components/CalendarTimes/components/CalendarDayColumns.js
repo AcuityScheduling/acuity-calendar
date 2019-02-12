@@ -6,8 +6,8 @@ import {
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
   CALENDAR_VIEW_TYPE
-} from "../../../../types";
-import makeClass from "../../../../utils/makeClass";
+} from "../../../types";
+import makeClass from "../../../utils/makeClass";
 
 const CalendarDayColumns = React.forwardRef(
   ({ renderCalendarDays, selectedDate, firstDay, view, events }, ref) => {

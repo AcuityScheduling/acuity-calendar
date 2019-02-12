@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import styles from "./CalendarDay.module.css";
 import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../../types";
 import CalendarEvent from "../../../CalendarEvent";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayColumnStyles } from "../utils";
+import "./CalendarDay.scss";
+import { makeClass } from "../../../../utils";
 
 const CalendarDay = ({
   events,
@@ -20,7 +21,7 @@ const CalendarDay = ({
     return Object.keys(events).map(columnKey => {
       const thisColumnEvents = events[columnKey];
       return (
-        <div className={styles.event_column} key={columnKey}>
+        <div className={makeClass("days__event-column")} key={columnKey}>
           {thisColumnEvents.map(event => {
             return (
               <CalendarEvent
@@ -68,7 +69,7 @@ const CalendarDay = ({
 
   return (
     <div
-      className={styles.column}
+      className={makeClass("days__column")}
       key={`weekView${date.day()}`}
       style={{
         minWidth: `${100 / 7}%`,
@@ -80,7 +81,7 @@ const CalendarDay = ({
       }}
     >
       {renderCurrentTimeIndicator}
-      <div className={styles.event_wrapper}>{renderEvents()}</div>
+      <div className={makeClass("days__event-columns")}>{renderEvents()}</div>
     </div>
   );
 };

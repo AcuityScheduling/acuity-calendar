@@ -1,13 +1,12 @@
-.wrapper {
-  width: 50%;
-}
-
-.row {
-  display: flex;
-  width: 100%;
-}
-
-.day-name-row {
-  display: flex;
-  width: 100%;
+.acuity-calendar {
+  &__month {
+    width: 50%;
+    &__row {
+      display: flex;
+      width: 100%;
+    }
+    &__cell {
+      width: 100%;
+    }
+  }
 }

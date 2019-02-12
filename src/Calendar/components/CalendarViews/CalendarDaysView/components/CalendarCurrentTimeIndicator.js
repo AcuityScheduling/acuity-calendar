@@ -1,35 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./CalendarCurrentTimeIndicator.module.css";
 import moment from "moment";
-import { getTopOffset } from "../../../../utils";
+import { getTopOffset, makeClass } from "../../../../utils";
 import { STEP_MINUTES_TYPE, MOMENT_TYPE } from "../../../../types";
+import "./CalendarCurrentTimeIndicator.scss";
+
+const block = makeClass("days__current-time-indicator");
 
 const CalendarCurrentTimeIndicator = React.forwardRef(
   ({ stepMinutes, currentTime, isToday }, ref) => {
     if (!isToday) {
       return (
         <div
-          className={`${styles.wrapper} ${styles.full}`}
+          className={block}
           style={{
             top: `${getTopOffset({ stepMinutes, date: currentTime }) + 70}px`
           }}
           ref={ref}
         >
-          <span className={styles.time}>{moment().format("h:mma")}</span>
-          <div className={styles.line} />
+          <span className={`${block}__time`}>{moment().format("h:mma")}</span>
+          <div className={`${block}__line`} />
         </div>
       );
     }
 
     return (
       <div
-        className={styles.wrapper}
+        className={block}
         style={{
           top: `${getTopOffset({ stepMinutes, date: currentTime })}px`
         }}
       >
-        <div className={styles.line_today} />
+        <div className={`${block}__line-today`} />
       </div>
     );
   }

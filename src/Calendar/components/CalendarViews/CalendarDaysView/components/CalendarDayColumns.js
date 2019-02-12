@@ -2,8 +2,9 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import { getWeekList, getTodayColumnStyles } from "../utils";
-import styles from "./CalendarDayColumns.module.css";
 import { MOMENT_TYPE, FIRST_DAY_TYPE } from "../../../../types";
+import "./CalendarDayColumns.scss";
+import { makeClass } from "../../../../utils";
 
 const CalendarDayColumns = React.forwardRef(
   ({ renderCalendarDays, selectedDate, firstDay, view, events }, ref) => {
@@ -13,7 +14,7 @@ const CalendarDayColumns = React.forwardRef(
     }
     return (
       <Fragment>
-        <div className={styles.header} ref={ref}>
+        <div className={makeClass("days__header")} ref={ref}>
           {dateList.map(date => {
             return (
               <h2
@@ -28,7 +29,7 @@ const CalendarDayColumns = React.forwardRef(
             );
           })}
         </div>
-        <div className={styles.day_wrapper}>
+        <div className={makeClass("days__columns")}>
           {dateList.map(date => {
             const eventsForDay = get(events, date.format("YYYY-MM-DD"), {});
             return renderCalendarDays({ date, eventsForDay });

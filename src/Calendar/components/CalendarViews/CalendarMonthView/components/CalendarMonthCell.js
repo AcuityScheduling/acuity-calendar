@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import styles from "./CalendarMonthCell.module.css";
 import CalendarEvent from "../../../CalendarEvent";
 import { MOMENT_TYPE } from "../../../../types";
-import { cellWidth, getEventsWithoutColumns } from "../../../../utils";
+import {
+  cellWidth,
+  getEventsWithoutColumns,
+  makeClass
+} from "../../../../utils";
 
 const CalendarMonthCell = ({
   date,
@@ -18,12 +21,12 @@ const CalendarMonthCell = ({
 
   return (
     <div
-      className={styles.cell}
+      className={makeClass("month__cell")}
       style={cellWidth}
       role="button"
       onClick={() => onSelectSlot(date)}
     >
-      <h2>{date.date()}</h2>
+      <h2 className={makeClass("month__date")}>{date.date()}</h2>
       {eventsWithoutColumns.length > 0 &&
         eventsWithoutColumns.map(
           event =>

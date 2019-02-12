@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./index.scss";
 import { getMonthGrid, getDayNames } from "./utils";
-import { cellWidth } from "../../../utils";
+import { cellWidth, makeClass } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import CalendarMonthCell from "./components/CalendarMonthCell";
+import "./index.scss";
 
 const CalendarMonthView = ({
   events,
@@ -19,22 +19,29 @@ const CalendarMonthView = ({
   let countDays = 0;
   let countRows = 0;
   return (
-    <div className="wrapper">
-      <div className="day-name-row">
+    <div className={makeClass("month")}>
+      <div className={makeClass("month__row", "month__header")}>
         {dayNames.map(dayName => {
           return (
-            <div style={cellWidth} key={dayName}>
+            <div
+              className={makeClass("month__day-name")}
+              style={cellWidth}
+              key={dayName}
+            >
               {dayName}
             </div>
           );
         })}
       </div>
-      <div className={styles.weekdays}>
+      <div>
         {monthGrid.map(row => {
           countRows += 1;
 
           return (
-            <div className="row" key={`monthColumn${countRows}`}>
+            <div
+              className={makeClass("month__row")}
+              key={`monthColumn${countRows}`}
+            >
               {row.map(dayDetails => {
                 countDays += 1;
 

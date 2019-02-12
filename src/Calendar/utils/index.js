@@ -7,6 +7,7 @@ import cellWidth from "./cellWidth";
 import getTopOffset from "./getTopOffset";
 import getEventsWithSelectedCalendars from "./getEventsWithSelectedCalendars";
 import getEventsWithoutColumns from "./getEventsWithoutColumns";
+import makeClass from "./makeClass";
 
 export {
   getRangeTitle,
@@ -17,5 +18,6 @@ export {
   getTopOffset,
   calendarsMocked,
   getEventsWithSelectedCalendars,
-  getEventsWithoutColumns
+  getEventsWithoutColumns,
+  makeClass
 };

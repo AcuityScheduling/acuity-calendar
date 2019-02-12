@@ -58,10 +58,12 @@ const CalendarTimes = ({
         stepMinutes={stepMinutes}
       />
 
-      <div className={makeClass("days__header")} ref={headerRef}>
+      <div className={makeClass("times__header")} ref={headerRef}>
         {renderHeader()}
       </div>
-      <div className={makeClass("days__columns")}>{renderColumns()}</div>
+      <div className={makeClass("times__columns")}>
+        {renderColumns({ currentTime })}
+      </div>
     </div>
   );
 };

@@ -10,13 +10,14 @@ import { makeClass } from "../../../utils";
 const CalendarDay = ({
   events,
   date,
-  totalStepsPerBlock,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
   renderCurrentTimeIndicator
 }) => {
+  const totalStepsPerBlock = 60 / stepMinutes;
+
   const renderEvents = () => {
     return Object.keys(events).map(columnKey => {
       const thisColumnEvents = events[columnKey];
@@ -91,7 +92,6 @@ CalendarDay.defaultProps = {
 };
 
 CalendarDay.propTypes = {
-  totalStepsPerBlock: PropTypes.number.isRequired,
   events: PropTypes.object.isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,

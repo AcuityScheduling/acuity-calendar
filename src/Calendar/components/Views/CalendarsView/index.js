@@ -59,7 +59,7 @@ const CalendarsView = ({
             <Day
               events={eventsForDay}
               date={selectedDate}
-              key={`weekColumn${selectedDate.date()}`}
+              key={`calendarColumn${calendarId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderCurrentTimeIndicator={

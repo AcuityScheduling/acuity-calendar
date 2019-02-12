@@ -1,5 +1,5 @@
-import MonthView from "./MonthView";
 import CalendarsView from "./CalendarsView";
+import MonthView from "./MonthView";
 import WeekView from "./WeekView";
 
-export { MonthView, WeekView, CalendarsView };
+export { CalendarsView, MonthView, WeekView };

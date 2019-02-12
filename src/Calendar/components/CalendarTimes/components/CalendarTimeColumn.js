@@ -10,7 +10,7 @@ const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
     for (let i = 0; i < 24; i += 1) {
       times.push(
         <div
-          className={makeClass("days__time-label")}
+          className={makeClass("times__time-label")}
           key={`dayTime${i}`}
           style={{
             height: `${blockHeight + STEP_BORDER_WIDTH}px`
@@ -26,7 +26,7 @@ const CalendarTimeColumn = React.forwardRef(({ blockHeight }, ref) => {
   };
 
   return (
-    <div className={makeClass("days__time-column")} ref={ref}>
+    <div className={makeClass("times__time-column")} ref={ref}>
       {renderTimes()}
     </div>
   );

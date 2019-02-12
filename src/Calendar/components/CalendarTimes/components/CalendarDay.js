@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 import CalendarEvent from "../../CalendarEvent";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
-import { getTodayColumnStyles } from "../utils";
+import { getTodayClass } from "../utils";
 import "./CalendarDay.scss";
-import { makeClass } from "../../../utils";
+import { makeClass, cellWidth } from "../../../utils";
 
 const CalendarDay = ({
   events,
@@ -22,7 +22,7 @@ const CalendarDay = ({
     return Object.keys(events).map(columnKey => {
       const thisColumnEvents = events[columnKey];
       return (
-        <div className={makeClass("days__event-column")} key={columnKey}>
+        <div className={makeClass("times__event-column")} key={columnKey}>
           {thisColumnEvents.map(event => {
             return (
               <CalendarEvent
@@ -70,19 +70,18 @@ const CalendarDay = ({
 
   return (
     <div
-      className={makeClass("days__column")}
+      className={`${makeClass("times__column")}${getTodayClass(date)}`}
       key={`weekView${date.day()}`}
       style={{
-        minWidth: `${100 / 7}%`,
-        height: `${totalHeight}px`,
-        ...getTodayColumnStyles(date)
+        minWidth: cellWidth,
+        height: `${totalHeight}px`
       }}
       onClick={e => {
         onSelectSlot(getClickedTime(e));
       }}
     >
       {renderCurrentTimeIndicator}
-      <div className={makeClass("days__event-columns")}>{renderEvents()}</div>
+      <div className={makeClass("times__event-columns")}>{renderEvents()}</div>
     </div>
   );
 };

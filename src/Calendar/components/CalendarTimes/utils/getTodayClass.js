@@ -1,5 +1,5 @@
 import moment from "moment";
-import { makeClass } from "../../../../utils";
+import { makeClass } from "../../../utils";
 
 /**
  * If the date is today we're going to add an extra class

@@ -6,7 +6,7 @@ import { STEP_MINUTES_TYPE, MOMENT_TYPE } from "../../../types";
 import { getTopOffset } from "../utils";
 import "./CalendarCurrentTimeIndicator.scss";
 
-const block = makeClass("days__current-time-indicator");
+const block = makeClass("times__current-time-indicator");
 
 const CalendarCurrentTimeIndicator = React.forwardRef(
   ({ stepMinutes, currentTime, isToday }, ref) => {

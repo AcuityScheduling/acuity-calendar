@@ -7,7 +7,7 @@ import "./CalendarEvent.scss";
 const CalendarEvent = ({ event, onSelectEvent, ...restProps }) => {
   return (
     <div
-      className={makeClass("days__event")}
+      className={makeClass("times__event")}
       role="button"
       onClick={e => {
         e.stopPropagation();

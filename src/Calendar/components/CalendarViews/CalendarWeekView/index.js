@@ -4,8 +4,9 @@ import moment from "moment";
 import CalendarTimes from "../../CalendarTimes";
 import CalendarDay from "../../CalendarTimes/components/CalendarDay";
 import CalendarCurrentTimeIndicator from "../../CalendarTimes/components/CalendarCurrentTimeIndicator";
-import { getWeekList, getTodayClass } from "./utils";
+import { getWeekList } from "./utils";
 import { makeClass, cellWidth } from "../../../utils";
+import { getTodayClass } from "../../CalendarTimes/utils";
 // import PropTypes from 'prop-types';
 
 const columnStyles = {

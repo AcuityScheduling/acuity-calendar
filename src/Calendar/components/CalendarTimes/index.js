@@ -42,7 +42,7 @@ const CalendarTimes = ({
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
-    <div className={makeClass("days")} ref={wrapperRef}>
+    <div className={makeClass("times")} ref={wrapperRef}>
       <CalendarCorner ref={cornerRef} />
       <CalendarCurrentTimeIndicator
         ref={timeIndicatorRef}

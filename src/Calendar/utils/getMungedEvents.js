@@ -15,7 +15,6 @@ const getMungedEvents = ({ events, stepMinutes }) => {
   const eventsWithDates = getEventsWithDates(events);
   const sortedEvents = getSortedEvents(eventsWithDates);
 
-  let currentColumn = 1;
   return sortedEvents.reduce((eventsKeyed, event, index) => {
     let newEvent = event;
     newEvent = addEventLocation({
@@ -23,16 +22,7 @@ const getMungedEvents = ({ events, stepMinutes }) => {
       stepMinutes
     });
 
-    const eventColumn = getEventColumn({
-      event,
-      lastEvent: index !== 0 ? sortedEvents[index - 1] : null,
-      currentColumn
-    });
-    if (eventColumn !== currentColumn) {
-      currentColumn = eventColumn;
-    }
-
-    return setNestedObject({ eventsKeyed, event: newEvent, eventColumn });
+    return setNestedObject({ eventsKeyed, event: newEvent });
   }, {});
 };
 
@@ -86,30 +76,6 @@ const addEventLocation = ({ event, stepMinutes }) => {
 };
 
 /**
- * Add a column key for each event to say which
- * column it should belong in in its respective day
- *
- * @param {Object} params
- * @param {Object} params.event
- * @param {Object} params.lastEvent
- * @param {number} params.currentColumn
- */
-const getEventColumn = ({ event, lastEvent, currentColumn }) => {
-  // If first event OR this event is on a different day then
-  // the last event start at column 1 again
-  if (!lastEvent || !event.start.isSame(lastEvent.start, "day")) return 1;
-
-  // These come in sorted by start date, so we only need to check if the start
-  // of this event is BEFORE the last event. If it is it needs a new column
-  // otherwise we're still in column 1
-  if (event.start.isBefore(lastEvent.end)) {
-    return currentColumn + 1;
-  }
-
-  return 1;
-};
-
-/**
  * This function creates the special function with all the nested objects. It should look like this:
  *
  * {
@@ -134,25 +100,21 @@ const getEventColumn = ({ event, lastEvent, currentColumn }) => {
  * @param {Object} params
  * @param {Object} params.eventsKeyed - the last set of events in their keyed form
  * @param {Object} params.event - the new event with location
- * @param {number} params.eventColumn - the column this event will appear in
  */
-const setNestedObject = ({ eventsKeyed, event, eventColumn }) => {
+const setNestedObject = ({ eventsKeyed, event }) => {
   const newEventsKeyed = Object.assign({}, eventsKeyed);
 
   const thisDate = event.start.format("YYYY-MM-DD");
 
-  const eventsForColumn = get(
+  const eventsForDate = get(
     eventsKeyed,
-    `${event.calendar_id}.${thisDate}.column_${eventColumn}`,
+    `${event.calendar_id}.${thisDate}`,
     []
   );
-  eventsForColumn.push(event);
-
-  const columns = get(eventsKeyed, `${event.calendar_id}.${thisDate}`, {});
-  columns[`column_${eventColumn}`] = eventsForColumn;
+  eventsForDate.push(event);
 
   const dates = get(eventsKeyed, `${event.calendar_id}`, {});
-  dates[thisDate] = columns;
+  dates[thisDate] = eventsForDate;
 
   newEventsKeyed[event.calendar_id] = dates;
 

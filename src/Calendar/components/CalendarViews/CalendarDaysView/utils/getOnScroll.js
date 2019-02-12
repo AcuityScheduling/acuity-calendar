@@ -9,39 +9,33 @@ let latestKnownScrollY = 0;
 let latestKnownScrollX = 0;
 let ticking = false;
 
-const update = ({
-  daysHeaderRef,
-  timeColumnRef,
-  cornerRef,
-  timeIndicatorRef
-}) => () => {
-  // reset the tick so we can
-  // capture the next onScroll
-  ticking = false;
+const update = ({ headerRef, timeColumnRef, cornerRef, timeIndicatorRef }) => () => {
+	// reset the tick so we can
+	// capture the next onScroll
+	ticking = false;
 
-  daysHeaderRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
-  timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+	headerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
+	timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
-  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX +
-    100}px)`;
-  timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
+	timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX + 100}px)`;
+	timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
 
-  // For some reason translateX doesn't work here. I'm not sure why but whatever
-  cornerRef.current.style.left = `${latestKnownScrollX}px`;
-  cornerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
+	// For some reason translateX doesn't work here. I'm not sure why but whatever
+	cornerRef.current.style.left = `${latestKnownScrollX}px`;
+	cornerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
 };
 
 const getOnScroll = elements => e => {
-  latestKnownScrollY = e.target.scrollTop;
-  latestKnownScrollX = e.target.scrollLeft;
-  requestTick(elements);
+	latestKnownScrollY = e.target.scrollTop;
+	latestKnownScrollX = e.target.scrollLeft;
+	requestTick(elements);
 };
 
 const requestTick = elements => {
-  if (!ticking) {
-    requestAnimationFrame(update(elements));
-  }
-  ticking = true;
+	if (!ticking) {
+		requestAnimationFrame(update(elements));
+	}
+	ticking = true;
 };
 
 export default getOnScroll;

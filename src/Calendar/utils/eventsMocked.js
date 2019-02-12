@@ -18,7 +18,7 @@ const event2 = {
 
 const event3 = {
   id: 3,
-  calendar_id: 6,
+  calendar_id: 5,
   start: "2019-02-07 09:00:00",
   end: "2019-02-07 09:30:00",
   title: "Feb 7st - 9-9:30am",

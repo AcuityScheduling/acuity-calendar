@@ -5,13 +5,15 @@ import cellWidth from "./cellWidth";
 import getTopOffset from "./getTopOffset";
 import getEventsWithSelectedCalendars from "./getEventsWithSelectedCalendars";
 import getEventsWithoutColumns from "./getEventsWithoutColumns";
+import makeClass from "./makeClass";
 
 export {
-	getMungedEvents,
-	eventsMocked,
-	cellWidth,
-	getTopOffset,
-	calendarsMocked,
-	getEventsWithSelectedCalendars,
-	getEventsWithoutColumns,
+  getMungedEvents,
+  eventsMocked,
+  cellWidth,
+  getTopOffset,
+  calendarsMocked,
+  getEventsWithSelectedCalendars,
+  getEventsWithoutColumns,
+  makeClass
 };

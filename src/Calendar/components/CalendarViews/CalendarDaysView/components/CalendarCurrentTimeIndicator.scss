@@ -1,0 +1,25 @@
+.acuity-calendar {
+  &__days {
+    &__current-time-indicator {
+      width: 100%;
+      position: absolute;
+      z-index: 3;
+      &--full {
+        transform: translateX(100px);
+      }
+      &__line {
+        height: 1px;
+        background: blue;
+      }
+      &__line-today {
+        height: 1px;
+        background: yellow;
+      }
+      &__time {
+        position: absolute;
+        top: -10px;
+        left: -50px;
+      }
+    }
+  }
+}

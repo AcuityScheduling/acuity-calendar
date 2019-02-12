@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./CalendarStepLines.module.css";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
+import { makeClass } from "../../../../utils";
+import "./CalendarStepLines.scss";
 
 const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
@@ -11,7 +12,7 @@ const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
     times.push(
       <div
-        className={styles.time_block}
+        className={makeClass("days__step-line")}
         key={`timeBlock${i}`}
         style={{
           height: stepHeightWithBorder
@@ -21,7 +22,7 @@ const CalendarStepLines = ({ totalStepsPerBlock, stepMinutes }) => {
     );
   }
 
-  return <div className={styles.wrapper}>{times}</div>;
+  return <div className={makeClass("days__step-lines")}>{times}</div>;
 };
 
 export default CalendarStepLines;

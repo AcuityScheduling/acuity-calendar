@@ -1,9 +1,10 @@
 import React from "react";
-import styles from "./CalendarCorner.module.css";
+import "./CalendarCorner.scss";
+import { makeClass } from "../../../../utils";
 
 const CalendarCorner = React.forwardRef((props, ref) => {
   return (
-    <div className={styles.wrapper} ref={ref}>
+    <div className={makeClass("days__corner")} ref={ref}>
       <h2>Calender Timer</h2>
     </div>
   );

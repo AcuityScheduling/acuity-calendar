@@ -9,13 +9,14 @@ import CalendarStepLines from "./components/CalendarStepLines";
 import CalendarCurrentTimeIndicator from "./components/CalendarCurrentTimeIndicator";
 import { STEP_HEIGHTS } from "./constants";
 import { useCalendarSticky, useCurrentTime } from "./utils";
-import styles from "./index.module.css";
 import {
   CALENDAR_VIEW_TYPE,
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE
 } from "../../../types";
+import { makeClass } from "../../../utils";
+import "./index.scss";
 
 const CalendarDaysView = ({
   view,
@@ -39,7 +40,7 @@ const CalendarDaysView = ({
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
-    <div className={styles.wrapper} ref={wrapperRef}>
+    <div className={makeClass("days")} ref={wrapperRef}>
       <CalendarCorner ref={cornerRef} />
       <CalendarCurrentTimeIndicator
         ref={timeIndicatorRef}

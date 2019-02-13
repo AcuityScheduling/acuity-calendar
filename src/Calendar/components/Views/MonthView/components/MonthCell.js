@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import get from "lodash/get";
 import Event from "../../../Event";
 import { MOMENT_TYPE } from "../../../../types";
-import {
-  cellWidth,
-  getEventsWithoutColumns,
-  makeClass
-} from "../../../../utils";
+import { cellWidth, makeClass } from "../../../../utils";
 
 const monthCellStyles = {
   width: cellWidth
@@ -21,7 +17,6 @@ const MonthCell = ({
   onSelectSlot
 }) => {
   const eventsForCell = get(events, date.format("YYYY-MM-DD"), []);
-  const eventsWithoutColumns = getEventsWithoutColumns(eventsForCell);
 
   return (
     <div
@@ -31,8 +26,8 @@ const MonthCell = ({
       onClick={() => onSelectSlot(date)}
     >
       <h2 className={makeClass("month__date")}>{date.date()}</h2>
-      {eventsWithoutColumns.length > 0 &&
-        eventsWithoutColumns.map(
+      {eventsForCell.length > 0 &&
+        eventsForCell.map(
           event =>
             isInRange && (
               <Event

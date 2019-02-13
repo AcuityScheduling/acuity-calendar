@@ -1,10 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  MonthView,
-  CalendarsView,
-  WeekView
-} from "./components/Views";
+import { MonthView, CalendarsView, WeekView } from "./components/Views";
 import { CALENDAR_VIEWS } from "./constants";
 import {
   FIRST_DAY_TYPE,
@@ -59,6 +55,7 @@ const Calendar = ({
   return (
     <View
       view={view}
+      eventsWithCalendars={mungedEvents}
       events={eventsWithSelectedCalendars}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}

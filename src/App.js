@@ -9,7 +9,7 @@ const App = () => {
   const { week } = CALENDAR_VIEWS;
   const [view, setView] = useState(week);
   const [selectedDate, setSelectedDate] = useState(moment());
-  const [selectedCalendars, setSelectedCalendars] = useState([]);
+  const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
 
   const stepMinutes = 30;
   const firstDay = 0;

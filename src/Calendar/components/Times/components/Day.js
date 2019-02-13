@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
+import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from "../../../types";
 import Event from "../../Event";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
-import { getTodayClass } from "../utils";
+import { getTodayClass, getEventColumns } from "../utils";
 import "./Day.scss";
 import { makeClass, cellWidth } from "../../../utils";
 
@@ -16,13 +16,13 @@ const Day = ({
   selectMinutes,
   renderCurrentTimeIndicator
 }) => {
-  const totalStepsPerBlock = 60 / stepMinutes;
+  const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   const renderEvents = () => {
-    return Object.keys(events).map(columnKey => {
-      const thisColumnEvents = events[columnKey];
+    return Object.keys(eventsWithColumns).map(column => {
+      const thisColumnEvents = eventsWithColumns[column];
       return (
-        <div className={makeClass("times__event-column")} key={columnKey}>
+        <div className={makeClass("times__event-column")} key={column}>
           {thisColumnEvents.map(event => {
             return (
               <Event
@@ -38,14 +38,14 @@ const Day = ({
     });
   };
 
-  const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
-
-  const totalHeight = useMemo(
-    () =>
+  const totalHeight = useMemo(() => {
+    const totalStepsPerBlock = 60 / stepMinutes;
+    const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
+    return (
       STEP_HEIGHTS[stepMinutes] * totalStepsPerBlock * 24 +
-      (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25),
-    [stepMinutes]
-  );
+      (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
+    );
+  }, [stepMinutes]);
 
   const getClickedTime = e => {
     const rect = e.target.getBoundingClientRect();
@@ -91,7 +91,7 @@ Day.defaultProps = {
 };
 
 Day.propTypes = {
-  events: PropTypes.object.isRequired,
+  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,

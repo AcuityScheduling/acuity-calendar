@@ -15,20 +15,30 @@ const columnStyles = {
 };
 
 const WeekView = ({
+  view,
   selectedDate,
+  calendars,
+  selectedCalendars,
   firstDay,
-  events,
   stepMinutes,
-  ...restProps
+  onSelectEvent,
+  onSelectSlot,
+  selectMinutes,
+  events
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
 
   return (
     <Times
+      view={view}
       selectedDate={selectedDate}
+      calendars={calendars}
+      selectedCalendars={selectedCalendars}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
-      {...restProps}
+      onSelectEvent={onSelectEvent}
+      onSelectSlot={onSelectSlot}
+      selectMinutes={selectMinutes}
       renderHeader={() =>
         dateList.map(date => {
           return (
@@ -46,12 +56,15 @@ const WeekView = ({
       }
       renderColumns={({ currentTime }) =>
         dateList.map(date => {
-          const eventsForDay = get(events, date.format("YYYY-MM-DD"), {});
+          const eventsForDay = get(events, date.format("YYYY-MM-DD"), []);
           return (
             <Day
               events={eventsForDay}
               date={date}
-              key={`weekColumn${date.date()}`}
+              onSelectEvent={onSelectEvent}
+              onSelectSlot={onSelectSlot}
+              selectMinutes={selectMinutes}
+              key={`weekColumn${date.day()}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderCurrentTimeIndicator={
@@ -63,7 +76,6 @@ const WeekView = ({
                   />
                 )
               }
-              {...restProps}
             />
           );
         })

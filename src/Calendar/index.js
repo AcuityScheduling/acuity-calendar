@@ -1,10 +1,10 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  CalendarMonthView,
-  CalendarDaysView
-} from "./components/CalendarViews";
-import CalendarToolbar from "./components/CalendarToolbar";
+  MonthView,
+  CalendarsView,
+  WeekView
+} from "./components/Views";
 import { CALENDAR_VIEWS } from "./constants";
 import {
   FIRST_DAY_TYPE,
@@ -20,7 +20,6 @@ const Calendar = ({
   view,
   calendars,
   selectedCalendars,
-  setSelectedCalendars,
   onViewChange,
   selectedDate,
   onNavigate,
@@ -32,11 +31,11 @@ const Calendar = ({
   selectMinutes
 }) => {
   const getView = () => {
-    const { month, week, day } = CALENDAR_VIEWS;
+    const { month, week, calendar } = CALENDAR_VIEWS;
     const views = {
-      [month]: CalendarMonthView,
-      [week]: CalendarDaysView,
-      [day]: CalendarDaysView
+      [month]: MonthView,
+      [week]: WeekView,
+      [calendar]: CalendarsView
     };
     return views[view];
   };
@@ -58,29 +57,19 @@ const Calendar = ({
   );
 
   return (
-    <Fragment>
-      <CalendarToolbar
-        view={view}
-        onViewChange={onViewChange}
-        selectedDate={selectedDate}
-        onNavigate={onNavigate}
-        firstDay={firstDay}
-        calendars={calendars}
-        selectedCalendars={selectedCalendars}
-        setSelectedCalendars={setSelectedCalendars}
-      />
-      <View
-        view={view}
-        events={eventsWithSelectedCalendars}
-        selectedDate={selectedDate}
-        onSelectEvent={onSelectEvent}
-        onSelecting={onSelecting}
-        onSelectSlot={onSelectSlot}
-        firstDay={firstDay}
-        stepMinutes={stepMinutes}
-        selectMinutes={selectMinutes}
-      />
-    </Fragment>
+    <View
+      view={view}
+      events={eventsWithSelectedCalendars}
+      selectedDate={selectedDate}
+      onSelectEvent={onSelectEvent}
+      onSelecting={onSelecting}
+      onSelectSlot={onSelectSlot}
+      firstDay={firstDay}
+      stepMinutes={stepMinutes}
+      selectMinutes={selectMinutes}
+      selectedCalendars={selectedCalendars}
+      calendars={calendars}
+    />
   );
 };
 
@@ -95,7 +84,6 @@ Calendar.propTypes = {
   calendars: PropTypes.arrayOf(CALENDAR_TYPE),
   view: CALENDAR_VIEW_TYPE.isRequired,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
-  setSelectedCalendars: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   onNavigate: PropTypes.func.isRequired,

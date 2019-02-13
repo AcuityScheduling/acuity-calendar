@@ -1,3 +1,3 @@
-const CALENDAR_VIEWS = { month: "month", week: "week", day: "day" };
+const CALENDAR_VIEWS = { month: "month", week: "week", calendar: "calendar" };
 
 export default CALENDAR_VIEWS;

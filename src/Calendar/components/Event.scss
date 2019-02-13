@@ -1,0 +1,11 @@
+.acuity-calendar {
+  &__times {
+    &__event {
+      position: absolute;
+      background: black;
+      color: white;
+      border: 1px solid blue;
+      z-index: 1;
+    }
+  }
+}

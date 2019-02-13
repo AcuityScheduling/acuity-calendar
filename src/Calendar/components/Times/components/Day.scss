@@ -1,0 +1,17 @@
+.acuity-calendar {
+  &__times {
+    &__column {
+      text-align: center;
+      border-right: 1px solid black;
+      position: relative;
+    }
+    &__event-columns {
+      position: relative;
+      display: flex;
+    }
+    &__event-column {
+      position: relative;
+      width: 100%;
+    }
+  }
+}

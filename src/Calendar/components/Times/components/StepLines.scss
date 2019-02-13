@@ -1,0 +1,18 @@
+.acuity-calendar {
+  &__times {
+    &__step-lines {
+      position: absolute;
+      top: 70px;
+      left: 100px;
+      width: 100%;
+    }
+    &__step-line:after {
+      width: 100%;
+      content: "";
+      border-bottom: 1px solid black;
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+}

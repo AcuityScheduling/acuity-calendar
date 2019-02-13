@@ -1,5 +1,3 @@
-const cellWidth = {
-  width: `${100 / 7}%`
-};
+const cellWidth = `${100 / 7}%`;
 
 export default cellWidth;

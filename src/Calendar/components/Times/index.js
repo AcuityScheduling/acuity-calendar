@@ -6,21 +6,12 @@ import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
 import { STEP_HEIGHTS } from "./constants";
 import { useCalendarSticky, useCurrentTime } from "./utils";
-import {
-  CALENDAR_VIEW_TYPE,
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  CALENDAR_TYPE
-} from "../../types";
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
 import "./index.scss";
 
 const Times = ({
-  view,
   selectedDate,
-  calendars,
-  selectedCalendars,
   firstDay,
   stepMinutes,
   onSelectEvent,
@@ -72,15 +63,12 @@ Times.defaultProps = {
 };
 
 Times.propTypes = {
-  view: CALENDAR_VIEW_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
-  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   renderHeader: PropTypes.func.isRequired,
   renderColumns: PropTypes.func.isRequired
 };

@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from "../../../types";
-import Event from "../../Event";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
-import { getTodayClass, getEventColumns } from "../utils";
+import { getTodayClass } from "../utils";
 import "./Day.scss";
 import { makeClass, cellWidth } from "../../../utils";
+import StepGridEvents from "./StepGridEvents";
 
 const Day = ({
   events,
@@ -14,32 +14,9 @@ const Day = ({
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
-  renderCurrentTimeIndicator
+  renderCurrentTimeIndicator,
+  renderEvent
 }) => {
-  const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
-
-  const renderEvents = () => {
-    return Object.keys(eventsWithColumns).map(column => {
-      const thisColumnEvents = eventsWithColumns[column];
-      return (
-        <div className={makeClass("times__event-column")} key={column}>
-          {thisColumnEvents.map(event => {
-            return (
-              <Event
-                key={event.id}
-                event={event}
-                style={{ top: `${event.top}px`, height: `${event.height}px` }}
-                onSelectEvent={onSelectEvent}
-                selectMinutes={selectMinutes}
-                stepMinutes={stepMinutes}
-              />
-            );
-          })}
-        </div>
-      );
-    });
-  };
-
   const totalHeight = useMemo(() => {
     const totalStepsPerBlock = 60 / stepMinutes;
     const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
@@ -83,13 +60,22 @@ const Day = ({
       }}
     >
       {renderCurrentTimeIndicator}
-      <div className={makeClass("times__event-columns")}>{renderEvents()}</div>
+      <div className={makeClass("times__event-columns")}>
+        <StepGridEvents
+          events={events}
+          stepMinutes={stepMinutes}
+          selectMinutes={selectMinutes}
+          onSelectEvent={onSelectEvent}
+          renderEvent={renderEvent}
+        />
+      </div>
     </div>
   );
 };
 
 Day.defaultProps = {
-  renderCurrentTimeIndicator: null
+  renderCurrentTimeIndicator: null,
+  renderEvent: null
 };
 
 Day.propTypes = {
@@ -99,7 +85,8 @@ Day.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,
-  renderCurrentTimeIndicator: PropTypes.node
+  renderCurrentTimeIndicator: PropTypes.node,
+  renderEvent: PropTypes.func
 };
 
 export default Day;

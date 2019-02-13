@@ -27,14 +27,13 @@ const CalendarsView = ({
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
-  eventsWithCalendars
+  eventsWithCalendars,
+  renderEvent
 }) => {
   return (
     <Times
       view={view}
       selectedDate={selectedDate}
-      calendars={calendars}
-      selectedCalendars={selectedCalendars}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
@@ -76,6 +75,7 @@ const CalendarsView = ({
               key={`calendarColumn${calendarId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
+              renderEvent={renderEvent}
               renderCurrentTimeIndicator={
                 selectedDate.isSame(moment(), "day") && (
                   <CurrentTimeIndicator
@@ -99,7 +99,8 @@ CalendarsView.propTypes = {
   eventsWithCalendars: PropTypes.object.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired
+  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
+  renderEvent: PropTypes.func.isRequired
 };
 
 export default CalendarsView;

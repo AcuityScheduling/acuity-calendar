@@ -15,25 +15,20 @@ const columnStyles = {
 };
 
 const WeekView = ({
-  view,
   selectedDate,
-  calendars,
-  selectedCalendars,
   firstDay,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
+  renderEvent,
   events
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
 
   return (
     <Times
-      view={view}
       selectedDate={selectedDate}
-      calendars={calendars}
-      selectedCalendars={selectedCalendars}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
@@ -67,6 +62,7 @@ const WeekView = ({
               key={`weekColumn${date.day()}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
+              renderEvent={renderEvent}
               renderCurrentTimeIndicator={
                 date.isSame(moment(), "day") && (
                   <CurrentTimeIndicator
@@ -84,11 +80,19 @@ const WeekView = ({
   );
 };
 
+WeekView.defaultProps = {
+  renderEvent: null
+};
+
 WeekView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  events: PropTypes.object.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  renderEvent: PropTypes.func,
+  events: PropTypes.object.isRequired
 };
 
 export default WeekView;

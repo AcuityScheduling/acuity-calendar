@@ -39,6 +39,7 @@ const App = () => {
         onSelectEvent={event => {
           console.log(`Selected ${event.title}`);
         }}
+        // When clicking and dragging to create a new event on a stepgrid view
         onSelecting={({ start, end }) =>
           console.log(`Selecting ${start} - ${end}`)
         }

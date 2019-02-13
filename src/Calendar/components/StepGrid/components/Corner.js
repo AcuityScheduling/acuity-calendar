@@ -1,13 +1,22 @@
 import React from "react";
-import "./Corner.scss";
+import PropTypes from "prop-types";
 import { makeClass } from "../../../utils";
+import "./Corner.scss";
 
-const Corner = React.forwardRef((props, ref) => {
+const Corner = React.forwardRef(({ renderCorner, currentTime }, ref) => {
   return (
     <div className={makeClass("step-grid__corner")} ref={ref}>
-      <h2>Calender Timer</h2>
+      {renderCorner && renderCorner({ currentTime })}
     </div>
   );
 });
+
+Corner.defaultProps = {
+  renderCorner: null
+};
+
+Corner.propTypes = {
+  renderCorner: PropTypes.func
+};
 
 export default Corner;

@@ -28,7 +28,8 @@ const CalendarsView = ({
   onSelectSlot,
   selectMinutes,
   eventsWithCalendars,
-  renderEvent
+  renderEvent,
+  renderCorner
 }) => {
   return (
     <StepGrid
@@ -39,6 +40,7 @@ const CalendarsView = ({
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
       selectMinutes={selectMinutes}
+      renderCorner={renderCorner}
       renderHeader={() =>
         selectedCalendars.map(calendarId => {
           const calendarName = get(
@@ -93,6 +95,11 @@ const CalendarsView = ({
   );
 };
 
+CalendarsView.defaultProps = {
+  renderCorner: null,
+  renderEvent: null
+};
+
 CalendarsView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
@@ -100,7 +107,8 @@ CalendarsView.propTypes = {
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
-  renderEvent: PropTypes.func.isRequired
+  renderEvent: PropTypes.func,
+  renderCorner: PropTypes.func
 };
 
 export default CalendarsView;

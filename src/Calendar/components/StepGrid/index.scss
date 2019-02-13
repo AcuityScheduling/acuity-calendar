@@ -1,6 +1,6 @@
 .acuity-calendar {
   &__step-grid {
-    width: 80%;
+    width: 100%;
     display: flex;
     height: 400px;
     overflow-y: scroll;
@@ -18,9 +18,14 @@
       text-align: center;
       height: 70px;
       border-bottom: 1px solid black;
+    }
+    &__header-column {
+      margin: 0;
+      border-right: 1px solid black;
+      min-width: 124px;
+      width: 14%;
       h2 {
-        margin: 0;
-        border-right: 1px solid black;
+        font-size: 14px;
       }
     }
     &__columns {

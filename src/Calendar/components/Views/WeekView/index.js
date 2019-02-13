@@ -6,13 +6,9 @@ import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";
 import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { getWeekList } from "./utils";
-import { makeClass, cellWidth } from "../../../utils";
+import { makeClass } from "../../../utils";
 import { getTodayClass } from "../../StepGrid/utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../../types";
-
-const columnStyles = {
-  minWidth: cellWidth
-};
 
 const WeekView = ({
   selectedDate,
@@ -22,6 +18,7 @@ const WeekView = ({
   onSelectSlot,
   selectMinutes,
   renderEvent,
+  renderCorner,
   events
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
@@ -34,18 +31,18 @@ const WeekView = ({
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
       selectMinutes={selectMinutes}
+      renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
           return (
-            <h2
-              className={`${makeClass("step-grid__header-column")}${getTodayClass(
-                date
-              )}`}
+            <div
+              className={`${makeClass(
+                "step-grid__header-column"
+              )}${getTodayClass(date)}`}
               key={`dayHeader${date.date()}`}
-              style={columnStyles}
             >
-              {date.format("dddd, MMM D")}
-            </h2>
+              <h2>{date.format("dddd, MMM D")}</h2>
+            </div>
           );
         })
       }
@@ -81,7 +78,8 @@ const WeekView = ({
 };
 
 WeekView.defaultProps = {
-  renderEvent: null
+  renderEvent: null,
+  renderCorner: null
 };
 
 WeekView.propTypes = {
@@ -92,6 +90,7 @@ WeekView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   renderEvent: PropTypes.func,
+  renderCorner: PropTypes.func,
   events: PropTypes.object.isRequired
 };
 

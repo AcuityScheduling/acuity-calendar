@@ -18,7 +18,8 @@ const StepGrid = ({
   onSelectSlot,
   selectMinutes,
   renderHeader,
-  renderColumns
+  renderColumns,
+  renderCorner
 }) => {
   const {
     wrapperRef,
@@ -33,7 +34,11 @@ const StepGrid = ({
 
   return (
     <div className={makeClass("step-grid")} ref={wrapperRef}>
-      <Corner ref={cornerRef} />
+      <Corner
+        currentTime={currentTime}
+        renderCorner={renderCorner}
+        ref={cornerRef}
+      />
       <CurrentTimeIndicator
         ref={timeIndicatorRef}
         stepMinutes={stepMinutes}
@@ -59,7 +64,8 @@ const StepGrid = ({
 };
 
 StepGrid.defaultProps = {
-  eventOverlap: false
+  eventOverlap: false,
+  renderCorner: null
 };
 
 StepGrid.propTypes = {
@@ -70,7 +76,8 @@ StepGrid.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   renderHeader: PropTypes.func.isRequired,
-  renderColumns: PropTypes.func.isRequired
+  renderColumns: PropTypes.func.isRequired,
+  renderCorner: PropTypes.func
 };
 
 export default StepGrid;

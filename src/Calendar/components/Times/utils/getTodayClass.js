@@ -7,6 +7,7 @@ import { makeClass } from "../../../utils";
  * @param {moment} date - the selected date
  */
 const getTodayClass = date => {
+  console.log('date: ', date);
   if (!date.isSame(moment(), "day")) return "";
   return ` ${makeClass("times__today")}`;
 };

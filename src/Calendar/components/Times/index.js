@@ -22,7 +22,6 @@ const Times = ({
   calendars,
   selectedCalendars,
   firstDay,
-  events,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,

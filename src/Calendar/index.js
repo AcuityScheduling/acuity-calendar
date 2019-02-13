@@ -55,6 +55,7 @@ const Calendar = ({
   return (
     <View
       view={view}
+      eventsWithCalendars={mungedEvents}
       events={eventsWithSelectedCalendars}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}

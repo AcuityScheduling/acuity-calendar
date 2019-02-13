@@ -18,22 +18,28 @@ const columnStyles = {
 };
 
 const CalendarsView = ({
+  view,
   selectedDate,
-  firstDay,
-  events,
-  stepMinutes,
-  selectedCalendars,
   calendars,
-  ...restProps
+  selectedCalendars,
+  firstDay,
+  stepMinutes,
+  onSelectEvent,
+  onSelectSlot,
+  selectMinutes,
+  eventsWithCalendars
 }) => {
   return (
     <Times
+      view={view}
       selectedDate={selectedDate}
-      firstDay={firstDay}
-      stepMinutes={stepMinutes}
       calendars={calendars}
       selectedCalendars={selectedCalendars}
-      {...restProps}
+      firstDay={firstDay}
+      stepMinutes={stepMinutes}
+      onSelectEvent={onSelectEvent}
+      onSelectSlot={onSelectSlot}
+      selectMinutes={selectMinutes}
       renderHeader={() =>
         selectedCalendars.map(calendarId => {
           const calendarName = get(
@@ -54,11 +60,19 @@ const CalendarsView = ({
       }
       renderColumns={({ currentTime }) => {
         return selectedCalendars.map(calendarId => {
-          const eventsForDay = get(events, `${calendarId}.${selectedDate}`, []);
+          const eventsForDay = get(
+            eventsWithCalendars,
+            `${calendarId}.${selectedDate.format("YYYY-MM-DD")}`,
+            []
+          );
+
           return (
             <Day
               events={eventsForDay}
               date={selectedDate}
+              onSelectEvent={onSelectEvent}
+              onSelectSlot={onSelectSlot}
+              selectMinutes={selectMinutes}
               key={`calendarColumn${calendarId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
@@ -71,7 +85,6 @@ const CalendarsView = ({
                   />
                 )
               }
-              {...restProps}
             />
           );
         });
@@ -83,7 +96,7 @@ const CalendarsView = ({
 CalendarsView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  events: PropTypes.object.isRequired,
+  eventsWithCalendars: PropTypes.object.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired

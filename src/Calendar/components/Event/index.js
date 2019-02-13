@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { EVENT_TYPE } from "../../types";
 import { makeClass } from "../../utils";
+import EventWrapper from "./components/EventWrapper";
+import { getDisplayTime } from "./utils";
 import "./index.scss";
-import { getDisplayTime, getEventContainerClass } from "./utils";
 
 const Event = ({
   event,
@@ -14,14 +15,11 @@ const Event = ({
   ...restProps
 }) => {
   return (
-    <div
+    <EventWrapper
       {...restProps}
-      className={getEventContainerClass(className)}
-      role="button"
-      onClick={e => {
-        e.stopPropagation();
-        onSelectEvent(event);
-      }}
+      className={className}
+      event={event}
+      onSelectEvent={onSelectEvent}
     >
       {children ? (
         children(event)
@@ -35,7 +33,7 @@ const Event = ({
           </span>
         </div>
       )}
-    </div>
+    </EventWrapper>
   );
 };
 

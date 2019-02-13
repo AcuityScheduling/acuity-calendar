@@ -2,11 +2,10 @@
   &__step-grid {
     &__time-column {
       background: white;
-      position: absolute;
-      width: 100px;
+      position: relative;
+      width: 50px;
       text-align: center;
       border-right: 1px solid black;
-      margin-top: 70px;
       z-index: 2;
     }
     &__time-label {

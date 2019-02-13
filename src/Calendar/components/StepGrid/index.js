@@ -34,30 +34,35 @@ const StepGrid = ({
 
   return (
     <div className={makeClass("step-grid")} ref={wrapperRef}>
-      <Corner
-        currentTime={currentTime}
-        renderCorner={renderCorner}
-        ref={cornerRef}
+      <StepLines
+        totalStepsPerBlock={totalStepsPerBlock}
+        stepMinutes={stepMinutes}
       />
       <CurrentTimeIndicator
         ref={timeIndicatorRef}
         stepMinutes={stepMinutes}
         currentTime={currentTime}
       />
-      <TimeColumn
-        blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
-        ref={timeColumnRef}
-      />
-      <StepLines
-        totalStepsPerBlock={totalStepsPerBlock}
-        stepMinutes={stepMinutes}
-      />
 
-      <div className={makeClass("step-grid__header")} ref={headerRef}>
-        {renderHeader()}
+      <div style={{ display: "flex" }}>
+        <Corner
+          currentTime={currentTime}
+          renderCorner={renderCorner}
+          ref={cornerRef}
+        />
+        <div className={makeClass("step-grid__header")} ref={headerRef}>
+          {renderHeader()}
+        </div>
       </div>
-      <div className={makeClass("step-grid__columns")}>
-        {renderColumns({ currentTime })}
+
+      <div style={{ display: "flex" }}>
+        <TimeColumn
+          blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
+          ref={timeColumnRef}
+        />
+        <div className={makeClass("step-grid__columns")}>
+          {renderColumns({ currentTime })}
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 .acuity-calendar {
   &__step-grid {
     &__corner {
-      position: absolute;
-      width: 100px;
+      position: relative;
+      width: 50px;
       z-index: 5;
       background: white;
       height: 70px;

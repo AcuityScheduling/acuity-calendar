@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import Event from "../../../Event";
 import { MOMENT_TYPE } from "../../../../types";
 import { cellWidth, makeClass } from "../../../../utils";
 
@@ -30,11 +29,17 @@ const MonthCell = ({
         eventsForCell.map(
           event =>
             isInRange && (
-              <Event
-                event={event}
+              // This wrapper should be reused from the stepgrid
+              <div
                 key={event.id}
-                onSelectEvent={onSelectEvent}
-              />
+                onClick={e => {
+                  e.stopPropagation();
+                  onSelectEvent(event);
+                }}
+                style={{ fontSize: "12px", position: "absolute" }}
+              >
+                {event.title}
+              </div>
             )
         )}
     </div>

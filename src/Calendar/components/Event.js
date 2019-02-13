@@ -77,15 +77,19 @@ const Event = ({
         }}
         {...restProps}
       >
-        <span className={makeClass("times__event-title")}>{event.title}</span>
-        <span className={makeClass("times__event-time")}>
-          {getDisplayTime({
-            event,
-            selectMinutes,
-            selectMinutesHeight,
-            deltaPosition
-          })}
-        </span>
+        <div className={makeClass("times__event-wrapper")}>
+          <span className={makeClass("times__event-title")}>
+            {event.title},{" "}
+          </span>
+          <span className={makeClass("times__event-time")}>
+            {getDisplayTime({
+              event,
+              selectMinutes,
+              selectMinutesHeight,
+              deltaPosition
+            })}
+          </span>
+        </div>
       </div>
     </Draggable>
   );

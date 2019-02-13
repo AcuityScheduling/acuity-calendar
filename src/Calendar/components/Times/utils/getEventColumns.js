@@ -13,8 +13,8 @@ const getEventColumns = events => {
       lastEvent: index !== 0 ? events[index - 1] : null,
       currentColumn
     });
-    const eventsInColumn = get(accumulator, eventColumn, [event]);
-    accumulator[eventColumn] = eventsInColumn;
+    const eventsInColumn = get(accumulator, eventColumn, []);
+    accumulator[eventColumn] = [...eventsInColumn, event];
     if (eventColumn !== currentColumn) {
       currentColumn = eventColumn;
     }

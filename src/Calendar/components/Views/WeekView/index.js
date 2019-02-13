@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import moment from "moment";
-import Times from "../../Times";
-import Day from "../../Times/components/Day";
-import CurrentTimeIndicator from "../../Times/components/CurrentTimeIndicator";
+import StepGrid from "../../StepGrid";
+import Day from "../../StepGrid/components/Day";
+import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { getWeekList } from "./utils";
 import { makeClass, cellWidth } from "../../../utils";
-import { getTodayClass } from "../../Times/utils";
+import { getTodayClass } from "../../StepGrid/utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 
 const columnStyles = {
@@ -15,25 +15,20 @@ const columnStyles = {
 };
 
 const WeekView = ({
-  view,
   selectedDate,
-  calendars,
-  selectedCalendars,
   firstDay,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
+  renderEvent,
   events
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
 
   return (
-    <Times
-      view={view}
+    <StepGrid
       selectedDate={selectedDate}
-      calendars={calendars}
-      selectedCalendars={selectedCalendars}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
@@ -43,7 +38,7 @@ const WeekView = ({
         dateList.map(date => {
           return (
             <h2
-              className={`${makeClass("times__header-column")}${getTodayClass(
+              className={`${makeClass("step-grid__header-column")}${getTodayClass(
                 date
               )}`}
               key={`dayHeader${date.date()}`}
@@ -67,6 +62,7 @@ const WeekView = ({
               key={`weekColumn${date.day()}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
+              renderEvent={renderEvent}
               renderCurrentTimeIndicator={
                 date.isSame(moment(), "day") && (
                   <CurrentTimeIndicator
@@ -84,11 +80,19 @@ const WeekView = ({
   );
 };
 
+WeekView.defaultProps = {
+  renderEvent: null
+};
+
 WeekView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  events: PropTypes.object.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  renderEvent: PropTypes.func,
+  events: PropTypes.object.isRequired
 };
 
 export default WeekView;

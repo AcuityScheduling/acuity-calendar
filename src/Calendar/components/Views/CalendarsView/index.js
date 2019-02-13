@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import moment from "moment";
-import Times from "../../Times";
-import Day from "../../Times/components/Day";
-import CurrentTimeIndicator from "../../Times/components/CurrentTimeIndicator";
+import StepGrid from "../../StepGrid";
+import Day from "../../StepGrid/components/Day";
+import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { makeClass, cellWidth } from "../../../utils";
 import {
   MOMENT_TYPE,
@@ -27,14 +27,13 @@ const CalendarsView = ({
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
-  eventsWithCalendars
+  eventsWithCalendars,
+  renderEvent
 }) => {
   return (
-    <Times
+    <StepGrid
       view={view}
       selectedDate={selectedDate}
-      calendars={calendars}
-      selectedCalendars={selectedCalendars}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
@@ -49,7 +48,7 @@ const CalendarsView = ({
           );
           return (
             <h2
-              className={makeClass("times__header-column")}
+              className={makeClass("step-grid__header-column")}
               key={`header${calendarId}`}
               style={columnStyles}
             >
@@ -76,6 +75,7 @@ const CalendarsView = ({
               key={`calendarColumn${calendarId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
+              renderEvent={renderEvent}
               renderCurrentTimeIndicator={
                 selectedDate.isSame(moment(), "day") && (
                   <CurrentTimeIndicator
@@ -99,7 +99,8 @@ CalendarsView.propTypes = {
   eventsWithCalendars: PropTypes.object.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired
+  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
+  renderEvent: PropTypes.func.isRequired
 };
 
 export default CalendarsView;

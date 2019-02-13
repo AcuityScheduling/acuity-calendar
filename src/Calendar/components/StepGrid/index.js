@@ -6,21 +6,12 @@ import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
 import { STEP_HEIGHTS } from "./constants";
 import { useCalendarSticky, useCurrentTime } from "./utils";
-import {
-  CALENDAR_VIEW_TYPE,
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  CALENDAR_TYPE
-} from "../../types";
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
 import "./index.scss";
 
-const Times = ({
-  view,
+const StepGrid = ({
   selectedDate,
-  calendars,
-  selectedCalendars,
   firstDay,
   stepMinutes,
   onSelectEvent,
@@ -41,7 +32,7 @@ const Times = ({
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
-    <div className={makeClass("times")} ref={wrapperRef}>
+    <div className={makeClass("step-grid")} ref={wrapperRef}>
       <Corner ref={cornerRef} />
       <CurrentTimeIndicator
         ref={timeIndicatorRef}
@@ -57,32 +48,29 @@ const Times = ({
         stepMinutes={stepMinutes}
       />
 
-      <div className={makeClass("times__header")} ref={headerRef}>
+      <div className={makeClass("step-grid__header")} ref={headerRef}>
         {renderHeader()}
       </div>
-      <div className={makeClass("times__columns")}>
+      <div className={makeClass("step-grid__columns")}>
         {renderColumns({ currentTime })}
       </div>
     </div>
   );
 };
 
-Times.defaultProps = {
+StepGrid.defaultProps = {
   eventOverlap: false
 };
 
-Times.propTypes = {
-  view: CALENDAR_VIEW_TYPE.isRequired,
+StepGrid.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
-  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   renderHeader: PropTypes.func.isRequired,
   renderColumns: PropTypes.func.isRequired
 };
 
-export default Times;
+export default StepGrid;

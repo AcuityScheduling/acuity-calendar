@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import moment from "moment";
-import { getTopOffset } from "../components/Times/utils";
-import { STEP_HEIGHTS } from "../components/Times/constants";
+import { getTopOffset } from "../components/StepGrid/utils";
+import { STEP_HEIGHTS } from "../components/StepGrid/constants";
 
 /**
  * Get all the events keyed by date for easy lookup - and add some

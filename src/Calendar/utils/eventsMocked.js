@@ -3,7 +3,7 @@ const event1 = {
   calendar_id: 5,
   start: "2019-01-02 12:00:00",
   end: "2019-01-02 12:30:00",
-  title: "Jan 2nd - 12-12:30pm",
+  title: "My Meeting",
   allDay: false
 };
 
@@ -12,7 +12,7 @@ const event2 = {
   calendar_id: 5,
   start: "2019-01-02 19:00:00",
   end: "2019-01-02 19:25:25",
-  title: "Jan 2nd - 7-7:25pm",
+  title: "1:1 with Jordan",
   allDay: false
 };
 
@@ -21,7 +21,7 @@ const event3 = {
   calendar_id: 5,
   start: "2019-02-12 09:00:00",
   end: "2019-02-12 09:30:00",
-  title: "Feb 12th - 9-9:30am",
+  title: "Unicorns are pretty",
   allDay: false
 };
 
@@ -30,7 +30,7 @@ const event4 = {
   calendar_id: 6,
   start: "2019-03-07 14:00:00",
   end: "2019-03-07 15:00:00",
-  title: "March 7th - 2-3pm",
+  title: "Interview Today",
   allDay: false
 };
 
@@ -39,7 +39,7 @@ const event5 = {
   calendar_id: 6,
   start: "2019-02-12 09:15:00",
   end: "2019-02-12 09:30:00",
-  title: "Feb 12th - 9:15-9:30am",
+  title: "Piano Recital",
   allDay: false
 };
 
@@ -48,7 +48,7 @@ const event6 = {
   calendar_id: 6,
   start: "2019-02-12 09:29:00",
   end: "2019-02-12 09:50:00",
-  title: "Feb 12th - 9:29-9:50am",
+  title: "Band Practice",
   allDay: false
 };
 
@@ -57,7 +57,7 @@ const event7 = {
   calendar_id: 6,
   start: "2019-02-12 10:00:00",
   end: "2019-02-12 11:00:00",
-  title: "Feb 12th - 10:00-11:00am",
+  title: "Valentine's Day",
   allDay: false
 };
 

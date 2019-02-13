@@ -1,0 +1,21 @@
+.acuity-calendar {
+  &__step-grid {
+    &__event {
+      position: absolute;
+      background: #26ada0;
+      color: #fff;
+      border-radius: 2px;
+      z-index: 1;
+      font-size: 14px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    &__event-wrapper {
+      padding: 5px;
+      text-align: left;
+    }
+    &__event-time {
+      color: #ececec;
+    }
+  }
+}

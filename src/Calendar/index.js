@@ -24,7 +24,8 @@ const Calendar = ({
   onSelecting,
   onSelectSlot,
   stepMinutes,
-  selectMinutes
+  selectMinutes,
+  renderEvent
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -54,7 +55,6 @@ const Calendar = ({
 
   return (
     <View
-      view={view}
       eventsWithCalendars={mungedEvents}
       events={eventsWithSelectedCalendars}
       selectedDate={selectedDate}
@@ -66,8 +66,13 @@ const Calendar = ({
       selectMinutes={selectMinutes}
       selectedCalendars={selectedCalendars}
       calendars={calendars}
+      renderEvent={renderEvent}
     />
   );
+};
+
+Calendar.defaultProps = {
+  renderEvent: null
 };
 
 Calendar.propTypes = {
@@ -89,7 +94,8 @@ Calendar.propTypes = {
   onSelecting: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  renderEvent: PropTypes.func
 };
 
 export default Calendar;

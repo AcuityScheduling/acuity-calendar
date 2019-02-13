@@ -1,7 +1,7 @@
 import { makeClass } from "../../../utils";
 
 const getEventContainerClass = className => {
-  const eventClass = makeClass("times__event");
+  const eventClass = makeClass("step-grid__event");
   if (className) {
     return `${eventClass} ${className}`;
   }

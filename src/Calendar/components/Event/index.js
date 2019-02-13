@@ -19,11 +19,11 @@ const Event = ({ event, onSelectEvent, children, className, ...restProps }) => {
       {children ? (
         children(event)
       ) : (
-        <div className={makeClass("times__event-wrapper")}>
-          <span className={makeClass("times__event-title")}>
+        <div className={makeClass("step-grid__event-wrapper")}>
+          <span className={makeClass("step-grid__event-title")}>
             {event.title},{" "}
           </span>
-          <span className={makeClass("times__event-time")}>
+          <span className={makeClass("step-grid__event-time")}>
             {getDisplayTime(event)}
           </span>
         </div>

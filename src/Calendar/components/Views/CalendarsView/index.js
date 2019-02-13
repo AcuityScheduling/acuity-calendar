@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import moment from "moment";
-import Times from "../../Times";
-import Day from "../../Times/components/Day";
-import CurrentTimeIndicator from "../../Times/components/CurrentTimeIndicator";
+import StepGrid from "../../StepGrid";
+import Day from "../../StepGrid/components/Day";
+import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { makeClass, cellWidth } from "../../../utils";
 import {
   MOMENT_TYPE,
@@ -31,7 +31,7 @@ const CalendarsView = ({
   renderEvent
 }) => {
   return (
-    <Times
+    <StepGrid
       view={view}
       selectedDate={selectedDate}
       firstDay={firstDay}
@@ -48,7 +48,7 @@ const CalendarsView = ({
           );
           return (
             <h2
-              className={makeClass("times__header-column")}
+              className={makeClass("step-grid__header-column")}
               key={`header${calendarId}`}
               style={columnStyles}
             >

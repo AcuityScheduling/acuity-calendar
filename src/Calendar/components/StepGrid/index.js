@@ -10,7 +10,7 @@ import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
 import "./index.scss";
 
-const Times = ({
+const StepGrid = ({
   selectedDate,
   firstDay,
   stepMinutes,
@@ -32,7 +32,7 @@ const Times = ({
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (
-    <div className={makeClass("times")} ref={wrapperRef}>
+    <div className={makeClass("step-grid")} ref={wrapperRef}>
       <Corner ref={cornerRef} />
       <CurrentTimeIndicator
         ref={timeIndicatorRef}
@@ -48,21 +48,21 @@ const Times = ({
         stepMinutes={stepMinutes}
       />
 
-      <div className={makeClass("times__header")} ref={headerRef}>
+      <div className={makeClass("step-grid__header")} ref={headerRef}>
         {renderHeader()}
       </div>
-      <div className={makeClass("times__columns")}>
+      <div className={makeClass("step-grid__columns")}>
         {renderColumns({ currentTime })}
       </div>
     </div>
   );
 };
 
-Times.defaultProps = {
+StepGrid.defaultProps = {
   eventOverlap: false
 };
 
-Times.propTypes = {
+StepGrid.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
@@ -73,4 +73,4 @@ Times.propTypes = {
   renderColumns: PropTypes.func.isRequired
 };
 
-export default Times;
+export default StepGrid;

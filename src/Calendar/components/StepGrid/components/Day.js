@@ -49,7 +49,7 @@ const Day = ({
 
   return (
     <div
-      className={`${makeClass("times__column")}${getTodayClass(date)}`}
+      className={`${makeClass("step-grid__column")}${getTodayClass(date)}`}
       key={`weekView${date.day()}`}
       style={{
         minWidth: cellWidth,
@@ -60,7 +60,7 @@ const Day = ({
       }}
     >
       {renderCurrentTimeIndicator}
-      <div className={makeClass("times__event-columns")}>
+      <div className={makeClass("step-grid__event-columns")}>
         <StepGridEvents
           events={events}
           stepMinutes={stepMinutes}

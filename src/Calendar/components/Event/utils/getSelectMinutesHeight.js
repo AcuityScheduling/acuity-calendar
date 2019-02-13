@@ -1,4 +1,4 @@
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../../Times/constants";
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../../StepGrid/constants";
 
 const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
   const selectMinutesRatio = stepMinutes / selectMinutes;

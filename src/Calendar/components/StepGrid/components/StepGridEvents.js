@@ -18,7 +18,7 @@ const StepGridEvents = ({
   return Object.keys(eventsWithColumns).map(column => {
     const thisColumnEvents = eventsWithColumns[column];
     return (
-      <div className={makeClass("times__event-column")} key={column}>
+      <div className={makeClass("step-grid__event-column")} key={column}>
         {thisColumnEvents.map(event => {
           return (
             <EventDragDrop

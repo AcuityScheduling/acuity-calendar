@@ -12,7 +12,7 @@ const StepLines = ({ totalStepsPerBlock, stepMinutes }) => {
   for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
     times.push(
       <div
-        className={makeClass("times__step-line")}
+        className={makeClass("step-grid__step-line")}
         key={`timeBlock${i}`}
         style={{
           height: stepHeightWithBorder
@@ -22,7 +22,7 @@ const StepLines = ({ totalStepsPerBlock, stepMinutes }) => {
     );
   }
 
-  return <div className={makeClass("times__step-lines")}>{times}</div>;
+  return <div className={makeClass("step-grid__step-lines")}>{times}</div>;
 };
 
 export default StepLines;

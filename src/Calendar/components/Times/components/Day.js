@@ -30,6 +30,8 @@ const Day = ({
                 event={event}
                 style={{ top: `${event.top}px`, height: `${event.height}px` }}
                 onSelectEvent={onSelectEvent}
+                selectMinutes={selectMinutes}
+                stepMinutes={stepMinutes}
               />
             );
           })}

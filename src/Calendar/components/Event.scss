@@ -2,10 +2,19 @@
   &__times {
     &__event {
       position: absolute;
-      background: black;
-      color: white;
+      background: white;
+      color: black;
       border: 1px solid blue;
       z-index: 1;
+      font-size: 12px;
+      overflow: hidden;
+    }
+    &__event-title {
+      display: block;
+      font-weight: 600;
+    }
+    &__event-time {
+      display: block;
     }
   }
 }

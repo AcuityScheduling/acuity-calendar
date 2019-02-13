@@ -6,18 +6,38 @@ import { makeClass } from "../utils";
 import "./Event.scss";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "./Times/constants";
 
-const getDisplayTime = event => {
-  let startMinutes = `:${event.start.format("mm")}`;
-  if (startMinutes !== "00") {
+const getDisplayTime = ({
+  event,
+  selectMinutes,
+  selectMinutesHeight,
+  deltaPosition
+}) => {
+  let newStart = event.start.clone();
+  let newEnd = event.end.clone();
+  if (deltaPosition.y !== 0) {
+    const totalPositionMoves = deltaPosition.y / selectMinutesHeight;
+    const totalMinutes = totalPositionMoves * selectMinutes;
+
+    newStart = newStart.add(totalMinutes, "minutes");
+    newEnd = newEnd.add(totalMinutes, "minutes");
+  }
+
+  let startMinutes = `:${newStart.format("mm")}`;
+  if (startMinutes === ":00") {
     startMinutes = "";
   }
-  const start = `${event.start.format("h")}${startMinutes}`;
+  let startMeridiem = "";
+  if (newStart.format("a") !== newEnd.format("a")) {
+    startMeridiem = newStart.format("a");
+  }
+  const start = `${newStart.format("h")}${startMinutes}${startMeridiem}`;
 
-  let endMinutes = `:${event.end.format("mm")}`;
-  if (endMinutes !== "00") {
+  let endMinutes = `:${newEnd.format("mm")}`;
+  if (endMinutes === ":00") {
     endMinutes = "";
   }
-  const end = `${event.end.format("h")}${startMinutes}${event.end.format("a")}`;
+
+  const end = `${newEnd.format("h")}${startMinutes}${newEnd.format("a")}`;
 
   return `${start} - ${end}`;
 };
@@ -59,7 +79,12 @@ const Event = ({
       >
         <span className={makeClass("times__event-title")}>{event.title}</span>
         <span className={makeClass("times__event-time")}>
-          {getDisplayTime(event)}
+          {getDisplayTime({
+            event,
+            selectMinutes,
+            selectMinutesHeight,
+            deltaPosition
+          })}
         </span>
       </div>
     </Draggable>

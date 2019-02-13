@@ -47,12 +47,16 @@ const StepGridEvents = ({
   });
 };
 
+StepGridEvents.defaultProps = {
+  renderEvent: null
+};
+
 StepGridEvents.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,
-  renderEvent: PropTypes.func.isRequired
+  renderEvent: PropTypes.func
 };
 
 export default StepGridEvents;

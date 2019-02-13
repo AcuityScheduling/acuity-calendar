@@ -5,7 +5,14 @@ import { makeClass } from "../../utils";
 import "./index.scss";
 import { getDisplayTime, getEventContainerClass } from "./utils";
 
-const Event = ({ event, onSelectEvent, children, className, ...restProps }) => {
+const Event = ({
+  event,
+  onSelectEvent,
+  children,
+  className,
+  renderEvent,
+  ...restProps
+}) => {
   return (
     <div
       {...restProps}

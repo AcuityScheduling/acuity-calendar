@@ -26,34 +26,32 @@ const App = () => {
         selectedCalendars={selectedCalendars}
         setSelectedCalendars={setSelectedCalendars}
       />
-      <div style={{ border: "1px solid #e7e7e7" }}>
-        <Calendar
-          events={eventsMocked}
-          view={view}
-          onViewChange={setView}
-          calendars={calendarsMocked}
-          selectedCalendars={selectedCalendars}
-          selectedDate={selectedDate}
-          onNavigate={setSelectedDate}
-          // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
-          firstDay={firstDay}
-          onSelectEvent={event => {
-            console.log(`Selected ${event.title}`);
-          }}
-          // When clicking and dragging to create a new event on a stepgrid view
-          onSelecting={({ start, end }) =>
-            console.log(`Selecting ${start} - ${end}`)
-          }
-          // A callback fired when a date selection is made
-          onSelectSlot={start => console.log(start.toDate())}
-          // How many grid lines there are between an hour. 30 means
-          // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
-          stepMinutes={stepMinutes}
-          // What range of minutes is selectable - for new events
-          // and for drag and drop
-          selectMinutes={15}
-        />
-      </div>
+      <Calendar
+        events={eventsMocked}
+        view={view}
+        onViewChange={setView}
+        calendars={calendarsMocked}
+        selectedCalendars={selectedCalendars}
+        selectedDate={selectedDate}
+        onNavigate={setSelectedDate}
+        // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
+        firstDay={firstDay}
+        onSelectEvent={event => {
+          console.log(`Selected ${event.title}`);
+        }}
+        // When clicking and dragging to create a new event on a stepgrid view
+        onSelecting={({ start, end }) =>
+          console.log(`Selecting ${start} - ${end}`)
+        }
+        // A callback fired when a date selection is made
+        onSelectSlot={start => console.log(start.toDate())}
+        // How many grid lines there are between an hour. 30 means
+        // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
+        stepMinutes={stepMinutes}
+        // What range of minutes is selectable - for new events
+        // and for drag and drop
+        selectMinutes={15}
+      />
     </Fragment>
   );
 };

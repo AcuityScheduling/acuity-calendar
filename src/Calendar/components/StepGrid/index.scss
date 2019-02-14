@@ -4,6 +4,7 @@
     height: 400px;
     overflow-y: scroll;
     position: relative;
+    border: 1px solid #e7e7e7;
     &__header-wrapper,
     &__column-wrapper {
       display: flex;

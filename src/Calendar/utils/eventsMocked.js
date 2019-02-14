@@ -61,6 +61,15 @@ const event7 = {
   allDay: false
 };
 
-const eventsMocked = [event1, event2, event3, event4, event5, event6, event7];
+const event8 = {
+  id: 8,
+  calendar_id: 6,
+  start: "2019-02-14 10:00:00",
+  end: "2019-02-14 16:00:00",
+  title: "Big Group Meeting",
+  allDay: false
+};
+
+const eventsMocked = [event1, event2, event3, event4, event5, event6, event7, event8];
 
 export default eventsMocked;

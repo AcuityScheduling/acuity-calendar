@@ -1,21 +1,23 @@
 .acuity-calendar {
   &__step-grid {
+    &__event-wrapper {
+      padding: 7.5px 10px 0;
+      text-align: left;
+    }
     &__event {
-      position: relative;
+      position: absolute;
       background: #26ada0;
       color: #fff;
       border-radius: 2px;
       z-index: 1;
-      font-size: 14px;
+      font-size: 12px;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: rgb(255, 255, 255) 0px 0px 0px 1px;
     }
-    &__event-wrapper {
-      padding: 5px;
-      text-align: left;
-    }
-    &__event-time {
-      color: #ececec;
+    &__event-title {
+      display: block;
+      margin-bottom: 7.5px;
     }
   }
 }

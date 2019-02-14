@@ -26,7 +26,7 @@ const Event = ({
       ) : (
         <div className={makeClass("step-grid__event-wrapper")}>
           <span className={makeClass("step-grid__event-title")}>
-            {event.title},{" "}
+            {event.title}
           </span>
           <span className={makeClass("step-grid__event-time")}>
             {getDisplayTime(event)}

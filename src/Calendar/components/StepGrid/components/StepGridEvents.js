@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import EventDragDrop from "../../Event/components/EventDragDrop";
 import Event from "../../Event";
 import { getEventColumns } from "../utils";
-import { makeClass } from "../../../utils";
 import { EVENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 
 const StepGridEvents = ({
@@ -14,36 +13,36 @@ const StepGridEvents = ({
   renderEvent
 }) => {
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
+  const totalColumns = Object.keys(eventsWithColumns).length;
+  const percentWidth = 100 / totalColumns - 1;
 
   return Object.keys(eventsWithColumns).map(column => {
     const thisColumnEvents = eventsWithColumns[column];
-    return (
-      <div className={makeClass("step-grid__event-column")} key={column}>
-        {thisColumnEvents.map(event => {
-          return (
-            <EventDragDrop
-              key={event.id}
-              event={event}
-              stepMinutes={stepMinutes}
-              selectMinutes={selectMinutes}
+    return thisColumnEvents.map(event => {
+      return (
+        <EventDragDrop
+          key={event.id}
+          event={event}
+          stepMinutes={stepMinutes}
+          selectMinutes={selectMinutes}
+        >
+          {draggedEvent => (
+            <Event
+              event={draggedEvent}
+              style={{
+                top: `${event.top}px`,
+                height: `${event.height}px`,
+                width: `${percentWidth}%`,
+                left: `${percentWidth * (column - 1)}%`
+              }}
+              onSelectEvent={onSelectEvent}
             >
-              {draggedEvent => (
-                <Event
-                  event={draggedEvent}
-                  style={{
-                    top: `${event.top}px`,
-                    height: `${event.height}px`
-                  }}
-                  onSelectEvent={onSelectEvent}
-                >
-                  {renderEvent}
-                </Event>
-              )}
-            </EventDragDrop>
-          );
-        })}
-      </div>
-    );
+              {renderEvent}
+            </Event>
+          )}
+        </EventDragDrop>
+      );
+    });
   });
 };
 

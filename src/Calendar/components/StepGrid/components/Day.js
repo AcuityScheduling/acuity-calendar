@@ -59,15 +59,13 @@ const Day = ({
       }}
     >
       {renderCurrentTimeIndicator}
-      <div className={makeClass("step-grid__event-columns")}>
-        <StepGridEvents
-          events={events}
-          stepMinutes={stepMinutes}
-          selectMinutes={selectMinutes}
-          onSelectEvent={onSelectEvent}
-          renderEvent={renderEvent}
-        />
-      </div>
+      <StepGridEvents
+        events={events}
+        stepMinutes={stepMinutes}
+        selectMinutes={selectMinutes}
+        onSelectEvent={onSelectEvent}
+        renderEvent={renderEvent}
+      />
     </div>
   );
 };

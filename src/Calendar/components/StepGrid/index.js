@@ -56,11 +56,11 @@ const StepGrid = ({
           ref={timeColumnRef}
         />
         <div className={makeClass("step-grid__columns")}>
-          {/* <CurrentTimeIndicator
+          <CurrentTimeIndicator
             ref={timeIndicatorRef}
             stepMinutes={stepMinutes}
             currentTime={currentTime}
-          /> */}
+          />
           {renderColumns({ currentTime })}
         </div>
       </div>

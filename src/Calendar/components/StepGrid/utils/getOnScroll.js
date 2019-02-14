@@ -22,8 +22,8 @@ const update = ({
   headerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
   timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
-  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-  timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
+//   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+//   timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
 
   // For some reason translateX doesn't work here. I'm not sure why but whatever
   cornerRef.current.style.left = `${latestKnownScrollX}px`;

@@ -22,10 +22,12 @@
       border-bottom: 1px solid #e7e7e7;
     }
     &__header-column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
       margin: 0;
-      border-right: 1px solid #e7e7e7;
       min-width: 124px;
-      width: 14%;
+      width: 14.286%;
       h2 {
         font-size: 14px;
         color: #444;

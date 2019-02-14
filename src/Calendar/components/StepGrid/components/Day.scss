@@ -1,11 +1,13 @@
 .acuity-calendar {
   &__step-grid {
     &__column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
       text-align: center;
-      border-right: 1px solid #e7e7e7;
       position: relative;
       min-width: 124px;
-      width: 14%;
+      width: 14.286%;
     }
     &__event-columns {
       position: relative;

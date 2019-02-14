@@ -35,7 +35,7 @@ const App = () => {
         selectedDate={selectedDate}
         onNavigate={setSelectedDate}
         // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
-        firstDay={firstDay}
+        firstDay={1}
         onSelectEvent={event => {
           console.log(`Selected ${event.title}`);
         }}

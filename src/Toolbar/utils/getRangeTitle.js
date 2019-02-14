@@ -20,7 +20,7 @@ const getRangeTitle = ({ date, view, firstDay }) => {
   const viewMap = {
     [month]: date.format("MMMM YYYY"),
     [week]: `Week of ${weekList[0].format("MMMM D, YYYY")}`,
-    [calendar]: date.format("MMMM D, YYYY")
+    [calendar]: date.format("dddd, MMMM D, YYYY")
   };
 
   return viewMap[view];

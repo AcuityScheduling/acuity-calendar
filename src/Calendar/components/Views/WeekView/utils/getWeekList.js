@@ -27,9 +27,9 @@ export const getFirstDayIndex = ({ firstDay, dateDay }) => {
     return 6;
   }
 
-  let distance = dateDay * -1;
-  if (firstDay !== 0) {
-    distance = firstDay - (dateDay + 7);
+  let distance = firstDay - (dateDay + 7);
+  if (dateDay > firstDay) {
+    distance = (dateDay - firstDay) * -1;
   }
 
   return 6 + distance;
@@ -46,7 +46,11 @@ export const getFirstDayIndex = ({ firstDay, dateDay }) => {
  */
 const getWeekList = ({ firstDay, date }) => {
   const possibleDays = getPossibleDays({ firstDay, date });
-  const firstDayIndex = getFirstDayIndex({ firstDay, dateDay: date.day() });
+  const firstDayIndex = getFirstDayIndex({
+    firstDay,
+    dateDay: date.day(),
+    possibleDays
+  });
   return possibleDays.slice(firstDayIndex, firstDayIndex + 7);
 };
 

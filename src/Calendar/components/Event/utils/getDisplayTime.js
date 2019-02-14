@@ -19,7 +19,7 @@ const getDisplayTime = event => {
     endMinutes = "";
   }
 
-  const end = `${event.end.format("h")}${startMinutes}${event.end.format("a")}`;
+  const end = `${event.end.format("h")}${endMinutes}${event.end.format("a")}`;
 
   return `${start} - ${end}`;
 };

@@ -9,7 +9,7 @@
       display: flex;
     }
     &__today {
-      background: grey;
+      background: #edf8f2;
     }
     &__header {
       display: flex;
@@ -19,15 +19,17 @@
       z-index: 4;
       text-align: center;
       height: 70px;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid #e7e7e7;
     }
     &__header-column {
       margin: 0;
-      border-right: 1px solid black;
+      border-right: 1px solid #e7e7e7;
       min-width: 124px;
       width: 14%;
       h2 {
         font-size: 14px;
+        color: #444;
+        font-weight: 400;
       }
     }
     &__columns {

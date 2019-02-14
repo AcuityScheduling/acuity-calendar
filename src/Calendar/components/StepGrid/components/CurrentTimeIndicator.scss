@@ -4,21 +4,21 @@
       width: 100%;
       position: absolute;
       z-index: 3;
-      &--full {
-        transform: translateX(100px);
-      }
       &__line {
         height: 1px;
-        background: blue;
+        background: rgba(360, 57, 73, 40);
       }
       &__line-today {
         height: 1px;
-        background: yellow;
+        background: #af5b55;
       }
       &__time {
         position: absolute;
-        top: -10px;
-        left: -50px;
+        transform: translate(-45px, -7px);
+        color: #c9484d;
+        background: #fff;
+        box-shadow: -3px 0px 8px 5px #fff;
+        font-size: 12px;
       }
     }
   }

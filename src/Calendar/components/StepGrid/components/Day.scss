@@ -2,8 +2,10 @@
   &__step-grid {
     &__column {
       text-align: center;
-      border-right: 1px solid black;
+      border-right: 1px solid #e7e7e7;
       position: relative;
+      min-width: 124px;
+      width: 14%;
     }
     &__event-columns {
       position: relative;

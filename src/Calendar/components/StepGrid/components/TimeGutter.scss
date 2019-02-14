@@ -5,12 +5,13 @@
       position: relative;
       width: 50px;
       text-align: center;
-      border-right: 1px solid black;
+      border-right: 1px solid #e7e7e7;
       z-index: 2;
       text-align: right;
     }
     &__time-label {
       font-size: 12px;
+      color: #444;
       transform: translateY(-8px);
       display: block;
       margin-right: 4px;

@@ -4,7 +4,7 @@ import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from "../../../types";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayClass } from "../utils";
 import "./Day.scss";
-import { makeClass, cellWidth } from "../../../utils";
+import { makeClass } from "../../../utils";
 import StepGridEvents from "./StepGridEvents";
 
 const Day = ({
@@ -52,7 +52,6 @@ const Day = ({
       className={`${makeClass("step-grid__column")}${getTodayClass(date)}`}
       key={`weekView${date.day()}`}
       style={{
-        minWidth: cellWidth,
         height: `${totalHeight}px`
       }}
       onClick={e => {

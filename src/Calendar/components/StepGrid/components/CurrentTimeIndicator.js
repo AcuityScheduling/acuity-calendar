@@ -15,7 +15,7 @@ const CurrentTimeIndicator = React.forwardRef(
         <div
           className={block}
           style={{
-            top: `${getTopOffset({ stepMinutes, date: currentTime }) + 70}px`
+            top: `${getTopOffset({ stepMinutes, date: currentTime })}px`
           }}
           ref={ref}
         >

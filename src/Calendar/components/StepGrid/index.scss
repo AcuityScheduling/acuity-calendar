@@ -4,6 +4,10 @@
     height: 400px;
     overflow-y: scroll;
     position: relative;
+    &__header-wrapper,
+    &__column-wrapper {
+      display: flex;
+    }
     &__today {
       background: grey;
     }

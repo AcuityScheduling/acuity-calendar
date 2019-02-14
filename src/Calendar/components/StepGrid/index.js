@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TimeColumn from "./components/TimeColumn";
+import TimeGutter from "./components/TimeGutter";
 import Corner from "./components/Corner";
 import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
@@ -44,7 +44,7 @@ const StepGrid = ({
         currentTime={currentTime}
       />
 
-      <div style={{ display: "flex" }}>
+      <div className={makeClass("step-grid__header-wrapper")}>
         <Corner
           currentTime={currentTime}
           renderCorner={renderCorner}
@@ -55,8 +55,8 @@ const StepGrid = ({
         </div>
       </div>
 
-      <div style={{ display: "flex" }}>
-        <TimeColumn
+      <div className={makeClass("step-grid__column-wrapper")}>
+        <TimeGutter
           blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
           ref={timeColumnRef}
         />

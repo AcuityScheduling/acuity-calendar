@@ -1,15 +1,22 @@
 .acuity-calendar {
   &__step-grid {
-    &__time-column {
+    &__time-gutter {
       background: white;
       position: relative;
       width: 50px;
       text-align: center;
       border-right: 1px solid black;
       z-index: 2;
+      text-align: right;
     }
     &__time-label {
-      text-align: right;
+      font-size: 12px;
+      transform: translateY(-8px);
+      display: block;
+      margin-right: 4px;
+    }
+    &__time-label-0 {
+      display: none;
     }
   }
 }

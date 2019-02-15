@@ -3,30 +3,36 @@ import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { makeClass } from "../../../utils";
 import "./StepLines.scss";
 
-const StepLines = ({ totalStepsPerBlock, stepMinutes }) => {
-  const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
-  const stepHeight = STEP_HEIGHTS[stepMinutes];
-  const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
+const StepLines = React.forwardRef(
+  ({ totalStepsPerBlock, stepMinutes }, ref) => {
+    const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
+    const stepHeight = STEP_HEIGHTS[stepMinutes];
+    const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
 
-  const times = [];
-  for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
-    const minorStep = i % totalStepsPerBlock;
-    times.push(
-      <div
-        className={makeClass(
-          "step-grid__step-line",
-          minorStep && "step-grid__step-line-minor"
-        )}
-        key={`timeBlock${i}`}
-        style={{
-          height: stepHeightWithBorder
-        }}
-        role="button"
-      />
+    const times = [];
+    for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
+      const minorStep = i % totalStepsPerBlock;
+      times.push(
+        <div
+          className={makeClass(
+            "step-grid__step-line",
+            minorStep && "step-grid__step-line-minor"
+          )}
+          key={`timeBlock${i}`}
+          style={{
+            height: stepHeightWithBorder
+          }}
+          role="button"
+        />
+      );
+    }
+
+    return (
+      <div className={makeClass("step-grid__step-lines")} ref={ref}>
+        {times}
+      </div>
     );
   }
-
-  return <div className={makeClass("step-grid__step-lines")}>{times}</div>;
-};
+);
 
 export default StepLines;

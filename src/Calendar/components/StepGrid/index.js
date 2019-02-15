@@ -26,7 +26,8 @@ const StepGrid = ({
     timeColumnRef,
     headerRef,
     cornerRef,
-    timeIndicatorRef
+    timeIndicatorRef,
+    stepLinesRef
   } = useCalendarSticky();
   const currentTime = useCurrentTime();
 
@@ -35,6 +36,7 @@ const StepGrid = ({
   return (
     <div className={makeClass("step-grid")} ref={wrapperRef}>
       <StepLines
+        ref={stepLinesRef}
         totalStepsPerBlock={totalStepsPerBlock}
         stepMinutes={stepMinutes}
       />

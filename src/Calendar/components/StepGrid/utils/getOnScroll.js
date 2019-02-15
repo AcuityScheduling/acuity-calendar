@@ -13,7 +13,8 @@ const update = ({
   headerRef,
   timeColumnRef,
   cornerRef,
-  timeIndicatorRef
+  timeIndicatorRef,
+  stepLinesRef
 }) => () => {
   // reset the tick so we can
   // capture the next onScroll
@@ -24,6 +25,8 @@ const update = ({
 
   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
   timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
+
+  stepLinesRef.current.style.width = `calc(100% + ${latestKnownScrollX}px)`;
 
   // For some reason translateX doesn't work here. I'm not sure why but whatever
   cornerRef.current.style.left = `${latestKnownScrollX}px`;

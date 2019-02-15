@@ -2,7 +2,7 @@
   &__step-grid {
     width: 100%;
     height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
     border: 1px solid #e7e7e7;
     &__header-wrapper,

@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import EventDragDrop from "../../Event/components/EventDragDrop";
 import Event from "../../Event";
-import { getEventColumns } from "../utils";
-import { EVENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
+import { STEP_MINUTES_TYPE } from "../../../types";
 
 const StepGridEvents = ({
   events,
@@ -12,12 +11,11 @@ const StepGridEvents = ({
   onSelectEvent,
   renderEvent
 }) => {
-  const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
-  const totalColumns = Object.keys(eventsWithColumns).length;
+  const totalColumns = Object.keys(events).length;
   const percentWidth = 100 / totalColumns - 1;
 
-  return Object.keys(eventsWithColumns).map(column => {
-    const thisColumnEvents = eventsWithColumns[column];
+  return Object.keys(events).map(column => {
+    const thisColumnEvents = events[column];
     return thisColumnEvents.map(event => {
       return (
         <EventDragDrop
@@ -51,7 +49,7 @@ StepGridEvents.defaultProps = {
 };
 
 StepGridEvents.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.object.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,

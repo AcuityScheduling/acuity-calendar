@@ -8,6 +8,7 @@
       border-right: 1px solid #e7e7e7;
       z-index: 2;
       text-align: right;
+      flex-shrink: 0;
     }
     &__time-label {
       font-size: 10px;

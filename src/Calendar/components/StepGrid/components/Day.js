@@ -47,12 +47,16 @@ const Day = ({
       .second(0);
   };
 
+  const totalColumns = Object.keys(events).length || 1;
+  const minWidth = `${totalColumns * 190}px`;
+
   return (
     <div
       className={`${makeClass("step-grid__column")}${getTodayClass(date)}`}
       key={`weekView${date.day()}`}
       style={{
-        height: `${totalHeight}px`
+        height: `${totalHeight}px`,
+        minWidth
       }}
       onClick={e => {
         onSelectSlot(getClickedTime(e));

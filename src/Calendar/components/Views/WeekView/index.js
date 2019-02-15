@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import moment from "moment";
+import { getEventColumns } from "../../StepGrid/utils";
 import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";
 import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
@@ -11,6 +12,7 @@ import { getTodayClass } from "../../StepGrid/utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 
 const WeekView = ({
+  events,
   selectedDate,
   firstDay,
   stepMinutes,
@@ -18,10 +20,10 @@ const WeekView = ({
   onSelectSlot,
   selectMinutes,
   renderEvent,
-  renderCorner,
-  events
+  renderCorner
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
+  const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   return (
     <StepGrid
@@ -34,21 +36,31 @@ const WeekView = ({
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
+          const totalColumns =
+            Object.keys(get(eventsWithColumns, date.format("YYYY-MM-DD"), {}))
+              .length || 1;
+
+          const minWidth = `${totalColumns * 190}px`;
           return (
             <div
               className={`${makeClass(
                 "step-grid__header-column"
               )}${getTodayClass(date)}`}
               key={`dayHeader${date.date()}`}
+              style={{ minWidth }}
             >
               <h2>{date.format("dddd, MMM D")}</h2>
             </div>
           );
         })
       }
-      renderColumns={({ currentTime }) =>
-        dateList.map(date => {
-          const eventsForDay = get(events, date.format("YYYY-MM-DD"), []);
+      renderColumns={({ currentTime }) => {
+        return dateList.map(date => {
+          const eventsForDay = get(
+            eventsWithColumns,
+            date.format("YYYY-MM-DD"),
+            {}
+          );
           return (
             <Day
               events={eventsForDay}
@@ -71,8 +83,8 @@ const WeekView = ({
               }
             />
           );
-        })
-      }
+        });
+      }}
     />
   );
 };

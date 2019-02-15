@@ -10,9 +10,13 @@ const StepLines = ({ totalStepsPerBlock, stepMinutes }) => {
 
   const times = [];
   for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
+    const minorStep = i % totalStepsPerBlock;
     times.push(
       <div
-        className={makeClass("step-grid__step-line")}
+        className={makeClass(
+          "step-grid__step-line",
+          minorStep && "step-grid__step-line-minor"
+        )}
         key={`timeBlock${i}`}
         style={{
           height: stepHeightWithBorder

@@ -13,5 +13,8 @@
       pointer-events: none;
       z-index: 1;
     }
+    &__step-line-minor:after {
+      border-bottom: 1px dashed #e7e7e7;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { MonthView, CalendarsView, WeekView } from "./components/Views";
@@ -17,7 +18,7 @@ const Calendar = ({
   calendars,
   selectedCalendars,
   onViewChange,
-  selectedDate,
+  selectedDate = moment(),
   onNavigate,
   firstDay,
   onSelectEvent,
@@ -87,7 +88,7 @@ Calendar.propTypes = {
   view: CALENDAR_VIEW_TYPE,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   onViewChange: PropTypes.func.isRequired,
-  selectedDate: MOMENT_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE,
   onNavigate: PropTypes.func.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,

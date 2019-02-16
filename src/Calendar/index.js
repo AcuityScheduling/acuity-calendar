@@ -13,12 +13,12 @@ import {
 import { getMungedEvents, getEventsWithSelectedCalendars } from "./utils";
 
 const Calendar = ({
-  events,
-  view = CALENDAR_VIEWS.month,
   calendars,
+  events = [],
+  selectedDate = moment(),
+  view = CALENDAR_VIEWS.month,
   selectedCalendars,
   onViewChange,
-  selectedDate = moment(),
   onNavigate,
   firstDay,
   onSelectEvent,
@@ -77,18 +77,18 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  calendars: PropTypes.arrayOf(CALENDAR_TYPE),
   events: PropTypes.arrayOf(
     PropTypes.shape({
       start: PropTypes.string.isRequired,
       end: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired
     })
-  ).isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE),
+  ),
+  selectedDate: MOMENT_TYPE,
   view: CALENDAR_VIEW_TYPE,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   onViewChange: PropTypes.func.isRequired,
-  selectedDate: MOMENT_TYPE,
   onNavigate: PropTypes.func.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,

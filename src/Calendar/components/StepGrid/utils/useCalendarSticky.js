@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import getOnScroll from "./getOnScroll";
 
 let timeIndicatorWidth = 0;
+let stepLinesWidth = 0;
 
 const useCalendarSticky = () => {
   const wrapperRef = useRef(null);
@@ -28,12 +29,20 @@ const useCalendarSticky = () => {
       wrapperRef.current &&
       stepLinesRef.current
     ) {
+      wrapperRef.current.scrollLeft = 0;
       timeIndicatorRef.current.style.width = "100%";
       stepLinesRef.current.style.width = "100%";
 
-      timeIndicatorWidth = wrapperRef.current.clientWidth - 51;
-      timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
-      stepLinesRef.current.style.width = `${wrapperRef.current.scrollWidth}px`;
+      // We have to wait for the width to be set to 100% before 
+      // we can do more calculations
+      const timeout = setTimeout(() => {
+        timeIndicatorWidth = wrapperRef.current.clientWidth - 51;
+        stepLinesWidth = wrapperRef.current.scrollWidth;
+        timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
+        stepLinesRef.current.style.width = `${stepLinesWidth}px`;
+      });
+
+      return () => clearTimeout(timeout);
     }
   });
 

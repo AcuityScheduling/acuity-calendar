@@ -15,3 +15,8 @@ export const CALENDAR_TYPE = PropTypes.shape({
   name: PropTypes.string,
   id: PropTypes.number
 });
+export const REF_TYPE = PropTypes.shape({
+  current: PropTypes.instanceOf(
+    typeof Element === "undefined" ? function() {} : Element
+  )
+});

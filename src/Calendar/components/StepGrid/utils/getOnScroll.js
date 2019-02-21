@@ -14,21 +14,20 @@ const update = ({
   cornerRef,
   timeIndicatorRef,
   stepLinesRef,
-  wrapperRef
+  wrapperRef,
+  timeIndicatorWidth
 }) => () => {
-  const hasHorizontalScrollbar =
-    wrapperRef.current.scrollWidth > wrapperRef.current.clientWidth;
+  // reset the tick so we can
+  // capture the next onScroll
+  ticking = false;
 
-  if (hasHorizontalScrollbar) {
-    // reset the tick so we can
-    // capture the next onScroll
-    ticking = false;
+  headerRef.current.style.transform = `translateX(-${latestKnownScrollX}px)`;
+  timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
-    headerRef.current.style.transform = `translateX(-${latestKnownScrollX}px)`;
-    timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-
-    // timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-    // timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
+  // Make sure the time indicator stays in the right place while scrolling horiz
+  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+  if (timeIndicatorWidth) {
+    timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
   }
 };
 

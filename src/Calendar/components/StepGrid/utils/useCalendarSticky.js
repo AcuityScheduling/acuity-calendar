@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
 import getOnScroll from "./getOnScroll";
 
+let timeIndicatorWidth = 0;
+
 const useCalendarSticky = () => {
   const wrapperRef = useRef(null);
   const timeColumnRef = useRef(null);
@@ -15,24 +17,29 @@ const useCalendarSticky = () => {
     timeColumnRef,
     cornerRef,
     timeIndicatorRef,
-    stepLinesRef
+    stepLinesRef,
+    timeIndicatorWidth
+  });
+
+  // Make sure stepLines and time indicator are the full width of the scroll
+  useEffect(() => {
+    if (
+      timeIndicatorRef.current &&
+      wrapperRef.current &&
+      stepLinesRef.current
+    ) {
+      timeIndicatorRef.current.style.width = "100%";
+      stepLinesRef.current.style.width = "100%";
+
+      timeIndicatorWidth = wrapperRef.current.scrollWidth - 51;
+      timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
+      stepLinesRef.current.style.width = `${wrapperRef.current.scrollWidth}px`;
+    }
   });
 
   useEffect(() => {
     wrapperRef.current.addEventListener("scroll", onScroll, false);
-    if (timeIndicatorRef.current && wrapperRef.current) {
-      timeIndicatorRef.current.style.width = "100%";
-      stepLinesRef.current.style.width = "100%";
 
-      const scrollWidth = wrapperRef.current.scrollWidth;
-      console.log("scrollWidth: ", scrollWidth);
-      timeIndicatorRef.current.style.width = `${wrapperRef.current.scrollWidth -
-        51}px`;
-    }
-
-    if (stepLinesRef.current && wrapperRef.current) {
-      stepLinesRef.current.style.width = `${wrapperRef.current.scrollWidth}px`;
-    }
     return () => {
       wrapperRef.current.removeEventListener("scroll", onScroll, false);
     };

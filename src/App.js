@@ -3,7 +3,11 @@ import moment from "moment";
 import Calendar from "./Calendar";
 import Toolbar from "./Toolbar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
-import { eventsMocked, calendarsMocked } from "./Calendar/utils";
+import {
+  eventsMocked,
+  calendarsMocked,
+  stepDetailsMocked
+} from "./Calendar/utils";
 
 const App = () => {
   const { week } = CALENDAR_VIEWS;
@@ -27,6 +31,7 @@ const App = () => {
         setSelectedCalendars={setSelectedCalendars}
       />
       <Calendar
+        stepDetails={stepDetailsMocked}
         events={eventsMocked}
         view={view}
         onViewChange={setView}

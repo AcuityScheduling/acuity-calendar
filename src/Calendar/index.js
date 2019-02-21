@@ -13,6 +13,7 @@ import { getMungedEvents, getEventsWithSelectedCalendars } from "./utils";
 
 const Calendar = ({
   events,
+  stepDetails,
   view,
   calendars,
   selectedCalendars,
@@ -55,10 +56,25 @@ const Calendar = ({
     [mungedEvents, selectedCalendars]
   );
 
+  const mungedStepDetails = useMemo(
+    () => getMungedEvents({ events: stepDetails, stepMinutes }),
+    [stepDetails, stepMinutes]
+  );
+
+  const mungedStepDetailsCalendar = useMemo(
+    () =>
+      getEventsWithSelectedCalendars({
+        mungedEvents: mungedStepDetails,
+        selectedCalendars
+      }),
+    [mungedStepDetails, selectedCalendars]
+  );
+
   return (
     <View
       eventsWithCalendars={mungedEvents}
       events={eventsWithSelectedCalendars}
+      stepDetails={mungedStepDetailsCalendar}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}

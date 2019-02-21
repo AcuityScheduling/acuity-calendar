@@ -9,6 +9,7 @@ import StepGridEvents from "./StepGridEvents";
 
 const Day = ({
   events,
+  stepDetails,
   date,
   stepMinutes,
   onSelectEvent,
@@ -64,6 +65,7 @@ const Day = ({
     >
       {renderCurrentTimeIndicator}
       <StepGridEvents
+        stepDetails={stepDetails}
         events={events}
         stepMinutes={stepMinutes}
         selectMinutes={selectMinutes}

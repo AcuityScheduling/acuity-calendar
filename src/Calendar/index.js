@@ -25,6 +25,7 @@ const Calendar = ({
   onSelectSlot,
   stepMinutes,
   selectMinutes,
+  timeGutterWidth,
   renderEvent,
   renderCorner
 }) => {
@@ -69,13 +70,15 @@ const Calendar = ({
       calendars={calendars}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
+      timeGutterWidth={timeGutterWidth}
     />
   );
 };
 
 Calendar.defaultProps = {
   renderEvent: null,
-  renderCorner: null
+  renderCorner: null,
+  timeGutterWidth: 50
 };
 
 Calendar.propTypes = {
@@ -99,7 +102,8 @@ Calendar.propTypes = {
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   renderEvent: PropTypes.func,
-  renderCorner: PropTypes.func
+  renderCorner: PropTypes.func,
+  timeGutterWidth: PropTypes.number
 };
 
 export default Calendar;

@@ -20,6 +20,7 @@ const WeekView = ({
   onSelectSlot,
   selectMinutes,
   renderEvent,
+  timeGutterWidth,
   renderCorner
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
@@ -33,6 +34,7 @@ const WeekView = ({
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
       selectMinutes={selectMinutes}
+      timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
@@ -91,7 +93,8 @@ const WeekView = ({
 
 WeekView.defaultProps = {
   renderEvent: null,
-  renderCorner: null
+  renderCorner: null,
+  timeGutterWidth: 50
 };
 
 WeekView.propTypes = {
@@ -103,7 +106,8 @@ WeekView.propTypes = {
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
-  events: PropTypes.object.isRequired
+  events: PropTypes.object.isRequired,
+  timeGutterWidth: PropTypes.number
 };
 
 export default WeekView;

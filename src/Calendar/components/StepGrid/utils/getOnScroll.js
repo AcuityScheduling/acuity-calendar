@@ -5,7 +5,6 @@
  * in the browser
  */
 
-let latestKnownScrollY = 0;
 let latestKnownScrollX = 0;
 let ticking = false;
 
@@ -20,21 +19,16 @@ const update = ({
   // capture the next onScroll
   ticking = false;
 
-  headerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
+  headerRef.current.style.transform = `translateX(-${latestKnownScrollX}px)`;
   timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
   timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
 
   stepLinesRef.current.style.width = `calc(100% + ${latestKnownScrollX}px)`;
-
-  // For some reason translateX doesn't work here. I'm not sure why but whatever
-  cornerRef.current.style.left = `${latestKnownScrollX}px`;
-  cornerRef.current.style.transform = `translateY(${latestKnownScrollY}px)`;
 };
 
 const getOnScroll = elements => e => {
-  latestKnownScrollY = e.target.scrollTop;
   latestKnownScrollX = e.target.scrollLeft;
   requestTick(elements);
 };

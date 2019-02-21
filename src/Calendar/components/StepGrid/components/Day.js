@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from "../../../types";
+import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
 import { getTodayClass } from "../utils";
 import "./Day.scss";
@@ -80,7 +80,7 @@ Day.defaultProps = {
 };
 
 Day.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.object.isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,

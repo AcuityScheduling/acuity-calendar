@@ -12,6 +12,7 @@ import {
   STEP_MINUTES_TYPE,
   CALENDAR_TYPE
 } from "../../../types";
+import { TIME_GUTTER_WIDTH } from "../../StepGrid/constants";
 
 const columnStyles = {
   minWidth: cellWidth
@@ -28,6 +29,7 @@ const CalendarsView = ({
   onSelectSlot,
   selectMinutes,
   eventsWithCalendars,
+  timeGutterWidth,
   renderEvent,
   renderCorner
 }) => {
@@ -40,6 +42,7 @@ const CalendarsView = ({
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
       selectMinutes={selectMinutes}
+      timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() =>
         selectedCalendars.map(calendarId => {
@@ -97,7 +100,8 @@ const CalendarsView = ({
 
 CalendarsView.defaultProps = {
   renderCorner: null,
-  renderEvent: null
+  renderEvent: null,
+  timeGutterWidth: TIME_GUTTER_WIDTH
 };
 
 CalendarsView.propTypes = {
@@ -108,7 +112,8 @@ CalendarsView.propTypes = {
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
   renderEvent: PropTypes.func,
-  renderCorner: PropTypes.func
+  renderCorner: PropTypes.func,
+  timeGutterWidth: PropTypes.number
 };
 
 export default CalendarsView;

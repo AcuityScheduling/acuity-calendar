@@ -51,6 +51,7 @@ const StepGridEvents = ({
         stepDetails.map(stepDetail => {
           return (
             <div
+              key={stepDetail.id}
               className={makeClass("step-grid__step-detail-wrapper")}
               style={{
                 top: `${stepDetail.top}px`,

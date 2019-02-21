@@ -23,7 +23,7 @@ const update = ({
   timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-  timeIndicatorRef.current.style.width = `calc(100% - ${latestKnownScrollX}px)`;
+  timeIndicatorRef.current.style.width = `calc(100% - 51px)`;
 
   stepLinesRef.current.style.width = `calc(100% + ${latestKnownScrollX}px)`;
 };

@@ -43,7 +43,6 @@ const StepGrid = ({
         renderHeader={renderHeader}
         currentTime={currentTime}
         timeGutterWidth={timeGutterWidth}
-        hasScrollbarGutter
       />
       <div className={makeClass("step-grid")} ref={wrapperRef}>
         <StepLines

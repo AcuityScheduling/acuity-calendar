@@ -13,8 +13,7 @@ const Header = ({
   renderCorner,
   renderHeader,
   currentTime,
-  timeGutterWidth,
-  hasScrollbarGutter
+  timeGutterWidth
 }) => {
   const scrollbarWidth = getScrollbarWidth();
 
@@ -62,7 +61,7 @@ const Header = ({
       >
         {renderHeader()}
       </div>
-      {hasScrollbarGutter && renderScrollbarGutter()}
+      {renderScrollbarGutter()}
     </div>
   );
 };
@@ -70,7 +69,6 @@ const Header = ({
 Header.defaultProps = {
   currentTime: null,
   timeGutterWidth: TIME_GUTTER_WIDTH,
-  hasScrollbarGutter: false,
   renderCorner: null,
   headerRef: null
 };
@@ -81,8 +79,7 @@ Header.propTypes = {
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
   currentTime: MOMENT_TYPE,
-  timeGutterWidth: PropTypes.number,
-  hasScrollbarGutter: PropTypes.bool
+  timeGutterWidth: PropTypes.number
 };
 
 export default Header;

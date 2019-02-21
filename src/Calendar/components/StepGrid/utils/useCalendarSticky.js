@@ -31,7 +31,7 @@ const useCalendarSticky = () => {
       timeIndicatorRef.current.style.width = "100%";
       stepLinesRef.current.style.width = "100%";
 
-      timeIndicatorWidth = wrapperRef.current.scrollWidth - 51;
+      timeIndicatorWidth = wrapperRef.current.clientWidth - 51;
       timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
       stepLinesRef.current.style.width = `${wrapperRef.current.scrollWidth}px`;
     }

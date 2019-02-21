@@ -31,7 +31,7 @@ const StepGrid = ({
     stepLinesRef
   } = useCalendarSticky();
   const currentTime = useCurrentTime();
-
+  
   const totalStepsPerBlock = 60 / stepMinutes;
 
   return (

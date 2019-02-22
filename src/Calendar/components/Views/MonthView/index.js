@@ -4,6 +4,7 @@ import get from "lodash/get";
 import { getMonthGrid, getDayNames } from "./utils";
 import { makeClass } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
+import Event from "../../Event";
 import "./index.scss";
 
 const cellWidth = `${100 / 7}%`;
@@ -16,7 +17,8 @@ const MonthView = ({
   selectedDate,
   firstDay,
   onSelectEvent,
-  onSelectSlot
+  onSelectSlot,
+  renderEvent
 }) => {
   const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
   const dayNames = getDayNames({ firstDay });
@@ -71,17 +73,13 @@ const MonthView = ({
                       eventsForCell.map(
                         event =>
                           dayDetails.isInRange && (
-                            // This wrapper should be reused from the stepgrid
-                            <div
+                            <Event
+                              event={event}
                               key={event.id}
-                              onClick={e => {
-                                e.stopPropagation();
-                                onSelectEvent(event);
-                              }}
-                              style={{ fontSize: "12px", position: "absolute" }}
+                              onSelectEvent={onSelectEvent}
                             >
-                              {event.title}
-                            </div>
+                              {renderEvent}
+                            </Event>
                           )
                       )}
                   </div>
@@ -95,12 +93,17 @@ const MonthView = ({
   );
 };
 
+MonthView.defaultProps = {
+  renderEvent: null
+};
+
 MonthView.propTypes = {
   selectedDate: MOMENT_TYPE.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   events: PropTypes.object.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
-  onSelectSlot: PropTypes.func.isRequired
+  onSelectSlot: PropTypes.func.isRequired,
+  renderEvent: PropTypes.func
 };
 
 export default MonthView;

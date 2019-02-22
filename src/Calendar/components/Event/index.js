@@ -72,14 +72,9 @@ const Event = ({
   );
 };
 
-Event.defaultProps = {
-  renderEvent: null
-};
-
 Event.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
-  event: EVENT_TYPE.isRequired,
-  renderEvent: PropTypes.func
+  event: EVENT_TYPE.isRequired
 };
 
 export default Event;

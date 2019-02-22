@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
 import { getMonthGrid, getDayNames } from "./utils";
-import { cellWidth, makeClass } from "../../../utils";
+import { makeClass } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
 import "./index.scss";
 
+const cellWidth = `${100 / 7}%`;
 const dayStyles = {
   width: cellWidth
 };

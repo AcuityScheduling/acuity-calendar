@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import get from "lodash/get";
 import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";
-import { makeClass, cellWidth } from "../../../utils";
+import { makeClass } from "../../../utils";
 import {
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
@@ -13,7 +13,7 @@ import {
 import { TIME_GUTTER_WIDTH } from "../../StepGrid/constants";
 
 const columnStyles = {
-  minWidth: cellWidth
+  minWidth: `${100 / 7}%`
 };
 
 const CalendarsView = ({

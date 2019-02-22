@@ -1,11 +1,11 @@
 import getEventsWithSelectedCalendars from "./getEventsWithSelectedCalendars";
 import getMungedEvents from "./getMungedEvents";
-import eventsMocked from "./eventsMocked";
+import { MOCKED_EVENTS } from "../mocks";
 
 describe("Munged Event Object", () => {
   it("Must have an event from two calendars", () => {
     const mungedEvents = getMungedEvents({
-      events: eventsMocked,
+      events: MOCKED_EVENTS,
       stepMinutes: 30
     });
 

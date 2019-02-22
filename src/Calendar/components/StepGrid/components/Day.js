@@ -1,15 +1,19 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from "../../../types";
+import moment from "moment";
+import { MOMENT_TYPE, STEP_MINUTES_TYPE } from "../../../types";
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
-import { getTodayClass } from "../utils";
+import { getTodayClass, getTopOffset } from "../utils";
 import "./Day.scss";
-import { makeClass, cellWidth } from "../../../utils";
-import StepGridEvents from "./StepGridEvents";
+import { makeClass } from "../../../utils";
+import Event from "../../Event";
+import EventDragDrop from "../../Event/components/EventDragDrop";
 
 const Day = ({
   events,
+  stepDetails,
   date,
+  currentTime,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
@@ -47,46 +51,93 @@ const Day = ({
       .second(0);
   };
 
+  const totalColumns = Object.keys(events).length || 1;
+  const minWidth = `${totalColumns * 190}px`;
+  const percentWidth = 100 / totalColumns - 1;
+  const currentTimeIndicatorClass = makeClass(
+    "step-grid__current-time-indicator"
+  );
+
   return (
     <div
       className={`${makeClass("step-grid__column")}${getTodayClass(date)}`}
       key={`weekView${date.day()}`}
       style={{
-        minWidth: cellWidth,
-        height: `${totalHeight}px`
+        height: `${totalHeight}px`,
+        minWidth
       }}
       onClick={e => {
         onSelectSlot(getClickedTime(e));
       }}
     >
-      {renderCurrentTimeIndicator}
-      <div className={makeClass("step-grid__event-columns")}>
-        <StepGridEvents
-          events={events}
-          stepMinutes={stepMinutes}
-          selectMinutes={selectMinutes}
-          onSelectEvent={onSelectEvent}
-          renderEvent={renderEvent}
-        />
-      </div>
+      {date.isSame(moment(), "day") && (
+        <div
+          className={currentTimeIndicatorClass}
+          style={{
+            top: `${getTopOffset({ stepMinutes, date: currentTime })}px`
+          }}
+        >
+          <div className={`${currentTimeIndicatorClass}__line-today`} />
+        </div>
+      )}
+      {Object.keys(events).map(column => {
+        const thisColumnEvents = events[column];
+        return thisColumnEvents.map(event => {
+          return (
+            <EventDragDrop
+              key={event.id}
+              event={event}
+              stepMinutes={stepMinutes}
+              selectMinutes={selectMinutes}
+            >
+              {draggedEvent => (
+                <Event
+                  event={draggedEvent}
+                  style={{
+                    top: `${event.top}px`,
+                    height: `${event.height}px`,
+                    width: `${percentWidth}%`,
+                    left: `${percentWidth * (column - 1)}%`
+                  }}
+                  onSelectEvent={onSelectEvent}
+                >
+                  {renderEvent}
+                </Event>
+              )}
+            </EventDragDrop>
+          );
+        });
+      })}
+      {stepDetails &&
+        stepDetails.map(stepDetail => {
+          return (
+            <div
+              key={stepDetail.id}
+              className={makeClass("step-grid__step-detail-wrapper")}
+              style={{
+                top: `${stepDetail.top}px`,
+                height: `${stepDetail.height}px`
+              }}
+            />
+          );
+        })}
     </div>
   );
 };
 
 Day.defaultProps = {
-  renderCurrentTimeIndicator: null,
   renderEvent: null
 };
 
 Day.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE).isRequired,
+  events: PropTypes.object.isRequired,
   date: MOMENT_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,
-  renderCurrentTimeIndicator: PropTypes.node,
-  renderEvent: PropTypes.func
+  renderEvent: PropTypes.func,
+  currentTime: MOMENT_TYPE.isRequired
 };
 
 export default Day;

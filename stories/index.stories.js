@@ -1,22 +1,21 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment } from "react";
 import moment from "moment";
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import { storiesOf } from "@storybook/react";
+import { linkTo } from "@storybook/addon-links";
 
 import Calendar from "../src/Calendar";
 import { CALENDAR_VIEWS } from "../src/Calendar/constants";
 
-import { Button, Welcome } from '@storybook/react/demo';
+import { Welcome } from "@storybook/react/demo";
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+storiesOf("Welcome", module).add("to Storybook", () => (
+  <Welcome showApp={linkTo("Button")} />
+));
 
-const eventsMocked = [
-];
+const eventsMocked = [];
 
-const SillyWrappingComponentToUseHooks = ({view}) => {
-
+const SillyWrappingComponentToUseHooks = ({ view }) => {
   const [selectedDate, setSelectedDate] = useState(moment());
 
   return (
@@ -49,11 +48,17 @@ const SillyWrappingComponentToUseHooks = ({view}) => {
   );
 };
 
-storiesOf('Calendar', module)
-  .add('day calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />)
-  .add('week calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />)
-  .add('month calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />)
-  .add('month heatmap', () => {
+storiesOf("Calendar", module)
+  .add("day calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
+  ))
+  .add("week calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
+  ))
+  .add("month calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />
+  ))
+  .add("month heatmap", () => {
     const events = [
       {
         id: 3,
@@ -84,9 +89,7 @@ storiesOf('Calendar', module)
         weight: 0.8
       }
     ];
-    const calendars = [
-      { id: 5, name: "Brian Jenkins" }
-    ]
+    const calendars = [{ id: 5, name: "Brian Jenkins" }];
     const styles = `
       .acuity-calendar__month__cell {
         position: relative;
@@ -120,15 +123,15 @@ storiesOf('Calendar', module)
           events={events}
           calendars={calendars}
           selectedCalendars={[5]}
-          renderEvent={(event) => (
-            <div className="heatmap__cell" style={{
-              background: 'rgba(0, 0, 255, '+event.weight+')'
-            }}>
-            </div>
+          renderEvent={event => (
+            <div
+              className="heatmap__cell"
+              style={{
+                background: "rgba(0, 0, 255, " + event.weight + ")"
+              }}
+            />
           )}
-        >
-        </Calendar>
+        />
       </Fragment>
     );
   });
-

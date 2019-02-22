@@ -1,10 +1,10 @@
 import getMungedEvents from "./getMungedEvents";
-import { eventsMocked } from "../utils";
+import { MOCKED_EVENTS } from "../mocks";
 
 describe("Munged Event Object", () => {
   it("has keys that are calendar ids", () => {
     const mungedEvents = getMungedEvents({
-      events: eventsMocked,
+      events: MOCKED_EVENTS,
       stepMinutes: 30
     });
 
@@ -14,7 +14,7 @@ describe("Munged Event Object", () => {
 
   it("has keys that are dates", () => {
     const mungedEvents = getMungedEvents({
-      events: eventsMocked,
+      events: MOCKED_EVENTS,
       stepMinutes: 30
     });
 
@@ -28,7 +28,7 @@ describe("Munged Event Object", () => {
 
   it("has new keys needed for calendar", () => {
     const mungedEvents = getMungedEvents({
-      events: eventsMocked,
+      events: MOCKED_EVENTS,
       stepMinutes: 30
     });
 

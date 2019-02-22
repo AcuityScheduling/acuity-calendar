@@ -99,11 +99,14 @@ Calendar.defaultProps = {
   stepDetails: [],
   events: [],
   selectedDate: moment(),
-  view: CALENDAR_VIEWS.month
+  view: CALENDAR_VIEWS.month,
+  calendars: [],
+  selectedCalendars: []
 };
 
 Calendar.propTypes = {
   calendars: PropTypes.arrayOf(CALENDAR_TYPE),
+  selectedCalendars: PropTypes.arrayOf(PropTypes.number),
   events: PropTypes.arrayOf(
     PropTypes.shape({
       start: PropTypes.string.isRequired,
@@ -114,7 +117,6 @@ Calendar.propTypes = {
   stepDetails: PropTypes.array,
   selectedDate: MOMENT_TYPE,
   view: CALENDAR_VIEW_TYPE,
-  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   onViewChange: PropTypes.func.isRequired,
   onNavigate: PropTypes.func.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,

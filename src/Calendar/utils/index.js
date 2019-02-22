@@ -1,5 +1,5 @@
-import getMungedEvents from "./getMungedEvents";
-import getEventsWithSelectedCalendars from "./getEventsWithSelectedCalendars";
-import makeClass from "./makeClass";
+import getMungedEvents from './getMungedEvents';
+import getEventsWithSelectedEventGroups from './getEventsWithSelectedEventGroups';
+import makeClass from './makeClass';
 
-export { getMungedEvents, getEventsWithSelectedCalendars, makeClass };
+export { getMungedEvents, getEventsWithSelectedEventGroups, makeClass };

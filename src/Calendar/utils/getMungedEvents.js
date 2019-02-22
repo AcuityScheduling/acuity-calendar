@@ -1,10 +1,10 @@
-import get from "lodash/get";
-import moment from "moment";
-import { getTopOffset } from "../components/StepGrid/utils";
+import get from 'lodash/get';
+import moment from 'moment';
+import { getTopOffset } from '../components/StepGrid/utils';
 import {
   STEP_HEIGHTS,
-  STEP_BORDER_WIDTH
-} from "../components/StepGrid/constants";
+  STEP_BORDER_WIDTH,
+} from '../components/StepGrid/constants';
 
 /**
  * Get all the events keyed by date for easy lookup - and add some
@@ -22,7 +22,7 @@ const getMungedEvents = ({ events, stepMinutes }) => {
     let newEvent = event;
     newEvent = addEventLocation({
       event: newEvent,
-      stepMinutes
+      stepMinutes,
     });
 
     return setNestedObject({ eventsKeyed, event: newEvent });
@@ -38,7 +38,7 @@ const getEventsWithDates = newEvents => {
   return newEvents.map(event => {
     return Object.assign({}, event, {
       start: moment(new Date(event.start)),
-      end: moment(new Date(event.end))
+      end: moment(new Date(event.end)),
     });
   });
 };
@@ -68,12 +68,12 @@ const addEventLocation = ({ event, stepMinutes }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const pixelsPerMinute = stepHeight / stepMinutes;
 
-  const duration = event.end.clone().diff(event.start, "minutes");
+  const duration = event.end.clone().diff(event.start, 'minutes');
   const borderHeightAdjustment = (duration / 60) * STEP_BORDER_WIDTH;
 
   const location = {
     height: duration * pixelsPerMinute + borderHeightAdjustment,
-    top: getTopOffset({ stepMinutes, date: event.start })
+    top: getTopOffset({ stepMinutes, date: event.start }),
   };
 
   return Object.assign(event, location);
@@ -83,7 +83,7 @@ const addEventLocation = ({ event, stepMinutes }) => {
  * This function creates the special function with all the nested objects. It should look like this:
  *
  * {
- *   5(this is the calendar_id):  {
+ *   5(this is the group_id):  {
  *    2019-01-02: {
  *     column_1: [
  *       {
@@ -108,19 +108,15 @@ const addEventLocation = ({ event, stepMinutes }) => {
 const setNestedObject = ({ eventsKeyed, event }) => {
   const newEventsKeyed = Object.assign({}, eventsKeyed);
 
-  const thisDate = event.start.format("YYYY-MM-DD");
+  const thisDate = event.start.format('YYYY-MM-DD');
 
-  const eventsForDate = get(
-    eventsKeyed,
-    `${event.calendar_id}.${thisDate}`,
-    []
-  );
+  const eventsForDate = get(eventsKeyed, `${event.group_id}.${thisDate}`, []);
   eventsForDate.push(event);
 
-  const dates = get(eventsKeyed, `${event.calendar_id}`, {});
+  const dates = get(eventsKeyed, `${event.group_id}`, {});
   dates[thisDate] = eventsForDate;
 
-  newEventsKeyed[event.calendar_id] = dates;
+  newEventsKeyed[event.group_id] = dates;
 
   return newEventsKeyed;
 };

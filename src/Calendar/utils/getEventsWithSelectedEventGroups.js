@@ -1,19 +1,19 @@
-import get from "lodash/get";
+import get from 'lodash/get';
 
 /**
  * Flatten the object of munged events to ONLY selected calendar events
  *
  * @param {Object} params
  * @param {Object} params.mungedEvents - These events need to be keyed all fun for this function to work
- * @param {array} params.selectedCalendars - An array of selected calendar ids
+ * @param {array} params.selectedEventGroups - An array of selected calendar ids
  */
-const getEventsWithSelectedCalendars = ({
+const getEventsWithSelectedEventGroups = ({
   mungedEvents,
-  selectedCalendars
+  selectedEventGroups,
 }) => {
   const newEvents = Object.assign({}, mungedEvents);
   Object.keys(newEvents).forEach(calendarId => {
-    if (!selectedCalendars.includes(Number(calendarId))) {
+    if (!selectedEventGroups.includes(Number(calendarId))) {
       delete newEvents[calendarId];
     }
   });
@@ -24,7 +24,7 @@ const getEventsWithSelectedCalendars = ({
       datesWithEvents.forEach(date => {
         accumulator[date] = [
           ...get(accumulator, date, []),
-          ...newEvents[calendarId][date]
+          ...newEvents[calendarId][date],
         ];
       });
       return accumulator;
@@ -34,4 +34,4 @@ const getEventsWithSelectedCalendars = ({
   return selectedCalendarEvents;
 };
 
-export default getEventsWithSelectedCalendars;
+export default getEventsWithSelectedEventGroups;

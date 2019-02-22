@@ -1,13 +1,13 @@
-import React, { useMemo } from "react";
-import PropTypes from "prop-types";
-import get from "lodash/get";
-import { getEventColumns } from "../../StepGrid/utils";
-import StepGrid from "../../StepGrid";
-import Day from "../../StepGrid/components/Day";
-import { getWeekList } from "./utils";
-import { makeClass } from "../../../utils";
-import { getTodayClass } from "../../StepGrid/utils";
-import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../../types";
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import get from 'lodash/get';
+import { getEventColumns } from '../../StepGrid/utils';
+import StepGrid from '../../StepGrid';
+import Day from '../../StepGrid/components/Day';
+import { getWeekList } from './utils';
+import { makeClass } from '../../../utils';
+import { getTodayClass } from '../../StepGrid/utils';
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 
 const WeekView = ({
   events,
@@ -20,7 +20,7 @@ const WeekView = ({
   renderEvent,
   timeGutterWidth,
   stepDetails,
-  renderCorner
+  renderCorner,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
@@ -38,19 +38,19 @@ const WeekView = ({
       renderHeader={() =>
         dateList.map(date => {
           const totalColumns =
-            Object.keys(get(eventsWithColumns, date.format("YYYY-MM-DD"), {}))
+            Object.keys(get(eventsWithColumns, date.format('YYYY-MM-DD'), {}))
               .length || 1;
 
           const minWidth = `${totalColumns * 190}px`;
           return (
             <div
               className={`${makeClass(
-                "step-grid__header-column"
+                'step-grid__header-column'
               )}${getTodayClass(date)}`}
               key={`dayHeader${date.date()}`}
               style={{ minWidth }}
             >
-              <h2>{date.format("dddd, MMM D")}</h2>
+              <h2>{date.format('dddd, MMM D')}</h2>
             </div>
           );
         })
@@ -59,13 +59,13 @@ const WeekView = ({
         return dateList.map(date => {
           const stepDetailsForDay = get(
             stepDetails,
-            date.format("YYYY-MM-DD"),
+            date.format('YYYY-MM-DD'),
             []
           );
 
           const eventsForDay = get(
             eventsWithColumns,
-            date.format("YYYY-MM-DD"),
+            date.format('YYYY-MM-DD'),
             {}
           );
           return (
@@ -92,7 +92,7 @@ WeekView.defaultProps = {
   renderEvent: null,
   renderCorner: null,
   timeGutterWidth: 50,
-  stepDetails: null
+  stepDetails: null,
 };
 
 WeekView.propTypes = {
@@ -106,7 +106,7 @@ WeekView.propTypes = {
   renderCorner: PropTypes.func,
   events: PropTypes.object.isRequired,
   timeGutterWidth: PropTypes.number,
-  stepDetails: PropTypes.object
+  stepDetails: PropTypes.object,
 };
 
 export default WeekView;

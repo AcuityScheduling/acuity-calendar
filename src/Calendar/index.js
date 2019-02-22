@@ -1,24 +1,22 @@
-import moment from "moment";
-import React, { useMemo } from "react";
-import PropTypes from "prop-types";
-import { MonthView, CalendarsView, WeekView } from "./components/Views";
-import { CALENDAR_VIEWS } from "./constants";
+import moment from 'moment';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { MonthView, CalendarsView, WeekView } from './components/Views';
+import { CALENDAR_VIEWS } from './constants';
 import {
   FIRST_DAY_TYPE,
   MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
   STEP_MINUTES_TYPE,
-  CALENDAR_TYPE
-} from "./types";
-import { getMungedEvents, getEventsWithSelectedCalendars } from "./utils";
+} from './types';
+import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
 
 const Calendar = ({
   events,
   stepDetails,
   view,
-  calendars,
   selectedDate,
-  selectedCalendars,
+  selectedEventGroups,
   onViewChange,
   onNavigate,
   firstDay,
@@ -29,14 +27,15 @@ const Calendar = ({
   selectMinutes,
   timeGutterWidth,
   renderEvent,
-  renderCorner
+  renderCorner,
+  renderEventGroupHeader,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
     const views = {
       [month]: MonthView,
       [week]: WeekView,
-      [calendar]: CalendarsView
+      [calendar]: CalendarsView,
     };
     return views[view];
   };
@@ -45,16 +44,16 @@ const Calendar = ({
 
   const mungedEvents = useMemo(() => getMungedEvents({ events, stepMinutes }), [
     events,
-    stepMinutes
+    stepMinutes,
   ]);
 
-  const eventsWithSelectedCalendars = useMemo(
+  const eventsWithSelectedEventGroups = useMemo(
     () =>
-      getEventsWithSelectedCalendars({
+      getEventsWithSelectedEventGroups({
         mungedEvents,
-        selectedCalendars
+        selectedEventGroups,
       }),
-    [mungedEvents, selectedCalendars]
+    [mungedEvents, selectedEventGroups]
   );
 
   const mungedStepDetails = useMemo(
@@ -64,17 +63,17 @@ const Calendar = ({
 
   const mungedStepDetailsCalendar = useMemo(
     () =>
-      getEventsWithSelectedCalendars({
+      getEventsWithSelectedEventGroups({
         mungedEvents: mungedStepDetails,
-        selectedCalendars
+        selectedEventGroups,
       }),
-    [mungedStepDetails, selectedCalendars]
+    [mungedStepDetails, selectedEventGroups]
   );
 
   return (
     <View
-      eventsWithCalendars={mungedEvents}
-      events={eventsWithSelectedCalendars}
+      eventsWithEventGroups={mungedEvents}
+      events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsCalendar}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}
@@ -83,38 +82,40 @@ const Calendar = ({
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
-      selectedCalendars={selectedCalendars}
-      calendars={calendars}
+      selectedEventGroups={selectedEventGroups}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
       timeGutterWidth={timeGutterWidth}
+      renderEventGroupHeader={renderEventGroupHeader}
     />
   );
 };
 
 Calendar.defaultProps = {
   renderEvent: null,
-  renderCorner: null,
+  renderCorner: () => null,
+  renderEventGroupHeader: () => null,
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
   selectedDate: moment(),
-  view: CALENDAR_VIEWS.month
+  view: CALENDAR_VIEWS.month,
+  calendars: [],
+  selectedEventGroups: false,
 };
 
 Calendar.propTypes = {
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE),
+  selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   events: PropTypes.arrayOf(
     PropTypes.shape({
       start: PropTypes.string.isRequired,
       end: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired
+      title: PropTypes.string.isRequired,
     })
   ),
   stepDetails: PropTypes.array,
   selectedDate: MOMENT_TYPE,
   view: CALENDAR_VIEW_TYPE,
-  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
   onViewChange: PropTypes.func.isRequired,
   onNavigate: PropTypes.func.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
@@ -125,7 +126,8 @@ Calendar.propTypes = {
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
-  timeGutterWidth: PropTypes.number
+  timeGutterWidth: PropTypes.number,
+  renderEventGroupHeader: PropTypes.func,
 };
 
 export default Calendar;

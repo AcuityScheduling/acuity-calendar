@@ -1,81 +1,72 @@
-import React from "react";
-import PropTypes from "prop-types";
-import get from "lodash/get";
-import StepGrid from "../../StepGrid";
-import Day from "../../StepGrid/components/Day";
-import { makeClass } from "../../../utils";
-import {
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  CALENDAR_TYPE
-} from "../../../types";
-import { TIME_GUTTER_WIDTH } from "../../StepGrid/constants";
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import get from 'lodash/get';
+import StepGrid from '../../StepGrid';
+import Day from '../../StepGrid/components/Day';
+import { makeClass } from '../../../utils';
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 
 const columnStyles = {
-  minWidth: `${100 / 7}%`
+  minWidth: `${100 / 7}%`,
 };
 
 const CalendarsView = ({
-  view,
   selectedDate,
-  calendars,
-  selectedCalendars,
+  selectedEventGroups,
+  renderEventGroupHeader,
   firstDay,
   stepMinutes,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
-  eventsWithCalendars,
+  eventsWithEventGroups,
   timeGutterWidth,
   renderEvent,
-  renderCorner
+  renderCorner,
 }) => {
+  const getEventsForDay = groupId =>
+    get(
+      eventsWithEventGroups,
+      `${groupId}.${selectedDate.format('YYYY-MM-DD')}`,
+      []
+    );
+
   return (
     <StepGrid
-      view={view}
       selectedDate={selectedDate}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
-      onSelectEvent={onSelectEvent}
-      onSelectSlot={onSelectSlot}
       selectMinutes={selectMinutes}
       timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() =>
-        selectedCalendars.map(calendarId => {
-          const calendarName = get(
-            calendars.find(calendar => calendar.id === calendarId),
-            "name",
-            ""
-          );
+        selectedEventGroups.map(groupId => {
           return (
-            <h2
-              className={makeClass("step-grid__header-column")}
-              key={`header${calendarId}`}
+            <div
+              className={makeClass('step-grid__header-column')}
+              key={`header${groupId}`}
               style={columnStyles}
             >
-              {calendarName}
-            </h2>
+              {renderEventGroupHeader({
+                groupId,
+                events: getEventsForDay(groupId),
+              })}
+            </div>
           );
         })
       }
       renderColumns={({ currentTime }) => {
-        return selectedCalendars.map(calendarId => {
-          const eventsForDay = get(
-            eventsWithCalendars,
-            `${calendarId}.${selectedDate.format("YYYY-MM-DD")}`,
-            []
-          );
-
+        return selectedEventGroups.map(groupId => {
           return (
             <Day
-              events={eventsForDay}
+              events={getEventsForDay(groupId)}
               date={selectedDate}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
               selectMinutes={selectMinutes}
-              key={`calendarColumn${calendarId}`}
+              key={`groupColumn${groupId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
@@ -88,21 +79,25 @@ const CalendarsView = ({
 };
 
 CalendarsView.defaultProps = {
-  renderCorner: null,
+  renderCorner: () => null,
   renderEvent: null,
-  timeGutterWidth: TIME_GUTTER_WIDTH
+  timeGutterWidth: TIME_GUTTER_WIDTH,
+  selectedDate: moment(),
 };
 
 CalendarsView.propTypes = {
-  selectedDate: MOMENT_TYPE.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  eventsWithCalendars: PropTypes.object.isRequired,
+  eventsWithEventGroups: PropTypes.object.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,
-  calendars: PropTypes.arrayOf(CALENDAR_TYPE).isRequired,
+  selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
   renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
-  timeGutterWidth: PropTypes.number
+  timeGutterWidth: PropTypes.number,
+  renderEventGroupHeader: PropTypes.func.isRequired,
 };
 
 export default CalendarsView;

@@ -1,20 +1,21 @@
-import React, { useState, Fragment } from "react";
-import moment from "moment";
+import React, { useState, Fragment } from 'react';
+import moment from 'moment';
 
-import { storiesOf } from "@storybook/react";
-import { linkTo } from "@storybook/addon-links";
+import { storiesOf } from '@storybook/react';
+import { linkTo } from '@storybook/addon-links';
 
-import Calendar from "../src/Calendar";
-import { CALENDAR_VIEWS } from "../src/Calendar/constants";
+import Calendar from '../src/Calendar';
+import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 
-import { Welcome } from "@storybook/react/demo";
+import { Welcome } from '@storybook/react/demo';
 
-storiesOf("Welcome", module).add("to Storybook", () => (
-  <Welcome showApp={linkTo("Button")} />
+storiesOf('Welcome', module).add('to Storybook', () => (
+  <Welcome showApp={linkTo('Button')} />
 ));
 
 const eventsMocked = [];
 
+// eslint-disable-next-line react/prop-types
 const SillyWrappingComponentToUseHooks = ({ view }) => {
   const [selectedDate, setSelectedDate] = useState(moment());
 
@@ -48,48 +49,48 @@ const SillyWrappingComponentToUseHooks = ({ view }) => {
   );
 };
 
-storiesOf("Calendar", module)
-  .add("day calendar", () => (
+storiesOf('Calendar', module)
+  .add('day calendar', () => (
     <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
   ))
-  .add("week calendar", () => (
+  .add('week calendar', () => (
     <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
   ))
-  .add("month calendar", () => (
+  .add('month calendar', () => (
     <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />
   ))
-  .add("month heatmap", () => {
+  .add('month heatmap', () => {
     const events = [
       {
         id: 3,
         calendar_id: 5,
-        start: "2019-02-11 00:00:00",
-        end: "2019-02-11 00:00:00",
-        weight: 0.7
+        start: '2019-02-11 00:00:00',
+        end: '2019-02-11 00:00:00',
+        weight: 0.7,
       },
       {
         id: 3,
         calendar_id: 5,
-        start: "2019-02-12 00:00:00",
-        end: "2019-02-12 00:00:00",
-        weight: 0.4
+        start: '2019-02-12 00:00:00',
+        end: '2019-02-12 00:00:00',
+        weight: 0.4,
       },
       {
         id: 3,
         calendar_id: 5,
-        start: "2019-02-13 00:00:00",
-        end: "2019-02-13 00:00:00",
-        weight: 0.5
+        start: '2019-02-13 00:00:00',
+        end: '2019-02-13 00:00:00',
+        weight: 0.5,
       },
       {
         id: 3,
         calendar_id: 5,
-        start: "2019-02-14 00:00:00",
-        end: "2019-02-14 00:00:00",
-        weight: 0.8
-      }
+        start: '2019-02-14 00:00:00',
+        end: '2019-02-14 00:00:00',
+        weight: 0.8,
+      },
     ];
-    const calendars = [{ id: 5, name: "Brian Jenkins" }];
+    const calendars = [{ id: 5, name: 'Brian Jenkins' }];
     const styles = `
       .acuity-calendar__month__cell {
         position: relative;
@@ -127,7 +128,7 @@ storiesOf("Calendar", module)
             <div
               className="heatmap__cell"
               style={{
-                background: "rgba(0, 0, 255, " + event.weight + ")"
+                background: 'rgba(0, 0, 255, ' + event.weight + ')',
               }}
             />
           )}

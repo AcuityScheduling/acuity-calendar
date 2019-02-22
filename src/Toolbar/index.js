@@ -76,27 +76,36 @@ const Toolbar = ({
     currentDate: selectedDate,
   });
 
+  const styles = `
+    button {
+      margin-right: 4px;
+    }
+  `;
+
   return (
-    <div>
+    <div style={{ marginBottom: '15px' }}>
+      <style>{styles}</style>
       <h1>{getRangeTitle({ date: selectedDate, view, firstDay })}</h1>
-      <div>
-        <button type="button" onClick={() => onViewChange(month)}>
-          Month
-        </button>
-        <button type="button" onClick={() => onViewChange(week)}>
-          Week
-        </button>
-        <button type="button" onClick={() => onViewChange(calendar)}>
-          Day
-        </button>
-      </div>
-      <div>
-        <button type="button" onClick={() => onNavigate(prevDate)}>
-          Back
-        </button>
-        <button type="button" onClick={() => onNavigate(nextDate)}>
-          Next
-        </button>
+      <div style={{ display: 'flex' }}>
+        <div style={{ marginRight: '20px' }}>
+          <button type="button" onClick={() => onViewChange(month)}>
+            Month
+          </button>
+          <button type="button" onClick={() => onViewChange(week)}>
+            Week
+          </button>
+          <button type="button" onClick={() => onViewChange(calendar)}>
+            Day
+          </button>
+        </div>
+        <div>
+          <button type="button" onClick={() => onNavigate(prevDate)}>
+            Back
+          </button>
+          <button type="button" onClick={() => onNavigate(nextDate)}>
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

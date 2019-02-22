@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import get from "lodash/get";
 import { getMonthGrid, getDayNames } from "./utils";
 import { cellWidth, makeClass } from "../../../utils";
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
-import MonthCell from "./components/MonthCell";
 import "./index.scss";
 
 const dayStyles = {
@@ -49,15 +49,41 @@ const MonthView = ({
               {row.map(dayDetails => {
                 countDays += 1;
 
+                const eventsForCell = get(
+                  events,
+                  dayDetails.date.format("YYYY-MM-DD"),
+                  []
+                );
+
                 return (
-                  <MonthCell
-                    date={dayDetails.date}
-                    isInRange={dayDetails.isInRange}
-                    events={events}
-                    key={`monthCell${countDays}`}
-                    onSelectEvent={onSelectEvent}
-                    onSelectSlot={onSelectSlot}
-                  />
+                  <div
+                    key={`monthCells${countDays}`}
+                    className={makeClass("month__cell")}
+                    style={dayStyles}
+                    role="button"
+                    onClick={() => onSelectSlot(dayDetails.date)}
+                  >
+                    <h2 className={makeClass("month__date")}>
+                      {dayDetails.date.date()}
+                    </h2>
+                    {eventsForCell.length > 0 &&
+                      eventsForCell.map(
+                        event =>
+                          dayDetails.isInRange && (
+                            // This wrapper should be reused from the stepgrid
+                            <div
+                              key={event.id}
+                              onClick={e => {
+                                e.stopPropagation();
+                                onSelectEvent(event);
+                              }}
+                              style={{ fontSize: "12px", position: "absolute" }}
+                            >
+                              {event.title}
+                            </div>
+                          )
+                      )}
+                  </div>
                 );
               })}
             </div>

@@ -1,5 +1,5 @@
 import getEventColumns from "./getEventColumns";
-import { eventsMocked } from "../../../utils";
+import { MOCKED_EVENTS } from "../../../mocks";
 import {
   getMungedEvents,
   getEventsWithSelectedCalendars
@@ -8,7 +8,7 @@ import {
 describe("Add column numbers to events", () => {
   it("has column keys and correct events in each column", () => {
     const mungedEvents = getMungedEvents({
-      events: eventsMocked,
+      events: MOCKED_EVENTS,
       stepMinutes: 30
     });
 

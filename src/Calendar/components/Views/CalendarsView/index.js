@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import moment from "moment";
 import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";
-import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { makeClass, cellWidth } from "../../../utils";
 import {
   MOMENT_TYPE,
@@ -81,15 +79,6 @@ const CalendarsView = ({
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
-              renderCurrentTimeIndicator={
-                selectedDate.isSame(moment(), "day") && (
-                  <CurrentTimeIndicator
-                    stepMinutes={stepMinutes}
-                    currentTime={currentTime}
-                    isToday
-                  />
-                )
-              }
             />
           );
         });

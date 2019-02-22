@@ -1,5 +1,12 @@
 .acuity-calendar {
   &__step-grid {
+    &__step-detail-wrapper {
+      background: #fff;
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
+
     &__column {
       &:not(:last-child) {
         border-right: 1px solid #e7e7e7;

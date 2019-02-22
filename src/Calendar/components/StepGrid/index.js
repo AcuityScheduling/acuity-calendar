@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import TimeGutter from "./components/TimeGutter";
-import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
 import {
   STEP_HEIGHTS,
   TIME_GUTTER_WIDTH,
   STEP_BORDER_WIDTH
 } from "./constants";
-import { useCalendarSticky, getScrollbarWidth } from "./utils";
+import { useCalendarSticky, getScrollbarWidth, getTopOffset } from "./utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
 import "./index.scss";
@@ -45,6 +43,9 @@ const StepGrid = ({
 
   const totalStepsPerBlock = 60 / stepMinutes;
   const scrollbarWidth = getScrollbarWidth();
+  const currentTimeIndicatorClass = makeClass(
+    "step-grid__current-time-indicator"
+  );
 
   const renderStepLines = () => {
     const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
@@ -67,12 +68,35 @@ const StepGrid = ({
         />
       );
     }
+    return times;
+  };
 
-    return (
-      <div className={makeClass("step-grid__step-lines")} ref={stepLinesRef}>
-        {times}
-      </div>
-    );
+  const renderTimes = () => {
+    const blockHeight = totalStepsPerBlock * STEP_HEIGHTS[stepMinutes];
+    const times = [];
+    for (let i = 0; i < 24; i += 1) {
+      times.push(
+        <div
+          className={makeClass("step-grid__time-label-wrapper")}
+          key={`dayTime${i}`}
+          style={{
+            height: `${blockHeight + STEP_BORDER_WIDTH}px`
+          }}
+        >
+          <span
+            className={makeClass(
+              "step-grid__time-label",
+              `step-grid__time-label-${i}`
+            )}
+          >
+            {moment()
+              .hour(i)
+              .format("ha")}
+          </span>
+        </div>
+      );
+    }
+    return times;
   };
 
   return (
@@ -110,19 +134,30 @@ const StepGrid = ({
         </div>
       </div>
       <div className={makeClass("step-grid")} ref={wrapperRef}>
-        {renderStepLines()}
+        <div className={makeClass("step-grid__step-lines")} ref={stepLinesRef}>
+          {renderStepLines()}
+        </div>
         <div className={makeClass("step-grid__column-wrapper")}>
-          <TimeGutter
-            blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}
+          <div
+            className={makeClass("step-grid__time-gutter")}
+            style={{ width: timeGutterWidth }}
             ref={timeColumnRef}
-            width={timeGutterWidth}
-          />
+          >
+            {renderTimes()}
+          </div>
           <div className={makeClass("step-grid__columns")}>
-            <CurrentTimeIndicator
+            <div
+              className={currentTimeIndicatorClass}
+              style={{
+                top: `${getTopOffset({ stepMinutes, date: currentTime })}px`
+              }}
               ref={timeIndicatorRef}
-              stepMinutes={stepMinutes}
-              currentTime={currentTime}
-            />
+            >
+              <span className={`${currentTimeIndicatorClass}__time`}>
+                {moment().format("h:mma")}
+              </span>
+              <div className={`${currentTimeIndicatorClass}__line`} />
+            </div>
             {renderColumns({ currentTime })}
           </div>
         </div>

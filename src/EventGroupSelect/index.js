@@ -6,7 +6,8 @@ const EventGroupSelect = ({
   selectedEventGroups,
   setSelectedEventGroups,
 }) => {
-  if (!eventGroups) return false;
+  if (eventGroups.length === 0) return null;
+
   const toggleSelectedGroup = ({ isSelected, group }) => {
     if (isSelected) {
       return setSelectedEventGroups(
@@ -39,7 +40,7 @@ const EventGroupSelect = ({
 };
 
 EventGroupSelect.defaultProps = {
-  eventGroups: null,
+  eventGroups: [],
   selectedEventGroups: [],
   setSelectedEventGroups: () => null,
 };

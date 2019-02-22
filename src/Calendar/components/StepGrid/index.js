@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import TimeGutter from "./components/TimeGutter";
 import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
-import { STEP_HEIGHTS, TIME_GUTTER_WIDTH, STEP_BORDER_WIDTH } from "./constants";
+import {
+  STEP_HEIGHTS,
+  TIME_GUTTER_WIDTH,
+  STEP_BORDER_WIDTH
+} from "./constants";
 import { useCalendarSticky, useCurrentTime, getScrollbarWidth } from "./utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
 import "./index.scss";
-import Corner from "./components/Corner";
 
 const StepGrid = ({
   selectedDate,
@@ -38,12 +41,13 @@ const StepGrid = ({
   return (
     <div className={makeClass("step-grid__wrapper")}>
       <div className={makeClass("step-grid__header-wrapper")}>
-        <Corner
-          currentTime={currentTime}
-          renderCorner={renderCorner}
+        <div
+          className={makeClass("step-grid__corner")}
+          style={{ width: `${timeGutterWidth}px` }}
           ref={cornerRef}
-          width={timeGutterWidth}
-        />
+        >
+          {renderCorner && renderCorner({ currentTime })}
+        </div>
         <div
           style={{
             width: "100%"

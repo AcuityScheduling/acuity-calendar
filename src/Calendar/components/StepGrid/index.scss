@@ -17,6 +17,20 @@
       border-top: 1px solid #e7e7e7;
     }
 
+    &__corner {
+      position: relative;
+      width: 50px;
+      z-index: 5;
+      background: white;
+      border-right: 1px solid #e7e7e7;
+      border-left: 1px solid #e7e7e7;
+      flex-shrink: 0;
+    }
+    &__corner h2 {
+      margin: 0;
+      background: white;
+    }
+
     &__header {
       display: flex;
       background: white;

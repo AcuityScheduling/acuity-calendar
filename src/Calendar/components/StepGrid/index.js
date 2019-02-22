@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import TimeGutter from "./components/TimeGutter";
-import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
 import {
   STEP_HEIGHTS,
@@ -47,6 +46,35 @@ const StepGrid = ({
   const totalStepsPerBlock = 60 / stepMinutes;
   const scrollbarWidth = getScrollbarWidth();
 
+  const renderStepLines = () => {
+    const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
+    const stepHeight = STEP_HEIGHTS[stepMinutes];
+    const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
+    const times = [];
+    for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
+      const minorStep = i % totalStepsPerBlock;
+      times.push(
+        <div
+          className={makeClass(
+            "step-grid__step-line",
+            minorStep && "step-grid__step-line-minor"
+          )}
+          key={`timeBlock${i}`}
+          style={{
+            height: stepHeightWithBorder
+          }}
+          role="button"
+        />
+      );
+    }
+
+    return (
+      <div className={makeClass("step-grid__step-lines")} ref={stepLinesRef}>
+        {times}
+      </div>
+    );
+  };
+
   return (
     <div className={makeClass("step-grid__wrapper")}>
       <div className={makeClass("step-grid__header-wrapper")}>
@@ -82,12 +110,7 @@ const StepGrid = ({
         </div>
       </div>
       <div className={makeClass("step-grid")} ref={wrapperRef}>
-        <StepLines
-          ref={stepLinesRef}
-          totalStepsPerBlock={totalStepsPerBlock}
-          stepMinutes={stepMinutes}
-        />
-
+        {renderStepLines()}
         <div className={makeClass("step-grid__column-wrapper")}>
           <TimeGutter
             blockHeight={totalStepsPerBlock * STEP_HEIGHTS[stepMinutes]}

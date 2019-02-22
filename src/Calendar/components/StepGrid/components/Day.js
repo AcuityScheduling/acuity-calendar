@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import get from 'lodash/get';
 import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 import { getTodayClass, getTopOffset } from '../utils';
@@ -84,7 +85,7 @@ const Day = ({
         </div>
       )}
       {Object.keys(events).map(column => {
-        const thisColumnEvents = events[column];
+        const thisColumnEvents = get(events, column, []);
         return thisColumnEvents.map(event => {
           return (
             <EventDragDrop

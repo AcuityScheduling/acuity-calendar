@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import get from "lodash/get";
-import { getMonthGrid, getDayNames } from "./utils";
-import { makeClass } from "../../../utils";
-import { FIRST_DAY_TYPE, MOMENT_TYPE } from "../../../types";
-import Event from "../../Event";
-import "./index.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import get from 'lodash/get';
+import { getMonthGrid, getDayNames } from './utils';
+import { makeClass } from '../../../utils';
+import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
+import Event from '../../Event';
+import './index.scss';
 
 const cellWidth = `${100 / 7}%`;
 const dayStyles = {
-  width: cellWidth
+  width: cellWidth,
 };
 
 const MonthView = ({
@@ -18,7 +18,7 @@ const MonthView = ({
   firstDay,
   onSelectEvent,
   onSelectSlot,
-  renderEvent
+  renderEvent,
 }) => {
   const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
   const dayNames = getDayNames({ firstDay });
@@ -26,12 +26,12 @@ const MonthView = ({
   let countDays = 0;
   let countRows = 0;
   return (
-    <div className={makeClass("month")}>
-      <div className={makeClass("month__row", "month__header")}>
+    <div className={makeClass('month')}>
+      <div className={makeClass('month__row', 'month__header')}>
         {dayNames.map(dayName => {
           return (
             <div
-              className={makeClass("month__day-name")}
+              className={makeClass('month__day-name')}
               style={dayStyles}
               key={dayName}
             >
@@ -46,7 +46,7 @@ const MonthView = ({
 
           return (
             <div
-              className={makeClass("month__row")}
+              className={makeClass('month__row')}
               key={`monthColumn${countRows}`}
             >
               {row.map(dayDetails => {
@@ -54,19 +54,19 @@ const MonthView = ({
 
                 const eventsForCell = get(
                   events,
-                  dayDetails.date.format("YYYY-MM-DD"),
+                  dayDetails.date.format('YYYY-MM-DD'),
                   []
                 );
 
                 return (
                   <div
                     key={`monthCells${countDays}`}
-                    className={makeClass("month__cell")}
+                    className={makeClass('month__cell')}
                     style={dayStyles}
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
-                    <h2 className={makeClass("month__date")}>
+                    <h2 className={makeClass('month__date')}>
                       {dayDetails.date.date()}
                     </h2>
                     {eventsForCell.length > 0 &&
@@ -94,7 +94,7 @@ const MonthView = ({
 };
 
 MonthView.defaultProps = {
-  renderEvent: null
+  renderEvent: null,
 };
 
 MonthView.propTypes = {
@@ -103,7 +103,7 @@ MonthView.propTypes = {
   events: PropTypes.object.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
-  renderEvent: PropTypes.func
+  renderEvent: PropTypes.func,
 };
 
 export default MonthView;

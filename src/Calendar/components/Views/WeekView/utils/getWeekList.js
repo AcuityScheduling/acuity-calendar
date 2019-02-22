@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import moment from "moment";
+import moment from 'moment';
 
 /**
  * Get all the days that could possibly be used in this week based off of the date
@@ -12,9 +12,9 @@ import moment from "moment";
  */
 const getPossibleDays = ({ firstDay = 0, date }) => {
   const week = [];
-  const lastWeek = date.clone().subtract(6, "days");
+  const lastWeek = date.clone().subtract(6, 'days');
   for (let i = 0; i < 13; i += 1) {
-    week.push(lastWeek.clone().add(i, "days"));
+    week.push(lastWeek.clone().add(i, 'days'));
   }
   return week;
 };
@@ -49,7 +49,7 @@ const getWeekList = ({ firstDay, date }) => {
   const firstDayIndex = getFirstDayIndex({
     firstDay,
     dateDay: date.day(),
-    possibleDays
+    possibleDays,
   });
   return possibleDays.slice(firstDayIndex, firstDayIndex + 7);
 };

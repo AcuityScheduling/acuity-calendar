@@ -1,3 +1,3 @@
-import getWeekList from "./getWeekList";
+import getWeekList from './getWeekList';
 
 export { getWeekList };

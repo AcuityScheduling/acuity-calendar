@@ -7,6 +7,7 @@
     "test": "razzle test --env=jsdom",
     "lint": "eslint --ignore-path .gitignore --ext .js",
     "lint:staged": "lint-staged",
+    "prettier": "prettier --write \"**/*.js\" \"!node_modules/**\" \"!build/**\" \"!storybook-static/**\"",
     "start:prod": "NODE_ENV=production node build/server.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

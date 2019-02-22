@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 /**
  * Get an array of all the days of the week - moment will give them to us 0 indexed on Sunday
@@ -11,11 +11,11 @@ import moment from "moment";
  *                                            uses the formating for moment even though that's
  *                                            not what the moment api does
  */
-const getDayNames = ({ firstDay = 0, format = "dddd" }) => {
+const getDayNames = ({ firstDay = 0, format = 'dddd' }) => {
   const formatMap = {
-    dd: "weekdaysMin",
-    ddd: "weekdaysShort",
-    dddd: "weekdays"
+    dd: 'weekdaysMin',
+    ddd: 'weekdaysShort',
+    dddd: 'weekdays',
   };
 
   const days = moment[formatMap[format]]();

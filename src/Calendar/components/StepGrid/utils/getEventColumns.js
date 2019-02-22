@@ -1,4 +1,4 @@
-import get from "lodash/get";
+import get from 'lodash/get';
 
 const getEventColumns = events => {
   const newEvents = Object.assign({}, events);
@@ -19,7 +19,7 @@ const getEventColumnsPerDay = events => {
     const eventColumn = getEventColumn({
       event,
       lastEvent: index !== 0 ? events[index - 1] : null,
-      currentColumn
+      currentColumn,
     });
     const eventsInColumn = get(accumulator, eventColumn, []);
     accumulator[eventColumn] = [...eventsInColumn, event];
@@ -42,7 +42,7 @@ const getEventColumnsPerDay = events => {
 const getEventColumn = ({ event, lastEvent, currentColumn }) => {
   // If first event OR this event is on a different day then
   // the last event start at column 1 again
-  if (!lastEvent || !event.start.isSame(lastEvent.start, "day")) return 1;
+  if (!lastEvent || !event.start.isSame(lastEvent.start, 'day')) return 1;
 
   // These come in sorted by start date, so we only need to check if the start
   // of this event is BEFORE the last event. If it is it needs a new column

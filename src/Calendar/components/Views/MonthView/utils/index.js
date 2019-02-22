@@ -1,4 +1,4 @@
-import getMonthGrid from "./getMonthGrid";
-import getDayNames from "./getDayNames";
+import getMonthGrid from './getMonthGrid';
+import getDayNames from './getDayNames';
 
 export { getMonthGrid, getDayNames };

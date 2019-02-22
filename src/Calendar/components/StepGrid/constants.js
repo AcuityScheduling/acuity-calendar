@@ -9,7 +9,7 @@ export const STEP_HEIGHTS = {
   15: 31,
   20: 34,
   30: 42,
-  60: 65
+  60: 65,
 };
 export const TIME_GUTTER_WIDTH = 50;
 export const STEP_BORDER_WIDTH = 1;

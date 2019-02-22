@@ -14,7 +14,8 @@ const MonthCell = ({
   events,
   isInRange,
   onSelectEvent,
-  onSelectSlot
+  onSelectSlot,
+  renderEvent
 }) => {
   const eventsForCell = get(events, date.format("YYYY-MM-DD"), []);
 
@@ -34,7 +35,9 @@ const MonthCell = ({
                 event={event}
                 key={event.id}
                 onSelectEvent={onSelectEvent}
-              />
+              >
+                {renderEvent}
+              </Event>
             )
         )}
     </div>
@@ -45,7 +48,8 @@ MonthCell.propTypes = {
   date: MOMENT_TYPE.isRequired,
   events: PropTypes.object.isRequired,
   isInRange: PropTypes.bool.isRequired,
-  onSelectEvent: PropTypes.func.isRequired
+  onSelectEvent: PropTypes.func.isRequired,
+  renderEvent: PropTypes.func
 };
 
 export default MonthCell;

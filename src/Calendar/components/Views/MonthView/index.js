@@ -15,7 +15,8 @@ const MonthView = ({
   selectedDate,
   firstDay,
   onSelectEvent,
-  onSelectSlot
+  onSelectSlot,
+  renderEvent
 }) => {
   const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
   const dayNames = getDayNames({ firstDay });
@@ -57,7 +58,9 @@ const MonthView = ({
                     key={`monthCell${countDays}`}
                     onSelectEvent={onSelectEvent}
                     onSelectSlot={onSelectSlot}
-                  />
+                    renderEvent={renderEvent}
+                  >
+                  </MonthCell>
                 );
               })}
             </div>
@@ -73,7 +76,8 @@ MonthView.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   events: PropTypes.object.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
-  onSelectSlot: PropTypes.func.isRequired
+  onSelectSlot: PropTypes.func.isRequired,
+  renderEvent: PropTypes.func
 };
 
 export default MonthView;

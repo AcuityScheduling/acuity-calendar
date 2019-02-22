@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import TimeGutter from "./components/TimeGutter";
 import StepLines from "./components/StepLines";
 import CurrentTimeIndicator from "./components/CurrentTimeIndicator";
-import { STEP_HEIGHTS, TIME_GUTTER_WIDTH } from "./constants";
-import { useCalendarSticky, useCurrentTime } from "./utils";
+import { STEP_HEIGHTS, TIME_GUTTER_WIDTH, STEP_BORDER_WIDTH } from "./constants";
+import { useCalendarSticky, useCurrentTime, getScrollbarWidth } from "./utils";
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from "../../types";
 import { makeClass } from "../../utils";
-import Header from "./components/Header";
 import "./index.scss";
+import Corner from "./components/Corner";
 
 const StepGrid = ({
   selectedDate,
@@ -31,19 +31,43 @@ const StepGrid = ({
     stepLinesRef
   } = useCalendarSticky();
   const currentTime = useCurrentTime();
-  
+
   const totalStepsPerBlock = 60 / stepMinutes;
+  const scrollbarWidth = getScrollbarWidth();
 
   return (
     <div className={makeClass("step-grid__wrapper")}>
-      <Header
-        headerRef={headerRef}
-        cornerRef={cornerRef}
-        renderCorner={renderCorner}
-        renderHeader={renderHeader}
-        currentTime={currentTime}
-        timeGutterWidth={timeGutterWidth}
-      />
+      <div className={makeClass("step-grid__header-wrapper")}>
+        <Corner
+          currentTime={currentTime}
+          renderCorner={renderCorner}
+          ref={cornerRef}
+          width={timeGutterWidth}
+        />
+        <div
+          style={{
+            width: "100%"
+          }}
+          className={makeClass("step-grid__header")}
+          ref={headerRef}
+        >
+          {renderHeader()}
+        </div>
+        <div
+          className={makeClass("step-grid__header-scroll-gutter-padding")}
+          style={{
+            width: `${scrollbarWidth}px`
+          }}
+        />
+        <div
+          className={makeClass("step-grid__header-scroll-gutter")}
+          style={{ width: `${scrollbarWidth - STEP_BORDER_WIDTH}px` }}
+        >
+          <div
+            className={makeClass("step-grid__header-scroll-gutter-connector")}
+          />
+        </div>
+      </div>
       <div className={makeClass("step-grid")} ref={wrapperRef}>
         <StepLines
           ref={stepLinesRef}

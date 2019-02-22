@@ -17,6 +17,28 @@
       border-top: 1px solid #e7e7e7;
     }
 
+    &__header {
+      display: flex;
+      background: white;
+      position: relative;
+      z-index: 4;
+      text-align: center;
+    }
+
+    &__header-column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      margin: 0;
+      min-width: 124px;
+      width: 14.286%;
+      h2 {
+        font-size: 14px;
+        color: #444;
+        font-weight: 400;
+      }
+    }
+
     &__header-scroll-gutter {
       height: 43px;
       background: white;
@@ -42,29 +64,11 @@
     &__column-wrapper {
       display: flex;
     }
+
     &__today {
       background: #edf8f2;
     }
-    &__header {
-      display: flex;
-      background: white;
-      position: relative;
-      z-index: 4;
-      text-align: center;
-    }
-    &__header-column {
-      &:not(:last-child) {
-        border-right: 1px solid #e7e7e7;
-      }
-      margin: 0;
-      min-width: 124px;
-      width: 14.286%;
-      h2 {
-        font-size: 14px;
-        color: #444;
-        font-weight: 400;
-      }
-    }
+
     &__columns {
       display: flex;
       width: 100%;

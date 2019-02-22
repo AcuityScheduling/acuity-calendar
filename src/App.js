@@ -24,7 +24,7 @@ const App = () => {
         setSelectedEventGroups={setSelectedCalendars}
         eventGroups={MOCKED_CALENDARS}
       />
-      <div>
+      <div style={{ width: '100%' }}>
         <Toolbar
           view={view}
           onViewChange={setView}

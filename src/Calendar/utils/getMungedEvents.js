@@ -1,7 +1,10 @@
 import get from "lodash/get";
 import moment from "moment";
 import { getTopOffset } from "../components/StepGrid/utils";
-import { STEP_HEIGHTS } from "../components/StepGrid/constants";
+import {
+  STEP_HEIGHTS,
+  STEP_BORDER_WIDTH
+} from "../components/StepGrid/constants";
 
 /**
  * Get all the events keyed by date for easy lookup - and add some
@@ -66,9 +69,10 @@ const addEventLocation = ({ event, stepMinutes }) => {
   const pixelsPerMinute = stepHeight / stepMinutes;
 
   const duration = event.end.clone().diff(event.start, "minutes");
+  const borderHeightAdjustment = (duration / 60) * STEP_BORDER_WIDTH;
 
   const location = {
-    height: duration * pixelsPerMinute,
+    height: duration * pixelsPerMinute + borderHeightAdjustment,
     top: getTopOffset({ stepMinutes, date: event.start })
   };
 

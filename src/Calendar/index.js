@@ -13,6 +13,7 @@ import { getMungedEvents, getEventsWithSelectedCalendars } from "./utils";
 
 const Calendar = ({
   events,
+  stepDetails,
   view,
   calendars,
   selectedCalendars,
@@ -25,7 +26,9 @@ const Calendar = ({
   onSelectSlot,
   stepMinutes,
   selectMinutes,
-  renderEvent
+  timeGutterWidth,
+  renderEvent,
+  renderCorner
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -53,10 +56,25 @@ const Calendar = ({
     [mungedEvents, selectedCalendars]
   );
 
+  const mungedStepDetails = useMemo(
+    () => getMungedEvents({ events: stepDetails, stepMinutes }),
+    [stepDetails, stepMinutes]
+  );
+
+  const mungedStepDetailsCalendar = useMemo(
+    () =>
+      getEventsWithSelectedCalendars({
+        mungedEvents: mungedStepDetails,
+        selectedCalendars
+      }),
+    [mungedStepDetails, selectedCalendars]
+  );
+
   return (
     <View
       eventsWithCalendars={mungedEvents}
       events={eventsWithSelectedCalendars}
+      stepDetails={mungedStepDetailsCalendar}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}
@@ -67,12 +85,16 @@ const Calendar = ({
       selectedCalendars={selectedCalendars}
       calendars={calendars}
       renderEvent={renderEvent}
+      renderCorner={renderCorner}
+      timeGutterWidth={timeGutterWidth}
     />
   );
 };
 
 Calendar.defaultProps = {
-  renderEvent: null
+  renderEvent: null,
+  renderCorner: null,
+  timeGutterWidth: 50
 };
 
 Calendar.propTypes = {
@@ -95,7 +117,9 @@ Calendar.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  renderEvent: PropTypes.func
+  renderEvent: PropTypes.func,
+  renderCorner: PropTypes.func,
+  timeGutterWidth: PropTypes.number
 };
 
 export default Calendar;

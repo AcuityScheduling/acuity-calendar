@@ -1,11 +1,19 @@
 import get from "lodash/get";
 
+const getEventColumns = events => {
+  const newEvents = Object.assign({}, events);
+  return Object.keys(events).reduce((accumulator, date) => {
+    accumulator[date] = getEventColumnsPerDay(newEvents[date]);
+    return accumulator;
+  }, newEvents);
+};
+
 /**
  * Add the column number as the key to all events in that column
  *
  * @param {array} events
  */
-const getEventColumns = events => {
+const getEventColumnsPerDay = events => {
   let currentColumn = 1;
   return events.reduce((accumulator, event, index) => {
     const eventColumn = getEventColumn({

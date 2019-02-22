@@ -1,17 +1,20 @@
 .acuity-calendar {
   &__step-grid {
-    &__column {
-      text-align: center;
-      border-right: 1px solid black;
-      position: relative;
-    }
-    &__event-columns {
-      position: relative;
-      display: flex;
-    }
-    &__event-column {
-      position: relative;
+    &__step-detail-wrapper {
+      background: #fff;
+      position: absolute;
       width: 100%;
+      z-index: 1;
+    }
+
+    &__column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      text-align: center;
+      position: relative;
+      min-width: 124px;
+      width: 14.286%;
     }
   }
 }

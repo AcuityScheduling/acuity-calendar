@@ -1,36 +1,153 @@
 .acuity-calendar {
   &__step-grid {
-    width: 80%;
-    display: flex;
+    width: 100%;
     height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
-    &__today {
-      background: grey;
+    border: 1px solid #e7e7e7;
+    background: #f3f3f3;
+
+    &__wrapper {
+      position: relative;
     }
+
+    &__header-wrapper {
+      display: flex;
+      overflow: hidden;
+      border-top: 1px solid #e7e7e7;
+    }
+
+    &__corner {
+      position: relative;
+      width: 50px;
+      z-index: 5;
+      background: white;
+      border-right: 1px solid #e7e7e7;
+      border-left: 1px solid #e7e7e7;
+      flex-shrink: 0;
+    }
+    &__corner h2 {
+      margin: 0;
+      background: white;
+    }
+
     &__header {
       display: flex;
-      width: 100%;
       background: white;
-      position: absolute;
+      position: relative;
       z-index: 4;
-      left: 100px;
       text-align: center;
-      height: 70px;
-      border-bottom: 1px solid black;
+    }
+
+    &__header-column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      margin: 0;
+      min-width: 124px;
+      width: 14.286%;
       h2 {
-        margin: 0;
-        border-right: 1px solid black;
+        font-size: 14px;
+        color: #444;
+        font-weight: 400;
       }
     }
+
+    &__header-scroll-gutter {
+      height: 43px;
+      background: white;
+      position: absolute;
+      z-index: 5;
+      right: -2px;
+      border-right: 1px solid #e7e7e7;
+      border-left: 1px solid #e7e7e7;
+    }
+
+    &__header-scroll-gutter-padding {
+      height: 39px;
+    }
+
+    &__header-scroll-gutter-connector {
+      width: 100%;
+      background: white;
+      height: 1px;
+      bottom: -1px;
+      position: absolute;
+    }
+
+    &__time-gutter {
+      background: white;
+      position: relative;
+      width: 50px;
+      text-align: center;
+      border-right: 1px solid #e7e7e7;
+      z-index: 2;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    &__time-label {
+      font-size: 10px;
+      color: #444;
+      transform: translateY(-8px);
+      display: block;
+      margin-right: 4px;
+    }
+    &__time-label-0 {
+      display: none;
+    }
+
+    &__step-lines {
+      position: absolute;
+      top: -1px;
+      width: 100%;
+    }
+    &__step-line:after {
+      width: 100%;
+      content: "";
+      border-bottom: 1px solid #e7e7e7;
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+    }
+    &__step-line-minor:after {
+      border-bottom: 1px dashed #e7e7e7;
+    }
+
+    &__column-wrapper {
+      display: flex;
+    }
+
+    &__today {
+      background: #edf8f2;
+    }
+
     &__columns {
       display: flex;
       width: 100%;
       position: relative;
-      /* Width of the time gutter */
-      left: 100px;
-      /* Height of header */
-      margin-top: 70px;
+    }
+
+    &__current-time-indicator {
+      width: 100%;
+      position: absolute;
+      z-index: 4;
+      &__line {
+        height: 1px;
+        background: #af5b55;
+        opacity: 0.4;
+      }
+      &__line-today {
+        height: 1px;
+        background: #af5b55;
+      }
+      &__time {
+        position: absolute;
+        transform: translate(-115%, -7px);
+        color: #c9484d;
+        background: #fff;
+        box-shadow: -3px 0px 8px 5px #fff;
+        font-size: 10px;
+      }
     }
   }
 }

@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import moment from "moment";
 import { getEventColumns } from "../../StepGrid/utils";
 import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";

@@ -111,6 +111,7 @@ Calendar.propTypes = {
       title: PropTypes.string.isRequired
     })
   ),
+  stepDetails: PropTypes.array,
   selectedDate: MOMENT_TYPE,
   view: CALENDAR_VIEW_TYPE,
   selectedCalendars: PropTypes.arrayOf(PropTypes.number).isRequired,

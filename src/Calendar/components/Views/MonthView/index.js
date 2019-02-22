@@ -73,7 +73,6 @@ const MonthView = ({
                       eventsForCell.map(
                         event =>
                           dayDetails.isInRange && (
-                            // This wrapper should be reused from the stepgrid
                             <Event
                               event={event}
                               key={event.id}

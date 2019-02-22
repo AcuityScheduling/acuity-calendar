@@ -1,29 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EventGroupSelect = ({ groups, selectedGroups, setSelectedGroups }) => {
-  if (!groups) return false;
+const EventGroupSelect = ({
+  eventGroups,
+  selectedEventGroups,
+  setSelectedEventGroups,
+}) => {
+  if (!eventGroups) return false;
   const toggleSelectedGroup = ({ isSelected, group }) => {
     if (isSelected) {
-      return setSelectedGroups(
-        selectedGroups.filter(groupId => groupId !== group.id)
+      return setSelectedEventGroups(
+        selectedEventGroups.filter(groupId => groupId !== group.id)
       );
     }
-    setSelectedGroups([...selectedGroups, group.id]);
+    setSelectedEventGroups([...selectedEventGroups, group.id]);
   };
 
   return (
-    <div>
-      {groups.map(group => {
-        const isSelected = selectedGroups.includes(group.id);
+    <div style={{ width: '200px', margin: '125px 10px' }}>
+      {eventGroups.map(group => {
+        const isSelected = selectedEventGroups.includes(group.id);
         return (
-          <label key={`selectGroup${group.id}`}>
-            {group.name}
+          <label
+            key={`selectGroup${group.id}`}
+            style={{ display: 'block', marginBottom: '7px' }}
+          >
             <input
               type="checkbox"
               checked={isSelected}
               onChange={() => toggleSelectedGroup({ isSelected, group })}
             />
+            {group.name}
           </label>
         );
       })}
@@ -32,15 +39,15 @@ const EventGroupSelect = ({ groups, selectedGroups, setSelectedGroups }) => {
 };
 
 EventGroupSelect.defaultProps = {
-  groups: null,
-  selectedGroups: null,
-  setSelectedGroups: null,
+  eventGroups: null,
+  selectedEventGroups: [],
+  setSelectedEventGroups: () => null,
 };
 
 EventGroupSelect.propTypes = {
-  groups: PropTypes.array,
-  selectedGroups: PropTypes.array,
-  setSelectedGroups: PropTypes.func,
+  eventGroups: PropTypes.array,
+  selectedEventGroups: PropTypes.array,
+  setSelectedEventGroups: PropTypes.func,
 };
 
 export default EventGroupSelect;

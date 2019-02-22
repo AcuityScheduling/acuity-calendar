@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import moment from "moment";
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import { storiesOf } from "@storybook/react";
+import { linkTo } from "@storybook/addon-links";
 
 import Calendar from "../src/Calendar";
 import { CALENDAR_VIEWS } from "../src/Calendar/constants";
 
-import { Button, Welcome } from '@storybook/react/demo';
+import { Welcome } from "@storybook/react/demo";
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+storiesOf("Welcome", module).add("to Storybook", () => (
+  <Welcome showApp={linkTo("Button")} />
+));
 
 const eventsMocked = [];
 
-const SillyWrappingComponentToUseHooks = ({view}) => {
-
+const SillyWrappingComponentToUseHooks = ({ view }) => {
   const [selectedDate, setSelectedDate] = useState(moment());
 
   return (
@@ -46,11 +46,17 @@ const SillyWrappingComponentToUseHooks = ({view}) => {
       selectMinutes={15}
     />
   );
-}
+};
 
 console.log(CALENDAR_VIEWS);
 
-storiesOf('Calendar', module)
-  .add('day calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />)
-  .add('week calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />)
-  .add('month calendar', () => <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />);
+storiesOf("Calendar", module)
+  .add("day calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
+  ))
+  .add("week calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
+  ))
+  .add("month calendar", () => (
+    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />
+  ));

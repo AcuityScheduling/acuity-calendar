@@ -4,10 +4,10 @@ import Calendar from "./Calendar";
 import Toolbar from "./Toolbar";
 import { CALENDAR_VIEWS } from "./Calendar/constants";
 import {
-  eventsMocked,
-  calendarsMocked,
-  stepDetailsMocked
-} from "./Calendar/utils";
+  MOCKED_EVENTS,
+  MOCKED_CALENDARS,
+  MOCKED_STEP_DETAILS
+} from "./Calendar/mocks";
 
 const App = () => {
   const { week } = CALENDAR_VIEWS;
@@ -26,16 +26,16 @@ const App = () => {
         selectedDate={selectedDate}
         onNavigate={setSelectedDate}
         firstDay={firstDay}
-        calendars={calendarsMocked}
+        calendars={MOCKED_CALENDARS}
         selectedCalendars={selectedCalendars}
         setSelectedCalendars={setSelectedCalendars}
       />
       <Calendar
-        stepDetails={stepDetailsMocked}
-        events={eventsMocked}
+        stepDetails={MOCKED_STEP_DETAILS}
+        events={MOCKED_EVENTS}
         view={view}
         onViewChange={setView}
-        calendars={calendarsMocked}
+        calendars={MOCKED_CALENDARS}
         selectedCalendars={selectedCalendars}
         selectedDate={selectedDate}
         onNavigate={setSelectedDate}

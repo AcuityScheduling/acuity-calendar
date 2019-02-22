@@ -1,11 +1,9 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import moment from "moment";
 import { getEventColumns } from "../../StepGrid/utils";
 import StepGrid from "../../StepGrid";
 import Day from "../../StepGrid/components/Day";
-import CurrentTimeIndicator from "../../StepGrid/components/CurrentTimeIndicator";
 import { getWeekList } from "./utils";
 import { makeClass } from "../../../utils";
 import { getTodayClass } from "../../StepGrid/utils";
@@ -82,15 +80,6 @@ const WeekView = ({
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
-              renderCurrentTimeIndicator={
-                date.isSame(moment(), "day") && (
-                  <CurrentTimeIndicator
-                    stepMinutes={stepMinutes}
-                    currentTime={currentTime}
-                    isToday
-                  />
-                )
-              }
             />
           );
         });

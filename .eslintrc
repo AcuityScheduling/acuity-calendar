@@ -1,3 +1,7 @@
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "rules": {
+    "react/require-default-props": 2,
+    "react/prop-types": 2
+  }
 }

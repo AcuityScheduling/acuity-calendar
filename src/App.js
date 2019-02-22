@@ -58,7 +58,7 @@ const App = () => {
           selectMinutes={15}
           selectedEventGroups={selectedCalendars}
           renderEventGroupHeader={({ groupId }) =>
-            MOCKED_CALENDARS.map(calendar => calendar.id === groupId).name
+            MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }
         />
       </div>

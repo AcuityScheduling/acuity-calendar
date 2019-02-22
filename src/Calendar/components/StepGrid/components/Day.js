@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { MOMENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 import { getTodayClass, getTopOffset } from '../utils';
 import './Day.scss';
@@ -140,7 +140,10 @@ Day.defaultProps = {
 };
 
 Day.propTypes = {
-  events: PropTypes.object,
+  events: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.arrayOf(EVENT_TYPE),
+  ]),
   stepDetails: PropTypes.array,
   date: MOMENT_TYPE,
   stepMinutes: STEP_MINUTES_TYPE,

@@ -28,7 +28,7 @@ const Calendar = ({
   timeGutterWidth,
   renderEvent,
   renderCorner,
-  renderGroupHeader,
+  renderEventGroupHeader,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -86,7 +86,7 @@ const Calendar = ({
       renderEvent={renderEvent}
       renderCorner={renderCorner}
       timeGutterWidth={timeGutterWidth}
-      renderGroupHeader={renderGroupHeader}
+      renderEventGroupHeader={renderEventGroupHeader}
     />
   );
 };
@@ -94,7 +94,7 @@ const Calendar = ({
 Calendar.defaultProps = {
   renderEvent: null,
   renderCorner: () => null,
-  renderGroupHeader: null,
+  renderEventGroupHeader: () => null,
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
@@ -127,7 +127,7 @@ Calendar.propTypes = {
   renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
   timeGutterWidth: PropTypes.number,
-  renderGroupHeader: PropTypes.func,
+  renderEventGroupHeader: PropTypes.func,
 };
 
 export default Calendar;

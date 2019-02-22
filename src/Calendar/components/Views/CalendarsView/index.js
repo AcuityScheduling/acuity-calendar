@@ -5,12 +5,7 @@ import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
 import Day from '../../StepGrid/components/Day';
 import { makeClass } from '../../../utils';
-import {
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  CALENDAR_VIEW_TYPE,
-} from '../../../types';
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 
 const columnStyles = {
@@ -20,7 +15,7 @@ const columnStyles = {
 const CalendarsView = ({
   selectedDate,
   selectedEventGroups,
-  renderGroupHeader,
+  renderEventGroupHeader,
   firstDay,
   stepMinutes,
   onSelectEvent,
@@ -54,7 +49,10 @@ const CalendarsView = ({
               key={`header${groupId}`}
               style={columnStyles}
             >
-              {renderGroupHeader({ groupId, events: getEventsForDay(groupId) })}
+              {renderEventGroupHeader({
+                groupId,
+                events: getEventsForDay(groupId),
+              })}
             </div>
           );
         })
@@ -91,7 +89,6 @@ CalendarsView.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  view: CALENDAR_VIEW_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
   firstDay: FIRST_DAY_TYPE.isRequired,
   eventsWithEventGroups: PropTypes.object.isRequired,
@@ -100,7 +97,7 @@ CalendarsView.propTypes = {
   renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
   timeGutterWidth: PropTypes.number,
-  renderGroupHeader: PropTypes.func.isRequired,
+  renderEventGroupHeader: PropTypes.func.isRequired,
 };
 
 export default CalendarsView;

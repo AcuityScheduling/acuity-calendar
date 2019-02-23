@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 
 let timeIndicatorWidth = 0;
 let stepLinesWidth = 0;
@@ -18,7 +18,7 @@ const useCalendarSticky = () => {
     cornerRef,
     timeIndicatorRef,
     stepLinesRef,
-    timeIndicatorWidth
+    timeIndicatorWidth,
   });
 
   // Make sure stepLines and time indicator are the full width of the scroll
@@ -29,8 +29,8 @@ const useCalendarSticky = () => {
       stepLinesRef.current
     ) {
       wrapperRef.current.scrollLeft = 0;
-      timeIndicatorRef.current.style.width = "100%";
-      stepLinesRef.current.style.width = "100%";
+      timeIndicatorRef.current.style.width = '100%';
+      stepLinesRef.current.style.width = '100%';
 
       // We have to wait for the width to be set to 100% before
       // we can do more calculations
@@ -46,10 +46,10 @@ const useCalendarSticky = () => {
   });
 
   useEffect(() => {
-    wrapperRef.current.addEventListener("scroll", onScroll, false);
+    wrapperRef.current.addEventListener('scroll', onScroll, false);
 
     return () => {
-      wrapperRef.current.removeEventListener("scroll", onScroll, false);
+      wrapperRef.current.removeEventListener('scroll', onScroll, false);
     };
   });
 
@@ -59,7 +59,7 @@ const useCalendarSticky = () => {
     headerRef,
     cornerRef,
     timeIndicatorRef,
-    stepLinesRef
+    stepLinesRef,
   };
 };
 
@@ -80,7 +80,7 @@ const update = ({
   timeIndicatorRef,
   stepLinesRef,
   wrapperRef,
-  timeIndicatorWidth
+  timeIndicatorWidth,
 }) => () => {
   // reset the tick so we can
   // capture the next onScroll

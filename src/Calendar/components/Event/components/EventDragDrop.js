@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import Draggable from "react-draggable";
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../../StepGrid/constants";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Draggable from 'react-draggable';
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
+import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 
 /**
  * Get a new start and end depending on where the event has been dragged to
@@ -15,7 +17,7 @@ const getDndEventStartEnd = ({
   event,
   deltaPosition,
   selectMinutesHeight,
-  selectMinutes
+  selectMinutes,
 }) => {
   let start = event.start.clone();
   let end = event.end.clone();
@@ -23,12 +25,12 @@ const getDndEventStartEnd = ({
     const totalPositionMoves = deltaPosition.y / selectMinutesHeight;
     const totalMinutes = totalPositionMoves * selectMinutes;
 
-    start.add(totalMinutes, "minutes");
-    end.add(totalMinutes, "minutes");
+    start.add(totalMinutes, 'minutes');
+    end.add(totalMinutes, 'minutes');
   }
   return {
     start,
-    end
+    end,
   };
 };
 
@@ -54,14 +56,14 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
 
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
-    selectMinutes
+    selectMinutes,
   });
 
   const eventStartEnd = getDndEventStartEnd({
     event,
     deltaPosition,
     selectMinutesHeight,
-    selectMinutes
+    selectMinutes,
   });
 
   newEvent.start = eventStartEnd.start;
@@ -76,6 +78,13 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
       {children(newEvent)}
     </Draggable>
   );
+};
+
+EventDragDrop.propTypes = {
+  event: EVENT_TYPE.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
 export default EventDragDrop;

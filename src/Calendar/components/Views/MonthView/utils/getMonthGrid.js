@@ -1,6 +1,6 @@
 // importing moment for JSDOC only
 // eslint-disable-next-line no-unused-vars
-import moment from "moment";
+import moment from 'moment';
 
 // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
 const totalGridSize = 42;
@@ -17,13 +17,13 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
 
   const lastDayOfLastMonth = date
     .clone()
-    .subtract(1, "months")
-    .endOf("month")
+    .subtract(1, 'months')
+    .endOf('month')
     .date();
 
   const lastDayOfMonth = date
     .clone()
-    .endOf("month")
+    .endOf('month')
     .date();
 
   let isLastMonth = true;
@@ -35,20 +35,20 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
         if (day === lastDayOfLastMonth) {
           isLastMonth = false;
           isCurrentMonth = true;
-          return getDetails({ date, day, isInRange: false, type: "last" });
+          return getDetails({ date, day, isInRange: false, type: 'last' });
         }
-        return getDetails({ date, day, isInRange: false, type: "last" });
+        return getDetails({ date, day, isInRange: false, type: 'last' });
       }
       if (isCurrentMonth) {
         if (day === lastDayOfMonth) {
           isCurrentMonth = false;
           isNextMonth = true;
-          return getDetails({ date, day, isInRange: true, type: "current" });
+          return getDetails({ date, day, isInRange: true, type: 'current' });
         }
-        return getDetails({ date, day, isInRange: true, type: "current" });
+        return getDetails({ date, day, isInRange: true, type: 'current' });
       }
       if (isNextMonth) {
-        return getDetails({ date, day, isInRange: false, type: "next" });
+        return getDetails({ date, day, isInRange: false, type: 'next' });
       }
       return null;
     });
@@ -67,27 +67,27 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
 const getDetails = ({ date, day, isInRange, type }) => {
   const details = {
     day,
-    isInRange
+    isInRange,
   };
   let newDate = null;
-  if (type === "last") {
+  if (type === 'last') {
     newDate = date
       .clone()
-      .subtract(1, "months")
+      .subtract(1, 'months')
       .date(day);
   }
-  if (type === "current") {
+  if (type === 'current') {
     newDate = date.clone().date(day);
   }
-  if (type === "next") {
+  if (type === 'next') {
     newDate = date
       .clone()
-      .add(1, "months")
+      .add(1, 'months')
       .date(day);
   }
   return {
     ...details,
-    date: newDate
+    date: newDate,
   };
 };
 
@@ -125,15 +125,15 @@ const getStartOfGrid = ({ date, firstDay }) => {
   const monthStartPadding = getMonthStartPadding({
     firstDateDay: date
       .clone()
-      .startOf("month")
+      .startOf('month')
       .day(),
-    firstDay
+    firstDay,
   });
 
   const lastDayOfLastMonth = date
     .clone()
-    .subtract(1, "months")
-    .endOf("month")
+    .subtract(1, 'months')
+    .endOf('month')
     .date();
 
   const firstDayOfPadding = lastDayOfLastMonth - monthStartPadding + 1;

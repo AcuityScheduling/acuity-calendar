@@ -1,4 +1,4 @@
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from "../constants";
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 
 const getTopOffset = ({ stepMinutes, date }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];
@@ -12,8 +12,8 @@ const getTopOffset = ({ stepMinutes, date }) => {
 };
 
 const getMinutesSinceMidnight = start => {
-  const hour = start.get("hour");
-  const minute = start.get("minute");
+  const hour = start.get('hour');
+  const minute = start.get('minute');
   return hour * 60 + minute;
 };
 

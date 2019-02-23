@@ -141,18 +141,18 @@ Day.defaultProps = {
 };
 
 Day.propTypes = {
+  currentTime: MOMENT_TYPE,
+  date: MOMENT_TYPE,
   events: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(EVENT_TYPE),
   ]),
-  stepDetails: PropTypes.array,
-  date: MOMENT_TYPE,
-  stepMinutes: STEP_MINUTES_TYPE,
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE,
   renderEvent: PropTypes.func,
-  currentTime: MOMENT_TYPE,
+  selectMinutes: STEP_MINUTES_TYPE,
+  stepDetails: PropTypes.array,
+  stepMinutes: STEP_MINUTES_TYPE,
 };
 
 export default Day;

@@ -81,10 +81,10 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
 };
 
 EventDragDrop.propTypes = {
-  event: EVENT_TYPE.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
   children: PropTypes.func.isRequired,
+  event: EVENT_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
 };
 
 export default EventDragDrop;

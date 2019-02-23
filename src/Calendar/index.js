@@ -105,29 +105,29 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-  selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   events: PropTypes.arrayOf(
     PropTypes.shape({
-      start: PropTypes.string.isRequired,
       end: PropTypes.string.isRequired,
+      start: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     })
   ),
-  stepDetails: PropTypes.array,
-  selectedDate: MOMENT_TYPE,
-  view: CALENDAR_VIEW_TYPE,
-  onViewChange: PropTypes.func.isRequired,
-  onNavigate: PropTypes.func.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
+  onNavigate: PropTypes.func.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
-  onSelecting: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  renderEvent: PropTypes.func,
+  onSelecting: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
-  timeGutterWidth: PropTypes.number,
+  renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE,
+  selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
+  stepDetails: PropTypes.array,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  timeGutterWidth: PropTypes.number,
+  view: CALENDAR_VIEW_TYPE,
 };
 
 export default Calendar;

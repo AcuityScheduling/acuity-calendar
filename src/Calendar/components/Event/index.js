@@ -72,9 +72,9 @@ Event.defaultProps = {
 
 Event.propTypes = {
   children: PropTypes.func,
-  onSelectEvent: PropTypes.func.isRequired,
-  event: EVENT_TYPE.isRequired,
   className: PropTypes.string,
+  event: EVENT_TYPE.isRequired,
+  onSelectEvent: PropTypes.func.isRequired,
 };
 
 export default Event;

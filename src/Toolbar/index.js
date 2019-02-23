@@ -112,11 +112,11 @@ const Toolbar = ({
 };
 
 Toolbar.propTypes = {
-  view: CALENDAR_VIEW_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE.isRequired,
+  onNavigate: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
-  onNavigate: PropTypes.func.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  view: CALENDAR_VIEW_TYPE.isRequired,
 };
 
 export default Toolbar;

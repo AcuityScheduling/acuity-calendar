@@ -96,17 +96,17 @@ WeekView.defaultProps = {
 };
 
 WeekView.propTypes = {
-  selectedDate: MOMENT_TYPE.isRequired,
+  events: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  renderEvent: PropTypes.func,
   renderCorner: PropTypes.func,
-  events: PropTypes.object.isRequired,
-  timeGutterWidth: PropTypes.number,
+  renderEvent: PropTypes.func,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE.isRequired,
   stepDetails: PropTypes.object,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  timeGutterWidth: PropTypes.number,
 };
 
 export default WeekView;

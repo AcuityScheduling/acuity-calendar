@@ -178,14 +178,14 @@ StepGrid.defaultProps = {
 };
 
 StepGrid.propTypes = {
-  selectedDate: MOMENT_TYPE,
   firstDay: FIRST_DAY_TYPE,
-  stepMinutes: STEP_MINUTES_TYPE,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  timeGutterWidth: PropTypes.number,
   renderColumns: PropTypes.func.isRequired,
-  renderHeader: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
+  renderHeader: PropTypes.func.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE,
+  stepMinutes: STEP_MINUTES_TYPE,
+  timeGutterWidth: PropTypes.number,
 };
 
 export default StepGrid;

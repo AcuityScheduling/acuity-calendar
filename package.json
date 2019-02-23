@@ -6,6 +6,7 @@
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "lint": "eslint --ignore-path .gitignore --ext .js",
+    "lint:fix": "eslint --fix --ignore-path .gitignore --ext .js",
     "lint:staged": "lint-staged",
     "prettier": "prettier --write \"**/*.js\" \"!node_modules/**\" \"!build/**\" \"!storybook-static/**\"",
     "start:prod": "NODE_ENV=production node build/server.js",
@@ -14,9 +15,11 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
+      "npm run lint:fix --",
       "git add",
-      "npm run lint --"
+      "npm run lint --",
+      "prettier --write",
+      "git add"
     ]
   },
   "pre-commit": "lint:staged",

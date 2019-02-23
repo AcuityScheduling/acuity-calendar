@@ -2,6 +2,12 @@
   "extends": "react-app",
   "rules": {
     "react/require-default-props": 2,
-    "react/prop-types": 2
+    "react/prop-types": 2,
+    "react/sort-prop-types": [
+      2,
+      {
+        "sortShapeProp": true
+      }
+    ]
   }
 }

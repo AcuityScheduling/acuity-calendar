@@ -86,18 +86,18 @@ CalendarsView.defaultProps = {
 };
 
 CalendarsView.propTypes = {
+  eventsWithEventGroups: PropTypes.object.isRequired,
+  firstDay: FIRST_DAY_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
+  renderCorner: PropTypes.func,
+  renderEvent: PropTypes.func,
+  renderEventGroupHeader: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
-  firstDay: FIRST_DAY_TYPE.isRequired,
-  eventsWithEventGroups: PropTypes.object.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
-  renderEvent: PropTypes.func,
-  renderCorner: PropTypes.func,
+  stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
-  renderEventGroupHeader: PropTypes.func.isRequired,
 };
 
 export default CalendarsView;

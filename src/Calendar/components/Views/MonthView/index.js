@@ -98,12 +98,12 @@ MonthView.defaultProps = {
 };
 
 MonthView.propTypes = {
-  selectedDate: MOMENT_TYPE.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
   events: PropTypes.object.isRequired,
+  firstDay: FIRST_DAY_TYPE.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
+  selectedDate: MOMENT_TYPE.isRequired,
 };
 
 export default MonthView;

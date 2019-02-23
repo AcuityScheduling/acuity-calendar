@@ -107,8 +107,8 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
-      end: PropTypes.string.isRequired,
       start: PropTypes.string.isRequired,
+      end: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     })
   ),

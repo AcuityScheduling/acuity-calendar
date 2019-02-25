@@ -77,7 +77,7 @@ export const MOCKED_STEP_DETAILS = [
     id: 1,
     group_id: 6,
     start: '2019-02-12 08:00:00',
-    end: '2019-02-12 13:30:00',
+    end: '2019-02-13 13:30:00',
   },
   {
     id: 2,

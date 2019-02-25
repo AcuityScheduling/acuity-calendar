@@ -36,7 +36,7 @@ const Day = ({
   }, [stepMinutes]);
 
   const getClickedTime = e => {
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     const verticalClick = e.clientY - rect.top;
 
     const stepHeight = STEP_HEIGHTS[stepMinutes];
@@ -71,9 +71,7 @@ const Day = ({
         height: `${totalHeight}px`,
         minWidth,
       }}
-      onClick={e => {
-        onSelectSlot(getClickedTime(e));
-      }}
+      onClick={e => onSelectSlot(getClickedTime(e))}
     >
       {date.isSame(moment(), 'day') && currentTime && (
         <div

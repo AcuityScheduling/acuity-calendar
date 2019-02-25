@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
-import Day from '../../StepGrid/components/Day';
+import Column from '../../StepGrid/components/Column';
 import { makeClass } from '../../../utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
@@ -61,7 +61,7 @@ const CalendarsView = ({
       renderColumns={({ currentTime }) => {
         return selectedEventGroups.map(groupId => {
           return (
-            <Day
+            <Column
               events={getEventsForDay(groupId)}
               date={selectedDate}
               onDragEnd={onDragEnd}

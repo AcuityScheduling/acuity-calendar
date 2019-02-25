@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getEventColumns } from '../../StepGrid/utils';
 import StepGrid from '../../StepGrid';
-import Day from '../../StepGrid/components/Day';
+import Column from '../../StepGrid/components/Column';
 import { getWeekList } from './utils';
 import { makeClass } from '../../../utils';
-import { getTodayClass } from '../../StepGrid/utils';
+import { getTodayClass, useElementWidths } from '../../StepGrid/utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 
 const WeekView = ({
@@ -24,6 +24,7 @@ const WeekView = ({
   renderCorner,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
+  const { elementRefs, elementWidths } = useElementWidths();
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   return (
@@ -57,7 +58,7 @@ const WeekView = ({
         })
       }
       renderColumns={({ currentTime }) => {
-        return dateList.map(date => {
+        return dateList.map((date, index) => {
           const stepDetailsForDay = get(
             stepDetails,
             date.format('YYYY-MM-DD'),
@@ -70,10 +71,17 @@ const WeekView = ({
             {}
           );
           return (
-            <Day
+            <Column
+              ref={inst =>
+                inst === null
+                  ? elementRefs.delete(date.day())
+                  : elementRefs.set(date.day(), inst)
+              }
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               date={date}
+              columnWidths={elementWidths}
+              columnIndex={index}
               onDragEnd={onDragEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}

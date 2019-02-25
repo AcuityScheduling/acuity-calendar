@@ -15,7 +15,7 @@ const App = () => {
   const [selectedDate, setSelectedDate] = useState(moment());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
 
-  const firstDay = 0;
+  const firstDay = 1;
 
   return (
     <div style={{ display: 'flex', width: '100%' }}>

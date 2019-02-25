@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Draggable from 'react-draggable';
+import { DraggableCore } from 'react-draggable';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { makeClass } from '../../../utils';
@@ -14,7 +14,7 @@ import { makeClass } from '../../../utils';
  * @param {number} params.selectMinutesHeight - the height of one movement on grid
  * @param {number} params.selectMinutes - The amount of minutes of one movement on grid
  */
-const getDndEventStartEnd = ({
+const getEventStartEnd = ({
   event,
   deltaPosition,
   selectMinutesHeight,
@@ -22,17 +22,55 @@ const getDndEventStartEnd = ({
 }) => {
   let start = event.start.clone();
   let end = event.end.clone();
-  if (deltaPosition.y !== 0) {
-    const totalPositionMoves = deltaPosition.y / selectMinutesHeight;
-    const totalMinutes = totalPositionMoves * selectMinutes;
 
-    start.add(totalMinutes, 'minutes');
-    end.add(totalMinutes, 'minutes');
-  }
+  const totalMinutes = getMinutesMoved({
+    changeInY: deltaPosition.y,
+    selectMinutes,
+    selectMinutesHeight,
+  });
+  if (totalMinutes === 0) return { start, end };
+
+  start.add(totalMinutes, 'minutes');
+  end.add(totalMinutes, 'minutes');
+
   return {
     start,
     end,
   };
+};
+
+/**
+ * Get the total number of minutes we've moved SNAPPED to the nearest selectMinutes
+ * selectMinutes defaults to 15 minutes.
+ *
+ * @param {Object} params
+ * @param {number} params.totalMinutes - Total minutes that we've moved so far
+ * @param {number} params.selectMinutes
+ */
+const getMinutesMoved = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
+  if (changeInY === 0) return 0;
+  const totalPositionMoves = changeInY / selectMinutesHeight;
+  const totalMinutes = totalPositionMoves * selectMinutes;
+  // Round to nearest selectMinutes and divide by select minutes to get total positions moved
+  return (Math.round(totalMinutes / selectMinutes) * selectMinutes) % 60;
+};
+
+/**
+ * Get the total pixels that we'll need to change the top to for a snap effect
+ *
+ * @param {Object} params
+ * @param {number} params.changeInY - The amount we dragged the event
+ * @param {number} params.selectMinutes
+ * @param {number} params.selectMinutesHeight
+ */
+const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
+  const minutesMoved = getMinutesMoved({
+    changeInY,
+    selectMinutes,
+    selectMinutesHeight,
+  });
+  const positionsMoved = minutesMoved / selectMinutes;
+  return selectMinutesHeight * positionsMoved;
 };
 
 const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
@@ -51,11 +89,14 @@ const EventDragDrop = ({
   event,
   stepMinutes,
   selectMinutes,
+  columnWidths,
+  columnIndex,
   onDragEnd,
   children,
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [currentColumn, setCurrentColumn] = useState(columnIndex);
 
   const newEvent = Object.assign({}, event);
 
@@ -70,9 +111,15 @@ const EventDragDrop = ({
     selectMinutes,
   });
 
+  const topChange = getTopChange({
+    changeInY: deltaPosition.y,
+    selectMinutes,
+    selectMinutesHeight,
+  });
+
   const columnWidth = getColumnWidth();
 
-  const eventStartEnd = getDndEventStartEnd({
+  const eventStartEnd = getEventStartEnd({
     event,
     deltaPosition,
     selectMinutesHeight,
@@ -84,21 +131,25 @@ const EventDragDrop = ({
 
   return (
     <Fragment>
-      <Draggable
+      <DraggableCore
         defaultClassName={makeClass('step-grid__draggable-event')}
         defaultClassNameDragging={makeClass('step-grid__dragging-event')}
         defaultClassNameDragged={makeClass('step-grid__dragged-event')}
         onDrag={onDrag}
-        grid={[columnWidth, selectMinutesHeight]}
+        // grid={[columnWidth, selectMinutesHeight]}
         onStop={(e, ui) => {
-          // Check if we hit the onDrag event. If we didn't this is a click
+          // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
           setTimeout(() => setIsDragging(false));
           onDragEnd(newEvent);
         }}
       >
-        {children({ draggedEvent: newEvent, isDragging })}
-      </Draggable>
+        {children({
+          draggedEvent: newEvent,
+          topChange,
+          isDragging,
+        })}
+      </DraggableCore>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-original-event')}>
           {children({ draggedEvent: event })}
@@ -110,6 +161,8 @@ const EventDragDrop = ({
 
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
+  columnIndex: PropTypes.number.isRequired,
+  columnWidths: PropTypes.arrayOf(PropTypes.number).isRequired,
   event: EVENT_TYPE.isRequired,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,

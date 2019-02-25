@@ -94,7 +94,7 @@ const Day = ({
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
             >
-              {draggedEvent => (
+              {({ draggedEvent, isDragging }) => (
                 <Event
                   event={draggedEvent}
                   style={{
@@ -104,6 +104,7 @@ const Day = ({
                     left: `${percentWidth * (column - 1)}%`,
                   }}
                   onSelectEvent={onSelectEvent}
+                  isDragging={isDragging}
                 >
                   {renderEvent}
                 </Event>

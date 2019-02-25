@@ -44,20 +44,27 @@ const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
   return selectMinutesHeight;
 };
 
+const getColumnWidth = () => 160;
+
 const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
 
   const newEvent = Object.assign({}, event);
 
   const onDrag = (e, ui) => {
     const { x, y } = deltaPosition;
     setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+    setIsDragging(true);
+    console.log('isDragging: ', isDragging);
   };
 
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
     selectMinutes,
   });
+
+  const columnWidth = getColumnWidth();
 
   const eventStartEnd = getDndEventStartEnd({
     event,
@@ -72,10 +79,13 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
   return (
     <Draggable
       onDrag={onDrag}
-      grid={[160, selectMinutesHeight]}
-      onStop={(...stuff) => console.log(stuff)}
+      grid={[columnWidth, selectMinutesHeight]}
+      onStop={(e, ui) => {
+        setTimeout(() => setIsDragging(false));
+        const totalMoves = ui.lastY / selectMinutesHeight;
+      }}
     >
-      {children(newEvent)}
+      {children({ draggedEvent: newEvent, isDragging })}
     </Draggable>
   );
 };

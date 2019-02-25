@@ -38,7 +38,14 @@ const getEventContainerClass = className => {
   return eventClass;
 };
 
-const Event = ({ event, onSelectEvent, children, className, ...restProps }) => {
+const Event = ({
+  children,
+  className,
+  event,
+  isDragging,
+  onSelectEvent,
+  ...restProps
+}) => {
   return (
     <div
       {...restProps}
@@ -46,6 +53,7 @@ const Event = ({ event, onSelectEvent, children, className, ...restProps }) => {
       role="button"
       onClick={e => {
         e.stopPropagation();
+        if (isDragging) return false;
         onSelectEvent(event);
       }}
     >
@@ -68,12 +76,14 @@ const Event = ({ event, onSelectEvent, children, className, ...restProps }) => {
 Event.defaultProps = {
   children: null,
   className: null,
+  isDragging: false,
 };
 
 Event.propTypes = {
   children: PropTypes.func,
   className: PropTypes.string,
   event: EVENT_TYPE.isRequired,
+  isDragging: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
 };
 

@@ -67,13 +67,21 @@ const getSortedEvents = events => {
 const addEventLocation = ({ event, stepMinutes }) => {
   const stepHeight = STEP_HEIGHTS[stepMinutes];
   const pixelsPerMinute = stepHeight / stepMinutes;
+  const totalDayHeight = pixelsPerMinute * 60 * 24;
 
   const duration = event.end.clone().diff(event.start, 'minutes');
   const borderHeightAdjustment = (duration / 60) * STEP_BORDER_WIDTH;
+  const eventTopOffset = getTopOffset({ stepMinutes, date: event.start });
+
+  const maxHeight = totalDayHeight - eventTopOffset + STEP_BORDER_WIDTH * 24;
+  let height = duration * pixelsPerMinute + borderHeightAdjustment;
+  if (height > maxHeight) {
+    height = maxHeight;
+  }
 
   const location = {
-    height: duration * pixelsPerMinute + borderHeightAdjustment,
-    top: getTopOffset({ stepMinutes, date: event.start }),
+    height,
+    top: eventTopOffset,
   };
 
   return Object.assign(event, location);

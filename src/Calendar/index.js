@@ -18,6 +18,7 @@ const Calendar = ({
   selectedDate,
   selectedEventGroups,
   onViewChange,
+  onDragEnd,
   onNavigate,
   firstDay,
   onSelectEvent,
@@ -76,6 +77,7 @@ const Calendar = ({
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
       selectedDate={selectedDate}
+      onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}
       onSelectSlot={onSelectSlot}
@@ -102,6 +104,7 @@ Calendar.defaultProps = {
   view: CALENDAR_VIEWS.month,
   calendars: [],
   selectedEventGroups: false,
+  onDragEnd: () => null,
 };
 
 Calendar.propTypes = {
@@ -113,6 +116,7 @@ Calendar.propTypes = {
     })
   ),
   firstDay: FIRST_DAY_TYPE.isRequired,
+  onDragEnd: PropTypes.func,
   onNavigate: PropTypes.func.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,

@@ -46,7 +46,13 @@ const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
 
 const getColumnWidth = () => 160;
 
-const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
+const EventDragDrop = ({
+  event,
+  stepMinutes,
+  selectMinutes,
+  onDragEnd,
+  children,
+}) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
 
@@ -56,7 +62,6 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
     const { x, y } = deltaPosition;
     setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
     setIsDragging(true);
-    console.log('isDragging: ', isDragging);
   };
 
   const selectMinutesHeight = getSelectMinutesHeight({
@@ -83,6 +88,13 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
       onStop={(e, ui) => {
         setTimeout(() => setIsDragging(false));
         const totalMoves = ui.lastY / selectMinutesHeight;
+        const totalMinutes = totalMoves * selectMinutes;
+        const newEvent = {
+          ...event,
+          start: event.start.clone().add(totalMinutes, 'minutes'),
+          end: event.end.clone().add(totalMinutes, 'minutes'),
+        };
+        onDragEnd(newEvent);
       }}
     >
       {children({ draggedEvent: newEvent, isDragging })}
@@ -93,6 +105,7 @@ const EventDragDrop = ({ event, stepMinutes, selectMinutes, children }) => {
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
   event: EVENT_TYPE.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
 };

@@ -20,6 +20,7 @@ const Day = ({
   date,
   currentTime,
   stepMinutes,
+  onDragEnd,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
@@ -93,6 +94,7 @@ const Day = ({
               event={event}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
+              onDragEnd={onDragEnd}
             >
               {({ draggedEvent, isDragging }) => (
                 <Event
@@ -131,6 +133,7 @@ const Day = ({
 
 Day.defaultProps = {
   renderEvent: null,
+  onDragEnd: () => null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   events: {},
   date: moment(),
@@ -148,6 +151,7 @@ Day.propTypes = {
     PropTypes.object,
     PropTypes.arrayOf(EVENT_TYPE),
   ]),
+  onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,

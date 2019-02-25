@@ -18,6 +18,7 @@ const CalendarsView = ({
   renderEventGroupHeader,
   firstDay,
   stepMinutes,
+  onDragEnd,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
@@ -63,6 +64,7 @@ const CalendarsView = ({
             <Day
               events={getEventsForDay(groupId)}
               date={selectedDate}
+              onDragEnd={onDragEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
               selectMinutes={selectMinutes}
@@ -83,11 +85,13 @@ CalendarsView.defaultProps = {
   renderEvent: null,
   timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: moment(),
+  onDragEnd: () => null,
 };
 
 CalendarsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
+  onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,

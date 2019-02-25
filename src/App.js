@@ -39,6 +39,9 @@ const App = () => {
           onViewChange={setView}
           selectedDate={selectedDate}
           onNavigate={setSelectedDate}
+          onDragEnd={event => {
+            console.log('event: ', event);
+          }}
           // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
           firstDay={firstDay}
           onSelectEvent={event => {

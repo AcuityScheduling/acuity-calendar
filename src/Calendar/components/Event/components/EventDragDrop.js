@@ -87,13 +87,6 @@ const EventDragDrop = ({
       grid={[columnWidth, selectMinutesHeight]}
       onStop={(e, ui) => {
         setTimeout(() => setIsDragging(false));
-        const totalMoves = ui.lastY / selectMinutesHeight;
-        const totalMinutes = totalMoves * selectMinutes;
-        const newEvent = {
-          ...event,
-          start: event.start.clone().add(totalMinutes, 'minutes'),
-          end: event.end.clone().add(totalMinutes, 'minutes'),
-        };
         onDragEnd(newEvent);
       }}
     >

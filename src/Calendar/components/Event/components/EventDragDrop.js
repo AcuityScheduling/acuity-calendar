@@ -86,6 +86,8 @@ const EventDragDrop = ({
       onDrag={onDrag}
       grid={[columnWidth, selectMinutesHeight]}
       onStop={(e, ui) => {
+        // Check if we hit the onDrag event. If we didn't this is a click
+        if (!isDragging) return false;
         setTimeout(() => setIsDragging(false));
         onDragEnd(newEvent);
       }}

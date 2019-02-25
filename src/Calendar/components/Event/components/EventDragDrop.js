@@ -156,6 +156,7 @@ const EventDragDrop = ({
             draggedEvent: newEvent,
             topChange,
             isDragging,
+            isDndPlaceholder: false,
           }),
           {
             className: getDraggableClasses({ isDragging, wasDragged }),
@@ -163,8 +164,13 @@ const EventDragDrop = ({
         )}
       </DraggableCore>
       {isDragging && (
-        <div className={makeClass('step-grid__dragging-original-event')}>
-          {children({ draggedEvent: event, isDragging, topChange: 0 })}
+        <div className={makeClass('step-grid__dragging-placeholder-event')}>
+          {children({
+            draggedEvent: event,
+            isDragging,
+            topChange: 0,
+            isDndPlaceholder: true,
+          })}
         </div>
       )}
     </Fragment>

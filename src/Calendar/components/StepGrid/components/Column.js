@@ -104,13 +104,21 @@ const Column = React.forwardRef(
                 selectMinutes={selectMinutes}
                 onDragEnd={onDragEnd}
               >
-                {({ draggedEvent, isDragging, topChange }) => (
+                {({
+                  draggedEvent,
+                  isDragging,
+                  topChange,
+                  isDndPlaceholder,
+                }) => (
                   <Event
                     event={draggedEvent}
                     style={{
                       top: `${event.top + topChange}px`,
                       height: `${event.height}px`,
-                      width: `${percentWidth}%`,
+                      width:
+                        !isDndPlaceholder && isDragging
+                          ? '100%'
+                          : `${percentWidth}%`,
                       left: `${percentWidth * (column - 1)}%`,
                     }}
                     onSelectEvent={onSelectEvent}

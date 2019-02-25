@@ -15,6 +15,12 @@
       cursor: pointer;
       box-shadow: rgb(255, 255, 255) 0px 0px 0px 1px;
     }
+    &__dragging-event {
+      z-index: 4;
+    }
+    &__dragging-original-event &__event {
+      opacity: 0.5;
+    }
     &__event-title {
       display: block;
       margin-bottom: 7.5px;

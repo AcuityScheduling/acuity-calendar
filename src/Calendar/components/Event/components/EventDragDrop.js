@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import { makeClass } from '../../../utils';
 
 /**
  * Get a new start and end depending on where the event has been dragged to
@@ -82,18 +83,28 @@ const EventDragDrop = ({
   newEvent.end = eventStartEnd.end;
 
   return (
-    <Draggable
-      onDrag={onDrag}
-      grid={[columnWidth, selectMinutesHeight]}
-      onStop={(e, ui) => {
-        // Check if we hit the onDrag event. If we didn't this is a click
-        if (!isDragging) return false;
-        setTimeout(() => setIsDragging(false));
-        onDragEnd(newEvent);
-      }}
-    >
-      {children({ draggedEvent: newEvent, isDragging })}
-    </Draggable>
+    <Fragment>
+      <Draggable
+        defaultClassName={makeClass('step-grid__draggable-event')}
+        defaultClassNameDragging={makeClass('step-grid__dragging-event')}
+        defaultClassNameDragged={makeClass('step-grid__dragged-event')}
+        onDrag={onDrag}
+        grid={[columnWidth, selectMinutesHeight]}
+        onStop={(e, ui) => {
+          // Check if we hit the onDrag event. If we didn't this is a click
+          if (!isDragging) return false;
+          setTimeout(() => setIsDragging(false));
+          onDragEnd(newEvent);
+        }}
+      >
+        {children({ draggedEvent: newEvent, isDragging })}
+      </Draggable>
+      {isDragging && (
+        <div className={makeClass('step-grid__dragging-original-event')}>
+          {children({ draggedEvent: event })}
+        </div>
+      )}
+    </Fragment>
   );
 };
 

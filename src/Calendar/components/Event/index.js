@@ -42,7 +42,7 @@ const Event = ({
   children,
   className,
   event,
-  isDragging,
+  isSelectable,
   onSelectEvent,
   ...restProps
 }) => {
@@ -53,7 +53,7 @@ const Event = ({
       role="button"
       onClick={e => {
         e.stopPropagation();
-        if (isDragging) return false;
+        if (!isSelectable) return false;
         onSelectEvent(event);
       }}
     >
@@ -76,14 +76,14 @@ const Event = ({
 Event.defaultProps = {
   children: null,
   className: null,
-  isDragging: false,
+  isSelectable: true,
 };
 
 Event.propTypes = {
   children: PropTypes.func,
   className: PropTypes.string,
   event: EVENT_TYPE.isRequired,
-  isDragging: PropTypes.bool,
+  isSelectable: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
 };
 

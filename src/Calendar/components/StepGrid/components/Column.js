@@ -102,11 +102,7 @@ const Column = React.forwardRef(
                 columnWidth={columnWidths}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
-                onDragEnd={(...allTheThings) => {
-                  // const width = columnRef.current.offsetWidth;
-                  // console.log('width: ', width);
-                  onDragEnd(...allTheThings);
-                }}
+                onDragEnd={onDragEnd}
               >
                 {({ draggedEvent, isDragging, topChange }) => (
                   <Event
@@ -118,7 +114,7 @@ const Column = React.forwardRef(
                       left: `${percentWidth * (column - 1)}%`,
                     }}
                     onSelectEvent={onSelectEvent}
-                    isDragging={isDragging}
+                    isSelectable={!isDragging}
                   >
                     {renderEvent}
                   </Event>

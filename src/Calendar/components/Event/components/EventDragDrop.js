@@ -52,7 +52,7 @@ const getMinutesMoved = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
   const totalPositionMoves = changeInY / selectMinutesHeight;
   const totalMinutes = totalPositionMoves * selectMinutes;
   // Round to nearest selectMinutes and divide by select minutes to get total positions moved
-  return (Math.round(totalMinutes / selectMinutes) * selectMinutes) % 60;
+  return Math.round(totalMinutes / selectMinutes) * selectMinutes;
 };
 
 /**
@@ -85,6 +85,14 @@ const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
 
 const getColumnWidth = () => 160;
 
+const getDraggableClasses = ({ isDragging, wasDragged }) => {
+  return makeClass(
+    'step-grid__draggable-event',
+    isDragging && 'step-grid__dragging-event',
+    wasDragged && 'step-grid__dragged-event'
+  );
+};
+
 const EventDragDrop = ({
   event,
   stepMinutes,
@@ -96,6 +104,7 @@ const EventDragDrop = ({
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [wasDragged, setWasDragged] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
 
   const newEvent = Object.assign({}, event);
@@ -132,23 +141,26 @@ const EventDragDrop = ({
   return (
     <Fragment>
       <DraggableCore
-        defaultClassName={makeClass('step-grid__draggable-event')}
-        defaultClassNameDragging={makeClass('step-grid__dragging-event')}
-        defaultClassNameDragged={makeClass('step-grid__dragged-event')}
         onDrag={onDrag}
         // grid={[columnWidth, selectMinutesHeight]}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
           setTimeout(() => setIsDragging(false));
+          setWasDragged(true);
           onDragEnd(newEvent);
         }}
       >
-        {children({
-          draggedEvent: newEvent,
-          topChange,
-          isDragging,
-        })}
+        {React.cloneElement(
+          children({
+            draggedEvent: newEvent,
+            topChange,
+            isDragging,
+          }),
+          {
+            className: getDraggableClasses({ isDragging, wasDragged }),
+          }
+        )}
       </DraggableCore>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-original-event')}>

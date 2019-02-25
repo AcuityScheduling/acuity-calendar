@@ -164,7 +164,7 @@ const EventDragDrop = ({
       </DraggableCore>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-original-event')}>
-          {children({ draggedEvent: event })}
+          {children({ draggedEvent: event, isDragging, topChange: 0 })}
         </div>
       )}
     </Fragment>

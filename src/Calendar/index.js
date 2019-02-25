@@ -61,7 +61,7 @@ const Calendar = ({
     [stepDetails, stepMinutes]
   );
 
-  const mungedStepDetailsCalendar = useMemo(
+  const mungedStepDetailsGroups = useMemo(
     () =>
       getEventsWithSelectedEventGroups({
         mungedEvents: mungedStepDetails,
@@ -74,7 +74,7 @@ const Calendar = ({
     <View
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
-      stepDetails={mungedStepDetailsCalendar}
+      stepDetails={mungedStepDetailsGroups}
       selectedDate={selectedDate}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}

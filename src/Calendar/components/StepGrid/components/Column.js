@@ -2,7 +2,12 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
-import { MOMENT_TYPE, STEP_MINUTES_TYPE, EVENT_TYPE } from '../../../types';
+import {
+  MOMENT_TYPE,
+  STEP_MINUTES_TYPE,
+  EVENT_TYPE,
+  COLUMN_WIDTHS_TYPE,
+} from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 import { getTodayClass, getTopOffset } from '../utils';
 import './Column.scss';
@@ -99,7 +104,7 @@ const Column = React.forwardRef(
                 key={event.id}
                 event={event}
                 columnIndex={columnIndex}
-                columnWidth={columnWidths}
+                columnWidths={columnWidths}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
                 onDragEnd={onDragEnd}
@@ -108,6 +113,8 @@ const Column = React.forwardRef(
                   draggedEvent,
                   isDragging,
                   topChange,
+                  leftChange,
+                  currentColumnWidth,
                   isDndPlaceholder,
                 }) => (
                   <Event
@@ -117,9 +124,12 @@ const Column = React.forwardRef(
                       height: `${event.height}px`,
                       width:
                         !isDndPlaceholder && isDragging
-                          ? '100%'
+                          ? `${currentColumnWidth}px`
                           : `${percentWidth}%`,
-                      left: `${percentWidth * (column - 1)}%`,
+                      left:
+                        !isDndPlaceholder && isDragging
+                          ? `${leftChange}px`
+                          : `${percentWidth * (column - 1)}%`,
                     }}
                     onSelectEvent={onSelectEvent}
                     isSelectable={!isDragging}
@@ -148,6 +158,8 @@ const Column = React.forwardRef(
   }
 );
 
+Column.displayName = 'Column';
+
 Column.defaultProps = {
   renderEvent: null,
   onDragEnd: () => null,
@@ -163,7 +175,7 @@ Column.defaultProps = {
 
 Column.propTypes = {
   columnIndex: PropTypes.number.isRequired,
-  columnWidths: PropTypes.arrayOf(PropTypes.number).isRequired,
+  columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
   date: MOMENT_TYPE,
   events: PropTypes.oneOfType([

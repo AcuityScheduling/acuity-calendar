@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { isArrayEqual } from '../../../utils';
+import isEqual from 'react-fast-compare';
 
 /**
  * Create the ref Map for all the elements and get the widths
@@ -7,9 +7,9 @@ import { isArrayEqual } from '../../../utils';
  */
 const useElementWidths = props => {
   const elementRefs = useRef(new Map()).current;
-  const [elementWidths, setElementWidths] = useState([]);
+  const [elementWidths, useElementWidths] = useState([]);
 
-  const getElementWidths = () => {
+  const getElementsMeasurements = () => {
     const widths = [];
     elementRefs.forEach((element, day) => {
       widths.push(element.offsetWidth);
@@ -18,8 +18,8 @@ const useElementWidths = props => {
   };
 
   useEffect(() => {
-    if (!isArrayEqual(getElementWidths(), elementWidths)) {
-      setElementWidths(getElementWidths());
+    if (!isEqual(getElementsMeasurements(), elementWidths)) {
+      useElementWidths(getElementsMeasurements());
     }
   });
 

@@ -2,7 +2,11 @@ import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
-import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import {
+  EVENT_TYPE,
+  STEP_MINUTES_TYPE,
+  COLUMN_WIDTHS_TYPE,
+} from '../../../types';
 import { makeClass } from '../../../utils';
 
 /**
@@ -64,6 +68,7 @@ const getMinutesMoved = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
  * @param {number} params.selectMinutesHeight
  */
 const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
+  if (!changeInY) return 0;
   const minutesMoved = getMinutesMoved({
     changeInY,
     selectMinutes,
@@ -71,6 +76,36 @@ const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
   });
   const positionsMoved = minutesMoved / selectMinutes;
   return selectMinutesHeight * positionsMoved;
+};
+
+/**
+ * Get the total pixels that we'll need to change the top to for a snap effect
+ *
+ * @param {Object} params
+ * @param {number} params.changeInX - The amount we dragged the event
+ * @param {array} params.columnWidths
+ * @param {number} params.currentColumn - The index of the current column the event is in
+ */
+const getLeftChange = ({
+  x,
+  columnWidths,
+  currentColumn,
+  setCurrentColumn,
+}) => {
+  // Move event to left column (if we're not in the first column)
+  if (x < 0 && currentColumn !== 0) {
+    setTimeout(() => setCurrentColumn(currentColumn - 1), 3000);
+    return columnWidths[currentColumn - 1] * -1;
+  }
+  // Move event to the right (if we're not in the last column)
+  if (
+    x > columnWidths[currentColumn] &&
+    currentColumn !== columnWidths.length - 1
+  ) {
+    setTimeout(() => setCurrentColumn(currentColumn + 1), 3000);
+    return columnWidths[currentColumn];
+  }
+  return 0;
 };
 
 const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
@@ -82,8 +117,6 @@ const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
 
   return selectMinutesHeight;
 };
-
-const getColumnWidth = () => 160;
 
 const getDraggableClasses = ({ isDragging, wasDragged }) => {
   return makeClass(
@@ -103,6 +136,7 @@ const EventDragDrop = ({
   children,
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
+  const [xPosition, setXPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [wasDragged, setWasDragged] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
@@ -112,6 +146,7 @@ const EventDragDrop = ({
   const onDrag = (e, ui) => {
     const { x, y } = deltaPosition;
     setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+    setXPosition(ui.x);
     setIsDragging(true);
   };
 
@@ -126,7 +161,12 @@ const EventDragDrop = ({
     selectMinutesHeight,
   });
 
-  const columnWidth = getColumnWidth();
+  const leftChange = getLeftChange({
+    x: xPosition,
+    columnWidths,
+    currentColumn,
+    setCurrentColumn,
+  });
 
   const eventStartEnd = getEventStartEnd({
     event,
@@ -142,7 +182,6 @@ const EventDragDrop = ({
     <Fragment>
       <DraggableCore
         onDrag={onDrag}
-        // grid={[columnWidth, selectMinutesHeight]}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
@@ -155,6 +194,8 @@ const EventDragDrop = ({
           children({
             draggedEvent: newEvent,
             topChange,
+            leftChange,
+            currentColumnWidth: columnWidths[columnIndex],
             isDragging,
             isDndPlaceholder: false,
           }),
@@ -180,7 +221,7 @@ const EventDragDrop = ({
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
   columnIndex: PropTypes.number.isRequired,
-  columnWidths: PropTypes.arrayOf(PropTypes.number).isRequired,
+  columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,

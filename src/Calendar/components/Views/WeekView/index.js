@@ -5,9 +5,9 @@ import { getEventColumns } from '../../StepGrid/utils';
 import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
 import { getWeekList } from './utils';
-import { makeClass } from '../../../utils';
 import { getTodayClass, useElementWidths } from '../../StepGrid/utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import { makeClass } from '../../../utils';
 
 const WeekView = ({
   events,

@@ -30,6 +30,7 @@ const Column = React.forwardRef(
       events,
       stepMinutes,
       onDragEnd,
+      onExtendEnd,
       onSelectEvent,
       onSelectSlot,
       selectMinutes,
@@ -101,7 +102,7 @@ const Column = React.forwardRef(
           const thisColumnEvents = get(events, column, []);
           return thisColumnEvents.map(event => {
             return (
-              <EventExtend key={event.id}>
+              <EventExtend key={event.id} onExtendEnd={onExtendEnd}>
                 {({ isExtending }) => (
                   <EventDragDrop
                     event={event}
@@ -168,6 +169,7 @@ Column.displayName = 'Column';
 
 Column.defaultProps = {
   renderEvent: null,
+  onExtendEnd: () => null,
   onDragEnd: () => null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   events: {},
@@ -189,6 +191,7 @@ Column.propTypes = {
     PropTypes.arrayOf(EVENT_TYPE),
   ]),
   onDragEnd: PropTypes.func,
+  onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,

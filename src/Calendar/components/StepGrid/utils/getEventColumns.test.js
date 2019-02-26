@@ -2,7 +2,7 @@ import getEventColumns from './getEventColumns';
 import { MOCKED_EVENTS } from '../../../mocks';
 import {
   getMungedEvents,
-  getEventsWithSelectedCalendars,
+  getEventsWithSelectedEventGroups,
 } from '../../../utils';
 
 describe('Add column numbers to events', () => {
@@ -12,18 +12,16 @@ describe('Add column numbers to events', () => {
       stepMinutes: 30,
     });
 
-    const eventsWithSelectedCalendars = getEventsWithSelectedCalendars({
+    const eventsWithSelectedEventGroups = getEventsWithSelectedEventGroups({
       mungedEvents,
-      selectedCalendars: [5, 6],
+      selectedEventGroups: [5, 6],
     });
 
-    const eventsWithColumn = getEventColumns(
-      eventsWithSelectedCalendars['2019-02-12']
-    );
+    const eventsWithColumn = getEventColumns(eventsWithSelectedEventGroups);
 
-    expect(eventsWithColumn).toHaveProperty('1');
-    expect(eventsWithColumn).toHaveProperty('2');
-    expect(eventsWithColumn).toHaveProperty('3');
-    expect(eventsWithColumn[1].length).toEqual(2);
+    expect(eventsWithColumn['2019-02-12']).toHaveProperty('1');
+    expect(eventsWithColumn['2019-02-12']).toHaveProperty('2');
+    expect(eventsWithColumn['2019-02-12']).toHaveProperty('3');
+    expect(eventsWithColumn['2019-02-12'][1].length).toEqual(2);
   });
 });

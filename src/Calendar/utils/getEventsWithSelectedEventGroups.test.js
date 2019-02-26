@@ -11,7 +11,7 @@ describe('Munged Event Object', () => {
 
     const events = getEventsWithSelectedEventGroups({
       mungedEvents,
-      selectedCalendars: [5, 6],
+      selectedEventGroups: [5, 6],
     });
 
     const hasEvent3 = events['2019-02-12'].some(event => {

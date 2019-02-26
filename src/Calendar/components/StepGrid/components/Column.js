@@ -102,7 +102,11 @@ const Column = React.forwardRef(
           const thisColumnEvents = get(events, column, []);
           return thisColumnEvents.map(event => {
             return (
-              <EventExtend key={event.id} onExtendEnd={onExtendEnd}>
+              <EventExtend
+                key={event.id}
+                event={event}
+                onExtendEnd={onExtendEnd}
+              >
                 {({ isExtending }) => (
                   <EventDragDrop
                     event={event}

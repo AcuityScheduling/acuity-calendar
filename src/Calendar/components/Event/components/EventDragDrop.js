@@ -78,6 +78,13 @@ const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
   return selectMinutesHeight * positionsMoved;
 };
 
+/**
+ * Get the height of the total amount of select minutues
+ *
+ * @param {Object} params
+ * @param {5|10|15|20|30|60} stepMinutes
+ * @param {5|10|15|20|30|60} selectMinutes
+ */
 const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
   const selectMinutesRatio = stepMinutes / selectMinutes;
   const blockMinutesRatio = 60 / selectMinutes;
@@ -88,6 +95,14 @@ const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
   return selectMinutesHeight;
 };
 
+/**
+ * Get classes that we're going to attach to an event while we're
+ * dragging it
+ *
+ * @param {Object} params
+ * @param {boolean} params.isDragging
+ * @param {boolean} params.wasDragged
+ */
 const getDraggableClasses = ({ isDragging, wasDragged }) => {
   return makeClass(
     'step-grid__draggable-event',
@@ -96,7 +111,15 @@ const getDraggableClasses = ({ isDragging, wasDragged }) => {
   );
 };
 
-export const getPosition = ({ columnMoves, columnWidths, columnIndex }) => {
+/**
+ * Get the 'left' position of an event when it is dragged
+ *
+ * @param {Object} params
+ * @param {number} params.columnMoves
+ * @param {number[]} params.columnWidths
+ * @param {number} params.columnIndex
+ */
+export const getLeftPosition = ({ columnMoves, columnWidths, columnIndex }) => {
   let left = 0;
   for (let i = 1; i <= Math.abs(columnMoves); i += 1) {
     // Moving left
@@ -172,12 +195,13 @@ const EventDragDrop = ({
       setCurrentColumnWidth(columnWidths[currentColumn]);
     }
 
-    const leftPosition = getPosition({
+    const leftPosition = getLeftPosition({
       columnMoves,
       columnWidths,
       columnIndex,
     });
 
+    // Make sure the leftChange is up to date with the position
     if (leftPosition !== leftChange) {
       setLeftChange(leftPosition);
     }

@@ -17,12 +17,14 @@ import { makeClass } from '../../../utils';
  * @param {Object} params.deltaPosition - An object with x/y telling how far the event moved
  * @param {number} params.selectMinutesHeight - the height of one movement on grid
  * @param {number} params.selectMinutes - The amount of minutes of one movement on grid
+ * @param {number} params.columnMoves - The amount of columns that were dragged passed
  */
 const getEventStartEnd = ({
   event,
   deltaPosition,
   selectMinutesHeight,
   selectMinutes,
+  columnMoves,
 }) => {
   let start = event.start.clone();
   let end = event.end.clone();
@@ -36,6 +38,9 @@ const getEventStartEnd = ({
 
   start.add(totalMinutes, 'minutes');
   end.add(totalMinutes, 'minutes');
+
+  start.add(columnMoves, 'days');
+  end.add(columnMoves, 'days');
 
   return {
     start,
@@ -224,6 +229,7 @@ const EventDragDrop = ({
     deltaPosition,
     selectMinutesHeight,
     selectMinutes,
+    columnMoves,
   });
 
   newEvent.start = eventStartEnd.start;

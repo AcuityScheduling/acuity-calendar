@@ -96,6 +96,21 @@ const getDraggableClasses = ({ isDragging, wasDragged }) => {
   );
 };
 
+export const getPosition = ({ columnMoves, columnWidths, columnIndex }) => {
+  let left = 0;
+  for (let i = 1; i <= Math.abs(columnMoves); i += 1) {
+    // Moving left
+    if (columnMoves < 0) {
+      left = left + columnWidths[columnIndex - i] * -1;
+    }
+    // Moving right
+    if (columnMoves > 0) {
+      left = left + columnWidths[columnIndex + i - 1];
+    }
+  }
+  return left;
+};
+
 const EventDragDrop = ({
   event,
   stepMinutes,
@@ -108,7 +123,9 @@ const EventDragDrop = ({
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [xPosition, setXPosition] = useState(0);
   const [leftChange, setLeftChange] = useState(0);
-  const [currentColumnWidth, setCurrentColumnWidth] = useState(null);
+  const [currentColumnWidth, setCurrentColumnWidth] = useState(
+    columnWidths[columnIndex]
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [wasDragged, setWasDragged] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
@@ -136,47 +153,45 @@ const EventDragDrop = ({
   /**
    * Set the state that we changed columns
    *
+   * @param {Object} params - 1 is to the right -1 is to the left
    * @param {1|-1} direction - 1 is to the right -1 is to the left
+   * @param {number} left - total left pixels we're moving
    */
-  const setNewColumn = direction => {
-    setLeftChange(columnWidths[currentColumn + direction] * direction);
+  const setNewColumn = ({ direction, left }) => {
+    setLeftChange(left);
     setCurrentColumnWidth(columnWidths[currentColumn + direction]);
     setCurrentColumn(currentColumn + direction);
   };
 
   const columnMoves = currentColumn - columnIndex;
-  const getPosition = () => {
-    let left = 0;
-    if (columnMoves > 0) {
-      left = columnWidths[columnIndex];
-    }
-    for (let i = 0; i < Math.abs(columnMoves); i += 1) {
-      // Moving left
-      if (columnMoves < 0) {
-        left = left + columnWidths[currentColumn - i] * -1;
-      }
-      // Moving right
-      if (columnMoves > 0) {
-        left = left + columnWidths[currentColumn + i];
-      }
-    }
-    return left;
-  };
 
   // Set column change
   useEffect(() => {
-    const leftPosition = getPosition();
+    // Make sure the current column width is actually the current column width
+    if (currentColumnWidth !== columnWidths[currentColumn]) {
+      setCurrentColumnWidth(columnWidths[currentColumn]);
+    }
+
+    const leftPosition = getPosition({
+      columnMoves,
+      columnWidths,
+      columnIndex,
+    });
+
+    if (leftPosition !== leftChange) {
+      setLeftChange(leftPosition);
+    }
 
     const leftBound = leftPosition;
-    const rightBound = leftPosition + columnWidths[currentColumn];
+    const rightBound = leftPosition + currentColumnWidth;
 
     // Moving Left
-    if (xPosition < leftBound) {
-      setNewColumn(-1);
+    if (xPosition < leftBound && currentColumn !== 0) {
+      setNewColumn({ direction: -1, left: leftPosition });
     }
     // Moving Right
-    if (xPosition > rightBound) {
-      setNewColumn(1);
+    if (xPosition > rightBound && currentColumn !== columnWidths.length - 1) {
+      setNewColumn({ direction: 1, left: leftPosition });
     }
   });
 

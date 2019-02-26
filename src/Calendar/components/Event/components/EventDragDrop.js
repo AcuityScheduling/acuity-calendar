@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
@@ -78,36 +78,6 @@ const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
   return selectMinutesHeight * positionsMoved;
 };
 
-/**
- * Get the total pixels that we'll need to change the top to for a snap effect
- *
- * @param {Object} params
- * @param {number} params.changeInX - The amount we dragged the event
- * @param {array} params.columnWidths
- * @param {number} params.currentColumn - The index of the current column the event is in
- */
-const getLeftChange = ({
-  x,
-  columnWidths,
-  currentColumn,
-  setCurrentColumn,
-}) => {
-  // Move event to left column (if we're not in the first column)
-  if (x < 0 && currentColumn !== 0) {
-    setTimeout(() => setCurrentColumn(currentColumn - 1), 3000);
-    return columnWidths[currentColumn - 1] * -1;
-  }
-  // Move event to the right (if we're not in the last column)
-  if (
-    x > columnWidths[currentColumn] &&
-    currentColumn !== columnWidths.length - 1
-  ) {
-    setTimeout(() => setCurrentColumn(currentColumn + 1), 3000);
-    return columnWidths[currentColumn];
-  }
-  return 0;
-};
-
 const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
   const selectMinutesRatio = stepMinutes / selectMinutes;
   const blockMinutesRatio = 60 / selectMinutes;
@@ -137,6 +107,8 @@ const EventDragDrop = ({
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [xPosition, setXPosition] = useState(0);
+  const [leftChange, setLeftChange] = useState(0);
+  const [currentColumnWidth, setCurrentColumnWidth] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [wasDragged, setWasDragged] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
@@ -161,11 +133,51 @@ const EventDragDrop = ({
     selectMinutesHeight,
   });
 
-  const leftChange = getLeftChange({
-    x: xPosition,
-    columnWidths,
-    currentColumn,
-    setCurrentColumn,
+  /**
+   * Set the state that we changed columns
+   *
+   * @param {1|-1} direction - 1 is to the right -1 is to the left
+   */
+  const setNewColumn = direction => {
+    setLeftChange(columnWidths[currentColumn + direction] * direction);
+    setCurrentColumnWidth(columnWidths[currentColumn + direction]);
+    setCurrentColumn(currentColumn + direction);
+  };
+
+  const columnMoves = currentColumn - columnIndex;
+  const getPosition = () => {
+    let left = 0;
+    if (columnMoves > 0) {
+      left = columnWidths[columnIndex];
+    }
+    for (let i = 0; i < Math.abs(columnMoves); i += 1) {
+      // Moving left
+      if (columnMoves < 0) {
+        left = left + columnWidths[currentColumn - i] * -1;
+      }
+      // Moving right
+      if (columnMoves > 0) {
+        left = left + columnWidths[currentColumn + i];
+      }
+    }
+    return left;
+  };
+
+  // Set column change
+  useEffect(() => {
+    const leftPosition = getPosition();
+
+    const leftBound = leftPosition;
+    const rightBound = leftPosition + columnWidths[currentColumn];
+
+    // Moving Left
+    if (xPosition < leftBound) {
+      setNewColumn(-1);
+    }
+    // Moving Right
+    if (xPosition > rightBound) {
+      setNewColumn(1);
+    }
   });
 
   const eventStartEnd = getEventStartEnd({
@@ -195,7 +207,7 @@ const EventDragDrop = ({
             draggedEvent: newEvent,
             topChange,
             leftChange,
-            currentColumnWidth: columnWidths[columnIndex],
+            currentColumnWidth,
             isDragging,
             isDndPlaceholder: false,
           }),

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { EVENT_TYPE } from '../../types';
 import { makeClass } from '../../utils';
 import './index.scss';
+import { extendHandleClass } from './components/EventExtend';
 
 /**
  * Get the display time for an event.
@@ -57,6 +58,11 @@ const Event = ({
         onSelectEvent(event);
       }}
     >
+      <div
+        className={`${extendHandleClass} ${makeClass(
+          'step-grid__event-handle-top'
+        )}`}
+      />
       {children ? (
         children(event)
       ) : (
@@ -69,6 +75,11 @@ const Event = ({
           </span>
         </div>
       )}
+      <div
+        className={`${extendHandleClass} ${makeClass(
+          'step-grid__event-handle-bottom'
+        )}`}
+      />
     </div>
   );
 };

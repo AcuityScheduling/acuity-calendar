@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
+import EventExtend from './EventExtend';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import {
   EVENT_TYPE,
@@ -237,30 +238,34 @@ const EventDragDrop = ({
 
   return (
     <Fragment>
-      <DraggableCore
-        onDrag={onDrag}
-        onStop={(e, ui) => {
-          // Check if we hit the onDrag event. If we didn't, this is a click
-          if (!isDragging) return false;
-          setTimeout(() => setIsDragging(false));
-          setWasDragged(true);
-          onDragEnd(newEvent);
-        }}
-      >
-        {React.cloneElement(
-          children({
-            draggedEvent: newEvent,
-            topChange,
-            leftChange,
-            currentColumnWidth,
-            isDragging,
-            isDndPlaceholder: false,
-          }),
-          {
-            className: getDraggableClasses({ isDragging, wasDragged }),
-          }
+      <EventExtend>
+        {() => (
+          <DraggableCore
+            onDrag={onDrag}
+            onStop={(e, ui) => {
+              // Check if we hit the onDrag event. If we didn't, this is a click
+              if (!isDragging) return false;
+              setTimeout(() => setIsDragging(false));
+              setWasDragged(true);
+              onDragEnd(newEvent);
+            }}
+          >
+            {React.cloneElement(
+              children({
+                draggedEvent: newEvent,
+                topChange,
+                leftChange,
+                currentColumnWidth,
+                isDragging,
+                isDndPlaceholder: false,
+              }),
+              {
+                className: getDraggableClasses({ isDragging, wasDragged }),
+              }
+            )}
+          </DraggableCore>
         )}
-      </DraggableCore>
+      </EventExtend>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-placeholder-event')}>
           {children({

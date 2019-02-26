@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
-import { makeClass } from '../../../utils';
-
-export const extendHandleClass = makeClass('step-grid__event-handle');
+import { extendHandleClass } from '..';
 
 const EventExtend = ({ children }) => {
+  const [isExtending, setIsExtending] = useState(false);
+
   return (
     <DraggableCore
       handle={`.${extendHandleClass}`}
       onDrag={() => {
+        setIsExtending(true);
         console.log('DRAGGING');
       }}
+      onStop={() => {
+        if (!isExtending) return false;
+        setTimeout(() => setIsExtending(false));
+      }}
     >
-      <span>{children()}</span>
+      <span>{children({ isExtending })}</span>
     </DraggableCore>
   );
 };

@@ -14,6 +14,7 @@ import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from '../../Event';
 import EventDragDrop from '../../Event/components/EventDragDrop';
+import EventExtend from '../../Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
@@ -100,44 +101,49 @@ const Column = React.forwardRef(
           const thisColumnEvents = get(events, column, []);
           return thisColumnEvents.map(event => {
             return (
-              <EventDragDrop
-                key={event.id}
-                event={event}
-                columnIndex={columnIndex}
-                columnWidths={columnWidths}
-                stepMinutes={stepMinutes}
-                selectMinutes={selectMinutes}
-                onDragEnd={onDragEnd}
-              >
-                {({
-                  draggedEvent,
-                  isDragging,
-                  topChange,
-                  leftChange,
-                  currentColumnWidth,
-                  isDndPlaceholder,
-                }) => (
-                  <Event
-                    event={draggedEvent}
-                    style={{
-                      top: `${event.top + topChange}px`,
-                      height: `${event.height}px`,
-                      width:
-                        !isDndPlaceholder && isDragging
-                          ? `${currentColumnWidth}px`
-                          : `${percentWidth}%`,
-                      left:
-                        !isDndPlaceholder && isDragging
-                          ? `${leftChange}px`
-                          : `${percentWidth * (column - 1)}%`,
-                    }}
-                    onSelectEvent={onSelectEvent}
-                    isSelectable={!isDragging}
+              <EventExtend key={event.id}>
+                {({ isExtending }) => (
+                  <EventDragDrop
+                    event={event}
+                    columnIndex={columnIndex}
+                    columnWidths={columnWidths}
+                    stepMinutes={stepMinutes}
+                    selectMinutes={selectMinutes}
+                    onDragEnd={onDragEnd}
                   >
-                    {renderEvent}
-                  </Event>
+                    {({
+                      draggedEvent,
+                      isDragging,
+                      topChange,
+                      leftChange,
+                      currentColumnWidth,
+                      isDndPlaceholder,
+                    }) => {
+                      return (
+                        <Event
+                          event={draggedEvent}
+                          style={{
+                            top: `${event.top + topChange}px`,
+                            height: `${event.height}px`,
+                            width:
+                              !isDndPlaceholder && isDragging
+                                ? `${currentColumnWidth}px`
+                                : `${percentWidth}%`,
+                            left:
+                              !isDndPlaceholder && isDragging
+                                ? `${leftChange}px`
+                                : `${percentWidth * (column - 1)}%`,
+                          }}
+                          onSelectEvent={onSelectEvent}
+                          isSelectable={!isDragging && !isExtending}
+                        >
+                          {renderEvent}
+                        </Event>
+                      );
+                    }}
+                  </EventDragDrop>
                 )}
-              </EventDragDrop>
+              </EventExtend>
             );
           });
         })}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
-import EventExtend from './EventExtend';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import {
   EVENT_TYPE,
@@ -9,6 +8,7 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
+import { handleCenterClass } from '..';
 
 /**
  * Get a new start and end depending on where the event has been dragged to
@@ -238,34 +238,31 @@ const EventDragDrop = ({
 
   return (
     <Fragment>
-      <EventExtend>
-        {() => (
-          <DraggableCore
-            onDrag={onDrag}
-            onStop={(e, ui) => {
-              // Check if we hit the onDrag event. If we didn't, this is a click
-              if (!isDragging) return false;
-              setTimeout(() => setIsDragging(false));
-              setWasDragged(true);
-              onDragEnd(newEvent);
-            }}
-          >
-            {React.cloneElement(
-              children({
-                draggedEvent: newEvent,
-                topChange,
-                leftChange,
-                currentColumnWidth,
-                isDragging,
-                isDndPlaceholder: false,
-              }),
-              {
-                className: getDraggableClasses({ isDragging, wasDragged }),
-              }
-            )}
-          </DraggableCore>
+      <DraggableCore
+        onDrag={onDrag}
+        handle={`.${handleCenterClass}`}
+        onStop={(e, ui) => {
+          // Check if we hit the onDrag event. If we didn't, this is a click
+          if (!isDragging) return false;
+          setTimeout(() => setIsDragging(false));
+          setWasDragged(true);
+          onDragEnd(newEvent);
+        }}
+      >
+        {React.cloneElement(
+          children({
+            draggedEvent: newEvent,
+            topChange,
+            leftChange,
+            currentColumnWidth,
+            isDragging,
+            isDndPlaceholder: false,
+          }),
+          {
+            className: getDraggableClasses({ isDragging, wasDragged }),
+          }
         )}
-      </EventExtend>
+      </DraggableCore>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-placeholder-event')}>
           {children({
@@ -280,11 +277,16 @@ const EventDragDrop = ({
   );
 };
 
+EventDragDrop.defaultProps = {
+  isDraggable: true,
+};
+
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,
+  isDraggable: PropTypes.bool,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,

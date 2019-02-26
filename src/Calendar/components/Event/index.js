@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { EVENT_TYPE } from '../../types';
 import { makeClass } from '../../utils';
 import './index.scss';
-import { extendHandleClass } from './components/EventExtend';
 
 /**
  * Get the display time for an event.
@@ -39,6 +38,9 @@ const getEventContainerClass = className => {
   return eventClass;
 };
 
+export const handleCenterClass = makeClass('step-grid__event-handle-center');
+export const extendHandleClass = makeClass('step-grid__event-handle');
+
 const Event = ({
   children,
   className,
@@ -47,11 +49,33 @@ const Event = ({
   onSelectEvent,
   ...restProps
 }) => {
+  const wrapper = useRef(null);
+  const topExtender = useRef(null);
+  const [dragHandleCenterHeight, setDragHandleCenterHeight] = useState(0);
+  const [dragHandleCenterTop, setDragHandleCenterTop] = useState(0);
+
+  // Set the height of the inner handler for drag and drop
+  useEffect(() => {
+    if (wrapper.current !== null && topExtender.current !== null) {
+      const wrapperHeight = wrapper.current.clientHeight;
+      const extenderHeight = topExtender.current.clientHeight;
+      const height = `${wrapperHeight - extenderHeight * 2}px`;
+      const top = `${extenderHeight}px`;
+      if (dragHandleCenterHeight !== height) {
+        setDragHandleCenterHeight(height);
+      }
+      if (dragHandleCenterTop !== top) {
+        setDragHandleCenterTop(top);
+      }
+    }
+  });
+
   return (
     <div
       {...restProps}
       className={getEventContainerClass(className)}
       role="button"
+      ref={wrapper}
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
@@ -62,6 +86,14 @@ const Event = ({
         className={`${extendHandleClass} ${makeClass(
           'step-grid__event-handle-top'
         )}`}
+        ref={topExtender}
+      />
+      <div
+        className={handleCenterClass}
+        style={{
+          height: dragHandleCenterHeight,
+          top: dragHandleCenterTop,
+        }}
       />
       {children ? (
         children(event)

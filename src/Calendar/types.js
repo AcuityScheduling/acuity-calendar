@@ -21,3 +21,4 @@ export const REF_TYPE = PropTypes.shape({
     typeof Element === 'undefined' ? function() {} : Element
   ),
 });
+export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);

@@ -36,9 +36,7 @@ const App = () => {
           stepDetails={MOCKED_STEP_DETAILS}
           events={MOCKED_EVENTS}
           view={view}
-          onViewChange={setView}
           selectedDate={selectedDate}
-          onNavigate={setSelectedDate}
           // After extending an event's duration
           onExtendEnd={event => {
             const newStart = event.start.format('Y-M-D H:mm');

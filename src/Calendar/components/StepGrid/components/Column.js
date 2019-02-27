@@ -143,11 +143,13 @@ const Column = React.forwardRef(
                             top: `${draggedEvent.top}px`,
                             height: `${draggedEvent.height}px`,
                             width:
-                              !isDndPlaceholder && (isDragging || wasDragged)
+                              !isDndPlaceholder &&
+                              (isDragging || wasDragged || isExtending)
                                 ? `${currentColumnWidth}px`
                                 : `${percentWidth}%`,
                             left:
-                              !isDndPlaceholder && (isDragging || wasDragged)
+                              !isDndPlaceholder &&
+                              (isDragging || wasDragged || isExtending)
                                 ? `${leftChange}px`
                                 : `${percentWidth * (column - 1)}%`,
                           }}

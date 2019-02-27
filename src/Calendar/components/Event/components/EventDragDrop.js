@@ -8,6 +8,7 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
+import { handleCenterClass } from '..';
 
 /**
  * Get a new start and end depending on where the event has been dragged to
@@ -239,6 +240,7 @@ const EventDragDrop = ({
     <Fragment>
       <DraggableCore
         onDrag={onDrag}
+        handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
@@ -275,11 +277,16 @@ const EventDragDrop = ({
   );
 };
 
+EventDragDrop.defaultProps = {
+  isDraggable: true,
+};
+
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,
+  isDraggable: PropTypes.bool,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,

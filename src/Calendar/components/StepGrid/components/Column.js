@@ -14,6 +14,7 @@ import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from '../../Event';
 import EventDragDrop from '../../Event/components/EventDragDrop';
+import EventExtend from '../../Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
@@ -29,6 +30,7 @@ const Column = React.forwardRef(
       events,
       stepMinutes,
       onDragEnd,
+      onExtendEnd,
       onSelectEvent,
       onSelectSlot,
       selectMinutes,
@@ -100,44 +102,53 @@ const Column = React.forwardRef(
           const thisColumnEvents = get(events, column, []);
           return thisColumnEvents.map(event => {
             return (
-              <EventDragDrop
+              <EventExtend
                 key={event.id}
                 event={event}
-                columnIndex={columnIndex}
-                columnWidths={columnWidths}
-                stepMinutes={stepMinutes}
-                selectMinutes={selectMinutes}
-                onDragEnd={onDragEnd}
+                onExtendEnd={onExtendEnd}
               >
-                {({
-                  draggedEvent,
-                  isDragging,
-                  topChange,
-                  leftChange,
-                  currentColumnWidth,
-                  isDndPlaceholder,
-                }) => (
-                  <Event
-                    event={draggedEvent}
-                    style={{
-                      top: `${event.top + topChange}px`,
-                      height: `${event.height}px`,
-                      width:
-                        !isDndPlaceholder && isDragging
-                          ? `${currentColumnWidth}px`
-                          : `${percentWidth}%`,
-                      left:
-                        !isDndPlaceholder && isDragging
-                          ? `${leftChange}px`
-                          : `${percentWidth * (column - 1)}%`,
-                    }}
-                    onSelectEvent={onSelectEvent}
-                    isSelectable={!isDragging}
+                {({ isExtending }) => (
+                  <EventDragDrop
+                    event={event}
+                    columnIndex={columnIndex}
+                    columnWidths={columnWidths}
+                    stepMinutes={stepMinutes}
+                    selectMinutes={selectMinutes}
+                    onDragEnd={onDragEnd}
                   >
-                    {renderEvent}
-                  </Event>
+                    {({
+                      draggedEvent,
+                      isDragging,
+                      topChange,
+                      leftChange,
+                      currentColumnWidth,
+                      isDndPlaceholder,
+                    }) => {
+                      return (
+                        <Event
+                          event={draggedEvent}
+                          style={{
+                            top: `${event.top + topChange}px`,
+                            height: `${event.height}px`,
+                            width:
+                              !isDndPlaceholder && isDragging
+                                ? `${currentColumnWidth}px`
+                                : `${percentWidth}%`,
+                            left:
+                              !isDndPlaceholder && isDragging
+                                ? `${leftChange}px`
+                                : `${percentWidth * (column - 1)}%`,
+                          }}
+                          onSelectEvent={onSelectEvent}
+                          isSelectable={!isDragging && !isExtending}
+                        >
+                          {renderEvent}
+                        </Event>
+                      );
+                    }}
+                  </EventDragDrop>
                 )}
-              </EventDragDrop>
+              </EventExtend>
             );
           });
         })}
@@ -162,6 +173,7 @@ Column.displayName = 'Column';
 
 Column.defaultProps = {
   renderEvent: null,
+  onExtendEnd: () => null,
   onDragEnd: () => null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   events: {},
@@ -183,6 +195,7 @@ Column.propTypes = {
     PropTypes.arrayOf(EVENT_TYPE),
   ]),
   onDragEnd: PropTypes.func,
+  onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,

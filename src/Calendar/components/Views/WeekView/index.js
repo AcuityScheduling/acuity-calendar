@@ -15,6 +15,7 @@ const WeekView = ({
   firstDay,
   stepMinutes,
   onDragEnd,
+  onExtendEnd,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
@@ -83,6 +84,7 @@ const WeekView = ({
               columnWidths={elementWidths}
               columnIndex={index}
               onDragEnd={onDragEnd}
+              onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
               selectMinutes={selectMinutes}
@@ -103,6 +105,7 @@ WeekView.defaultProps = {
   renderCorner: null,
   timeGutterWidth: 50,
   stepDetails: null,
+  onExtendEnd: () => null,
   onDragEnd: () => null,
 };
 
@@ -110,6 +113,7 @@ WeekView.propTypes = {
   events: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   onDragEnd: PropTypes.func,
+  onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,

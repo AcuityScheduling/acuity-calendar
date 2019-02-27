@@ -30,12 +30,20 @@ const getEventStartEnd = ({
   let start = event.start.clone();
   let end = event.end.clone();
 
-  const totalMinutes = getMinutesMoved({
+  let totalMinutes = getMinutesMoved({
     changeInY: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,
   });
   if (totalMinutes === 0) return { start, end };
+
+  const isPastMidnight = getIsPastMidnight({
+    event,
+    minutesMoved: totalMinutes,
+  });
+  if (isPastMidnight) {
+    totalMinutes = getMinutesFromMidnight(event);
+  }
 
   start.add(totalMinutes, 'minutes');
   end.add(totalMinutes, 'minutes');
@@ -73,15 +81,53 @@ const getMinutesMoved = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
  * @param {number} params.selectMinutes
  * @param {number} params.selectMinutesHeight
  */
-const getTopChange = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
+const getTopChange = ({
+  changeInY,
+  event,
+  selectMinutes,
+  selectMinutesHeight,
+}) => {
   if (!changeInY) return 0;
-  const minutesMoved = getMinutesMoved({
+  let minutesMoved = getMinutesMoved({
     changeInY,
     selectMinutes,
     selectMinutesHeight,
   });
+
+  // If we went past midnight, don't move
+  if (getIsPastMidnight({ event, minutesMoved })) {
+    minutesMoved = getMinutesFromMidnight(event);
+  }
+
   const positionsMoved = minutesMoved / selectMinutes;
   return selectMinutesHeight * positionsMoved;
+};
+
+/**
+ * Check if the amount of time we moved is past midnight or not
+ *
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {number} params.minutesMoved - How many minutes have we moved from the og pos
+ */
+const getIsPastMidnight = ({ event, minutesMoved }) => {
+  return event.end
+    .clone()
+    .add(minutesMoved, 'minutes')
+    .isSame(event.start.clone().add(1, 'days'), 'days');
+};
+
+/**
+ * How many minutes until we hit midnight
+ *
+ * @param {Object} event
+ */
+const getMinutesFromMidnight = event => {
+  const midnight = event.end
+    .clone()
+    .add(1, 'days')
+    .startOf('day');
+  return midnight.diff(event.end, 'minutes');
 };
 
 /**
@@ -175,6 +221,7 @@ const EventDragDrop = ({
 
   const topChange = getTopChange({
     changeInY: deltaPosition.y,
+    event,
     selectMinutes,
     selectMinutesHeight,
   });

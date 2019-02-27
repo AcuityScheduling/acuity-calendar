@@ -78,6 +78,7 @@ const Calendar = ({
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
       selectedDate={selectedDate}
+      onExtendEnd={onExtendEnd}
       onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}

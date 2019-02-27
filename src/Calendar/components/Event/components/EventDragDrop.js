@@ -1,93 +1,18 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import {
   EVENT_TYPE,
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
-import { getMinutesMoved } from '../utils';
+import {
+  getSelectMinutesHeight,
+  getDragVerticalChange,
+  getDraggedEventStartEnd,
+} from '../utils';
 import { handleCenterClass } from '..';
-
-/**
- * Get a new start and end depending on where the event has been dragged to
- *
- * @param {Object} params
- * @param {Object} params.event
- * @param {Object} params.deltaPosition - An object with x/y telling how far the event moved
- * @param {number} params.selectMinutesHeight - the height of one movement on grid
- * @param {number} params.selectMinutes - The amount of minutes of one movement on grid
- * @param {number} params.columnMoves - The amount of columns that were dragged passed
- */
-const getEventStartEnd = ({
-  event,
-  deltaPosition,
-  selectMinutesHeight,
-  selectMinutes,
-  columnMoves,
-}) => {
-  let start = event.start.clone();
-  let end = event.end.clone();
-
-  let totalMinutes = getMinutesMoved({
-    event,
-    lastY: deltaPosition.y,
-    selectMinutes,
-    selectMinutesHeight,
-  });
-  if (totalMinutes === 0) return { start, end };
-
-  start.add(totalMinutes, 'minutes');
-  end.add(totalMinutes, 'minutes');
-
-  start.add(columnMoves, 'days');
-  end.add(columnMoves, 'days');
-
-  return {
-    start,
-    end,
-  };
-};
-
-/**
- * Get the total pixels that we'll need to change the top to for a snap effect
- *
- * @param {Object} params
- * @param {number} params.lastY - The amount we dragged the event
- * @param {number} params.selectMinutes
- * @param {number} params.selectMinutesHeight
- */
-const getTopChange = ({ lastY, selectMinutes, event, selectMinutesHeight }) => {
-  if (!lastY) return 0;
-  let minutesMoved = getMinutesMoved({
-    event,
-    lastY,
-    selectMinutes,
-    selectMinutesHeight,
-  });
-
-  const positionsMoved = minutesMoved / selectMinutes;
-  return selectMinutesHeight * positionsMoved;
-};
-
-/**
- * Get the height of the total amount of select minutues
- *
- * @param {Object} params
- * @param {5|10|15|20|30|60} stepMinutes
- * @param {5|10|15|20|30|60} selectMinutes
- */
-const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
-  const selectMinutesRatio = stepMinutes / selectMinutes;
-  const blockMinutesRatio = 60 / selectMinutes;
-  const selectMinutesHeight =
-    STEP_HEIGHTS[stepMinutes] / selectMinutesRatio +
-    STEP_BORDER_WIDTH / blockMinutesRatio;
-
-  return selectMinutesHeight;
-};
 
 /**
  * Get classes that we're going to attach to an event while we're
@@ -162,7 +87,7 @@ const EventDragDrop = ({
     selectMinutes,
   });
 
-  const topChange = getTopChange({
+  const topChange = getDragVerticalChange({
     event,
     lastY: deltaPosition.y,
     selectMinutes,
@@ -214,16 +139,15 @@ const EventDragDrop = ({
     setCurrentColumn(currentColumn + direction);
   };
 
-  const eventStartEnd = getEventStartEnd({
+  const eventStartEnd = getDraggedEventStartEnd({
     event,
     deltaPosition,
     selectMinutesHeight,
     selectMinutes,
-    columnMoves,
   });
 
-  newEvent.start = eventStartEnd.start;
-  newEvent.end = eventStartEnd.end;
+  newEvent.start = eventStartEnd.start.add(columnMoves, 'days');
+  newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
 
   /**
    * If the delta is more or less than we're allowed to have we'll reset it onDragEnd

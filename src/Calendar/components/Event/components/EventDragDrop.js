@@ -32,8 +32,7 @@ const getEventStartEnd = ({
   let end = event.end.clone();
 
   let totalMinutes = getMinutesMoved({
-    changeInY: deltaPosition.y,
-    event,
+    lastY: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,
   });
@@ -55,20 +54,14 @@ const getEventStartEnd = ({
  * Get the total pixels that we'll need to change the top to for a snap effect
  *
  * @param {Object} params
- * @param {number} params.changeInY - The amount we dragged the event
+ * @param {number} params.lastY - The amount we dragged the event
  * @param {number} params.selectMinutes
  * @param {number} params.selectMinutesHeight
  */
-const getTopChange = ({
-  changeInY,
-  event,
-  selectMinutes,
-  selectMinutesHeight,
-}) => {
-  if (!changeInY) return 0;
+const getTopChange = ({ lastY, selectMinutes, selectMinutesHeight }) => {
+  if (!lastY) return 0;
   let minutesMoved = getMinutesMoved({
-    event,
-    changeInY,
+    lastY,
     selectMinutes,
     selectMinutesHeight,
   });
@@ -160,7 +153,8 @@ const EventDragDrop = ({
     if (
       getIsInMoveableRange({
         event,
-        changeInY: y,
+        changeInY: ui.deltaY,
+        lastY: y,
         selectMinutes,
         selectMinutesHeight,
       })
@@ -177,8 +171,7 @@ const EventDragDrop = ({
   });
 
   const topChange = getTopChange({
-    changeInY: deltaPosition.y,
-    event,
+    lastY: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,
   });

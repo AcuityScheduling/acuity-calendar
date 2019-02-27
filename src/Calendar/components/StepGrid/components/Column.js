@@ -110,6 +110,7 @@ const Column = React.forwardRef(
                 {({ isExtending }) => (
                   <EventDragDrop
                     event={event}
+                    columnHeight={totalHeight}
                     columnIndex={columnIndex}
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}

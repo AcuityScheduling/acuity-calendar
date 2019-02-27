@@ -10,10 +10,6 @@ import {
 import { makeClass } from '../../../utils';
 import { getMinutesMoved } from '../utils';
 import { handleCenterClass } from '..';
-import {
-  getMinutesSinceMidnight,
-  getMinutesFromMidnight,
-} from '../../StepGrid/utils';
 
 /**
  * Get a new start and end depending on where the event has been dragged to
@@ -136,6 +132,7 @@ const EventDragDrop = ({
   event,
   stepMinutes,
   selectMinutes,
+  columnHeight,
   columnWidths,
   columnIndex,
   onDragEnd,
@@ -234,13 +231,8 @@ const EventDragDrop = ({
    * and try to move it our delta is in the right place
    */
   const resetDeltaY = () => {
-    const stepHeight = STEP_HEIGHTS[stepMinutes];
-    const pixelsPerMinute = stepHeight / stepMinutes;
-    const minutesSinceMidnight = getMinutesSinceMidnight(event.start);
-    const minutesFromMidnight = getMinutesFromMidnight(event.end);
-
-    const minDeltaY = minutesSinceMidnight * pixelsPerMinute * -1;
-    const maxDeltaY = minutesFromMidnight * pixelsPerMinute;
+    const minDeltaY = event.top * -1;
+    const maxDeltaY = columnHeight - event.top - event.height;
 
     if (deltaPosition.y < minDeltaY) {
       setDeltaPosition({ x: deltaPosition.x, y: minDeltaY });
@@ -301,6 +293,7 @@ EventDragDrop.defaultProps = {
 
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
+  columnHeight: PropTypes.number.isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,

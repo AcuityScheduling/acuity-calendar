@@ -41,7 +41,10 @@ const App = () => {
           onNavigate={setSelectedDate}
           // After extending an event's duration
           onExtendEnd={event => {
-            console.log(event);
+            const newStart = event.start.format('Y-M-D H:mm');
+            const newEnd = event.end.format('Y-M-D H:mm');
+            console.log('newStart: ', newStart);
+            console.log('newEnd: ', newEnd);
           }}
           onDragEnd={event => {
             const newStart = event.start.format('Y-M-D H:mm');

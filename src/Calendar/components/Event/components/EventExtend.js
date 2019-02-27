@@ -63,7 +63,7 @@ const EventExtend = ({
       onStop={() => {
         if (!isExtending) return false;
         setTimeout(() => setIsExtending(false));
-        onExtendEnd(event);
+        onExtendEnd(newEvent);
       }}
     >
       <span>

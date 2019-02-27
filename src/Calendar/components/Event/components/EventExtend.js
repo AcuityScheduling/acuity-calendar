@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { extendHandleClass } from '..';
 import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
-import { getSelectMinutesHeight, getDragVerticalChange } from '../utils';
+import {
+  getSelectMinutesHeight,
+  getDragVerticalChange,
+  getDraggedEventStartEnd,
+} from '../utils';
 import {
   SELECT_MINUTES_DEFAULT,
   STEP_MINUTES_DEFAULT,
@@ -20,21 +24,21 @@ const EventExtend = ({
   const [isExtending, setIsExtending] = useState(false);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
 
-  const selectMinutesHeight = getSelectMinutesHeight({
-    stepMinutes,
+  const selectMinutesHeight = useMemo(
+    () =>
+      getSelectMinutesHeight({
+        stepMinutes,
+        selectMinutes,
+      }),
+    [stepMinutes, selectMinutes]
+  );
+
+  const eventStartEnd = getDraggedEventStartEnd({
+    event,
+    deltaPosition,
+    selectMinutesHeight,
     selectMinutes,
   });
-
-  //   const eventStartEnd = getEventStartEnd({
-  //     event,
-  //     deltaPosition,
-  //     selectMinutesHeight,
-  //     selectMinutes,
-  //   });
-
-  //   const newEvent = Object.assign({}, event);
-  //   newEvent.start = eventStartEnd.start;
-  //   newEvent.end = eventStartEnd.end;
 
   const heightChange = getDragVerticalChange({
     lastY: deltaPosition.y,
@@ -42,6 +46,10 @@ const EventExtend = ({
     event,
     selectMinutesHeight,
   });
+
+  const newEvent = Object.assign({}, event);
+  newEvent.start = eventStartEnd.start;
+  newEvent.end = eventStartEnd.end;
 
   return (
     <DraggableCore
@@ -58,7 +66,9 @@ const EventExtend = ({
         onExtendEnd(event);
       }}
     >
-      <span>{children({ isExtending, heightChange })}</span>
+      <span>
+        {children({ isExtending, heightChange, extendedEvent: newEvent })}
+      </span>
     </DraggableCore>
   );
 };

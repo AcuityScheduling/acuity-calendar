@@ -118,9 +118,9 @@ const Column = React.forwardRef(
                   onExtendEnd(event);
                 }}
               >
-                {({ isExtending, heightChange }) => (
+                {({ isExtending, heightChange, extendedEvent }) => (
                   <EventDragDrop
-                    event={event}
+                    event={extendedEvent}
                     columnHeight={totalHeight}
                     columnIndex={columnIndex}
                     columnWidths={columnWidths}

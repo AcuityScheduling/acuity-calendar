@@ -8,51 +8,11 @@ import {
 } from '../../../types';
 import { makeClass } from '../../../utils';
 import {
-  getMinutesMoved,
   getSelectMinutesHeight,
   getDragVerticalChange,
+  getDraggedEventStartEnd,
 } from '../utils';
 import { handleCenterClass } from '..';
-
-/**
- * Get a new start and end depending on where the event has been dragged to
- *
- * @param {Object} params
- * @param {Object} params.event
- * @param {Object} params.deltaPosition - An object with x/y telling how far the event moved
- * @param {number} params.selectMinutesHeight - the height of one movement on grid
- * @param {number} params.selectMinutes - The amount of minutes of one movement on grid
- * @param {number} params.columnMoves - The amount of columns that were dragged passed
- */
-const getEventStartEnd = ({
-  event,
-  deltaPosition,
-  selectMinutesHeight,
-  selectMinutes,
-  columnMoves,
-}) => {
-  let start = event.start.clone();
-  let end = event.end.clone();
-
-  let totalMinutes = getMinutesMoved({
-    event,
-    lastY: deltaPosition.y,
-    selectMinutes,
-    selectMinutesHeight,
-  });
-  if (totalMinutes === 0) return { start, end };
-
-  start.add(totalMinutes, 'minutes');
-  end.add(totalMinutes, 'minutes');
-
-  start.add(columnMoves, 'days');
-  end.add(columnMoves, 'days');
-
-  return {
-    start,
-    end,
-  };
-};
 
 /**
  * Get classes that we're going to attach to an event while we're
@@ -179,16 +139,15 @@ const EventDragDrop = ({
     setCurrentColumn(currentColumn + direction);
   };
 
-  const eventStartEnd = getEventStartEnd({
+  const eventStartEnd = getDraggedEventStartEnd({
     event,
     deltaPosition,
     selectMinutesHeight,
     selectMinutes,
-    columnMoves,
   });
 
-  newEvent.start = eventStartEnd.start;
-  newEvent.end = eventStartEnd.end;
+  newEvent.start = eventStartEnd.start.add(columnMoves, 'days');
+  newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
 
   /**
    * If the delta is more or less than we're allowed to have we'll reset it onDragEnd

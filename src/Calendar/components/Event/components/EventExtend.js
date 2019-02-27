@@ -4,7 +4,7 @@ import { DraggableCore } from 'react-draggable';
 import { extendHandleClass } from '..';
 import { EVENT_TYPE } from '../../../types';
 
-const EventExtend = ({ children, onExtendEnd, event }) => {
+const EventExtend = ({ children, onExtend, onExtendEnd, event }) => {
   const [isExtending, setIsExtending] = useState(false);
 
   return (
@@ -12,6 +12,7 @@ const EventExtend = ({ children, onExtendEnd, event }) => {
       handle={`.${extendHandleClass}`}
       onDrag={() => {
         setIsExtending(true);
+        onExtend();
         console.log('DRAGGING');
       }}
       onStop={() => {
@@ -25,9 +26,14 @@ const EventExtend = ({ children, onExtendEnd, event }) => {
   );
 };
 
+EventExtend.defaultProps = {
+  onExtend: () => null,
+};
+
 EventExtend.propTypes = {
   children: PropTypes.func.isRequired,
   event: EVENT_TYPE.isRequired,
+  onExtend: PropTypes.func,
   onExtendEnd: PropTypes.func.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
@@ -39,6 +39,8 @@ const Column = React.forwardRef(
     },
     ref
   ) => {
+    const [isSlotClickable, setIsSlotClickable] = useState(true);
+
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
       const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
@@ -85,7 +87,10 @@ const Column = React.forwardRef(
           height: `${totalHeight}px`,
           minWidth,
         }}
-        onClick={e => onSelectSlot(getClickedTime(e))}
+        onClick={e => {
+          if (!isSlotClickable) return false;
+          onSelectSlot(getClickedTime(e));
+        }}
         ref={ref}
       >
         {date.isSame(moment(), 'day') && currentTime && (
@@ -105,7 +110,11 @@ const Column = React.forwardRef(
               <EventExtend
                 key={event.id}
                 event={event}
-                onExtendEnd={onExtendEnd}
+                onExtend={() => setIsSlotClickable(false)}
+                onExtendEnd={event => {
+                  setTimeout(() => setIsSlotClickable(true));
+                  onExtendEnd(event);
+                }}
               >
                 {({ isExtending }) => (
                   <EventDragDrop

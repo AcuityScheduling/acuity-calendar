@@ -41,7 +41,7 @@ export const getMinutesMoved = ({
  * @param {number} params.totalMinutes - Total minutes that we've moved so far
  * @param {number} params.selectMinutes
  */
-export const getTotalMinutesMoved = ({
+const getTotalMinutesMoved = ({
   lastY,
   selectMinutes,
   selectMinutesHeight,
@@ -60,7 +60,7 @@ export const getTotalMinutesMoved = ({
  * @param {Object} params.event
  * @param {number} params.minutesMoved
  */
-export const getIsYesterday = ({ event, minutesMoved }) => {
+const getIsYesterday = ({ event, minutesMoved }) => {
   return event.start
     .clone()
     .add(minutesMoved, 'minutes')
@@ -74,7 +74,7 @@ export const getIsYesterday = ({ event, minutesMoved }) => {
  * @param {Object} params.event
  * @param {number} params.minutesMoved
  */
-export const getIsTomorrow = ({ event, minutesMoved }) => {
+const getIsTomorrow = ({ event, minutesMoved }) => {
   return event.end
     .clone()
     .add(minutesMoved, 'minutes')

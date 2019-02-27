@@ -32,6 +32,7 @@ const getEventStartEnd = ({
   let end = event.end.clone();
 
   let totalMinutes = getMinutesMoved({
+    event,
     lastY: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,
@@ -58,9 +59,10 @@ const getEventStartEnd = ({
  * @param {number} params.selectMinutes
  * @param {number} params.selectMinutesHeight
  */
-const getTopChange = ({ lastY, selectMinutes, selectMinutesHeight }) => {
+const getTopChange = ({ lastY, selectMinutes, event, selectMinutesHeight }) => {
   if (!lastY) return 0;
   let minutesMoved = getMinutesMoved({
+    event,
     lastY,
     selectMinutes,
     selectMinutesHeight,
@@ -150,19 +152,19 @@ const EventDragDrop = ({
   const onDrag = (e, ui) => {
     const { x, y } = deltaPosition;
 
-    if (
-      getIsInMoveableRange({
-        event,
-        changeInY: ui.deltaY,
-        lastY: y,
-        selectMinutes,
-        selectMinutesHeight,
-      })
-    ) {
-      setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-      setXPosition(ui.x);
-      setIsDragging(true);
-    }
+    // if (
+    //   getIsInMoveableRange({
+    //     event,
+    //     changeInY: ui.deltaY,
+    //     lastY: y,
+    //     selectMinutes,
+    //     selectMinutesHeight,
+    //   })
+    // ) {
+    setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+    setXPosition(ui.x);
+    setIsDragging(true);
+    // }
   };
 
   const selectMinutesHeight = getSelectMinutesHeight({
@@ -171,6 +173,7 @@ const EventDragDrop = ({
   });
 
   const topChange = getTopChange({
+    event,
     lastY: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,

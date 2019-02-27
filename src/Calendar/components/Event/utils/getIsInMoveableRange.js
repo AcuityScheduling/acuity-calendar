@@ -1,6 +1,7 @@
-import getMinutesMoved, {
+import {
   getIsYesterday,
   getIsTomorrow,
+  getTotalMinutesMoved,
 } from './getMinutesMoved';
 
 /**
@@ -19,7 +20,7 @@ const getIsInMoveableRange = ({
   selectMinutes,
   selectMinutesHeight,
 }) => {
-  let totalMinutes = getMinutesMoved({
+  let totalMinutes = getTotalMinutesMoved({
     lastY,
     selectMinutes,
     selectMinutesHeight,

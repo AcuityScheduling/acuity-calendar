@@ -51,8 +51,8 @@ export const MOCKED_EVENTS = [
   {
     id: 7,
     group_id: 6,
-    start: '2019-02-12 10:00:00',
-    end: '2019-02-12 11:00:00',
+    start: '2019-02-12 22:00:00',
+    end: '2019-02-12 23:00:00',
     title: "Valentine's Day",
     allDay: false,
   },

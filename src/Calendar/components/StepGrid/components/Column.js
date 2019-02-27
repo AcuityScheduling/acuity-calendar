@@ -119,6 +119,7 @@ const Column = React.forwardRef(
                     {({
                       draggedEvent,
                       isDragging,
+                      wasDragged,
                       topChange,
                       leftChange,
                       currentColumnWidth,
@@ -131,11 +132,11 @@ const Column = React.forwardRef(
                             top: `${event.top + topChange}px`,
                             height: `${event.height}px`,
                             width:
-                              !isDndPlaceholder && isDragging
+                              !isDndPlaceholder && (isDragging || wasDragged)
                                 ? `${currentColumnWidth}px`
                                 : `${percentWidth}%`,
                             left:
-                              !isDndPlaceholder && isDragging
+                              !isDndPlaceholder && (isDragging || wasDragged)
                                 ? `${leftChange}px`
                                 : `${percentWidth * (column - 1)}%`,
                           }}

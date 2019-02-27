@@ -38,6 +38,7 @@ const EventExtend = ({
     deltaPosition,
     selectMinutesHeight,
     selectMinutes,
+    isDurationOnly: true,
   });
 
   const heightChange = getDragVerticalChange({

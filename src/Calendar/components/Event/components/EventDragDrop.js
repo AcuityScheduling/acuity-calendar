@@ -1,14 +1,17 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
 import {
   EVENT_TYPE,
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
-import { getMinutesMoved } from '../utils';
+import {
+  getMinutesMoved,
+  getSelectMinutesHeight,
+  getDragVerticalChange,
+} from '../utils';
 import { handleCenterClass } from '..';
 
 /**
@@ -49,44 +52,6 @@ const getEventStartEnd = ({
     start,
     end,
   };
-};
-
-/**
- * Get the total pixels that we'll need to change the top to for a snap effect
- *
- * @param {Object} params
- * @param {number} params.lastY - The amount we dragged the event
- * @param {number} params.selectMinutes
- * @param {number} params.selectMinutesHeight
- */
-const getTopChange = ({ lastY, selectMinutes, event, selectMinutesHeight }) => {
-  if (!lastY) return 0;
-  let minutesMoved = getMinutesMoved({
-    event,
-    lastY,
-    selectMinutes,
-    selectMinutesHeight,
-  });
-
-  const positionsMoved = minutesMoved / selectMinutes;
-  return selectMinutesHeight * positionsMoved;
-};
-
-/**
- * Get the height of the total amount of select minutues
- *
- * @param {Object} params
- * @param {5|10|15|20|30|60} stepMinutes
- * @param {5|10|15|20|30|60} selectMinutes
- */
-const getSelectMinutesHeight = ({ stepMinutes, selectMinutes }) => {
-  const selectMinutesRatio = stepMinutes / selectMinutes;
-  const blockMinutesRatio = 60 / selectMinutes;
-  const selectMinutesHeight =
-    STEP_HEIGHTS[stepMinutes] / selectMinutesRatio +
-    STEP_BORDER_WIDTH / blockMinutesRatio;
-
-  return selectMinutesHeight;
 };
 
 /**
@@ -162,7 +127,7 @@ const EventDragDrop = ({
     selectMinutes,
   });
 
-  const topChange = getTopChange({
+  const topChange = getDragVerticalChange({
     event,
     lastY: deltaPosition.y,
     selectMinutes,

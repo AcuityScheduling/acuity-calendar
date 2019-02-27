@@ -110,13 +110,15 @@ const Column = React.forwardRef(
               <EventExtend
                 key={event.id}
                 event={event}
+                stepMinutes={stepMinutes}
+                selectMinutes={selectMinutes}
                 onExtend={() => setIsSlotClickable(false)}
                 onExtendEnd={event => {
                   setTimeout(() => setIsSlotClickable(true));
                   onExtendEnd(event);
                 }}
               >
-                {({ isExtending }) => (
+                {({ isExtending, heightChange }) => (
                   <EventDragDrop
                     event={event}
                     columnHeight={totalHeight}
@@ -140,7 +142,7 @@ const Column = React.forwardRef(
                           event={draggedEvent}
                           style={{
                             top: `${event.top + topChange}px`,
-                            height: `${event.height}px`,
+                            height: `${event.height + heightChange}px`,
                             width:
                               !isDndPlaceholder && (isDragging || wasDragged)
                                 ? `${currentColumnWidth}px`

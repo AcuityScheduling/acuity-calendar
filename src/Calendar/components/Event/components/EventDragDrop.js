@@ -8,6 +8,7 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
+import { getMinutesMoved, getIsInMoveableRange } from '../utils';
 import { handleCenterClass } from '..';
 
 /**
@@ -32,18 +33,11 @@ const getEventStartEnd = ({
 
   let totalMinutes = getMinutesMoved({
     changeInY: deltaPosition.y,
+    event,
     selectMinutes,
     selectMinutesHeight,
   });
   if (totalMinutes === 0) return { start, end };
-
-  const isPastMidnight = getIsPastMidnight({
-    event,
-    minutesMoved: totalMinutes,
-  });
-  if (isPastMidnight) {
-    totalMinutes = getMinutesFromMidnight(event);
-  }
 
   start.add(totalMinutes, 'minutes');
   end.add(totalMinutes, 'minutes');
@@ -55,22 +49,6 @@ const getEventStartEnd = ({
     start,
     end,
   };
-};
-
-/**
- * Get the total number of minutes we've moved SNAPPED to the nearest selectMinutes
- * selectMinutes defaults to 15 minutes.
- *
- * @param {Object} params
- * @param {number} params.totalMinutes - Total minutes that we've moved so far
- * @param {number} params.selectMinutes
- */
-const getMinutesMoved = ({ changeInY, selectMinutes, selectMinutesHeight }) => {
-  if (changeInY === 0) return 0;
-  const totalPositionMoves = changeInY / selectMinutesHeight;
-  const totalMinutes = totalPositionMoves * selectMinutes;
-  // Round to nearest selectMinutes and divide by select minutes to get total positions moved
-  return Math.round(totalMinutes / selectMinutes) * selectMinutes;
 };
 
 /**
@@ -89,45 +67,14 @@ const getTopChange = ({
 }) => {
   if (!changeInY) return 0;
   let minutesMoved = getMinutesMoved({
+    event,
     changeInY,
     selectMinutes,
     selectMinutesHeight,
   });
 
-  // If we went past midnight, don't move
-  if (getIsPastMidnight({ event, minutesMoved })) {
-    minutesMoved = getMinutesFromMidnight(event);
-  }
-
   const positionsMoved = minutesMoved / selectMinutes;
   return selectMinutesHeight * positionsMoved;
-};
-
-/**
- * Check if the amount of time we moved is past midnight or not
- *
- * @param {Object} params
- * @param {Object} params.event
- * @param {number} params.minutesMoved - How many minutes have we moved from the og pos
- */
-const getIsPastMidnight = ({ event, minutesMoved }) => {
-  return event.end
-    .clone()
-    .add(minutesMoved, 'minutes')
-    .isSame(event.start.clone().add(1, 'days'), 'days');
-};
-
-/**
- * How many minutes until we hit midnight
- *
- * @param {Object} event
- */
-const getMinutesFromMidnight = event => {
-  const midnight = event.end
-    .clone()
-    .add(1, 'days')
-    .startOf('day');
-  return midnight.diff(event.end, 'minutes');
 };
 
 /**
@@ -209,9 +156,19 @@ const EventDragDrop = ({
 
   const onDrag = (e, ui) => {
     const { x, y } = deltaPosition;
-    setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-    setXPosition(ui.x);
-    setIsDragging(true);
+
+    if (
+      getIsInMoveableRange({
+        event,
+        changeInY: y,
+        selectMinutes,
+        selectMinutesHeight,
+      })
+    ) {
+      setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+      setXPosition(ui.x);
+      setIsDragging(true);
+    }
   };
 
   const selectMinutesHeight = getSelectMinutesHeight({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../../StepGrid/constants';
@@ -8,7 +8,7 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { makeClass } from '../../../utils';
-import { getMinutesMoved, getIsInMoveableRange } from '../utils';
+import { getMinutesMoved } from '../utils';
 import { handleCenterClass } from '..';
 
 /**
@@ -151,20 +151,9 @@ const EventDragDrop = ({
 
   const onDrag = (e, ui) => {
     const { x, y } = deltaPosition;
-
-    // if (
-    //   getIsInMoveableRange({
-    //     event,
-    //     changeInY: ui.deltaY,
-    //     lastY: y,
-    //     selectMinutes,
-    //     selectMinutesHeight,
-    //   })
-    // ) {
     setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
     setXPosition(ui.x);
     setIsDragging(true);
-    // }
   };
 
   const selectMinutesHeight = getSelectMinutesHeight({
@@ -179,23 +168,9 @@ const EventDragDrop = ({
     selectMinutesHeight,
   });
 
-  /**
-   * Set the state that we changed columns
-   *
-   * @param {Object} params - 1 is to the right -1 is to the left
-   * @param {1|-1} direction - 1 is to the right -1 is to the left
-   * @param {number} left - total left pixels we're moving
-   */
-  const setNewColumn = ({ direction, left }) => {
-    setLeftChange(left);
-    setCurrentColumnWidth(columnWidths[currentColumn + direction]);
-    setCurrentColumn(currentColumn + direction);
-  };
-
   const columnMoves = currentColumn - columnIndex;
 
-  // Set column change
-  useEffect(() => {
+  const changeColumn = () => {
     // Make sure the current column width is actually the current column width
     if (currentColumnWidth !== columnWidths[currentColumn]) {
       setCurrentColumnWidth(columnWidths[currentColumn]);
@@ -223,7 +198,20 @@ const EventDragDrop = ({
     if (xPosition > rightBound && currentColumn !== columnWidths.length - 1) {
       setNewColumn({ direction: 1, left: leftPosition });
     }
-  });
+  };
+
+  /**
+   * Set the state that we changed columns
+   *
+   * @param {Object} params - 1 is to the right -1 is to the left
+   * @param {1|-1} direction - 1 is to the right -1 is to the left
+   * @param {number} left - total left pixels we're moving
+   */
+  const setNewColumn = ({ direction, left }) => {
+    setLeftChange(left);
+    setCurrentColumnWidth(columnWidths[currentColumn + direction]);
+    setCurrentColumn(currentColumn + direction);
+  };
 
   const eventStartEnd = getEventStartEnd({
     event,
@@ -235,6 +223,8 @@ const EventDragDrop = ({
 
   newEvent.start = eventStartEnd.start;
   newEvent.end = eventStartEnd.end;
+
+  changeColumn();
 
   return (
     <Fragment>
@@ -256,6 +246,7 @@ const EventDragDrop = ({
             leftChange,
             currentColumnWidth,
             isDragging,
+            wasDragged,
             isDndPlaceholder: false,
           }),
           {

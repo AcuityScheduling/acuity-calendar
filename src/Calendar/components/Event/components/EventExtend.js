@@ -51,6 +51,7 @@ const EventExtend = ({
   const newEvent = Object.assign({}, event);
   newEvent.start = eventStartEnd.start;
   newEvent.end = eventStartEnd.end;
+  newEvent.height = event.height + heightChange;
 
   return (
     <DraggableCore
@@ -59,7 +60,7 @@ const EventExtend = ({
         const { x, y } = deltaPosition;
         setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
         setIsExtending(true);
-        onExtend(event);
+        onExtend();
       }}
       onStop={() => {
         if (!isExtending) return false;
@@ -67,9 +68,7 @@ const EventExtend = ({
         onExtendEnd(newEvent);
       }}
     >
-      <span>
-        {children({ isExtending, heightChange, extendedEvent: newEvent })}
-      </span>
+      <span>{children({ isExtending, extendedEvent: newEvent })}</span>
     </DraggableCore>
   );
 };

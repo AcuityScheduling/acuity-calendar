@@ -118,7 +118,7 @@ const Column = React.forwardRef(
                   onExtendEnd(event);
                 }}
               >
-                {({ isExtending, heightChange, extendedEvent }) => (
+                {({ isExtending, extendedEvent, heightChange }) => (
                   <EventDragDrop
                     event={extendedEvent}
                     columnHeight={totalHeight}
@@ -132,7 +132,6 @@ const Column = React.forwardRef(
                       draggedEvent,
                       isDragging,
                       wasDragged,
-                      topChange,
                       leftChange,
                       currentColumnWidth,
                       isDndPlaceholder,
@@ -141,8 +140,8 @@ const Column = React.forwardRef(
                         <Event
                           event={draggedEvent}
                           style={{
-                            top: `${event.top + topChange}px`,
-                            height: `${event.height + heightChange}px`,
+                            top: `${draggedEvent.top}px`,
+                            height: `${draggedEvent.height}px`,
                             width:
                               !isDndPlaceholder && (isDragging || wasDragged)
                                 ? `${currentColumnWidth}px`

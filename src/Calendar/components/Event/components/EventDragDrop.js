@@ -148,6 +148,7 @@ const EventDragDrop = ({
 
   newEvent.start = eventStartEnd.start.add(columnMoves, 'days');
   newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
+  newEvent.top = event.top + topChange;
 
   /**
    * If the delta is more or less than we're allowed to have we'll reset it onDragEnd
@@ -185,7 +186,6 @@ const EventDragDrop = ({
         {React.cloneElement(
           children({
             draggedEvent: newEvent,
-            topChange,
             leftChange,
             currentColumnWidth,
             isDragging,

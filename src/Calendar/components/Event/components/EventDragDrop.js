@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Fragment } from 'react';
+import React, { useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import {
@@ -76,13 +76,6 @@ const EventDragDrop = ({
 
   const newEvent = Object.assign({}, event);
 
-  const onDrag = (e, ui) => {
-    const { x, y } = deltaPosition;
-    setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-    setXPosition(ui.x);
-    setIsDragging(true);
-  };
-
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
     selectMinutes,
@@ -153,16 +146,18 @@ const EventDragDrop = ({
 
   changeColumn();
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeout.current);
-    };
-  });
-
   return (
     <Fragment>
       <DraggableCore
-        onDrag={onDrag}
+        onStart={() => {
+          if (isDragging) return false;
+          setIsDragging(true);
+        }}
+        onDrag={(e, ui) => {
+          const { x, y } = deltaPosition;
+          setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+          setXPosition(ui.x);
+        }}
         handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click

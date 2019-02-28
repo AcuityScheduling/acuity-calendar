@@ -128,12 +128,13 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={onDragEnd}
+                    onDragEnd={event => {
+                      onDragEnd(event);
+                    }}
                   >
                     {({
                       draggedEvent,
                       isDragging,
-                      wasDragged,
                       leftChange,
                       currentColumnWidth,
                       isDndPlaceholder,

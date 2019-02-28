@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';
 import { linkTo } from '@storybook/addon-links';
@@ -17,7 +16,7 @@ const eventsMocked = [];
 
 // eslint-disable-next-line react/prop-types
 const SillyWrappingComponentToUseHooks = ({ view }) => {
-  const [selectedDate, setSelectedDate] = useState(moment());
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
     <Calendar
@@ -38,7 +37,7 @@ const SillyWrappingComponentToUseHooks = ({ view }) => {
       //   console.log(`Selecting ${start} - ${end}`)
       // }
       // A callback fired when a date selection is made
-      onSelectSlot={start => console.log(start.toDate())}
+      onSelectSlot={start => console.log(start)}
       // How many grid lines there are between an hour. 30 means
       // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
       stepMinutes={20}
@@ -63,28 +62,28 @@ storiesOf('Calendar', module)
     const events = [
       {
         id: 3,
-        calendar_id: 5,
+        group_id: 5,
         start: '2019-02-11 00:00:00',
         end: '2019-02-11 00:00:00',
         weight: 0.7,
       },
       {
         id: 3,
-        calendar_id: 5,
+        group_id: 5,
         start: '2019-02-12 00:00:00',
         end: '2019-02-12 00:00:00',
         weight: 0.4,
       },
       {
         id: 3,
-        calendar_id: 5,
+        group_id: 5,
         start: '2019-02-13 00:00:00',
         end: '2019-02-13 00:00:00',
         weight: 0.5,
       },
       {
         id: 3,
-        calendar_id: 5,
+        group_id: 5,
         start: '2019-02-14 00:00:00',
         end: '2019-02-14 00:00:00',
         weight: 0.8,
@@ -121,9 +120,9 @@ storiesOf('Calendar', module)
       <Fragment>
         <style>{styles}</style>
         <Calendar
+          view={CALENDAR_VIEWS.month}
+          selectedEventGroups={[5]}
           events={events}
-          calendars={calendars}
-          selectedCalendars={[5]}
           renderEvent={event => (
             <div
               className="heatmap__cell"

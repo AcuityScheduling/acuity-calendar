@@ -105,7 +105,7 @@ Calendar.defaultProps = {
   stepDetails: [],
   events: [],
   selectedDate: SELECTED_DATE_DEFAULT,
-  view: CALENDAR_VIEWS.month,
+  view: CALENDAR_VIEWS.week,
   calendars: [],
   selectedEventGroups: false,
   onExtendEnd: () => null,

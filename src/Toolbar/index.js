@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CALENDAR_VIEWS } from '../Calendar/constants';
-import { CALENDAR_VIEW_TYPE, FIRST_DAY_TYPE } from '../Calendar/types';
+import {
+  CALENDAR_VIEW_TYPE,
+  FIRST_DAY_TYPE,
+  DATE_TYPE,
+} from '../Calendar/types';
 import { getWeekList } from '../Calendar/components/Views/WeekView/utils';
 
 const { month, week, calendar } = CALENDAR_VIEWS;
@@ -110,10 +114,7 @@ Toolbar.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   onNavigate: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
-  selectedDate: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date).isRequired,
-    PropTypes.instanceOf(moment),
-  ]).isRequired,
+  selectedDate: DATE_TYPE.isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,
 };
 

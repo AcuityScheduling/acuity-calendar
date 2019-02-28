@@ -13,35 +13,26 @@ const App = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
-  // const [alteredEvents, setAlteredEvents] = useState(MOCKED_EVENTS);
+  const [alteredEvents, setAlteredEvents] = useState(MOCKED_EVENTS);
 
   const firstDay = 0;
 
-  // const updateEvent = event => {
-  //   // Find the event key we're going to replace
-  //   let alteredEventKey = false;
-  //   alteredEvents.some((alteredEvent, index) => {
-  //     if (alteredEvent.id === event.id) {
-  //       alteredEventKey = index;
-  //       return true;
-  //     }
-  //     return false;
-  //   });
+  const updateEvent = event => {
+    // Find the event key we're going to replace
+    let alteredEventKey = false;
+    alteredEvents.some((alteredEvent, index) => {
+      if (alteredEvent.id === event.id) {
+        alteredEventKey = index;
+        return true;
+      }
+      return false;
+    });
 
-  //   const newEvent = {
-  //     ...event,
-  //     start: event.start.format('YYYY-MM-DD H:mm:ss'),
-  //     end: event.end.format('YYYY-MM-DD H:mm:ss'),
-  //   };
-  //   delete newEvent.height;
-  //   delete newEvent.top;
+    const newAlteredEvents = [...alteredEvents];
+    newAlteredEvents[alteredEventKey] = event;
 
-  //   const newAlteredEvents = [...alteredEvents];
-  //   newAlteredEvents[alteredEventKey] = newEvent;
-  //   console.log('newAlteredEvents: ', newAlteredEvents);
-
-  //   setAlteredEvents([...newAlteredEvents]);
-  // };
+    setAlteredEvents([...newAlteredEvents]);
+  };
 
   return (
     <div style={{ display: 'flex', width: '100%' }}>
@@ -60,7 +51,7 @@ const App = () => {
         />
         <Calendar
           stepDetails={MOCKED_STEP_DETAILS}
-          events={MOCKED_EVENTS}
+          events={alteredEvents}
           view={view}
           selectedDate={selectedDate}
           // After extending an event's duration
@@ -68,6 +59,7 @@ const App = () => {
             console.log('event: ', event);
           }}
           onDragEnd={event => {
+            updateEvent(event);
             console.log('event: ', event);
           }}
           // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1

@@ -151,23 +151,6 @@ const EventDragDrop = ({
   newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
   newEvent.top = event.top + topChange;
 
-  /**
-   * If the delta is more or less than we're allowed to have we'll reset it onDragEnd
-   * This way if we drag an event outside of the calendar then go back to the event
-   * and try to move it our delta is in the right place
-   */
-  const resetDeltaY = () => {
-    const minDeltaY = event.top * -1;
-    const maxDeltaY = columnHeight - event.top - event.height;
-
-    if (deltaPosition.y < minDeltaY) {
-      setDeltaPosition({ x: deltaPosition.x, y: minDeltaY });
-    }
-    if (deltaPosition.y > maxDeltaY) {
-      setDeltaPosition({ x: deltaPosition.x, y: maxDeltaY });
-    }
-  };
-
   changeColumn();
 
   useEffect(() => {
@@ -184,7 +167,7 @@ const EventDragDrop = ({
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
-          resetDeltaY();
+          setDeltaPosition({ x: 0, y: 0 });
           timeout.current = setTimeout(() => setIsDragging(false));
           setWasDragged(true);
           onDragEnd(resetEventFormat(newEvent));

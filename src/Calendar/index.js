@@ -78,16 +78,8 @@ const Calendar = ({
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
       selectedDate={moment(new Date(selectedDate))}
-      onExtendEnd={event => {
-        // updateEvent(event);
-        onExtendEnd(event);
-      }}
-      onDragEnd={event => {
-        // const newStart = event.start.format('HH:mm:ss');
-        // console.log('in calendar: ', newStart);
-        // updateEvent(event);
-        onDragEnd(event);
-      }}
+      onExtendEnd={onExtendEnd}
+      onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}
       onSelectSlot={onSelectSlot}

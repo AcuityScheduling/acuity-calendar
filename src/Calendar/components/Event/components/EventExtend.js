@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { extendHandleClass } from '..';
@@ -22,6 +22,7 @@ const EventExtend = ({
   selectMinutes,
   stepMinutes,
 }) => {
+  const timeout = useRef(null);
   const [isExtending, setIsExtending] = useState(false);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
 
@@ -54,6 +55,12 @@ const EventExtend = ({
   newEvent.end = eventStartEnd.end;
   newEvent.height = event.height + heightChange;
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeout.current);
+    };
+  });
+
   return (
     <DraggableCore
       handle={`.${extendHandleClass}`}
@@ -65,7 +72,8 @@ const EventExtend = ({
       }}
       onStop={() => {
         if (!isExtending) return false;
-        setTimeout(() => setIsExtending(false));
+        timeout.current = setTimeout(() => setIsExtending(false));
+        setDeltaPosition({ x: 0, y: 0 });
         onExtendEnd(newEvent);
       }}
     >

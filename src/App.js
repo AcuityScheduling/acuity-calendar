@@ -13,14 +13,14 @@ const App = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
-  const [alteredEvents, setAlteredEvents] = useState(MOCKED_EVENTS);
+  const [events, setEvents] = useState(MOCKED_EVENTS);
 
   const firstDay = 0;
 
   const updateEvent = event => {
     // Find the event key we're going to replace
     let alteredEventKey = false;
-    alteredEvents.some((alteredEvent, index) => {
+    events.some((alteredEvent, index) => {
       if (alteredEvent.id === event.id) {
         alteredEventKey = index;
         return true;
@@ -28,10 +28,10 @@ const App = () => {
       return false;
     });
 
-    const newAlteredEvents = [...alteredEvents];
+    const newAlteredEvents = [...events];
     newAlteredEvents[alteredEventKey] = event;
 
-    setAlteredEvents([...newAlteredEvents]);
+    setEvents([...newAlteredEvents]);
   };
 
   return (
@@ -51,11 +51,12 @@ const App = () => {
         />
         <Calendar
           stepDetails={MOCKED_STEP_DETAILS}
-          events={alteredEvents}
+          events={events}
           view={view}
           selectedDate={selectedDate}
           // After extending an event's duration
           onExtendEnd={event => {
+            updateEvent(event);
             console.log('event: ', event);
           }}
           onDragEnd={event => {

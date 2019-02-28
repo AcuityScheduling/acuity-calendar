@@ -72,6 +72,7 @@ const Event = ({
       role="button"
       ref={wrapperRef}
       onClick={e => {
+        e.stopPropagation();
         if (!isSelectable) return false;
         onSelectEvent(resetEventFormat(event));
       }}

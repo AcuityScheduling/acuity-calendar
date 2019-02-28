@@ -149,14 +149,11 @@ const EventDragDrop = ({
   return (
     <Fragment>
       <DraggableCore
-        onStart={() => {
-          if (isDragging) return false;
-          setIsDragging(true);
-        }}
         onDrag={(e, ui) => {
           const { x, y } = deltaPosition;
           setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
           setXPosition(ui.x);
+          setIsDragging(true);
         }}
         handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {

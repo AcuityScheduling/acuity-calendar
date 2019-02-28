@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { EVENT_TYPE } from '../../types';
-import { makeClass } from '../../utils';
+import { makeClass, resetEventFormat } from '../../utils';
 import './index.scss';
 
 /**
@@ -49,23 +49,18 @@ const Event = ({
   onSelectEvent,
   ...restProps
 }) => {
-  const wrapper = useRef(null);
-  const topExtender = useRef(null);
+  const wrapperRef = useRef(null);
+  const extenderRef = useRef(null);
   const [dragHandleCenterHeight, setDragHandleCenterHeight] = useState(0);
-  const [dragHandleCenterTop, setDragHandleCenterTop] = useState(0);
 
   // Set the height of the inner handler for drag and drop
   useEffect(() => {
-    if (wrapper.current !== null && topExtender.current !== null) {
-      const wrapperHeight = wrapper.current.clientHeight;
-      const extenderHeight = topExtender.current.clientHeight;
-      const height = `${wrapperHeight - extenderHeight * 2}px`;
-      const top = `${extenderHeight}px`;
+    if (wrapperRef.current !== null && extenderRef.current !== null) {
+      const wrapperHeight = wrapperRef.current.clientHeight;
+      const extenderHeight = extenderRef.current.clientHeight;
+      const height = `${wrapperHeight - extenderHeight}px`;
       if (dragHandleCenterHeight !== height) {
         setDragHandleCenterHeight(height);
-      }
-      if (dragHandleCenterTop !== top) {
-        setDragHandleCenterTop(top);
       }
     }
   });
@@ -75,24 +70,17 @@ const Event = ({
       {...restProps}
       className={getEventContainerClass(className)}
       role="button"
-      ref={wrapper}
+      ref={wrapperRef}
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
-        onSelectEvent(event);
+        onSelectEvent(resetEventFormat(event));
       }}
     >
-      <div
-        className={`${extendHandleClass} ${makeClass(
-          'step-grid__event-handle-top'
-        )}`}
-        ref={topExtender}
-      />
       <div
         className={handleCenterClass}
         style={{
           height: dragHandleCenterHeight,
-          top: dragHandleCenterTop,
         }}
       />
       {children ? (
@@ -111,6 +99,7 @@ const Event = ({
         className={`${extendHandleClass} ${makeClass(
           'step-grid__event-handle-bottom'
         )}`}
+        ref={extenderRef}
       />
     </div>
   );

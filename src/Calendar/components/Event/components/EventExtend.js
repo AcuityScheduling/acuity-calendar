@@ -12,6 +12,7 @@ import {
   SELECT_MINUTES_DEFAULT,
   STEP_MINUTES_DEFAULT,
 } from '../../../defaultProps';
+import { resetEventFormat } from '../../../utils';
 
 const EventExtend = ({
   children,
@@ -51,25 +52,28 @@ const EventExtend = ({
   const newEvent = Object.assign({}, event);
   newEvent.start = eventStartEnd.start;
   newEvent.end = eventStartEnd.end;
+  newEvent.height = event.height + heightChange;
 
   return (
     <DraggableCore
       handle={`.${extendHandleClass}`}
+      onStart={() => {
+        if (isExtending) return false;
+        setIsExtending(true);
+      }}
       onDrag={(e, ui) => {
         const { x, y } = deltaPosition;
         setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-        setIsExtending(true);
-        onExtend(event);
+        onExtend(resetEventFormat(newEvent));
       }}
       onStop={() => {
         if (!isExtending) return false;
-        setTimeout(() => setIsExtending(false));
         onExtendEnd(newEvent);
+        setDeltaPosition({ x: 0, y: 0 });
+        setIsExtending(false);
       }}
     >
-      <span>
-        {children({ isExtending, heightChange, extendedEvent: newEvent })}
-      </span>
+      <span>{children({ isExtending, extendedEvent: newEvent })}</span>
     </DraggableCore>
   );
 };

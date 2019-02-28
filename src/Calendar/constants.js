@@ -5,3 +5,4 @@ export const CALENDAR_VIEWS = {
 };
 
 export const CLASS_PREFIX = 'acuity-calendar';
+export const DATE_FORMAT = 'YYYY-MM-DD';

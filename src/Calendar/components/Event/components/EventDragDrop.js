@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import {
@@ -6,7 +6,7 @@ import {
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
-import { makeClass } from '../../../utils';
+import { makeClass, resetEventFormat } from '../../../utils';
 import {
   getSelectMinutesHeight,
   getDragVerticalChange,
@@ -63,6 +63,7 @@ const EventDragDrop = ({
   onDragEnd,
   children,
 }) => {
+  const timeout = useRef(null);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [xPosition, setXPosition] = useState(0);
   const [leftChange, setLeftChange] = useState(0);
@@ -74,13 +75,6 @@ const EventDragDrop = ({
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
 
   const newEvent = Object.assign({}, event);
-
-  const onDrag = (e, ui) => {
-    const { x, y } = deltaPosition;
-    setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-    setXPosition(ui.x);
-    setIsDragging(true);
-  };
 
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
@@ -148,44 +142,35 @@ const EventDragDrop = ({
 
   newEvent.start = eventStartEnd.start.add(columnMoves, 'days');
   newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
-
-  /**
-   * If the delta is more or less than we're allowed to have we'll reset it onDragEnd
-   * This way if we drag an event outside of the calendar then go back to the event
-   * and try to move it our delta is in the right place
-   */
-  const resetDeltaY = () => {
-    const minDeltaY = event.top * -1;
-    const maxDeltaY = columnHeight - event.top - event.height;
-
-    if (deltaPosition.y < minDeltaY) {
-      setDeltaPosition({ x: deltaPosition.x, y: minDeltaY });
-    }
-    if (deltaPosition.y > maxDeltaY) {
-      setDeltaPosition({ x: deltaPosition.x, y: maxDeltaY });
-    }
-  };
+  newEvent.top = event.top + topChange;
 
   changeColumn();
 
   return (
     <Fragment>
       <DraggableCore
-        onDrag={onDrag}
+        onStart={() => {
+          if (isDragging) return false;
+          setIsDragging(true);
+        }}
+        onDrag={(e, ui) => {
+          const { x, y } = deltaPosition;
+          setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+          setXPosition(ui.x);
+        }}
         handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
-          resetDeltaY();
-          setTimeout(() => setIsDragging(false));
+          setDeltaPosition({ x: 0, y: 0 });
+          timeout.current = setTimeout(() => setIsDragging(false));
           setWasDragged(true);
-          onDragEnd(newEvent);
+          onDragEnd(resetEventFormat(newEvent));
         }}
       >
         {React.cloneElement(
           children({
             draggedEvent: newEvent,
-            topChange,
             leftChange,
             currentColumnWidth,
             isDragging,

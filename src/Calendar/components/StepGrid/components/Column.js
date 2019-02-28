@@ -66,10 +66,12 @@ const Column = React.forwardRef(
         Math.round(selectedTime.clone().minute() / selectMinutes) *
         selectMinutes;
 
-      return selectedTime
-        .clone()
-        .minute(rounded)
-        .second(0);
+      return new Date(
+        selectedTime
+          .clone()
+          .minute(rounded)
+          .second(0)
+      );
     };
 
     const totalColumns = Object.keys(events).length || 1;
@@ -114,11 +116,11 @@ const Column = React.forwardRef(
                 selectMinutes={selectMinutes}
                 onExtend={() => setIsSlotClickable(false)}
                 onExtendEnd={event => {
-                  setTimeout(() => setIsSlotClickable(true));
                   onExtendEnd(event);
+                  setIsSlotClickable(true);
                 }}
               >
-                {({ isExtending, heightChange, extendedEvent }) => (
+                {({ isExtending, extendedEvent, heightChange }) => (
                   <EventDragDrop
                     event={extendedEvent}
                     columnHeight={totalHeight}
@@ -126,13 +128,13 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={onDragEnd}
+                    onDragEnd={event => {
+                      onDragEnd(event);
+                    }}
                   >
                     {({
                       draggedEvent,
                       isDragging,
-                      wasDragged,
-                      topChange,
                       leftChange,
                       currentColumnWidth,
                       isDndPlaceholder,
@@ -141,14 +143,14 @@ const Column = React.forwardRef(
                         <Event
                           event={draggedEvent}
                           style={{
-                            top: `${event.top + topChange}px`,
-                            height: `${event.height + heightChange}px`,
+                            top: `${draggedEvent.top}px`,
+                            height: `${draggedEvent.height}px`,
                             width:
-                              !isDndPlaceholder && (isDragging || wasDragged)
+                              !isDndPlaceholder && (isDragging || isExtending)
                                 ? `${currentColumnWidth}px`
                                 : `${percentWidth}%`,
                             left:
-                              !isDndPlaceholder && (isDragging || wasDragged)
+                              !isDndPlaceholder && (isDragging || isExtending)
                                 ? `${leftChange}px`
                                 : `${percentWidth * (column - 1)}%`,
                           }}

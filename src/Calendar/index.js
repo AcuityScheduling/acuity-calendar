@@ -1,15 +1,17 @@
-import moment from 'moment';
 import React, { useMemo } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { MonthView, CalendarsView, WeekView } from './components/Views';
 import { CALENDAR_VIEWS } from './constants';
 import {
   FIRST_DAY_TYPE,
-  MOMENT_TYPE,
   CALENDAR_VIEW_TYPE,
   STEP_MINUTES_TYPE,
+  EVENT_TYPE,
+  DATE_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
+import { SELECTED_DATE_DEFAULT } from './defaultProps';
 
 const Calendar = ({
   events,
@@ -17,10 +19,8 @@ const Calendar = ({
   view,
   selectedDate,
   selectedEventGroups,
-  onViewChange,
   onExtendEnd,
   onDragEnd,
-  onNavigate,
   firstDay,
   onSelectEvent,
   onSelecting,
@@ -77,7 +77,7 @@ const Calendar = ({
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
-      selectedDate={selectedDate}
+      selectedDate={moment(new Date(selectedDate))}
       onExtendEnd={onExtendEnd}
       onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
@@ -102,8 +102,8 @@ Calendar.defaultProps = {
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
-  selectedDate: moment(),
-  view: CALENDAR_VIEWS.month,
+  selectedDate: SELECTED_DATE_DEFAULT,
+  view: CALENDAR_VIEWS.week,
   calendars: [],
   selectedEventGroups: false,
   onExtendEnd: () => null,
@@ -111,26 +111,18 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      start: PropTypes.string.isRequired,
-      end: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-    })
-  ),
+  events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE.isRequired,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
-  onNavigate: PropTypes.func.isRequired,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   onSelecting: PropTypes.func.isRequired,
-  onViewChange: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectedDate: MOMENT_TYPE,
+  selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,

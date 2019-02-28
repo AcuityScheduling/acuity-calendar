@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import getSortedEvents from './getSortedEvents';
 
 /**
  * Flatten the object of munged events to ONLY selected calendar events
@@ -22,10 +23,10 @@ const getEventsWithSelectedEventGroups = ({
     (accumulator, calendarId) => {
       const datesWithEvents = Object.keys(newEvents[calendarId]);
       datesWithEvents.forEach(date => {
-        accumulator[date] = [
+        accumulator[date] = getSortedEvents([
           ...get(accumulator, date, []),
           ...newEvents[calendarId][date],
-        ];
+        ]);
       });
       return accumulator;
     },

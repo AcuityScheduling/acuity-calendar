@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line no-unused-vars
 import moment from 'moment';
 import { CALENDAR_VIEWS } from '../Calendar/constants';
 import {
   CALENDAR_VIEW_TYPE,
-  MOMENT_TYPE,
   FIRST_DAY_TYPE,
+  DATE_TYPE,
 } from '../Calendar/types';
 import { getWeekList } from '../Calendar/components/Views/WeekView/utils';
 
@@ -67,13 +66,13 @@ const Toolbar = ({
   const prevDate = getNavigateDate({
     view,
     direction: -1,
-    currentDate: selectedDate,
+    currentDate: moment(selectedDate),
   });
 
   const nextDate = getNavigateDate({
     view,
     direction: 1,
-    currentDate: selectedDate,
+    currentDate: moment(selectedDate),
   });
 
   const styles = `
@@ -85,7 +84,7 @@ const Toolbar = ({
   return (
     <div style={{ marginBottom: '15px' }}>
       <style>{styles}</style>
-      <h1>{getRangeTitle({ date: selectedDate, view, firstDay })}</h1>
+      <h1>{getRangeTitle({ date: moment(selectedDate), view, firstDay })}</h1>
       <div style={{ display: 'flex' }}>
         <div style={{ marginRight: '20px' }}>
           <button type="button" onClick={() => onViewChange(month)}>
@@ -115,7 +114,7 @@ Toolbar.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   onNavigate: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
-  selectedDate: MOMENT_TYPE.isRequired,
+  selectedDate: DATE_TYPE.isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,
 };
 

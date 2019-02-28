@@ -1,5 +1,4 @@
 import getMinutesMoved from './getMinutesMoved';
-import { isDuration } from 'moment';
 
 /**
  * Get a new start and end depending on where the event has been dragged to

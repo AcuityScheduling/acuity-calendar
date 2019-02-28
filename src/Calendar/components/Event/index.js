@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { EVENT_TYPE } from '../../types';
-import { makeClass } from '../../utils';
+import { makeClass, resetEventFormat } from '../../utils';
 import './index.scss';
 
 /**
@@ -79,7 +79,7 @@ const Event = ({
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
-        onSelectEvent(event);
+        onSelectEvent(resetEventFormat(event));
       }}
     >
       <div

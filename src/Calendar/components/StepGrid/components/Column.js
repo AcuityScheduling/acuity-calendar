@@ -66,10 +66,12 @@ const Column = React.forwardRef(
         Math.round(selectedTime.clone().minute() / selectMinutes) *
         selectMinutes;
 
-      return selectedTime
-        .clone()
-        .minute(rounded)
-        .second(0);
+      return new Date(
+        selectedTime
+          .clone()
+          .minute(rounded)
+          .second(0)
+      );
     };
 
     const totalColumns = Object.keys(events).length || 1;
@@ -144,12 +146,12 @@ const Column = React.forwardRef(
                             height: `${draggedEvent.height}px`,
                             width:
                               !isDndPlaceholder &&
-                              (isDragging || wasDragged || isExtending)
+                              (isDragging || isExtending || wasDragged)
                                 ? `${currentColumnWidth}px`
                                 : `${percentWidth}%`,
                             left:
                               !isDndPlaceholder &&
-                              (isDragging || wasDragged || isExtending)
+                              (isDragging || isExtending || wasDragged)
                                 ? `${leftChange}px`
                                 : `${percentWidth * (column - 1)}%`,
                           }}

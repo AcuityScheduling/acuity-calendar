@@ -1,15 +1,11 @@
-import moment from 'moment';
 import React, { useMemo } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { MonthView, CalendarsView, WeekView } from './components/Views';
 import { CALENDAR_VIEWS } from './constants';
-import {
-  FIRST_DAY_TYPE,
-  MOMENT_TYPE,
-  CALENDAR_VIEW_TYPE,
-  STEP_MINUTES_TYPE,
-} from './types';
+import { FIRST_DAY_TYPE, CALENDAR_VIEW_TYPE, STEP_MINUTES_TYPE } from './types';
 import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
+import { SELECTED_DATE_DEFAULT } from './defaultProps';
 
 const Calendar = ({
   events,
@@ -75,9 +71,17 @@ const Calendar = ({
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
-      selectedDate={selectedDate}
-      onExtendEnd={onExtendEnd}
-      onDragEnd={onDragEnd}
+      selectedDate={moment(selectedDate)}
+      onExtendEnd={event => {
+        // updateEvent(event);
+        onExtendEnd(event);
+      }}
+      onDragEnd={event => {
+        // const newStart = event.start.format('HH:mm:ss');
+        // console.log('in calendar: ', newStart);
+        // updateEvent(event);
+        onDragEnd(event);
+      }}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}
       onSelectSlot={onSelectSlot}
@@ -100,7 +104,7 @@ Calendar.defaultProps = {
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
-  selectedDate: moment(),
+  selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.month,
   calendars: [],
   selectedEventGroups: false,
@@ -126,7 +130,10 @@ Calendar.propTypes = {
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  selectedDate: MOMENT_TYPE,
+  selectedDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,

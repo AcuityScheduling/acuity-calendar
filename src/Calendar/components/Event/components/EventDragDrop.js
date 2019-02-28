@@ -6,7 +6,7 @@ import {
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
-import { makeClass } from '../../../utils';
+import { makeClass, resetEventFormat } from '../../../utils';
 import {
   getSelectMinutesHeight,
   getDragVerticalChange,
@@ -180,7 +180,7 @@ const EventDragDrop = ({
           resetDeltaY();
           setTimeout(() => setIsDragging(false));
           setWasDragged(true);
-          onDragEnd(newEvent);
+          onDragEnd(resetEventFormat(newEvent));
         }}
       >
         {React.cloneElement(

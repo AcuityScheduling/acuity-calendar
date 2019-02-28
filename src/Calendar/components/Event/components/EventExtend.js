@@ -12,6 +12,7 @@ import {
   SELECT_MINUTES_DEFAULT,
   STEP_MINUTES_DEFAULT,
 } from '../../../defaultProps';
+import { resetEventFormat } from '../../../utils';
 
 const EventExtend = ({
   children,
@@ -60,7 +61,7 @@ const EventExtend = ({
         const { x, y } = deltaPosition;
         setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
         setIsExtending(true);
-        onExtend();
+        onExtend(resetEventFormat(newEvent));
       }}
       onStop={() => {
         if (!isExtending) return false;

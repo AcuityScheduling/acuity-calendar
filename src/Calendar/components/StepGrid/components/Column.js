@@ -116,8 +116,8 @@ const Column = React.forwardRef(
                 selectMinutes={selectMinutes}
                 onExtend={() => setIsSlotClickable(false)}
                 onExtendEnd={event => {
+                  setTimeout(() => setIsSlotClickable(true));
                   onExtendEnd(event);
-                  setIsSlotClickable(true);
                 }}
               >
                 {({ isExtending, extendedEvent, heightChange }) => (

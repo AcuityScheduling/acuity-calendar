@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import {
@@ -63,7 +63,6 @@ const EventDragDrop = ({
   onDragEnd,
   children,
 }) => {
-  const timeout = useRef(null);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [xPosition, setXPosition] = useState(0);
   const [leftChange, setLeftChange] = useState(0);
@@ -149,21 +148,18 @@ const EventDragDrop = ({
   return (
     <Fragment>
       <DraggableCore
-        onStart={() => {
-          if (isDragging) return false;
-          setIsDragging(true);
-        }}
         onDrag={(e, ui) => {
           const { x, y } = deltaPosition;
           setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
           setXPosition(ui.x);
+          setIsDragging(true);
         }}
         handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {
           // Check if we hit the onDrag event. If we didn't, this is a click
           if (!isDragging) return false;
           setDeltaPosition({ x: 0, y: 0 });
-          timeout.current = setTimeout(() => setIsDragging(false));
+          setTimeout(() => setIsDragging(false));
           setWasDragged(true);
           onDragEnd(resetEventFormat(newEvent));
         }}

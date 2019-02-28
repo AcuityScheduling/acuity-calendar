@@ -57,20 +57,17 @@ const EventExtend = ({
   return (
     <DraggableCore
       handle={`.${extendHandleClass}`}
-      onStart={() => {
-        if (isExtending) return false;
-        setIsExtending(true);
-      }}
       onDrag={(e, ui) => {
         const { x, y } = deltaPosition;
         setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
         onExtend(resetEventFormat(newEvent));
+        setIsExtending(true);
       }}
       onStop={() => {
         if (!isExtending) return false;
-        onExtendEnd(newEvent);
         setDeltaPosition({ x: 0, y: 0 });
-        setIsExtending(false);
+        setTimeout(() => setIsExtending(false));
+        onExtendEnd(newEvent);
       }}
     >
       <span>{children({ isExtending, extendedEvent: newEvent })}</span>

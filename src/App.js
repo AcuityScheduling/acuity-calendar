@@ -57,23 +57,29 @@ const App = () => {
           // After extending an event's duration
           onExtendEnd={event => {
             updateEvent(event);
-            console.log('event: ', event);
+            console.log('EXTEND', event);
+            // console.log('event: ', event);
           }}
           onDragEnd={event => {
             updateEvent(event);
-            console.log('event: ', event);
+            console.log('DRAG', event);
+            // console.log('event: ', event);
           }}
           // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
           firstDay={firstDay}
           onSelectEvent={event => {
-            console.log('event: ', event);
+            console.log('CLICK', event);
+            // console.log('event: ', event);
           }}
           // When clicking and dragging to create a new event on a stepgrid view
           onSelecting={({ start, end }) =>
             console.log(`Selecting ${start} - ${end}`)
           }
           // A callback fired when a date selection is made
-          onSelectSlot={start => console.log('start: ', start)}
+          onSelectSlot={start => {
+            console.log('SLOT', start);
+            // console.log('start: ', start);
+          }}
           // How many grid lines there are between an hour. 30 means
           // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
           stepMinutes={30}

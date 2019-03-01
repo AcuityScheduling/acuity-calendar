@@ -65,10 +65,11 @@ const CalendarsView = ({
           );
         })
       }
-      renderColumns={({ currentTime }) => {
+      renderColumns={({ currentTime, columnWidths }) => {
         return selectedEventGroups.map((groupId, index) => {
           return (
             <Column
+              key={`groupColumn${groupId}`}
               ref={assignRef(groupId)}
               events={getEventsForDay(groupId)}
               columnWidths={elementWidths}
@@ -78,10 +79,16 @@ const CalendarsView = ({
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
               selectMinutes={selectMinutes}
-              key={`groupColumn${groupId}`}
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
+              getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
+                return {
+                  ...event,
+                  start: start.add(columnMoves, 'days'),
+                  end: end.add(columnMoves, 'days'),
+                };
+              }}
             />
           );
         });

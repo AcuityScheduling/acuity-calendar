@@ -62,6 +62,7 @@ const EventDragDrop = ({
   columnIndex,
   onDragEnd,
   children,
+  getUpdatedDraggedEvent,
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   const [xPosition, setXPosition] = useState(0);
@@ -72,8 +73,6 @@ const EventDragDrop = ({
   const [isDragging, setIsDragging] = useState(false);
   const [wasDragged, setWasDragged] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
-
-  const newEvent = Object.assign({}, event);
 
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
@@ -139,9 +138,13 @@ const EventDragDrop = ({
     selectMinutes,
   });
 
-  newEvent.start = eventStartEnd.start.add(columnMoves, 'days');
-  newEvent.end = eventStartEnd.end.add(columnMoves, 'days');
-  newEvent.top = event.top + topChange;
+  const updatedEvent = getUpdatedDraggedEvent({
+    event,
+    start: eventStartEnd.start,
+    end: eventStartEnd.end,
+    columnMoves,
+  });
+  updatedEvent.top = event.top + topChange;
 
   changeColumn();
 
@@ -161,12 +164,12 @@ const EventDragDrop = ({
           setDeltaPosition({ x: 0, y: 0 });
           setTimeout(() => setIsDragging(false));
           setWasDragged(true);
-          onDragEnd(resetEventFormat(newEvent));
+          onDragEnd(resetEventFormat(updatedEvent));
         }}
       >
         {React.cloneElement(
           children({
-            draggedEvent: newEvent,
+            draggedEvent: updatedEvent,
             leftChange,
             currentColumnWidth,
             isDragging,
@@ -194,6 +197,7 @@ const EventDragDrop = ({
 
 EventDragDrop.defaultProps = {
   isDraggable: true,
+  getUpdatedDraggedEvent: () => null,
 };
 
 EventDragDrop.propTypes = {
@@ -202,6 +206,7 @@ EventDragDrop.propTypes = {
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,
+  getUpdatedDraggedEvent: PropTypes.func,
   isDraggable: PropTypes.bool,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,

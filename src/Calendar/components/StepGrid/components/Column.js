@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import {
   MOMENT_TYPE,
   STEP_MINUTES_TYPE,
-  EVENT_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
@@ -36,6 +35,7 @@ const Column = React.forwardRef(
       selectMinutes,
       stepDetails,
       renderEvent,
+      getUpdatedDraggedEvent,
     },
     ref
   ) => {
@@ -128,9 +128,8 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={event => {
-                      onDragEnd(event);
-                    }}
+                    onDragEnd={onDragEnd}
+                    getUpdatedDraggedEvent={getUpdatedDraggedEvent}
                   >
                     {({
                       draggedEvent,
@@ -198,6 +197,7 @@ Column.defaultProps = {
   selectMinutes: SELECT_MINUTES_DEFAULT,
   currentTime: null,
   stepDetails: [],
+  getUpdatedDraggedEvent: () => null,
 };
 
 Column.propTypes = {
@@ -205,10 +205,8 @@ Column.propTypes = {
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
   date: MOMENT_TYPE,
-  events: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(EVENT_TYPE),
-  ]),
+  events: PropTypes.object,
+  getUpdatedDraggedEvent: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,

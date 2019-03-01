@@ -88,6 +88,13 @@ const WeekView = ({
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
+              getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
+                return {
+                  ...event,
+                  start: start.add(columnMoves, 'days'),
+                  end: end.add(columnMoves, 'days'),
+                };
+              }}
             />
           );
         });

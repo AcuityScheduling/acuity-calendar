@@ -74,8 +74,7 @@ const Column = React.forwardRef(
       );
     };
 
-    const totalColumns = Object.keys(events).length || 1;
-    const minWidth = `${totalColumns * 190}px`;
+    const totalColumns = Object.keys(events).length;
     const percentWidth = 100 / totalColumns - 1;
     const currentTimeIndicatorClass = makeClass(
       'step-grid__current-time-indicator'
@@ -87,7 +86,8 @@ const Column = React.forwardRef(
         key={`weekView${date.day()}`}
         style={{
           height: `${totalHeight}px`,
-          minWidth,
+          minWidth: `${totalColumns * 190 || 100}px`,
+          width: `${100 / columnWidths.length}%`,
         }}
         onClick={e => {
           if (!isSlotClickable) return false;

@@ -47,24 +47,28 @@ const CalendarsView = ({
       selectMinutes={selectMinutes}
       timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
-      renderHeader={() =>
-        selectedEventGroups.map(groupId => {
+      renderHeader={() => {
+        const totalColumns = selectedEventGroups.length;
+        return selectedEventGroups.map(groupId => {
+          const eventsForDay = getEventsForDay(groupId);
+          const totalEventColumns = Object.keys(eventsForDay).length;
           return (
             <div
               className={makeClass('step-grid__header-column')}
               key={`header${groupId}`}
               style={{
-                minWidth: `${100 / selectedEventGroups.length}%`,
+                minWidth: `${totalEventColumns * 190 || 100}px`,
+                width: `${100 / totalColumns}%`,
               }}
             >
               {renderEventGroupHeader({
                 groupId,
-                events: getEventsForDay(groupId),
+                events: eventsForDay,
               })}
             </div>
           );
-        })
-      }
+        });
+      }}
       renderColumns={({ currentTime, columnWidths }) => {
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;

@@ -40,18 +40,20 @@ const WeekView = ({
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
-          const totalColumns =
-            Object.keys(get(eventsWithColumns, date.format('YYYY-MM-DD'), {}))
-              .length || 1;
+          const totalColumns = Object.keys(
+            get(eventsWithColumns, date.format('YYYY-MM-DD'), {})
+          ).length;
 
-          const minWidth = `${totalColumns * 190}px`;
           return (
             <div
               className={`${makeClass(
                 'step-grid__header-column'
               )}${getTodayClass(date)}`}
               key={`dayHeader${date.date()}`}
-              style={{ minWidth }}
+              style={{
+                minWidth: `${totalColumns * 190 || 100}px`,
+                width: `${100 / dateList.length}%`,
+              }}
             >
               <h2>{date.format('dddd, MMM D')}</h2>
             </div>

@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import {
   MOMENT_TYPE,
   STEP_MINUTES_TYPE,
-  EVENT_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
@@ -18,6 +17,8 @@ import EventExtend from '../../Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
+  MIN_WIDTH_COLUMN_DEFAULT,
+  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 } from '../../../defaultProps';
 
 const Column = React.forwardRef(
@@ -36,6 +37,10 @@ const Column = React.forwardRef(
       selectMinutes,
       stepDetails,
       renderEvent,
+      getUpdatedDraggedEvent,
+      minWidth,
+      minWidthEmpty,
+      renderStepDetail,
     },
     ref
   ) => {
@@ -74,9 +79,17 @@ const Column = React.forwardRef(
       );
     };
 
-    const totalColumns = Object.keys(events).length || 1;
-    const minWidth = `${totalColumns * 190}px`;
-    const percentWidth = 100 / totalColumns - 1;
+    // If we remove a column it's not going to remove it from the columnWidths
+    // array it will just set it to 0. So in this case don't want to count it
+    // which is why we're not doing columnWidths.length here
+    const totalColumns = columnWidths.reduce((total, columnWidth) => {
+      if (columnWidth !== 0) {
+        return total + 1;
+      }
+      return total;
+    }, 0);
+    const totalEventColumns = Object.keys(events).length;
+    const percentWidth = 100 / totalEventColumns - 1;
     const currentTimeIndicatorClass = makeClass(
       'step-grid__current-time-indicator'
     );
@@ -87,7 +100,8 @@ const Column = React.forwardRef(
         key={`weekView${date.day()}`}
         style={{
           height: `${totalHeight}px`,
-          minWidth,
+          minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
+          width: `${100 / totalColumns}%`,
         }}
         onClick={e => {
           if (!isSlotClickable) return false;
@@ -128,9 +142,8 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={event => {
-                      onDragEnd(event);
-                    }}
+                    onDragEnd={onDragEnd}
+                    getUpdatedDraggedEvent={getUpdatedDraggedEvent}
                   >
                     {({
                       draggedEvent,
@@ -176,7 +189,9 @@ const Column = React.forwardRef(
                 top: `${stepDetail.top}px`,
                 height: `${stepDetail.height}px`,
               }}
-            />
+            >
+              {renderStepDetail(stepDetail)}
+            </div>
           );
         })}
       </div>
@@ -198,6 +213,10 @@ Column.defaultProps = {
   selectMinutes: SELECT_MINUTES_DEFAULT,
   currentTime: null,
   stepDetails: [],
+  getUpdatedDraggedEvent: () => null,
+  minWidth: MIN_WIDTH_COLUMN_DEFAULT,
+  minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 Column.propTypes = {
@@ -205,15 +224,16 @@ Column.propTypes = {
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
   date: MOMENT_TYPE,
-  events: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(EVENT_TYPE),
-  ]),
+  events: PropTypes.object,
+  getUpdatedDraggedEvent: PropTypes.func,
+  minWidth: PropTypes.number,
+  minWidthEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   stepDetails: PropTypes.array,
   stepMinutes: STEP_MINUTES_TYPE,

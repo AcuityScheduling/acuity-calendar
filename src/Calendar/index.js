@@ -11,7 +11,11 @@ import {
   DATE_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
-import { SELECTED_DATE_DEFAULT } from './defaultProps';
+import {
+  SELECTED_DATE_DEFAULT,
+  MIN_WIDTH_COLUMN_DEFAULT,
+  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+} from './defaultProps';
 
 const Calendar = ({
   events,
@@ -31,6 +35,9 @@ const Calendar = ({
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
+  renderStepDetail,
+  minWidthColumn,
+  minWidthColumnEmpty,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -77,6 +84,7 @@ const Calendar = ({
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
+      stepDetailsWithEventGroups={mungedStepDetails}
       selectedDate={moment(new Date(selectedDate))}
       onExtendEnd={onExtendEnd}
       onDragEnd={onDragEnd}
@@ -91,6 +99,9 @@ const Calendar = ({
       renderCorner={renderCorner}
       timeGutterWidth={timeGutterWidth}
       renderEventGroupHeader={renderEventGroupHeader}
+      minWidthColumn={minWidthColumn}
+      minWidthColumnEmpty={minWidthColumnEmpty}
+      renderStepDetail={renderStepDetail}
     />
   );
 };
@@ -108,11 +119,16 @@ Calendar.defaultProps = {
   selectedEventGroups: false,
   onExtendEnd: () => null,
   onDragEnd: () => null,
+  minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
+  minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 Calendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE.isRequired,
+  minWidthColumn: PropTypes.number,
+  minWidthColumnEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
@@ -121,6 +137,7 @@ Calendar.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),

@@ -1,6 +1,7 @@
 /**
  * After events have been munged, moments were added to dates and height
- * and top were added. It would be easier if we were able to remove all that extra stuff
+ * and top were added. When we send back events to the top level we want all
+ * of that info to be hidden from the consumer. They shouldn't care about it right?
  * that's what this function is for
  *
  * @param {Object} event

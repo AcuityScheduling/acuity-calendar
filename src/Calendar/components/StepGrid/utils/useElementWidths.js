@@ -23,9 +23,14 @@ const useElementWidths = props => {
     }
   });
 
+  // A function used to assign to the element for multiple refs
+  // used like this ref={assignRef(key)}
+  const assignRef = key => inst =>
+    inst === null ? elementRefs.delete() : elementRefs.set(key, inst);
+
   return {
-    elementRefs,
     elementWidths,
+    assignRef,
   };
 };
 

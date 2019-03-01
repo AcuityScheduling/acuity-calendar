@@ -10,8 +10,8 @@ import {
 import EventGroupSelect from './EventGroupSelect';
 
 const App = () => {
-  const [view, setView] = useState(CALENDAR_VIEWS.week);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [view, setView] = useState(CALENDAR_VIEWS.calendar);
+  const [selectedDate, setSelectedDate] = useState(new Date('2019-02-13'));
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const [events, setEvents] = useState(MOCKED_EVENTS);
 
@@ -58,18 +58,15 @@ const App = () => {
           onExtendEnd={event => {
             updateEvent(event);
             console.log('EXTEND', event);
-            // console.log('event: ', event);
           }}
           onDragEnd={event => {
             updateEvent(event);
             console.log('DRAG', event);
-            // console.log('event: ', event);
           }}
           // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
           firstDay={firstDay}
           onSelectEvent={event => {
             console.log('CLICK', event);
-            // console.log('event: ', event);
           }}
           // When clicking and dragging to create a new event on a stepgrid view
           onSelecting={({ start, end }) =>
@@ -78,7 +75,6 @@ const App = () => {
           // A callback fired when a date selection is made
           onSelectSlot={start => {
             console.log('SLOT', start);
-            // console.log('start: ', start);
           }}
           // How many grid lines there are between an hour. 30 means
           // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
@@ -90,6 +86,9 @@ const App = () => {
           renderEventGroupHeader={({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }
+          renderStepDetail={stepDetail => (
+            <div style={{ background: 'white', height: '100%' }} />
+          )}
         />
       </div>
     </div>

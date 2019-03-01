@@ -10,10 +10,6 @@ import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 
-const columnStyles = {
-  minWidth: `${100 / 7}%`,
-};
-
 const CalendarsView = ({
   selectedDate,
   selectedEventGroups,
@@ -57,7 +53,9 @@ const CalendarsView = ({
             <div
               className={makeClass('step-grid__header-column')}
               key={`header${groupId}`}
-              style={columnStyles}
+              style={{
+                minWidth: `${100 / selectedEventGroups.length}%`,
+              }}
             >
               {renderEventGroupHeader({
                 groupId,

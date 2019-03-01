@@ -41,7 +41,7 @@ const CalendarsView = ({
     return get(
       eventsWithColumns,
       `${groupId}.${selectedDate.format('YYYY-MM-DD')}`,
-      []
+      {}
     );
   };
 

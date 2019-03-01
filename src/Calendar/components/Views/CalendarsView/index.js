@@ -4,11 +4,11 @@ import moment from 'moment';
 import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
-import { makeClass } from '../../../utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
+import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 
 const CalendarsView = ({
   selectedDate,
@@ -53,19 +53,16 @@ const CalendarsView = ({
           const eventsForDay = getEventsForDay(groupId);
           const totalEventColumns = Object.keys(eventsForDay).length;
           return (
-            <div
-              className={makeClass('step-grid__header-column')}
-              key={`header${groupId}`}
-              style={{
-                minWidth: `${totalEventColumns * 190 || 100}px`,
-                width: `${100 / totalColumns}%`,
-              }}
+            <ColumnHeader
+              totalEventsColumns={totalEventColumns}
+              totalColumns={totalColumns}
+              date={selectedDate}
             >
               {renderEventGroupHeader({
                 groupId,
                 events: eventsForDay,
               })}
-            </div>
+            </ColumnHeader>
           );
         });
       }}

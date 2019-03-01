@@ -8,6 +8,7 @@ import { getWeekList } from './utils';
 import { getTodayClass, useElementWidths } from '../../StepGrid/utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { makeClass } from '../../../utils';
+import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 
 const WeekView = ({
   events,
@@ -40,23 +41,18 @@ const WeekView = ({
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
-          const totalColumns = Object.keys(
+          const totalEventColumns = Object.keys(
             get(eventsWithColumns, date.format('YYYY-MM-DD'), {})
           ).length;
 
           return (
-            <div
-              className={`${makeClass(
-                'step-grid__header-column'
-              )}${getTodayClass(date)}`}
-              key={`dayHeader${date.date()}`}
-              style={{
-                minWidth: `${totalColumns * 190 || 100}px`,
-                width: `${100 / dateList.length}%`,
-              }}
+            <ColumnHeader
+              totalEventColumns={totalEventColumns}
+              totalColumns={dateList.length}
+              date={date}
             >
               <h2>{date.format('dddd, MMM D')}</h2>
-            </div>
+            </ColumnHeader>
           );
         })
       }

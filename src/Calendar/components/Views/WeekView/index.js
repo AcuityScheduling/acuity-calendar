@@ -74,6 +74,7 @@ const WeekView = ({
           return (
             <Column
               ref={assignRef(date.day())}
+              key={`weekColumn${date.day()}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               date={date}
@@ -83,10 +84,9 @@ const WeekView = ({
               onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
-              selectMinutes={selectMinutes}
-              key={`weekColumn${date.day()}`}
-              currentTime={currentTime}
               stepMinutes={stepMinutes}
+              selectMinutes={selectMinutes}
+              currentTime={currentTime}
               renderEvent={renderEvent}
               getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
                 return {

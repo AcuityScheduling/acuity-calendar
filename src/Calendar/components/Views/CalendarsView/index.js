@@ -21,9 +21,11 @@ const CalendarsView = ({
   firstDay,
   stepMinutes,
   onDragEnd,
+  onExtendEnd,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
+  stepDetails,
   eventsWithEventGroups,
   timeGutterWidth,
   renderEvent,
@@ -74,18 +76,20 @@ const CalendarsView = ({
         return selectedEventGroups.map((groupId, index) => {
           return (
             <Column
-              key={`groupColumn${groupId}`}
               ref={assignRef(groupId)}
+              key={`groupColumn${groupId}`}
               events={getEventsForDay(groupId)}
+              // stepDetails={stepDetails}
+              date={selectedDate}
               columnWidths={elementWidths}
               columnIndex={index}
-              date={selectedDate}
               onDragEnd={onDragEnd}
+              onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
+              stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
               currentTime={currentTime}
-              stepMinutes={stepMinutes}
               renderEvent={renderEvent}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
@@ -106,13 +110,16 @@ CalendarsView.defaultProps = {
   renderEvent: null,
   timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: moment(),
+  onExtendEnd: () => null,
   onDragEnd: () => null,
+  stepDetails: null,
 };
 
 CalendarsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
   onDragEnd: PropTypes.func,
+  onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
@@ -121,6 +128,7 @@ CalendarsView.propTypes = {
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
+  stepDetails: PropTypes.object,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
 };

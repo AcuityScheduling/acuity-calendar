@@ -25,7 +25,7 @@ const WeekView = ({
   renderCorner,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
-  const { elementRefs, elementWidths } = useElementWidths();
+  const { assignRef, elementRefs, elementWidths } = useElementWidths();
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   return (
@@ -73,11 +73,7 @@ const WeekView = ({
           );
           return (
             <Column
-              ref={inst =>
-                inst === null
-                  ? elementRefs.delete(date.day())
-                  : elementRefs.set(date.day(), inst)
-              }
+              ref={assignRef(date.day())}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               date={date}

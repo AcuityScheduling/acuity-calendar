@@ -17,6 +17,8 @@ import EventExtend from '../../Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
+  MIN_WIDTH_COLUMN_DEFAULT,
+  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 } from '../../../defaultProps';
 
 const Column = React.forwardRef(
@@ -36,6 +38,8 @@ const Column = React.forwardRef(
       stepDetails,
       renderEvent,
       getUpdatedDraggedEvent,
+      minWidth,
+      minWidthEmpty,
     },
     ref
   ) => {
@@ -86,7 +90,7 @@ const Column = React.forwardRef(
         key={`weekView${date.day()}`}
         style={{
           height: `${totalHeight}px`,
-          minWidth: `${totalColumns * 190 || 100}px`,
+          minWidth: `${totalColumns * minWidth || minWidthEmpty}px`,
           width: `${100 / columnWidths.length}%`,
         }}
         onClick={e => {
@@ -198,6 +202,8 @@ Column.defaultProps = {
   currentTime: null,
   stepDetails: [],
   getUpdatedDraggedEvent: () => null,
+  minWidth: MIN_WIDTH_COLUMN_DEFAULT,
+  minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 };
 
 Column.propTypes = {
@@ -207,6 +213,8 @@ Column.propTypes = {
   date: MOMENT_TYPE,
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
+  minWidth: PropTypes.number,
+  minWidthEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,

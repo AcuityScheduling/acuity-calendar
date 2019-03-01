@@ -78,8 +78,17 @@ const Column = React.forwardRef(
       );
     };
 
-    const totalColumns = Object.keys(events).length;
-    const percentWidth = 100 / totalColumns - 1;
+    // If we remove a column it's not going to remove it from the columnWidths
+    // array it will just set it to 0. So in this case don't want to count it
+    // which is why we're not doing columnWidths.length here
+    const totalColumns = columnWidths.reduce((total, columnWidth) => {
+      if (columnWidth !== 0) {
+        return total + 1;
+      }
+      return total;
+    }, 0);
+    const totalEventColumns = Object.keys(events).length;
+    const percentWidth = 100 / totalEventColumns - 1;
     const currentTimeIndicatorClass = makeClass(
       'step-grid__current-time-indicator'
     );
@@ -90,8 +99,8 @@ const Column = React.forwardRef(
         key={`weekView${date.day()}`}
         style={{
           height: `${totalHeight}px`,
-          minWidth: `${totalColumns * minWidth || minWidthEmpty}px`,
-          width: `${100 / columnWidths.length}%`,
+          minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
+          width: `${100 / totalColumns}%`,
         }}
         onClick={e => {
           if (!isSlotClickable) return false;

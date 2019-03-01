@@ -35,6 +35,7 @@ const Calendar = ({
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
+  renderStepDetail,
   minWidthColumn,
   minWidthColumnEmpty,
 }) => {
@@ -100,6 +101,7 @@ const Calendar = ({
       renderEventGroupHeader={renderEventGroupHeader}
       minWidthColumn={minWidthColumn}
       minWidthColumnEmpty={minWidthColumnEmpty}
+      renderStepDetail={renderStepDetail}
     />
   );
 };
@@ -119,6 +121,7 @@ Calendar.defaultProps = {
   onDragEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 Calendar.propTypes = {
@@ -134,6 +137,7 @@ Calendar.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),

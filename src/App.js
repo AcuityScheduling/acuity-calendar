@@ -86,6 +86,9 @@ const App = () => {
           renderEventGroupHeader={({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }
+          renderStepDetail={stepDetail => (
+            <div style={{ background: 'white', height: '100%' }} />
+          )}
         />
       </div>
     </div>

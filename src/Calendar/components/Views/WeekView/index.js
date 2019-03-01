@@ -29,6 +29,7 @@ const WeekView = ({
   timeGutterWidth,
   stepDetails,
   renderCorner,
+  renderStepDetail,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -103,6 +104,7 @@ const WeekView = ({
                   end: end.add(columnMoves, 'days'),
                 };
               }}
+              renderStepDetail={renderStepDetail}
             />
           );
         });
@@ -120,6 +122,7 @@ WeekView.defaultProps = {
   onDragEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 WeekView.propTypes = {
@@ -133,6 +136,7 @@ WeekView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   stepDetails: PropTypes.object,

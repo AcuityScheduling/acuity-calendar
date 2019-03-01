@@ -40,6 +40,7 @@ const Column = React.forwardRef(
       getUpdatedDraggedEvent,
       minWidth,
       minWidthEmpty,
+      renderStepDetail,
     },
     ref
   ) => {
@@ -188,7 +189,9 @@ const Column = React.forwardRef(
                 top: `${stepDetail.top}px`,
                 height: `${stepDetail.height}px`,
               }}
-            />
+            >
+              {renderStepDetail(stepDetail)}
+            </div>
           );
         })}
       </div>
@@ -213,6 +216,7 @@ Column.defaultProps = {
   getUpdatedDraggedEvent: () => null,
   minWidth: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 Column.propTypes = {
@@ -229,6 +233,7 @@ Column.propTypes = {
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   stepDetails: PropTypes.array,
   stepMinutes: STEP_MINUTES_TYPE,

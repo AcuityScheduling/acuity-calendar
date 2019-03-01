@@ -36,6 +36,7 @@ const CalendarsView = ({
   timeGutterWidth,
   renderEvent,
   renderCorner,
+  renderStepDetail,
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
@@ -112,6 +113,7 @@ const CalendarsView = ({
               selectMinutes={selectMinutes}
               currentTime={currentTime}
               renderEvent={renderEvent}
+              renderStepDetail={renderStepDetail}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
@@ -136,6 +138,7 @@ CalendarsView.defaultProps = {
   stepDetailsWithEventGroups: null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  renderStepDetail: () => null,
 };
 
 CalendarsView.propTypes = {
@@ -150,6 +153,7 @@ CalendarsView.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func.isRequired,
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,

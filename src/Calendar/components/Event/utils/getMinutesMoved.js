@@ -24,10 +24,10 @@ export const getMinutesMoved = ({
       -1;
   }
   if (getIsTomorrow({ event, minutesMoved })) {
-    minutesMoved = event.end
+    minutesMoved = event.start
       .clone()
       .endOf('day')
-      .add(1, 'second')
+      .add(1, 'minutes')
       .diff(event.end, 'minutes');
   }
   return minutesMoved;
@@ -78,7 +78,7 @@ const getIsTomorrow = ({ event, minutesMoved }) => {
   return event.end
     .clone()
     .add(minutesMoved, 'minutes')
-    .isSame(event.end.clone().add(1, 'days'), 'days');
+    .isSame(event.start.clone().add(1, 'days'), 'days');
 };
 
 export default getMinutesMoved;

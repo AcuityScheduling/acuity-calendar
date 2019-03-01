@@ -66,6 +66,11 @@ const CalendarsView = ({
         })
       }
       renderColumns={({ currentTime, columnWidths }) => {
+        const getNewGroupId = ({ columnMoves, columnIndex }) => {
+          const newIndex = columnIndex + columnMoves;
+          return selectedEventGroups[newIndex];
+        };
+
         return selectedEventGroups.map((groupId, index) => {
           return (
             <Column
@@ -82,11 +87,10 @@ const CalendarsView = ({
               currentTime={currentTime}
               stepMinutes={stepMinutes}
               renderEvent={renderEvent}
-              getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
+              getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
-                  start: start.add(columnMoves, 'days'),
-                  end: end.add(columnMoves, 'days'),
+                  group_id: getNewGroupId({ columnMoves, columnIndex: index }),
                 };
               }}
             />

@@ -131,19 +131,23 @@ const EventDragDrop = ({
     setCurrentColumn(currentColumn + direction);
   };
 
+  let updatedEvent = Object.assign({}, event);
   const eventStartEnd = getDraggedEventStartEnd({
     event,
     deltaPosition,
     selectMinutesHeight,
     selectMinutes,
   });
+  updatedEvent.start = eventStartEnd.start;
+  updatedEvent.end = eventStartEnd.end;
 
-  const updatedEvent = getUpdatedDraggedEvent({
-    event,
+  updatedEvent = getUpdatedDraggedEvent({
+    event: updatedEvent,
     start: eventStartEnd.start,
     end: eventStartEnd.end,
     columnMoves,
   });
+
   updatedEvent.top = event.top + topChange;
 
   changeColumn();

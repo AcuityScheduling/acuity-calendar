@@ -1,9 +1,36 @@
 import get from 'lodash/get';
 
+/**
+ * Get event columns and add them to the munged events data if the events that are being
+ * passed in have an object with the event date as a key
+ *
+ * @param {Object} events
+ */
 const getEventColumns = events => {
   const newEvents = Object.assign({}, events);
   return Object.keys(events).reduce((accumulator, date) => {
-    accumulator[date] = getEventColumnsPerDay(newEvents[date]);
+    return {
+      ...accumulator,
+      [date]: getEventColumnsPerDay(newEvents[date]),
+    };
+  }, newEvents);
+};
+
+/**
+ * Get event columns and add them to the munged events data if the events that are being
+ * passed in have an object with the group id as the key
+ *
+ * @param {Object} events
+ */
+export const getEventColumnsByGroup = events => {
+  const newEvents = Object.assign({}, events);
+  return Object.keys(newEvents).reduce((accumulator, groupId) => {
+    Object.keys(newEvents[groupId]).forEach(date => {
+      accumulator = {
+        ...accumulator,
+        [groupId]: { [date]: getEventColumnsPerDay(newEvents[groupId][date]) },
+      };
+    });
     return accumulator;
   }, newEvents);
 };
@@ -22,7 +49,10 @@ const getEventColumnsPerDay = events => {
       currentColumn,
     });
     const eventsInColumn = get(accumulator, eventColumn, []);
-    accumulator[eventColumn] = [...eventsInColumn, event];
+    accumulator = {
+      ...accumulator,
+      [eventColumn]: [...eventsInColumn, event],
+    };
     if (eventColumn !== currentColumn) {
       currentColumn = eventColumn;
     }

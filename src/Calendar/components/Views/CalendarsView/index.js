@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
@@ -7,6 +7,8 @@ import Column from '../../StepGrid/components/Column';
 import { makeClass } from '../../../utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
+import { useElementWidths } from '../../StepGrid/utils';
+import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 
 const columnStyles = {
   minWidth: `${100 / 7}%`,
@@ -27,12 +29,18 @@ const CalendarsView = ({
   renderEvent,
   renderCorner,
 }) => {
-  const getEventsForDay = groupId =>
-    get(
+  const { assignRef, elementWidths } = useElementWidths();
+
+  console.log('eventsWithEventGroups: ', eventsWithEventGroups);
+  const newEvents = getEventColumnsByGroup({ ...eventsWithEventGroups });
+  console.log('newEvents: ', newEvents);
+  const getEventsForDay = groupId => {
+    return get(
       eventsWithEventGroups,
       `${groupId}.${selectedDate.format('YYYY-MM-DD')}`,
       []
     );
+  };
 
   return (
     <StepGrid
@@ -59,10 +67,15 @@ const CalendarsView = ({
         })
       }
       renderColumns={({ currentTime }) => {
-        return selectedEventGroups.map(groupId => {
+        return selectedEventGroups.map((groupId, index) => {
+          console.log('getEventsForDay(groupId): ', getEventsForDay(groupId));
+          return false;
           return (
             <Column
+              ref={assignRef(groupId)}
               events={getEventsForDay(groupId)}
+              columnWidths={elementWidths}
+              columnIndex={index}
               date={selectedDate}
               onDragEnd={onDragEnd}
               onSelectEvent={onSelectEvent}

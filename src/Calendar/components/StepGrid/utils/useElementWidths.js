@@ -29,7 +29,6 @@ const useElementWidths = props => {
     inst === null ? elementRefs.delete() : elementRefs.set(key, inst);
 
   return {
-    elementRefs,
     elementWidths,
     assignRef,
   };

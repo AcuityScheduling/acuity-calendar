@@ -13,7 +13,7 @@ const getEventColumns = events => {
       ...accumulator,
       [date]: getEventColumnsPerDay(newEvents[date]),
     };
-  }, newEvents);
+  }, {});
 };
 
 /**
@@ -28,11 +28,14 @@ export const getEventColumnsByGroup = events => {
     Object.keys(newEvents[groupId]).forEach(date => {
       accumulator = {
         ...accumulator,
-        [groupId]: { [date]: getEventColumnsPerDay(newEvents[groupId][date]) },
+        [groupId]: {
+          ...accumulator[groupId],
+          [date]: getEventColumnsPerDay(newEvents[groupId][date]),
+        },
       };
     });
     return accumulator;
-  }, newEvents);
+  }, {});
 };
 
 /**

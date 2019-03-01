@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
@@ -31,12 +31,11 @@ const CalendarsView = ({
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
-  console.log('eventsWithEventGroups: ', eventsWithEventGroups);
-  const newEvents = getEventColumnsByGroup({ ...eventsWithEventGroups });
-  console.log('newEvents: ', newEvents);
+  const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
+
   const getEventsForDay = groupId => {
     return get(
-      eventsWithEventGroups,
+      eventsWithColumns,
       `${groupId}.${selectedDate.format('YYYY-MM-DD')}`,
       []
     );
@@ -68,8 +67,6 @@ const CalendarsView = ({
       }
       renderColumns={({ currentTime }) => {
         return selectedEventGroups.map((groupId, index) => {
-          console.log('getEventsForDay(groupId): ', getEventsForDay(groupId));
-          return false;
           return (
             <Column
               ref={assignRef(groupId)}

@@ -14,6 +14,10 @@ import {
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 } from '../../../defaultProps';
 
+const getEventsForDay = ({ events, groupId, selectedDate }) => {
+  return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
+};
+
 const CalendarsView = ({
   selectedDate,
   selectedEventGroups,
@@ -27,7 +31,7 @@ const CalendarsView = ({
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
-  stepDetails,
+  stepDetailsWithEventGroups,
   eventsWithEventGroups,
   timeGutterWidth,
   renderEvent,
@@ -36,14 +40,6 @@ const CalendarsView = ({
   const { assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
-
-  const getEventsForDay = groupId => {
-    return get(
-      eventsWithColumns,
-      `${groupId}.${selectedDate.format('YYYY-MM-DD')}`,
-      {}
-    );
-  };
 
   return (
     <StepGrid
@@ -56,7 +52,11 @@ const CalendarsView = ({
       renderHeader={() => {
         const totalColumns = selectedEventGroups.length;
         return selectedEventGroups.map(groupId => {
-          const eventsForDay = getEventsForDay(groupId);
+          const eventsForDay = getEventsForDay({
+            events: eventsWithColumns,
+            groupId,
+            selectedDate,
+          });
           const totalEventColumns = Object.keys(eventsForDay).length;
           return (
             <ColumnHeader
@@ -82,12 +82,25 @@ const CalendarsView = ({
         };
 
         return selectedEventGroups.map((groupId, index) => {
+          const eventsForDay =
+            getEventsForDay({
+              events: eventsWithColumns,
+              groupId,
+              selectedDate,
+            }) || {};
+
+          const stepDetailsForDay =
+            getEventsForDay({
+              events: stepDetailsWithEventGroups,
+              groupId,
+              selectedDate,
+            }) || [];
           return (
             <Column
               ref={assignRef(groupId)}
               key={`groupColumn${groupId}`}
-              events={getEventsForDay(groupId)}
-              // stepDetails={stepDetails}
+              events={eventsForDay}
+              stepDetails={stepDetailsForDay}
               date={selectedDate}
               columnWidths={elementWidths}
               columnIndex={index}
@@ -120,7 +133,7 @@ CalendarsView.defaultProps = {
   selectedDate: moment(),
   onExtendEnd: () => null,
   onDragEnd: () => null,
-  stepDetails: null,
+  stepDetailsWithEventGroups: null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 };
@@ -140,7 +153,7 @@ CalendarsView.propTypes = {
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
-  stepDetails: PropTypes.object,
+  stepDetailsWithEventGroups: PropTypes.object,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
 };

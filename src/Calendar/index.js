@@ -83,6 +83,7 @@ const Calendar = ({
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
+      stepDetailsWithEventGroups={mungedStepDetails}
       selectedDate={moment(new Date(selectedDate))}
       onExtendEnd={onExtendEnd}
       onDragEnd={onDragEnd}

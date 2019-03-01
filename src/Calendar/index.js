@@ -11,7 +11,11 @@ import {
   DATE_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
-import { SELECTED_DATE_DEFAULT } from './defaultProps';
+import {
+  SELECTED_DATE_DEFAULT,
+  MIN_WIDTH_COLUMN_DEFAULT,
+  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+} from './defaultProps';
 
 const Calendar = ({
   events,
@@ -31,6 +35,8 @@ const Calendar = ({
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
+  minWidthColumn,
+  minWidthColumnEmpty,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -91,6 +97,8 @@ const Calendar = ({
       renderCorner={renderCorner}
       timeGutterWidth={timeGutterWidth}
       renderEventGroupHeader={renderEventGroupHeader}
+      minWidthColumn={minWidthColumn}
+      minWidthColumnEmpty={minWidthColumnEmpty}
     />
   );
 };
@@ -108,11 +116,15 @@ Calendar.defaultProps = {
   selectedEventGroups: false,
   onExtendEnd: () => null,
   onDragEnd: () => null,
+  minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
+  minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 };
 
 Calendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE.isRequired,
+  minWidthColumn: PropTypes.number,
+  minWidthColumnEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,

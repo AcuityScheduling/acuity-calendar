@@ -9,6 +9,10 @@ import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 import ColumnHeader from '../../StepGrid/components/ColumnHeader';
+import {
+  MIN_WIDTH_COLUMN_DEFAULT,
+  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+} from '../../../defaultProps';
 
 const CalendarsView = ({
   selectedDate,
@@ -16,6 +20,8 @@ const CalendarsView = ({
   renderEventGroupHeader,
   firstDay,
   stepMinutes,
+  minWidthColumn,
+  minWidthColumnEmpty,
   onDragEnd,
   onExtendEnd,
   onSelectEvent,
@@ -54,9 +60,12 @@ const CalendarsView = ({
           const totalEventColumns = Object.keys(eventsForDay).length;
           return (
             <ColumnHeader
-              totalEventsColumns={totalEventColumns}
+              key={`calendarHeader${groupId}`}
+              totalEventColumns={totalEventColumns}
               totalColumns={totalColumns}
               date={selectedDate}
+              minWidth={minWidthColumn}
+              minWidthEmpty={minWidthColumnEmpty}
             >
               {renderEventGroupHeader({
                 groupId,
@@ -112,11 +121,15 @@ CalendarsView.defaultProps = {
   onExtendEnd: () => null,
   onDragEnd: () => null,
   stepDetails: null,
+  minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
+  minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 };
 
 CalendarsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
+  minWidthColumn: PropTypes.number,
+  minWidthColumnEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,

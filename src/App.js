@@ -94,8 +94,9 @@ const App = () => {
             setStepDetails(newStepDetails);
           }}
           // A callback fired when a date selection is made
-          onSelectSlot={start => {
-            console.log('SLOT', start);
+          onSelectSlot={({ time, column }) => {
+            console.log('SLOT', time);
+            console.log('SLOT', column);
           }}
           // How many grid lines there are between an hour. 30 means
           // break the hour into 30 minute blocks. 20 means to break it into 20 etc.

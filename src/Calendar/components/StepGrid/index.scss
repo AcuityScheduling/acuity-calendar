@@ -39,8 +39,6 @@
       text-align: center;
     }
 
-    
-
     &__header-scroll-gutter {
       height: 43px;
       background: white;
@@ -91,7 +89,7 @@
     }
     &__step-line:after {
       width: 100%;
-      content: "";
+      content: '';
       border-bottom: 1px solid #e7e7e7;
       position: absolute;
       pointer-events: none;
@@ -113,6 +111,14 @@
       display: flex;
       width: 100%;
       position: relative;
+    }
+
+    &__selected-slot-indicator {
+      border-bottom: 1px dotted black;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
     }
 
     &__current-time-indicator {

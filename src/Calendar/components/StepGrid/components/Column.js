@@ -46,6 +46,7 @@ const Column = React.forwardRef(
     ref
   ) => {
     const [isSlotClickable, setIsSlotClickable] = useState(true);
+    const [clickedTime, setClickedTime] = useState(null);
 
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
@@ -72,12 +73,10 @@ const Column = React.forwardRef(
         Math.round(selectedTime.clone().minute() / selectMinutes) *
         selectMinutes;
 
-      return new Date(
-        selectedTime
-          .clone()
-          .minute(rounded)
-          .second(0)
-      );
+      return selectedTime
+        .clone()
+        .minute(rounded)
+        .second(0);
     };
 
     // If we remove a column it's not going to remove it from the columnWidths
@@ -106,7 +105,17 @@ const Column = React.forwardRef(
         }}
         onClick={e => {
           if (!isSlotClickable) return false;
-          onSelectSlot({ time: getClickedTime(e), column: columnId });
+          const clickedTime = getClickedTime(e);
+          onSelectSlot({ time: new Date(clickedTime), column: columnId });
+        }}
+        onMouseDown={e => {
+          e.stopPropagation();
+          const clickedTime = getClickedTime(e);
+          setClickedTime(clickedTime);
+        }}
+        onMouseUp={e => {
+          e.stopPropagation();
+          setTimeout(() => setClickedTime(null), 300);
         }}
         ref={ref}
       >
@@ -118,6 +127,18 @@ const Column = React.forwardRef(
             }}
           >
             <div className={`${currentTimeIndicatorClass}__line-today`} />
+          </div>
+        )}
+        {clickedTime && (
+          <div
+            className={makeClass('step-grid__selected-slot-indicator')}
+            style={{
+              top: `${getTopOffset({ stepMinutes, date: clickedTime })}px`,
+            }}
+          >
+            <div style={{ position: 'absolute', top: '5px' }}>
+              {clickedTime.format('HH:mm')}
+            </div>
           </div>
         )}
         {Object.keys(events).map(column => {

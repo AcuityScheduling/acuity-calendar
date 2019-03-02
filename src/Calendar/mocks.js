@@ -1,3 +1,7 @@
+import moment from 'moment';
+
+const now = moment().format('YYYY-MM-DD HH:mm:ss');
+
 export const MOCKED_EVENTS = [
   {
     id: 1,
@@ -78,11 +82,22 @@ export const MOCKED_STEP_DETAILS = [
     group_id: 6,
     start: '2019-02-12 08:00:00',
     end: '2019-02-13 13:30:00',
+    availability: true,
   },
   {
     id: 2,
     group_id: 6,
     start: '2019-02-13 04:00:00',
     end: '2019-02-13 19:11:00',
+    availability: true,
+  },
+  {
+    id: 3,
+    group_id: 6,
+    start: now,
+    end: moment(now)
+      .add(12, 'hours')
+      .format('YYYY-MM-DD HH:mm:ss'),
+    schedulingLimits: true,
   },
 ];

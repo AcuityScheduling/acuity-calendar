@@ -28,6 +28,7 @@ const CalendarsView = ({
   minWidthColumnEmpty,
   onDragEnd,
   onExtendEnd,
+  onCurrentTimeChange,
   onSelectEvent,
   onSelectSlot,
   selectMinutes,
@@ -46,6 +47,7 @@ const CalendarsView = ({
     <StepGrid
       selectedDate={selectedDate}
       firstDay={firstDay}
+      onCurrentTimeChange={onCurrentTimeChange}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
       timeGutterWidth={timeGutterWidth}
@@ -134,6 +136,7 @@ CalendarsView.defaultProps = {
   timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: moment(),
   onExtendEnd: () => null,
+  onCurrentTimeChange: () => null,
   onDragEnd: () => null,
   stepDetailsWithEventGroups: null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
@@ -146,6 +149,7 @@ CalendarsView.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
+  onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,

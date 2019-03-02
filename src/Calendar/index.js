@@ -24,6 +24,7 @@ const Calendar = ({
   selectedDate,
   selectedEventGroups,
   onExtendEnd,
+  onCurrentTimeChange,
   onDragEnd,
   firstDay,
   onSelectEvent,
@@ -87,6 +88,7 @@ const Calendar = ({
       stepDetailsWithEventGroups={mungedStepDetails}
       selectedDate={moment(new Date(selectedDate))}
       onExtendEnd={onExtendEnd}
+      onCurrentTimeChange={onCurrentTimeChange}
       onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
       onSelecting={onSelecting}
@@ -122,6 +124,7 @@ Calendar.defaultProps = {
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  onCurrentTimeChange: () => null,
 };
 
 Calendar.propTypes = {
@@ -129,6 +132,7 @@ Calendar.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
+  onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,

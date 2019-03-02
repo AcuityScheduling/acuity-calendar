@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import Calendar from './Calendar';
 import Toolbar from './Toolbar';
 import { CALENDAR_VIEWS } from './Calendar/constants';
@@ -14,6 +15,7 @@ const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date('2019-02-13'));
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const [events, setEvents] = useState(MOCKED_EVENTS);
+  const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
 
   const firstDay = 0;
 
@@ -50,7 +52,7 @@ const App = () => {
           firstDay={firstDay}
         />
         <Calendar
-          stepDetails={MOCKED_STEP_DETAILS}
+          stepDetails={stepDetails}
           events={events}
           view={view}
           selectedDate={selectedDate}
@@ -72,6 +74,22 @@ const App = () => {
           onSelecting={({ start, end }) =>
             console.log(`Selecting ${start} - ${end}`)
           }
+          onCurrentTimeChange={currentTime => {
+            const newStepDetails = stepDetails.map(stepDetail => {
+              if (stepDetail.schedulingLimits) {
+                const newTime = moment(currentTime);
+                const oldStart = moment(new Date(stepDetail.start));
+                const minuteChange = newTime.diff(oldStart, 'minutes');
+                return {
+                  ...stepDetail,
+                  start: newTime.format('YYYY-MM-DD HH:mm:ss'),
+                  end: moment(stepDetail.end).add(minuteChange),
+                };
+              }
+              return stepDetail;
+            });
+            setStepDetails(newStepDetails);
+          }}
           // A callback fired when a date selection is made
           onSelectSlot={start => {
             console.log('SLOT', start);
@@ -86,9 +104,26 @@ const App = () => {
           renderEventGroupHeader={({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }
-          renderStepDetail={stepDetail => (
-            <div style={{ background: 'white', height: '100%' }} />
-          )}
+          renderStepDetail={stepDetail => {
+            if (stepDetail.availability) {
+              return <div style={{ background: 'white', height: '100%' }} />;
+            }
+            if (stepDetail.schedulingLimits) {
+              return (
+                <div
+                  style={{
+                    background: 'green',
+                    height: '100%',
+                    width: '30px',
+                    opacity: '.13',
+                    backgroundImage:
+                      'linear-gradient(135deg,#fff 25%,#111 25%,#111 50%,#fff 50%,#fff 75%,#111 75%)',
+                    backgroundSize: '8px 8px',
+                  }}
+                />
+              );
+            }
+          }}
         />
       </div>
     </div>

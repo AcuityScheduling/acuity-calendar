@@ -21,6 +21,7 @@ const StepGrid = ({
   firstDay,
   stepMinutes,
   selectMinutes,
+  onCurrentTimeChange,
   timeGutterWidth,
   renderHeader,
   renderColumns,
@@ -29,7 +30,11 @@ const StepGrid = ({
   const [currentTime, setCurrentTime] = useState(moment());
 
   useEffect(() => {
-    const timeout = setTimeout(() => setCurrentTime(moment()), 1000 * 60);
+    const timeout = setTimeout(() => {
+      const now = moment();
+      setCurrentTime(now);
+      onCurrentTimeChange(new Date(now.format('YYYY-MM-DD HH:mm:ss')));
+    }, 1000 * 60);
     return () => {
       clearTimeout(timeout);
     };
@@ -175,10 +180,12 @@ StepGrid.defaultProps = {
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
+  onCurrentTimeChange: () => null,
 };
 
 StepGrid.propTypes = {
   firstDay: FIRST_DAY_TYPE,
+  onCurrentTimeChange: PropTypes.func,
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,

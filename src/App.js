@@ -85,7 +85,8 @@ const App = () => {
                   start: newTime.format('YYYY-MM-DD HH:mm:ss'),
                   end: moment(stepDetail.end)
                     .clone()
-                    .add(minuteChange, 'minutes'),
+                    .add(minuteChange, 'minutes')
+                    .format('YYYY-MM-DD HH:mm:ss'),
                 };
               }
               return stepDetail;

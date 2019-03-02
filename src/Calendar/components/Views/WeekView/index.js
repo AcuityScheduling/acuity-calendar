@@ -80,6 +80,11 @@ const WeekView = ({
             date.format('YYYY-MM-DD'),
             {}
           );
+
+          const columnId = new Date(
+            date.startOf('day').format('YYYY-MM-DD HH:mm:ss')
+          );
+
           return (
             <Column
               ref={assignRef(date.day())}
@@ -87,6 +92,7 @@ const WeekView = ({
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               date={date}
+              columnId={columnId}
               columnWidths={elementWidths}
               columnIndex={index}
               minWidth={minWidthColumn}

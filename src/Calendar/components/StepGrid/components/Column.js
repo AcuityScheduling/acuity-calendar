@@ -24,6 +24,7 @@ import {
 const Column = React.forwardRef(
   (
     {
+      columnId,
       columnIndex,
       columnWidths,
       currentTime,
@@ -105,7 +106,7 @@ const Column = React.forwardRef(
         }}
         onClick={e => {
           if (!isSlotClickable) return false;
-          onSelectSlot(getClickedTime(e));
+          onSelectSlot({ time: getClickedTime(e), column: columnId });
         }}
         ref={ref}
       >
@@ -220,6 +221,7 @@ Column.defaultProps = {
 };
 
 Column.propTypes = {
+  columnId: PropTypes.oneOfType([MOMENT_TYPE, PropTypes.number]).isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,

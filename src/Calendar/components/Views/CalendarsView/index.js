@@ -105,6 +105,7 @@ const CalendarsView = ({
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               date={selectedDate}
+              columnId={groupId}
               columnWidths={elementWidths}
               columnIndex={index}
               onDragEnd={onDragEnd}

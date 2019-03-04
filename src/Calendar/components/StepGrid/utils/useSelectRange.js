@@ -90,11 +90,13 @@ const useSelectRange = ({
     }
   };
 
-  const isSelectRangeFinished = endMousePosition > startMousePosition;
+  const isSelectRangeFinished =
+    Math.abs(endMousePosition) > selectMinutesHeight / 2;
 
   const resetSelectRangeDrag = () => {
     setIsMouseDown(false);
     setEndMousePosition(0);
+    setStartMousePosition(0);
     setHeight(0);
   };
 

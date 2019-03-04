@@ -8,7 +8,13 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
-import { getTodayClass, getTopOffset, useSelectRange } from '../utils';
+import {
+  getTodayClass,
+  getTopOffset,
+  useSelectRange,
+  getClickedTime,
+  getDisplayTime,
+} from '../utils';
 import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from '../../Event';
@@ -46,15 +52,6 @@ const Column = React.forwardRef(
     },
     ref
   ) => {
-    const [isSlotClickable, setIsSlotClickable] = useState(true);
-    const [clickedTime, setClickedTime] = useState(null);
-    const {
-      selectRangeHandlers,
-      isSelectRangeFinished,
-      resetSelectRangeDrag,
-      selectRangeHeight,
-    } = useSelectRange(isSlotClickable);
-
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
       const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
@@ -64,27 +61,23 @@ const Column = React.forwardRef(
       );
     }, [stepMinutes]);
 
-    const getClickedTime = e => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const verticalClick = e.clientY - rect.top;
+    const [isSlotClickable, setIsSlotClickable] = useState(true);
+    const [clickedTime, setClickedTime] = useState(null);
 
-      const stepHeight = STEP_HEIGHTS[stepMinutes];
-      const pixelsPerMinute = stepHeight / stepMinutes;
-      const minutesFromMidnight = verticalClick / pixelsPerMinute;
-      const selectedTime = date
-        .clone()
-        .startOf('day')
-        .add(minutesFromMidnight, 'minutes');
-
-      const rounded =
-        Math.round(selectedTime.clone().minute() / selectMinutes) *
-        selectMinutes;
-
-      return selectedTime
-        .clone()
-        .minute(rounded)
-        .second(0);
-    };
+    const {
+      selectRangeHandlers,
+      isSelectRangeFinished,
+      resetSelectRangeDrag,
+      selectRangeHeight,
+      selectRangeTop,
+      selectRange,
+    } = useSelectRange({
+      isSelectable: isSlotClickable,
+      stepMinutes,
+      selectMinutes,
+      columnHeight: totalHeight,
+      columnDate: date,
+    });
 
     // If we remove a column it's not going to remove it from the columnWidths
     // array it will just set it to 0. So in this case don't want to count it
@@ -116,7 +109,11 @@ const Column = React.forwardRef(
             return false;
           }
           if (!isSlotClickable) return false;
-          const clickedTime = getClickedTime(e);
+          const clickedTime = getClickedTime({
+            stepMinutes,
+            selectMinutes,
+            columnDate: date,
+          })(e);
           setClickedTime(clickedTime);
           onSelectSlot({ time: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
@@ -156,17 +153,15 @@ const Column = React.forwardRef(
             )}
           </div>
         )}
-        {selectRangeHeight && (
+        {selectRangeHeight !== 0 && (
           <div
+            className={makeClass('step-grid__select-range')}
             style={{
-              height: `${selectRangeHeight}px`,
-              position: 'absolute',
-              top: '200px',
-              background: 'black',
-              width: '100%',
+              height: selectRangeHeight,
+              top: selectRangeTop,
             }}
           >
-            DRAGGING STUFF
+            {getDisplayTime({ start: selectRange.start, end: selectRange.end })}
           </div>
         )}
         {Object.keys(events).map(column => {

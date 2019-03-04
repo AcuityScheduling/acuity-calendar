@@ -6,19 +6,22 @@ import getMinutesMoved from './getMinutesMoved';
  *
  * @param {Object} params
  * @param {number} params.selectMinutes
- * @param {Object} params.event
+ * @param {moment} params.originalStart
+ * @param {moment} params.originalEnd
  * @param {number} params.selectMinutesHeight
  */
 const getDragVerticalChange = ({
-  lastY,
+  pixelsMoved,
   selectMinutes,
-  event,
+  originalStart,
+  originalEnd,
   selectMinutesHeight,
 }) => {
-  if (!lastY) return 0;
+  if (!pixelsMoved) return 0;
   let minutesMoved = getMinutesMoved({
-    event,
-    lastY,
+    originalStart,
+    originalEnd,
+    pixelsMoved: pixelsMoved,
     selectMinutes,
     selectMinutesHeight,
   });

@@ -129,6 +129,16 @@
       right: 0;
     }
 
+    &__select-range {
+      position: absolute;
+      width: 99%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 4;
+      border-radius: 4px;
+      color: white;
+      user-select: none;
+    }
+
     &__current-time-indicator {
       width: 100%;
       position: absolute;

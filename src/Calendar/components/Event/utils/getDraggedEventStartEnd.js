@@ -20,8 +20,9 @@ const getDraggedEventStartEnd = ({
   let end = event.end.clone();
 
   let totalMinutes = getMinutesMoved({
-    event,
-    lastY: deltaPosition.y,
+    originalStart: event.start,
+    originalEnd: event.end,
+    pixelsMoved: deltaPosition.y,
     selectMinutes,
     selectMinutesHeight,
   });

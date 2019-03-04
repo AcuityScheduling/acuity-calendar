@@ -31,6 +31,7 @@ const CalendarsView = ({
   onCurrentTimeChange,
   onSelectEvent,
   onSelectSlot,
+  onSelectRangeEnd,
   selectMinutes,
   stepDetailsWithEventGroups,
   eventsWithEventGroups,
@@ -38,6 +39,8 @@ const CalendarsView = ({
   renderEvent,
   renderCorner,
   renderStepDetail,
+  renderSelectSlotIndicator,
+  renderSelectRange,
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
@@ -111,12 +114,15 @@ const CalendarsView = ({
               onDragEnd={onDragEnd}
               onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
+              onSelectRangeEnd={onSelectRangeEnd}
               onSelectSlot={onSelectSlot}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
               currentTime={currentTime}
               renderEvent={renderEvent}
               renderStepDetail={renderStepDetail}
+              renderSelectSlotIndicator={renderSelectSlotIndicator}
+              renderSelectRange={renderSelectRange}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
@@ -139,10 +145,13 @@ CalendarsView.defaultProps = {
   onExtendEnd: () => null,
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
+  onSelectRangeEnd: () => null,
   stepDetailsWithEventGroups: null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  renderSelectSlotIndicator: null,
+  renderSelectRange: null,
 };
 
 CalendarsView.propTypes = {
@@ -154,10 +163,13 @@ CalendarsView.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func.isRequired,
+  renderSelectRange: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,

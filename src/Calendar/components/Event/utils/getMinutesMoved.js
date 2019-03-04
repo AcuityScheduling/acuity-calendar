@@ -1,34 +1,40 @@
+// eslint-disable-next-line no-unused-vars
+import moment from 'moment';
+
 /**
  * Get the minutes moved when limited by not moving from one day to another day
  *
  * @param {Object} params
- * @param {number} params.lastY
- * @param {Object} params.event
+ * @param {number} params.pixelsMoved - total pixels that the items was moved so far
+ * @param {moment} params.originalStart
+ * @param {moment} params.originalEnd
  * @param {number} params.selectMinutes
  * @param {number} params.selectMinutesHeight
  */
 export const getMinutesMoved = ({
-  lastY,
-  event,
+  pixelsMoved,
+  originalStart,
+  originalEnd,
   selectMinutes,
   selectMinutesHeight,
 }) => {
   let minutesMoved = getTotalMinutesMoved({
-    lastY,
+    pixelsMoved,
     selectMinutes,
     selectMinutesHeight,
   });
-  if (getIsYesterday({ event, minutesMoved })) {
+  if (getIsYesterday({ originalStart, originalEnd, minutesMoved })) {
     minutesMoved =
-      event.start.clone().diff(event.start.clone().startOf('day'), 'minutes') *
-      -1;
+      originalStart
+        .clone()
+        .diff(originalStart.clone().startOf('day'), 'minutes') * -1;
   }
-  if (getIsTomorrow({ event, minutesMoved })) {
-    minutesMoved = event.start
+  if (getIsTomorrow({ originalStart, originalEnd, minutesMoved })) {
+    minutesMoved = originalStart
       .clone()
       .endOf('day')
       .add(1, 'minutes')
-      .diff(event.end, 'minutes');
+      .diff(originalEnd, 'minutes');
   }
   return minutesMoved;
 };
@@ -42,12 +48,12 @@ export const getMinutesMoved = ({
  * @param {number} params.selectMinutes
  */
 const getTotalMinutesMoved = ({
-  lastY,
+  pixelsMoved,
   selectMinutes,
   selectMinutesHeight,
 }) => {
-  if (lastY === 0) return 0;
-  const totalPositionMoves = lastY / selectMinutesHeight;
+  if (pixelsMoved === 0) return 0;
+  const totalPositionMoves = pixelsMoved / selectMinutesHeight;
   const totalMinutes = totalPositionMoves * selectMinutes;
   // Round to nearest selectMinutes and divide by select minutes to get total positions moved
   return Math.round(totalMinutes / selectMinutes) * selectMinutes;
@@ -60,11 +66,11 @@ const getTotalMinutesMoved = ({
  * @param {Object} params.event
  * @param {number} params.minutesMoved
  */
-const getIsYesterday = ({ event, minutesMoved }) => {
-  return event.start
+const getIsYesterday = ({ originalStart, originalEnd, minutesMoved }) => {
+  return originalStart
     .clone()
     .add(minutesMoved, 'minutes')
-    .isSame(event.start.clone().subtract(1, 'days'), 'days');
+    .isSame(originalStart.clone().subtract(1, 'days'), 'days');
 };
 
 /**
@@ -74,11 +80,11 @@ const getIsYesterday = ({ event, minutesMoved }) => {
  * @param {Object} params.event
  * @param {number} params.minutesMoved
  */
-const getIsTomorrow = ({ event, minutesMoved }) => {
-  return event.end
+const getIsTomorrow = ({ originalStart, originalEnd, minutesMoved }) => {
+  return originalEnd
     .clone()
     .add(minutesMoved, 'minutes')
-    .isSame(event.start.clone().add(1, 'days'), 'days');
+    .isSame(originalStart.clone().add(1, 'days'), 'days');
 };
 
 export default getMinutesMoved;

@@ -71,9 +71,9 @@ const App = () => {
             console.log('CLICK', event);
           }}
           // When clicking and dragging to create a new event on a stepgrid view
-          onSelecting={({ start, end }) =>
-            console.log(`Selecting ${start} - ${end}`)
-          }
+          onSelectRangeEnd={({ start, end, column }) => {
+            console.log('SELECTING RANGE', { start, end, column });
+          }}
           onCurrentTimeChange={currentTime => {
             const newStepDetails = stepDetails.map(stepDetail => {
               if (stepDetail.schedulingLimits) {
@@ -95,8 +95,7 @@ const App = () => {
           }}
           // A callback fired when a date selection is made
           onSelectSlot={({ time, column }) => {
-            console.log('SLOT', time);
-            console.log('SLOT', column);
+            console.log('SLOT', { time, column });
           }}
           // How many grid lines there are between an hour. 30 means
           // break the hour into 30 minute blocks. 20 means to break it into 20 etc.

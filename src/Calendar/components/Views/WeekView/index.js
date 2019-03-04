@@ -25,12 +25,14 @@ const WeekView = ({
   onSelectEvent,
   onSelectSlot,
   onCurrentTimeChange,
+  onSelectRangeEnd,
   selectMinutes,
   renderEvent,
   timeGutterWidth,
   stepDetails,
   renderCorner,
   renderStepDetail,
+  renderSelectSlotIndicator,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -101,6 +103,7 @@ const WeekView = ({
               onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
+              onSelectRangeEnd={onSelectRangeEnd}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
               currentTime={currentTime}
@@ -113,6 +116,7 @@ const WeekView = ({
                 };
               }}
               renderStepDetail={renderStepDetail}
+              renderSelectSlotIndicator={renderSelectSlotIndicator}
             />
           );
         });
@@ -129,9 +133,11 @@ WeekView.defaultProps = {
   onExtendEnd: () => null,
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
+  onSelectRangeEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  renderSelectSlotIndicator: null,
 };
 
 WeekView.propTypes = {
@@ -143,9 +149,11 @@ WeekView.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,

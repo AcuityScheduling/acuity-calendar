@@ -8,7 +8,13 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
-import { getTodayClass, getTopOffset } from '../utils';
+import {
+  getTodayClass,
+  getTopOffset,
+  useSelectRange,
+  getClickedTime,
+  getDisplayTime,
+} from '../utils';
 import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from '../../Event';
@@ -35,6 +41,7 @@ const Column = React.forwardRef(
       onExtendEnd,
       onSelectEvent,
       onSelectSlot,
+      onSelectRangeEnd,
       selectMinutes,
       stepDetails,
       renderEvent,
@@ -42,12 +49,11 @@ const Column = React.forwardRef(
       minWidth,
       minWidthEmpty,
       renderStepDetail,
+      renderSelectSlotIndicator,
+      renderSelectRange,
     },
     ref
   ) => {
-    const [isSlotClickable, setIsSlotClickable] = useState(true);
-    const [clickedTime, setClickedTime] = useState(null);
-
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
       const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
@@ -57,27 +63,23 @@ const Column = React.forwardRef(
       );
     }, [stepMinutes]);
 
-    const getClickedTime = e => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const verticalClick = e.clientY - rect.top;
+    const [isSlotClickable, setIsSlotClickable] = useState(true);
+    const [clickedTime, setClickedTime] = useState(null);
 
-      const stepHeight = STEP_HEIGHTS[stepMinutes];
-      const pixelsPerMinute = stepHeight / stepMinutes;
-      const minutesFromMidnight = verticalClick / pixelsPerMinute;
-      const selectedTime = date
-        .clone()
-        .startOf('day')
-        .add(minutesFromMidnight, 'minutes');
-
-      const rounded =
-        Math.round(selectedTime.clone().minute() / selectMinutes) *
-        selectMinutes;
-
-      return selectedTime
-        .clone()
-        .minute(rounded)
-        .second(0);
-    };
+    const {
+      selectRangeHandlers,
+      isSelectRangeFinished,
+      resetSelectRangeDrag,
+      selectRangeHeight,
+      selectRangeTop,
+      selectRange,
+    } = useSelectRange({
+      isSelectable: isSlotClickable,
+      stepMinutes,
+      selectMinutes,
+      columnHeight: totalHeight,
+      columnDate: date,
+    });
 
     // If we remove a column it's not going to remove it from the columnWidths
     // array it will just set it to 0. So in this case don't want to count it
@@ -104,19 +106,27 @@ const Column = React.forwardRef(
           width: `${100 / totalColumns}%`,
         }}
         onClick={e => {
+          if (isSelectRangeFinished) {
+            resetSelectRangeDrag();
+            onSelectRangeEnd({
+              start: new Date(selectRange.start),
+              end: new Date(selectRange.end),
+              column: columnId,
+            });
+            return false;
+          }
           if (!isSlotClickable) return false;
-          const clickedTime = getClickedTime(e);
-          onSelectSlot({ time: new Date(clickedTime), column: columnId });
-        }}
-        onMouseDown={e => {
-          e.stopPropagation();
-          const clickedTime = getClickedTime(e);
+          const clickedTime = getClickedTime({
+            stepMinutes,
+            selectMinutes,
+            columnDate: date,
+          })(e);
           setClickedTime(clickedTime);
-        }}
-        onMouseUp={e => {
-          e.stopPropagation();
+          onSelectSlot({ time: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
+          resetSelectRangeDrag();
         }}
+        {...selectRangeHandlers}
         ref={ref}
       >
         {date.isSame(moment(), 'day') && currentTime && (
@@ -131,14 +141,39 @@ const Column = React.forwardRef(
         )}
         {clickedTime && (
           <div
-            className={makeClass('step-grid__selected-slot-indicator')}
+            className={makeClass('step-grid__select-slot-indicator')}
             style={{
               top: `${getTopOffset({ stepMinutes, date: clickedTime })}px`,
             }}
           >
-            <div style={{ position: 'absolute', top: '5px' }}>
-              {clickedTime.format('HH:mm')}
-            </div>
+            {renderSelectSlotIndicator ? (
+              renderSelectSlotIndicator({
+                time: new Date(clickedTime.format('YYYY-MM-DD HH:mm:ss')),
+                column: columnId,
+              })
+            ) : (
+              <div
+                className={makeClass('step-grid__select-slot-indicator-time')}
+              >
+                {clickedTime.format('h:mma')}
+              </div>
+            )}
+          </div>
+        )}
+        {selectRangeHeight !== 0 && (
+          <div
+            className={makeClass('step-grid__select-range')}
+            style={{
+              height: selectRangeHeight,
+              top: selectRangeTop,
+            }}
+          >
+            {renderSelectRange
+              ? renderSelectRange({
+                  start: new Date(selectRange.start),
+                  end: new Date(selectRange.end),
+                })
+              : getDisplayTime(selectRange)}
           </div>
         )}
         {Object.keys(events).map(column => {
@@ -150,7 +185,9 @@ const Column = React.forwardRef(
                 event={event}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
-                onExtend={() => setIsSlotClickable(false)}
+                onExtend={() => {
+                  setIsSlotClickable(false);
+                }}
                 onExtendEnd={event => {
                   setTimeout(() => setIsSlotClickable(true));
                   onExtendEnd(event);
@@ -239,6 +276,9 @@ Column.defaultProps = {
   minWidth: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  renderSelectSlotIndicator: null,
+  onSelectRangeEnd: () => null,
+  renderSelectRange: null,
 };
 
 Column.propTypes = {
@@ -255,8 +295,11 @@ Column.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
+  onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderSelectRange: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   stepDetails: PropTypes.array,

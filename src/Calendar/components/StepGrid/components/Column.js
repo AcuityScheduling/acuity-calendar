@@ -201,7 +201,13 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={onDragEnd}
+                    onDrag={() => {
+                      setIsSlotClickable(false);
+                    }}
+                    onDragEnd={(e, ui) => {
+                      onDragEnd(e, ui);
+                      setIsSlotClickable(true);
+                    }}
                     getUpdatedDraggedEvent={getUpdatedDraggedEvent}
                   >
                     {({

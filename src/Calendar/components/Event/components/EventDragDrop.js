@@ -60,6 +60,7 @@ const EventDragDrop = ({
   columnHeight,
   columnWidths,
   columnIndex,
+  onDrag,
   onDragEnd,
   children,
   getUpdatedDraggedEvent,
@@ -161,6 +162,7 @@ const EventDragDrop = ({
           setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
           setXPosition(ui.x);
           setIsDragging(true);
+          onDrag(e, ui);
         }}
         handle={`.${handleCenterClass}`}
         onStop={(e, ui) => {
@@ -203,6 +205,7 @@ const EventDragDrop = ({
 EventDragDrop.defaultProps = {
   isDraggable: true,
   getUpdatedDraggedEvent: () => null,
+  onDrag: () => null,
 };
 
 EventDragDrop.propTypes = {
@@ -213,6 +216,7 @@ EventDragDrop.propTypes = {
   event: EVENT_TYPE.isRequired,
   getUpdatedDraggedEvent: PropTypes.func,
   isDraggable: PropTypes.bool,
+  onDrag: PropTypes.func,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,

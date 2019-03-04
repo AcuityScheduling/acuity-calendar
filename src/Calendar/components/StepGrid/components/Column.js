@@ -8,7 +8,7 @@ import {
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
-import { getTodayClass, getTopOffset } from '../utils';
+import { getTodayClass, getTopOffset, useSelectRange } from '../utils';
 import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from '../../Event';
@@ -48,9 +48,11 @@ const Column = React.forwardRef(
   ) => {
     const [isSlotClickable, setIsSlotClickable] = useState(true);
     const [clickedTime, setClickedTime] = useState(null);
-    const [isMouseDown, setIsMouseDown] = useState(false);
-    const [startMousePosition, setStartMousePosition] = useState(0);
-    const [endMousePosition, setEndMousePosition] = useState(0);
+    const {
+      selectRangeHandlers,
+      isSelectRangeFinished,
+      resetSelectRangeDrag,
+    } = useSelectRange(isSlotClickable);
 
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
@@ -108,8 +110,8 @@ const Column = React.forwardRef(
           width: `${100 / totalColumns}%`,
         }}
         onClick={e => {
-          if (endMousePosition > startMousePosition) {
-            setEndMousePosition(0);
+          if (isSelectRangeFinished) {
+            resetSelectRangeDrag();
             return false;
           }
           if (!isSlotClickable) return false;
@@ -117,25 +119,9 @@ const Column = React.forwardRef(
           setClickedTime(clickedTime);
           onSelectSlot({ time: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
-          setIsMouseDown(false);
-          setEndMousePosition(0);
+          resetSelectRangeDrag();
         }}
-        onMouseUp={e => {
-          setIsMouseDown(false);
-        }}
-        onMouseDown={e => {
-          if (!isSlotClickable) return false;
-          setIsMouseDown(true);
-          setStartMousePosition(e.clientY);
-        }}
-        onMouseMove={e => {
-          if (!isSlotClickable || !isMouseDown) return false;
-          if (e.clientY > startMousePosition) {
-            const difference = e.clientY - startMousePosition;
-            console.log('difference: ', difference);
-            setEndMousePosition(e.clientY);
-          }
-        }}
+        {...selectRangeHandlers}
         ref={ref}
       >
         {date.isSame(moment(), 'day') && currentTime && (

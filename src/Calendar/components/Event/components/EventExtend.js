@@ -43,9 +43,10 @@ const EventExtend = ({
   });
 
   const heightChange = getDragVerticalChange({
-    lastY: deltaPosition.y,
+    pixelsMoved: deltaPosition.y,
     selectMinutes,
-    event,
+    originalStart: event.start,
+    originalEnd: event.end,
     selectMinutesHeight,
   });
 

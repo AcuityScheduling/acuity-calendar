@@ -20,6 +20,7 @@ const useSelectRange = ({
   const [top, setTop] = useState(0);
   const [range, setRange] = useState(0);
   const [startTime, setStartTime] = useState(null);
+  const [originalTop, setOriginalTop] = useState(0);
 
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
@@ -41,6 +42,7 @@ const useSelectRange = ({
     const top = Math.round(positionsMoved) * selectMinutesHeight;
 
     setTop(top);
+    setOriginalTop(top);
     const clickedTime = getClickedTime({
       stepMinutes,
       selectMinutes,
@@ -51,16 +53,18 @@ const useSelectRange = ({
 
   const onMouseMove = e => {
     if (!isSelectable || !isMouseDown) return false;
-    if (e.clientY > startMousePosition) {
+    if (e.clientY !== startMousePosition) {
       const pixelsMoved = e.clientY - startMousePosition;
 
-      const height = getDragVerticalChange({
-        originalStart: startTime,
-        originalEnd: startTime,
-        pixelsMoved,
-        selectMinutes,
-        selectMinutesHeight,
-      });
+      const height = Math.abs(
+        getDragVerticalChange({
+          originalStart: startTime,
+          originalEnd: startTime,
+          pixelsMoved: Math.abs(pixelsMoved),
+          selectMinutes,
+          selectMinutesHeight,
+        })
+      );
 
       let minutesMoved = getMinutesMoved({
         originalStart: startTime,
@@ -70,10 +74,17 @@ const useSelectRange = ({
         selectMinutesHeight,
       });
 
-      setRange({
-        start: startTime,
-        end: startTime.clone().add(minutesMoved, 'minutes'),
-      });
+      const newRange = {};
+      if (e.clientY < startMousePosition) {
+        setTop(originalTop - height);
+        newRange.start = startTime.clone().add(minutesMoved, 'minutes');
+        newRange.end = startTime;
+      } else {
+        newRange.start = startTime;
+        newRange.end = startTime.clone().add(minutesMoved, 'minutes');
+      }
+
+      setRange(newRange);
       setHeight(height);
       setEndMousePosition(e.clientY);
     }

@@ -160,7 +160,7 @@ const Column = React.forwardRef(
             )}
           </div>
         )}
-        {selectRangeHeight !== 0 && (
+        {selectRangeHeight !== 0 && isSlotClickable && (
           <div
             className={makeClass('step-grid__select-range')}
             style={{
@@ -206,7 +206,7 @@ const Column = React.forwardRef(
                     }}
                     onDragEnd={(e, ui) => {
                       onDragEnd(e, ui);
-                      setIsSlotClickable(true);
+                      setTimeout(() => setIsSlotClickable(true));
                     }}
                     getUpdatedDraggedEvent={getUpdatedDraggedEvent}
                   >

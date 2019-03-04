@@ -4,6 +4,7 @@ const useSelectRange = isSelectable => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startMousePosition, setStartMousePosition] = useState(0);
   const [endMousePosition, setEndMousePosition] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const onMouseUp = e => {
     setIsMouseDown(false);
@@ -19,7 +20,7 @@ const useSelectRange = isSelectable => {
     if (!isSelectable || !isMouseDown) return false;
     if (e.clientY > startMousePosition) {
       const difference = e.clientY - startMousePosition;
-      console.log('difference: ', difference);
+      setHeight(difference);
       setEndMousePosition(e.clientY);
     }
   };
@@ -27,13 +28,16 @@ const useSelectRange = isSelectable => {
   const isSelectRangeFinished = endMousePosition > startMousePosition;
 
   const resetSelectRangeDrag = () => {
+    setIsMouseDown(false);
     setEndMousePosition(0);
+    setHeight(0);
   };
 
   return {
     selectRangeHandlers: { onMouseUp, onMouseDown, onMouseMove },
     isSelectRangeFinished,
     resetSelectRangeDrag,
+    selectRangeHeight: height,
   };
 };
 

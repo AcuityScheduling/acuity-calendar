@@ -52,6 +52,7 @@ const Column = React.forwardRef(
       selectRangeHandlers,
       isSelectRangeFinished,
       resetSelectRangeDrag,
+      selectRangeHeight,
     } = useSelectRange(isSlotClickable);
 
     const totalHeight = useMemo(() => {
@@ -153,6 +154,19 @@ const Column = React.forwardRef(
                 {clickedTime.format('h:mma')}
               </div>
             )}
+          </div>
+        )}
+        {selectRangeHeight && (
+          <div
+            style={{
+              height: `${selectRangeHeight}px`,
+              position: 'absolute',
+              top: '200px',
+              background: 'black',
+              width: '100%',
+            }}
+          >
+            DRAGGING STUFF
           </div>
         )}
         {Object.keys(events).map(column => {

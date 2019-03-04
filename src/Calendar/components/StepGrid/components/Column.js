@@ -186,6 +186,10 @@ const Column = React.forwardRef(
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
                 onExtend={() => {
+                  // On drag triggers mousedown in the select range
+                  // so we need to change state to tell that we're not actually
+                  // selecting a range when we're dragging an event
+                  resetSelectRangeDrag();
                   setIsSlotClickable(false);
                 }}
                 onExtendEnd={event => {
@@ -202,6 +206,10 @@ const Column = React.forwardRef(
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
                     onDrag={() => {
+                      // On drag triggers mousedown in the select range
+                      // so we need to change state to tell that we're not actually
+                      // selecting a range when we're dragging an event
+                      resetSelectRangeDrag();
                       setIsSlotClickable(false);
                     }}
                     onDragEnd={(e, ui) => {

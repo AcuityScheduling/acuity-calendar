@@ -79,9 +79,6 @@ const Column = React.forwardRef(
       selectMinutes,
       columnHeight: totalHeight,
       columnDate: date,
-      onSelectRangeEnd: ({ start, end }) => {
-        onSelectRangeEnd({ start, end, column: columnId });
-      },
     });
 
     // If we remove a column it's not going to remove it from the columnWidths
@@ -111,6 +108,11 @@ const Column = React.forwardRef(
         onClick={e => {
           if (isSelectRangeFinished) {
             resetSelectRangeDrag();
+            onSelectRangeEnd({
+              start: selectRange.start,
+              end: selectRange.end,
+              column: columnId,
+            });
             return false;
           }
           if (!isSlotClickable) return false;

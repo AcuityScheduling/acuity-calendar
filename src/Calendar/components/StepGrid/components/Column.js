@@ -48,6 +48,9 @@ const Column = React.forwardRef(
   ) => {
     const [isSlotClickable, setIsSlotClickable] = useState(true);
     const [clickedTime, setClickedTime] = useState(null);
+    const [isMouseDown, setIsMouseDown] = useState(false);
+    const [startMousePosition, setStartMousePosition] = useState(0);
+    const [endMousePosition, setEndMousePosition] = useState(0);
 
     const totalHeight = useMemo(() => {
       const totalStepsPerBlock = 60 / stepMinutes;
@@ -105,11 +108,33 @@ const Column = React.forwardRef(
           width: `${100 / totalColumns}%`,
         }}
         onClick={e => {
+          if (endMousePosition > startMousePosition) {
+            setEndMousePosition(0);
+            return false;
+          }
           if (!isSlotClickable) return false;
           const clickedTime = getClickedTime(e);
           setClickedTime(clickedTime);
           onSelectSlot({ time: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
+          setIsMouseDown(false);
+          setEndMousePosition(0);
+        }}
+        onMouseUp={e => {
+          setIsMouseDown(false);
+        }}
+        onMouseDown={e => {
+          if (!isSlotClickable) return false;
+          setIsMouseDown(true);
+          setStartMousePosition(e.clientY);
+        }}
+        onMouseMove={e => {
+          if (!isSlotClickable || !isMouseDown) return false;
+          if (e.clientY > startMousePosition) {
+            const difference = e.clientY - startMousePosition;
+            console.log('difference: ', difference);
+            setEndMousePosition(e.clientY);
+          }
         }}
         ref={ref}
       >

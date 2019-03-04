@@ -41,6 +41,7 @@ const Column = React.forwardRef(
       onExtendEnd,
       onSelectEvent,
       onSelectSlot,
+      onSelectRangeEnd,
       selectMinutes,
       stepDetails,
       renderEvent,
@@ -49,6 +50,7 @@ const Column = React.forwardRef(
       minWidthEmpty,
       renderStepDetail,
       renderSelectSlotIndicator,
+      renderSelectRange,
     },
     ref
   ) => {
@@ -77,6 +79,7 @@ const Column = React.forwardRef(
       selectMinutes,
       columnHeight: totalHeight,
       columnDate: date,
+      onSelectRangeEnd,
     });
 
     // If we remove a column it's not going to remove it from the columnWidths
@@ -161,7 +164,12 @@ const Column = React.forwardRef(
               top: selectRangeTop,
             }}
           >
-            {getDisplayTime({ start: selectRange.start, end: selectRange.end })}
+            {renderSelectRange
+              ? renderSelectRange({
+                  start: new Date(selectRange.start),
+                  end: new Date(selectRange.end),
+                })
+              : getDisplayTime(selectRange)}
           </div>
         )}
         {Object.keys(events).map(column => {
@@ -265,6 +273,8 @@ Column.defaultProps = {
   minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
   renderSelectSlotIndicator: null,
+  onSelectRangeEnd: () => null,
+  renderSelectRange: null,
 };
 
 Column.propTypes = {
@@ -281,8 +291,10 @@ Column.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
+  onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,

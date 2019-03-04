@@ -71,9 +71,9 @@ const App = () => {
             console.log('CLICK', event);
           }}
           // When clicking and dragging to create a new event on a stepgrid view
-          onSelecting={({ start, end }) =>
-            console.log(`Selecting ${start} - ${end}`)
-          }
+          onSelectRangeEnd={({ start, end }) => {
+            console.log('SELECTING', { start, end });
+          }}
           onCurrentTimeChange={currentTime => {
             const newStepDetails = stepDetails.map(stepDetail => {
               if (stepDetail.schedulingLimits) {

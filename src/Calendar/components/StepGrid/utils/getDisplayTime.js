@@ -1,7 +1,9 @@
 /**
  * Get the display time for an event.
  *
- * @param {Object} event - The event we're displaying time for
+ * @param {Object} params
+ * @param {Object} params.start
+ * @param {Object} params.end
  */
 const getDisplayTime = ({ start, end }) => {
   let startMinutes = `:${start.format('mm')}`;

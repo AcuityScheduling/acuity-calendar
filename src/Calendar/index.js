@@ -28,7 +28,7 @@ const Calendar = ({
   onDragEnd,
   firstDay,
   onSelectEvent,
-  onSelecting,
+  onSelectRangeEnd,
   onSelectSlot,
   stepMinutes,
   selectMinutes,
@@ -38,6 +38,7 @@ const Calendar = ({
   renderEventGroupHeader,
   renderSelectSlotIndicator,
   renderStepDetail,
+  renderSelectRange,
   minWidthColumn,
   minWidthColumnEmpty,
 }) => {
@@ -92,7 +93,7 @@ const Calendar = ({
       onCurrentTimeChange={onCurrentTimeChange}
       onDragEnd={onDragEnd}
       onSelectEvent={onSelectEvent}
-      onSelecting={onSelecting}
+      onSelectRangeEnd={onSelectRangeEnd}
       onSelectSlot={onSelectSlot}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
@@ -100,6 +101,7 @@ const Calendar = ({
       selectedEventGroups={selectedEventGroups}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
+      renderSelectRange={renderSelectRange}
       timeGutterWidth={timeGutterWidth}
       renderEventGroupHeader={renderEventGroupHeader}
       minWidthColumn={minWidthColumn}
@@ -128,6 +130,8 @@ Calendar.defaultProps = {
   renderStepDetail: () => null,
   onCurrentTimeChange: () => null,
   renderSelectSlotIndicator: null,
+  onSelectRangeEnd: () => null,
+  renderSelectRange: null,
 };
 
 Calendar.propTypes = {
@@ -139,11 +143,12 @@ Calendar.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
-  onSelecting: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,

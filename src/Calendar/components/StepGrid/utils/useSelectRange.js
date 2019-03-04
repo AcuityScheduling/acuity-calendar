@@ -12,6 +12,7 @@ const useSelectRange = ({
   selectMinutes,
   columnHeight,
   columnDate,
+  onSelectRangeEnd,
 }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startMousePosition, setStartMousePosition] = useState(0);
@@ -81,6 +82,10 @@ const useSelectRange = ({
     setIsMouseDown(false);
     setEndMousePosition(0);
     setHeight(0);
+    onSelectRangeEnd({
+      start: new Date(range.start),
+      end: new Date(range.end),
+    });
   };
 
   return {

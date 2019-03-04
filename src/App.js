@@ -71,8 +71,8 @@ const App = () => {
             console.log('CLICK', event);
           }}
           // When clicking and dragging to create a new event on a stepgrid view
-          onSelectRangeEnd={({ start, end }) => {
-            console.log('SELECTING', { start, end });
+          onSelectRangeEnd={({ start, end, column }) => {
+            console.log('SELECTING RANGE', { start, end, column });
           }}
           onCurrentTimeChange={currentTime => {
             const newStepDetails = stepDetails.map(stepDetail => {

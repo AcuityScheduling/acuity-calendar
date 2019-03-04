@@ -79,7 +79,9 @@ const Column = React.forwardRef(
       selectMinutes,
       columnHeight: totalHeight,
       columnDate: date,
-      onSelectRangeEnd,
+      onSelectRangeEnd: ({ start, end }) => {
+        onSelectRangeEnd({ start, end, column: columnId });
+      },
     });
 
     // If we remove a column it's not going to remove it from the columnWidths

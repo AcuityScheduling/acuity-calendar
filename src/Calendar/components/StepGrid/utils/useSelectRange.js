@@ -36,7 +36,11 @@ const useSelectRange = ({
     setIsMouseDown(true);
     setStartMousePosition(e.clientY);
     const rect = e.currentTarget.getBoundingClientRect();
-    setTop(e.clientY - rect.top);
+    const exactPosition = e.clientY - rect.top;
+    const positionsMoved = exactPosition / selectMinutesHeight;
+    const top = Math.round(positionsMoved) * selectMinutesHeight;
+
+    setTop(top);
     const clickedTime = getClickedTime({
       stepMinutes,
       selectMinutes,

@@ -109,8 +109,8 @@ const Column = React.forwardRef(
           if (isSelectRangeFinished) {
             resetSelectRangeDrag();
             onSelectRangeEnd({
-              start: selectRange.start,
-              end: selectRange.end,
+              start: new Date(selectRange.start),
+              end: new Date(selectRange.end),
               column: columnId,
             });
             return false;

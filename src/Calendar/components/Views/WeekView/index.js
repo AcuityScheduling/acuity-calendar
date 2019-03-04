@@ -31,6 +31,7 @@ const WeekView = ({
   stepDetails,
   renderCorner,
   renderStepDetail,
+  renderSelectSlotIndicator,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -113,6 +114,7 @@ const WeekView = ({
                 };
               }}
               renderStepDetail={renderStepDetail}
+              renderSelectSlotIndicator={renderSelectSlotIndicator}
             />
           );
         });
@@ -132,6 +134,7 @@ WeekView.defaultProps = {
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  renderSelectSlotIndicator: null,
 };
 
 WeekView.propTypes = {
@@ -146,6 +149,7 @@ WeekView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,

@@ -113,12 +113,20 @@
       position: relative;
     }
 
-    &__selected-slot-indicator {
-      border-bottom: 1px dotted black;
+    &__select-slot-indicator {
+      border-bottom: 2px dashed #c1c1c1;
       position: absolute;
       width: 100%;
       text-align: center;
       z-index: 2;
+    }
+
+    &__select-slot-indicator-time {
+      position: absolute;
+      top: -20px;
+      font-size: 14px;
+      left: 0;
+      right: 0;
     }
 
     &__current-time-indicator {

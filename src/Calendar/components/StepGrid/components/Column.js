@@ -42,6 +42,7 @@ const Column = React.forwardRef(
       minWidth,
       minWidthEmpty,
       renderStepDetail,
+      renderSelectSlotIndicator,
     },
     ref
   ) => {
@@ -115,7 +116,7 @@ const Column = React.forwardRef(
         }}
         onMouseUp={e => {
           e.stopPropagation();
-          setTimeout(() => setClickedTime(null), 300);
+          setClickedTime(null);
         }}
         ref={ref}
       >
@@ -131,14 +132,23 @@ const Column = React.forwardRef(
         )}
         {clickedTime && (
           <div
-            className={makeClass('step-grid__selected-slot-indicator')}
+            className={makeClass('step-grid__select-slot-indicator')}
             style={{
               top: `${getTopOffset({ stepMinutes, date: clickedTime })}px`,
             }}
           >
-            <div style={{ position: 'absolute', top: '5px' }}>
-              {clickedTime.format('HH:mm')}
-            </div>
+            {renderSelectSlotIndicator ? (
+              renderSelectSlotIndicator({
+                time: new Date(clickedTime.format('YYYY-MM-DD HH:mm:ss')),
+                column: columnId,
+              })
+            ) : (
+              <div
+                className={makeClass('step-grid__select-slot-indicator-time')}
+              >
+                {clickedTime.format('h:mma')}
+              </div>
+            )}
           </div>
         )}
         {Object.keys(events).map(column => {
@@ -239,6 +249,7 @@ Column.defaultProps = {
   minWidth: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
+  renderSelectSlotIndicator: null,
 };
 
 Column.propTypes = {
@@ -257,6 +268,7 @@ Column.propTypes = {
   onSelectEvent: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   stepDetails: PropTypes.array,

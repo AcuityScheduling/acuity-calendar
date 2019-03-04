@@ -36,6 +36,7 @@ const Calendar = ({
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
+  renderSelectSlotIndicator,
   renderStepDetail,
   minWidthColumn,
   minWidthColumnEmpty,
@@ -104,6 +105,7 @@ const Calendar = ({
       minWidthColumn={minWidthColumn}
       minWidthColumnEmpty={minWidthColumnEmpty}
       renderStepDetail={renderStepDetail}
+      renderSelectSlotIndicator={renderSelectSlotIndicator}
     />
   );
 };
@@ -125,6 +127,7 @@ Calendar.defaultProps = {
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
   onCurrentTimeChange: () => null,
+  renderSelectSlotIndicator: null,
 };
 
 Calendar.propTypes = {
@@ -141,6 +144,7 @@ Calendar.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: DATE_TYPE,

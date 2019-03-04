@@ -107,16 +107,9 @@ const Column = React.forwardRef(
         onClick={e => {
           if (!isSlotClickable) return false;
           const clickedTime = getClickedTime(e);
-          onSelectSlot({ time: new Date(clickedTime), column: columnId });
-        }}
-        onMouseDown={e => {
-          e.stopPropagation();
-          const clickedTime = getClickedTime(e);
           setClickedTime(clickedTime);
-        }}
-        onMouseUp={e => {
-          e.stopPropagation();
-          setClickedTime(null);
+          onSelectSlot({ time: new Date(clickedTime), column: columnId });
+          setTimeout(() => setClickedTime(null), 300);
         }}
         ref={ref}
       >
@@ -160,7 +153,9 @@ const Column = React.forwardRef(
                 event={event}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
-                onExtend={() => setIsSlotClickable(false)}
+                onExtend={() => {
+                  setIsSlotClickable(false);
+                }}
                 onExtendEnd={event => {
                   setTimeout(() => setIsSlotClickable(true));
                   onExtendEnd(event);

@@ -34,7 +34,6 @@ const useSelectRange = ({
 
   const onMouseDown = e => {
     if (!isSelectable) return false;
-    console.log('mouseDOWN');
     setIsMouseDown(true);
     setStartMousePosition(e.clientY);
     const rect = e.currentTarget.getBoundingClientRect();

@@ -112,7 +112,7 @@ const addEventLocation = ({ event, stepMinutes }) => {
 
   const location = {
     height,
-    top: eventTopOffset - padding.topHeight, // if there is top padding that will adjust WHERE the event should be placed
+    top: eventTopOffset,
     paddingTopHeight: padding.topHeight,
     paddingBottomHeight: padding.bottomHeight,
   };

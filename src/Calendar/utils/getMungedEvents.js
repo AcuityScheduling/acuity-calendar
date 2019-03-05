@@ -44,8 +44,8 @@ const expandAllDayEvents = events => {
     if (event.paddingTopStart) {
       padding.paddingTopStart = moment(event.paddingTopStart);
     }
-    if (event.paddingBottomStart) {
-      padding.paddingBottomStart = moment(event.paddingBottomStart);
+    if (event.paddingBottomEnd) {
+      padding.paddingBottomEnd = moment(event.paddingBottomEnd);
     }
     // Turn event strings into moment objects
     const newEvent = Object.assign({}, event, {

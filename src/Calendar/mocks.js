@@ -43,7 +43,7 @@ export const MOCKED_EVENTS = [
     title: 'Piano Recital',
     allDay: false,
     paddingTopStart: '2019-02-12 08:45:00',
-    // paddingBottomEnd: '2019-02-12 10:00:00',
+    paddingBottomEnd: '2019-02-12 10:00:00',
   },
   {
     id: 6,

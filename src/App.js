@@ -11,8 +11,8 @@ import {
 import EventGroupSelect from './EventGroupSelect';
 
 const App = () => {
-  const [view, setView] = useState(CALENDAR_VIEWS.week);
-  const [selectedDate, setSelectedDate] = useState(new Date('2019-02-13'));
+  const [view, setView] = useState(CALENDAR_VIEWS.month);
+  const [selectedDate, setSelectedDate] = useState(new Date('2019-04-13'));
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const [events, setEvents] = useState(MOCKED_EVENTS);
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);

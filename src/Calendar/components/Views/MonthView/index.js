@@ -40,7 +40,7 @@ const MonthView = ({
           );
         })}
       </div>
-      <div>
+      <div className={makeClass('month__days')}>
         {monthGrid.map(row => {
           countRows += 1;
 
@@ -66,9 +66,9 @@ const MonthView = ({
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
-                    <h2 className={makeClass('month__date')}>
+                    <span className={makeClass('month__date')}>
                       {dayDetails.date.date()}
-                    </h2>
+                    </span>
                     {eventsForCell.length > 0 &&
                       eventsForCell.map(
                         event =>

@@ -246,7 +246,7 @@ const Column = React.forwardRef(
                               : `${percentWidth * (column - 1)}%`,
                           }}
                         >
-                          {event.paddingTopStart && (
+                          {event.paddingTopStart && !isDndPlaceholder && (
                             <div
                               className={makeClass(
                                 'step-grid__event-padding',
@@ -269,16 +269,14 @@ const Column = React.forwardRef(
                           >
                             {renderEvent}
                           </Event>
-                          {event.paddingBottomEnd && (
+                          {event.paddingBottomEnd && !isDndPlaceholder && (
                             <div
                               className={makeClass(
                                 'step-grid__event-padding',
                                 'step-grid__event-padding-bottom'
                               )}
                               style={{
-                                height: '200px',
-                                width: '100%',
-                                background: 'blue',
+                                height: event.paddingBottomHeight,
                               }}
                             >
                               {renderEventPaddingBottom(event)}

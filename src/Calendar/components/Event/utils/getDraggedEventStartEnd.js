@@ -26,6 +26,7 @@ const getDraggedEventStartEnd = ({
     selectMinutes,
     selectMinutesHeight,
   });
+
   if (totalMinutes === 0) return { start, end };
 
   if (!isDurationOnly) {
@@ -33,16 +34,15 @@ const getDraggedEventStartEnd = ({
   }
   end.add(totalMinutes, 'minutes');
 
-  let paddingTopStart = null;
+  const padding = {};
   if (event.paddingTopStart) {
-    paddingTopStart = event.paddingTopStart
+    padding.paddingTopStart = event.paddingTopStart
       .clone()
       .add(totalMinutes, 'minutes');
   }
 
-  let paddingBottomEnd = null;
   if (event.paddingBottomEnd) {
-    paddingBottomEnd = event.paddingBottomEnd
+    padding.paddingBottomEnd = event.paddingBottomEnd
       .clone()
       .add(totalMinutes, 'minutes');
   }
@@ -50,14 +50,8 @@ const getDraggedEventStartEnd = ({
   const newTimes = {
     start,
     end,
+    ...padding,
   };
-
-  if (paddingTopStart) {
-    newTimes.paddingTopStart = paddingTopStart;
-  }
-  if (paddingBottomEnd) {
-    newTimes.paddingBottomEnd = paddingBottomEnd;
-  }
 
   return newTimes;
 };

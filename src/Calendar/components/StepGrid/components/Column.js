@@ -214,8 +214,8 @@ const Column = React.forwardRef(
                       resetSelectRangeDrag();
                       setIsSlotClickable(false);
                     }}
-                    onDragEnd={(e, ui) => {
-                      onDragEnd(e, ui);
+                    onDragEnd={event => {
+                      onDragEnd(event);
                       setTimeout(() => setIsSlotClickable(true));
                     }}
                     getUpdatedDraggedEvent={getUpdatedDraggedEvent}
@@ -237,7 +237,7 @@ const Column = React.forwardRef(
                             'step-grid__event-padding-wrapper'
                           )}`}
                           style={{
-                            top: draggedEvent.top,
+                            top: draggedEvent.top - event.paddingTopHeight,
                             width: isInteracting
                               ? `${currentColumnWidth}px`
                               : `${percentWidth}%`,

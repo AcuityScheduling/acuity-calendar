@@ -20,7 +20,6 @@ const resetEventFormat = event => {
   if (newEvent.paddingBottomEnd) {
     newEvent.paddingBottomEnd = new Date(event.paddingBottomEnd);
   }
-  console.log('newEvent: ', newEvent);
   return newEvent;
 };
 

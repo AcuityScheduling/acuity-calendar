@@ -142,10 +142,11 @@ const EventDragDrop = ({
   });
   updatedEvent.start = eventStartEnd.start;
   updatedEvent.end = eventStartEnd.end;
-  if (event.paddingTopStart) {
+
+  if (typeof event.paddingTopStart !== 'undefined') {
     updatedEvent.paddingTopStart = eventStartEnd.paddingTopStart;
   }
-  if (event.paddingBottomEnd) {
+  if (typeof event.paddingBottomEnd !== 'undefined') {
     updatedEvent.paddingBottomEnd = eventStartEnd.paddingBottomEnd;
   }
 

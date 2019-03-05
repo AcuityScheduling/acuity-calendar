@@ -27,7 +27,20 @@ const getDraggedEventStartEnd = ({
     selectMinutesHeight,
   });
 
-  if (totalMinutes === 0) return { start, end };
+  if (totalMinutes === 0) {
+    // If we didn't move any minutes (like moving to a different day)
+    // We still need to make sure that we keep passing on the paddingTopStart and
+    // paddingBottomEnd or we're gonna get really hard to find bugs
+    const paddingTemp = {};
+    if (event.paddingTopStart) {
+      paddingTemp.paddingTopStart = event.paddingTopStart;
+    }
+    if (event.paddingBottomEnd) {
+      paddingTemp.paddingBottomEnd = event.paddingBottomEnd;
+    }
+
+    return { start, end, ...paddingTemp };
+  }
 
   if (!isDurationOnly) {
     start.add(totalMinutes, 'minutes');

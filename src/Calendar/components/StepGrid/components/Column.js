@@ -226,18 +226,34 @@ const Column = React.forwardRef(
                       leftChange,
                       currentColumnWidth,
                       isDndPlaceholder,
+                      dndClassName,
                     }) => {
+                      const isInteracting =
+                        !isDndPlaceholder && (isDragging || isExtending);
+
                       return (
-                        <div>
+                        <div
+                          className={`${dndClassName} ${makeClass(
+                            'step-grid__event-padding-wrapper'
+                          )}`}
+                          style={{
+                            top: draggedEvent.top,
+                            width: isInteracting
+                              ? `${currentColumnWidth}px`
+                              : `${percentWidth}%`,
+                            left: isInteracting
+                              ? `${leftChange}px`
+                              : `${percentWidth * (column - 1)}%`,
+                          }}
+                        >
                           {event.paddingTopStart && (
                             <div
                               className={makeClass(
+                                'step-grid__event-padding',
                                 'step-grid__event-padding-top'
                               )}
                               style={{
-                                height: '200px',
-                                width: '100%',
-                                background: 'blue',
+                                height: event.paddingTopHeight,
                               }}
                             >
                               {renderEventPaddingTop(event)}
@@ -246,16 +262,7 @@ const Column = React.forwardRef(
                           <Event
                             event={draggedEvent}
                             style={{
-                              top: `${draggedEvent.top}px`,
                               height: `${draggedEvent.height}px`,
-                              width:
-                                !isDndPlaceholder && (isDragging || isExtending)
-                                  ? `${currentColumnWidth}px`
-                                  : `${percentWidth}%`,
-                              left:
-                                !isDndPlaceholder && (isDragging || isExtending)
-                                  ? `${leftChange}px`
-                                  : `${percentWidth * (column - 1)}%`,
                             }}
                             onSelectEvent={onSelectEvent}
                             isSelectable={!isDragging && !isExtending}
@@ -265,6 +272,7 @@ const Column = React.forwardRef(
                           {event.paddingBottomEnd && (
                             <div
                               className={makeClass(
+                                'step-grid__event-padding',
                                 'step-grid__event-padding-bottom'
                               )}
                               style={{

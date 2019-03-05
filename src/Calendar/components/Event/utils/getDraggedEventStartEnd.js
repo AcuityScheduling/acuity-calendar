@@ -33,9 +33,25 @@ const getDraggedEventStartEnd = ({
   }
   end.add(totalMinutes, 'minutes');
 
+  let paddingTopStart = null;
+  if (event.paddingTopStart) {
+    paddingTopStart = event.paddingTopStart
+      .clone()
+      .add(totalMinutes, 'minutes');
+  }
+
+  let paddingBottomEnd = null;
+  if (event.paddingBottomEnd) {
+    paddingBottomEnd = event.paddingBottomEnd
+      .clone()
+      .add(totalMinutes, 'minutes');
+  }
+
   return {
     start,
     end,
+    paddingTopStart: paddingTopStart ? paddingTopStart : undefined,
+    paddingBottomEnd: paddingBottomEnd ? paddingBottomEnd : undefined,
   };
 };
 

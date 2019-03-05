@@ -44,6 +44,12 @@ const expandAllDayEvents = events => {
     const newEvent = Object.assign({}, event, {
       start: moment(new Date(event.start)),
       end: moment(new Date(event.end)),
+      paddingTopStart: event.paddingTopStart
+        ? moment(event.paddingTopStart)
+        : undefined,
+      paddingBottomEnd: event.paddingBottomEnd
+        ? moment(event.paddingBottomEnd)
+        : undefined,
     });
 
     const totalDays = Math.abs(
@@ -104,6 +110,23 @@ const addEventLocation = ({ event, stepMinutes }) => {
     height,
     top: eventTopOffset,
   };
+
+  if (event.paddingTopStart) {
+    const paddingTopDuration = event.paddingTopStart
+      .clone()
+      .diff(event.start, 'minutes');
+    location.paddingTopHeight = Math.abs(
+      paddingTopDuration * pixelsPerMinute + borderHeightAdjustment
+    );
+  }
+  if (event.paddingBottomEnd) {
+    const paddingBottomDuration = event.paddingBottomEnd
+      .clone()
+      .diff(event.end, 'minutes');
+    location.paddingBottomHeight = Math.abs(
+      paddingBottomDuration * pixelsPerMinute + borderHeightAdjustment
+    );
+  }
 
   return Object.assign(event, location);
 };

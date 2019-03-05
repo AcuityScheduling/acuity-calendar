@@ -142,6 +142,8 @@ const EventDragDrop = ({
   });
   updatedEvent.start = eventStartEnd.start;
   updatedEvent.end = eventStartEnd.end;
+  updatedEvent.paddingTopStart = eventStartEnd.paddingTopStart;
+  updatedEvent.paddingBottomEnd = eventStartEnd.paddingBottomEnd;
 
   updatedEvent = getUpdatedDraggedEvent({
     event: updatedEvent,
@@ -174,19 +176,15 @@ const EventDragDrop = ({
           onDragEnd(resetEventFormat(updatedEvent));
         }}
       >
-        {React.cloneElement(
-          children({
-            draggedEvent: updatedEvent,
-            leftChange,
-            currentColumnWidth,
-            isDragging,
-            wasDragged,
-            isDndPlaceholder: false,
-          }),
-          {
-            className: getDraggableClasses({ isDragging, wasDragged }),
-          }
-        )}
+        {children({
+          draggedEvent: updatedEvent,
+          leftChange,
+          currentColumnWidth,
+          isDragging,
+          wasDragged,
+          isDndPlaceholder: false,
+          dndClassName: getDraggableClasses({ isDragging, wasDragged }),
+        })}
       </DraggableCore>
       {isDragging && (
         <div className={makeClass('step-grid__dragging-placeholder-event')}>

@@ -6,12 +6,13 @@
     }
 
     &__event-padding-wrapper {
-      z-index: 3;
       position: absolute;
     }
 
     &__event {
       background: #26ada0;
+      z-index: 3;
+      position: relative;
       color: #fff;
       border-radius: 2px;
       font-size: 12px;
@@ -22,7 +23,8 @@
 
     &__event-padding {
       background: #3dbe8b;
-      z-index: 3;
+      z-index: 2;
+      position: relative;
       opacity: 0.25;
       pointer-events: none;
       background-image: linear-gradient(

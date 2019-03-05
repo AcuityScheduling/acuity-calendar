@@ -160,7 +160,7 @@ const Column = React.forwardRef(
             )}
           </div>
         )}
-        {selectRangeHeight !== 0 && (
+        {selectRangeHeight !== 0 && isSlotClickable && (
           <div
             className={makeClass('step-grid__select-range')}
             style={{
@@ -186,6 +186,10 @@ const Column = React.forwardRef(
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
                 onExtend={() => {
+                  // On drag triggers mousedown in the select range
+                  // so we need to change state to tell that we're not actually
+                  // selecting a range when we're dragging an event
+                  resetSelectRangeDrag();
                   setIsSlotClickable(false);
                 }}
                 onExtendEnd={event => {
@@ -201,7 +205,17 @@ const Column = React.forwardRef(
                     columnWidths={columnWidths}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
-                    onDragEnd={onDragEnd}
+                    onDrag={() => {
+                      // On drag triggers mousedown in the select range
+                      // so we need to change state to tell that we're not actually
+                      // selecting a range when we're dragging an event
+                      resetSelectRangeDrag();
+                      setIsSlotClickable(false);
+                    }}
+                    onDragEnd={(e, ui) => {
+                      onDragEnd(e, ui);
+                      setTimeout(() => setIsSlotClickable(true));
+                    }}
                     getUpdatedDraggedEvent={getUpdatedDraggedEvent}
                   >
                     {({

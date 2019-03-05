@@ -11,7 +11,7 @@ import {
 import EventGroupSelect from './EventGroupSelect';
 
 const App = () => {
-  const [view, setView] = useState(CALENDAR_VIEWS.calendar);
+  const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date('2019-02-13'));
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const [events, setEvents] = useState(MOCKED_EVENTS);
@@ -104,6 +104,12 @@ const App = () => {
           // and for drag and drop
           selectMinutes={15}
           selectedEventGroups={selectedCalendars}
+          renderEventPaddingTop={event => {
+            return <div />;
+          }}
+          renderEventPaddingBottom={event => {
+            return <div />;
+          }}
           renderEventGroupHeader={({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }

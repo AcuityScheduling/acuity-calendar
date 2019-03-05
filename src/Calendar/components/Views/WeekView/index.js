@@ -33,6 +33,9 @@ const WeekView = ({
   renderCorner,
   renderStepDetail,
   renderSelectSlotIndicator,
+  renderSelectRange,
+  renderEventPaddingTop,
+  renderEventPaddingBottom,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -104,15 +107,31 @@ const WeekView = ({
               onSelectEvent={onSelectEvent}
               onSelectSlot={onSelectSlot}
               onSelectRangeEnd={onSelectRangeEnd}
+              renderSelectRange={renderSelectRange}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
               currentTime={currentTime}
               renderEvent={renderEvent}
+              renderEventPaddingTop={renderEventPaddingTop}
+              renderEventPaddingBottom={renderEventPaddingBottom}
               getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
+                const padding = {};
+                if (typeof event.paddingTopStart !== 'undefined') {
+                  padding.paddingTopStart = event.paddingTopStart
+                    .clone()
+                    .add(columnMoves, 'days');
+                }
+                if (typeof event.paddingBottomEnd !== 'undefined') {
+                  padding.paddingBottomEnd = event.paddingBottomEnd
+                    .clone()
+                    .add(columnMoves, 'days');
+                }
+
                 return {
                   ...event,
-                  start: start.add(columnMoves, 'days'),
-                  end: end.add(columnMoves, 'days'),
+                  start: start.clone().add(columnMoves, 'days'),
+                  end: end.clone().add(columnMoves, 'days'),
+                  ...padding,
                 };
               }}
               renderStepDetail={renderStepDetail}
@@ -138,6 +157,9 @@ WeekView.defaultProps = {
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
   renderSelectSlotIndicator: null,
+  renderSelectRange: null,
+  renderEventPaddingTop: () => null,
+  renderEventPaddingBottom: () => null,
 };
 
 WeekView.propTypes = {
@@ -153,6 +175,9 @@ WeekView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderEventPaddingBottom: PropTypes.func,
+  renderEventPaddingTop: PropTypes.func,
+  renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,

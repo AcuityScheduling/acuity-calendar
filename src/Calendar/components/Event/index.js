@@ -61,7 +61,7 @@ const Event = ({
       {children ? (
         children(event)
       ) : (
-        <div className={makeClass('step-grid__event-wrapper')}>
+        <div className={makeClass('step-grid__event-details-wrapper')}>
           <span className={makeClass('step-grid__event-title')}>
             {event.title}
           </span>

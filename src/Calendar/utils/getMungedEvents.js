@@ -40,10 +40,18 @@ const getMungedEvents = ({ events, stepMinutes }) => {
  */
 const expandAllDayEvents = events => {
   return events.reduce((accumulator, event) => {
+    const padding = {};
+    if (event.paddingTopStart) {
+      padding.paddingTopStart = moment(event.paddingTopStart);
+    }
+    if (event.paddingBottomStart) {
+      padding.paddingBottomStart = moment(event.paddingBottomStart);
+    }
     // Turn event strings into moment objects
     const newEvent = Object.assign({}, event, {
       start: moment(new Date(event.start)),
       end: moment(new Date(event.end)),
+      ...padding,
     });
 
     const totalDays = Math.abs(
@@ -100,12 +108,53 @@ const addEventLocation = ({ event, stepMinutes }) => {
     height = maxHeight;
   }
 
+  const padding = getEventPadding({ event, pixelsPerMinute });
+
   const location = {
     height,
     top: eventTopOffset,
+    paddingTopHeight: padding.topHeight,
+    paddingBottomHeight: padding.bottomHeight,
   };
 
   return Object.assign(event, location);
+};
+
+/**
+ * Get the height of the event's padding
+ *
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {number} params.pixelsPerMinute
+ */
+const getEventPadding = ({ event, pixelsPerMinute }) => {
+  let topHeight = 0;
+  if (event.paddingTopStart) {
+    const paddingTopDuration = event.paddingTopStart
+      .clone()
+      .diff(event.start, 'minutes');
+    const borderHeightAdjustmentPadding =
+      (paddingTopDuration / 60) * STEP_BORDER_WIDTH;
+    topHeight = Math.abs(
+      paddingTopDuration * pixelsPerMinute + borderHeightAdjustmentPadding
+    );
+  }
+  let bottomHeight = 0;
+  if (event.paddingBottomEnd) {
+    const paddingBottomDuration = event.paddingBottomEnd
+      .clone()
+      .diff(event.end, 'minutes');
+    const borderHeightAdjustmentPadding =
+      (paddingBottomDuration / 60) * STEP_BORDER_WIDTH;
+    bottomHeight = Math.abs(
+      paddingBottomDuration * pixelsPerMinute + borderHeightAdjustmentPadding
+    );
+  }
+
+  return {
+    topHeight,
+    bottomHeight,
+  };
 };
 
 /**

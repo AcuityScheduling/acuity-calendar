@@ -10,8 +10,16 @@ const resetEventFormat = event => {
   const newEvent = { ...event };
   delete newEvent.height;
   delete newEvent.top;
-  newEvent.start = new Date(event.start.format('YYYY-MM-DD HH:mm:ss'));
-  newEvent.end = new Date(event.end.format('YYYY-MM-DD HH:mm:ss'));
+  delete newEvent.paddingTopHeight;
+  delete newEvent.paddingBottomHeight;
+  newEvent.start = new Date(event.start);
+  newEvent.end = new Date(event.end);
+  if (newEvent.paddingTopStart) {
+    newEvent.paddingTopStart = new Date(event.paddingTopStart);
+  }
+  if (newEvent.paddingBottomEnd) {
+    newEvent.paddingBottomEnd = new Date(event.paddingBottomEnd);
+  }
   return newEvent;
 };
 

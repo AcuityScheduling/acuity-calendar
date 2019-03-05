@@ -26,6 +26,7 @@ const getDraggedEventStartEnd = ({
     selectMinutes,
     selectMinutesHeight,
   });
+
   if (totalMinutes === 0) return { start, end };
 
   if (!isDurationOnly) {
@@ -33,10 +34,28 @@ const getDraggedEventStartEnd = ({
   }
   end.add(totalMinutes, 'minutes');
 
-  return {
+  const padding = {};
+  if (!isDurationOnly) {
+    if (event.paddingTopStart) {
+      padding.paddingTopStart = event.paddingTopStart
+        .clone()
+        .add(totalMinutes, 'minutes');
+    }
+  }
+
+  if (event.paddingBottomEnd) {
+    padding.paddingBottomEnd = event.paddingBottomEnd
+      .clone()
+      .add(totalMinutes, 'minutes');
+  }
+
+  const newTimes = {
     start,
     end,
+    ...padding,
   };
+
+  return newTimes;
 };
 
 export default getDraggedEventStartEnd;

@@ -234,7 +234,7 @@ const Column = React.forwardRef(
                       return (
                         <div
                           className={`${dndClassName} ${makeClass(
-                            'step-grid__event-padding-wrapper'
+                            'step-grid__event-wrapper'
                           )}`}
                           style={{
                             top: draggedEvent.top - event.paddingTopHeight,

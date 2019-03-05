@@ -1,12 +1,12 @@
 .acuity-calendar {
   &__step-grid {
     &__event-wrapper {
-      padding: 7.5px 10px 0;
-      text-align: left;
+      position: absolute;
     }
 
-    &__event-padding-wrapper {
-      position: absolute;
+    &__event-details-wrapper {
+      padding: 7.5px 10px 0;
+      text-align: left;
     }
 
     &__event {

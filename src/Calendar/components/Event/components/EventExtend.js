@@ -54,6 +54,12 @@ const EventExtend = ({
   newEvent.start = eventStartEnd.start;
   newEvent.end = eventStartEnd.end;
   newEvent.height = event.height + heightChange;
+  if (event.paddingTopStart) {
+    newEvent.paddingTopStart = eventStartEnd.paddingTopStart;
+  }
+  if (event.paddingBottomEnd) {
+    newEvent.paddingBottomEnd = eventStartEnd.paddingBottomEnd;
+  }
 
   return (
     <DraggableCore

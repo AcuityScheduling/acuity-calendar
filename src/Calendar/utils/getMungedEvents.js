@@ -108,32 +108,53 @@ const addEventLocation = ({ event, stepMinutes }) => {
     height = maxHeight;
   }
 
+  const padding = getEventPadding({ event, pixelsPerMinute });
+
   const location = {
     height,
-    top: eventTopOffset,
+    top: eventTopOffset - padding.topHeight, // if there is top padding that will adjust WHERE the event should be placed
+    paddingTopHeight: padding.topHeight,
+    paddingBottomHeight: padding.bottomHeight,
   };
 
-  location.paddingTopHeight = 0;
+  return Object.assign(event, location);
+};
+
+/**
+ * Get the height of the event's padding
+ *
+ * @param {Object} params
+ * @param {Object} params.event
+ * @param {number} params.pixelsPerMinute
+ */
+const getEventPadding = ({ event, pixelsPerMinute }) => {
+  let topHeight = 0;
   if (event.paddingTopStart) {
     const paddingTopDuration = event.paddingTopStart
       .clone()
       .diff(event.start, 'minutes');
-    location.paddingTopHeight = Math.abs(
-      paddingTopDuration * pixelsPerMinute + borderHeightAdjustment
+    const borderHeightAdjustmentPadding =
+      (paddingTopDuration / 60) * STEP_BORDER_WIDTH;
+    topHeight = Math.abs(
+      paddingTopDuration * pixelsPerMinute + borderHeightAdjustmentPadding
     );
   }
-
-  location.paddingBottomHeight = 0;
+  let bottomHeight = 0;
   if (event.paddingBottomEnd) {
     const paddingBottomDuration = event.paddingBottomEnd
       .clone()
       .diff(event.end, 'minutes');
-    location.paddingBottomHeight = Math.abs(
-      paddingBottomDuration * pixelsPerMinute + borderHeightAdjustment
+    const borderHeightAdjustmentPadding =
+      (paddingBottomDuration / 60) * STEP_BORDER_WIDTH;
+    bottomHeight = Math.abs(
+      paddingBottomDuration * pixelsPerMinute + borderHeightAdjustmentPadding
     );
   }
 
-  return Object.assign(event, location);
+  return {
+    topHeight,
+    bottomHeight,
+  };
 };
 
 /**

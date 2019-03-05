@@ -35,10 +35,12 @@ const getDraggedEventStartEnd = ({
   end.add(totalMinutes, 'minutes');
 
   const padding = {};
-  if (event.paddingTopStart) {
-    padding.paddingTopStart = event.paddingTopStart
-      .clone()
-      .add(totalMinutes, 'minutes');
+  if (!isDurationOnly) {
+    if (event.paddingTopStart) {
+      padding.paddingTopStart = event.paddingTopStart
+        .clone()
+        .add(totalMinutes, 'minutes');
+    }
   }
 
   if (event.paddingBottomEnd) {

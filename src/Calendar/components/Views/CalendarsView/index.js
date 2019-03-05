@@ -41,6 +41,8 @@ const CalendarsView = ({
   renderStepDetail,
   renderSelectSlotIndicator,
   renderSelectRange,
+  renderEventPaddingTop,
+  renderEventPaddingBottom,
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
@@ -123,6 +125,8 @@ const CalendarsView = ({
               renderStepDetail={renderStepDetail}
               renderSelectSlotIndicator={renderSelectSlotIndicator}
               renderSelectRange={renderSelectRange}
+              renderEventPaddingTop={renderEventPaddingTop}
+              renderEventPaddingBottom={renderEventPaddingBottom}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
@@ -152,6 +156,8 @@ CalendarsView.defaultProps = {
   renderStepDetail: () => null,
   renderSelectSlotIndicator: null,
   renderSelectRange: null,
+  renderEventPaddingTop: () => null,
+  renderEventPaddingBottom: () => null,
 };
 
 CalendarsView.propTypes = {
@@ -168,6 +174,8 @@ CalendarsView.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func.isRequired,
+  renderEventPaddingBottom: PropTypes.func,
+  renderEventPaddingTop: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

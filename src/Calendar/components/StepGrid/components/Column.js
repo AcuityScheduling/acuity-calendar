@@ -51,6 +51,8 @@ const Column = React.forwardRef(
       renderStepDetail,
       renderSelectSlotIndicator,
       renderSelectRange,
+      renderEventPaddingTop,
+      renderEventPaddingBottom,
     },
     ref
   ) => {
@@ -226,25 +228,55 @@ const Column = React.forwardRef(
                       isDndPlaceholder,
                     }) => {
                       return (
-                        <Event
-                          event={draggedEvent}
-                          style={{
-                            top: `${draggedEvent.top}px`,
-                            height: `${draggedEvent.height}px`,
-                            width:
-                              !isDndPlaceholder && (isDragging || isExtending)
-                                ? `${currentColumnWidth}px`
-                                : `${percentWidth}%`,
-                            left:
-                              !isDndPlaceholder && (isDragging || isExtending)
-                                ? `${leftChange}px`
-                                : `${percentWidth * (column - 1)}%`,
-                          }}
-                          onSelectEvent={onSelectEvent}
-                          isSelectable={!isDragging && !isExtending}
-                        >
-                          {renderEvent}
-                        </Event>
+                        <div>
+                          {event.paddingTopStart && (
+                            <div
+                              className={makeClass(
+                                'step-grid__event-padding-top'
+                              )}
+                              style={{
+                                height: '200px',
+                                width: '100%',
+                                background: 'blue',
+                              }}
+                            >
+                              {renderEventPaddingTop(event)}
+                            </div>
+                          )}
+                          <Event
+                            event={draggedEvent}
+                            style={{
+                              top: `${draggedEvent.top}px`,
+                              height: `${draggedEvent.height}px`,
+                              width:
+                                !isDndPlaceholder && (isDragging || isExtending)
+                                  ? `${currentColumnWidth}px`
+                                  : `${percentWidth}%`,
+                              left:
+                                !isDndPlaceholder && (isDragging || isExtending)
+                                  ? `${leftChange}px`
+                                  : `${percentWidth * (column - 1)}%`,
+                            }}
+                            onSelectEvent={onSelectEvent}
+                            isSelectable={!isDragging && !isExtending}
+                          >
+                            {renderEvent}
+                          </Event>
+                          {event.paddingBottomEnd && (
+                            <div
+                              className={makeClass(
+                                'step-grid__event-padding-bottom'
+                              )}
+                              style={{
+                                height: '200px',
+                                width: '100%',
+                                background: 'blue',
+                              }}
+                            >
+                              {renderEventPaddingBottom(event)}
+                            </div>
+                          )}
+                        </div>
                       );
                     }}
                   </EventDragDrop>
@@ -293,6 +325,8 @@ Column.defaultProps = {
   renderSelectSlotIndicator: null,
   onSelectRangeEnd: () => null,
   renderSelectRange: null,
+  renderEventPaddingTop: () => null,
+  renderEventPaddingBottom: () => null,
 };
 
 Column.propTypes = {
@@ -312,6 +346,8 @@ Column.propTypes = {
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderEventPaddingBottom: PropTypes.func,
+  renderEventPaddingTop: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

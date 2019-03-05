@@ -104,6 +104,12 @@ const App = () => {
           // and for drag and drop
           selectMinutes={15}
           selectedEventGroups={selectedCalendars}
+          renderEventPaddingTop={event => {
+            return <div />;
+          }}
+          renderEventPaddingBottom={event => {
+            return <div />;
+          }}
           renderEventGroupHeader={({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
           }

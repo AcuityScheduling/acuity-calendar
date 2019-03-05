@@ -41,6 +41,8 @@ const Calendar = ({
   renderSelectRange,
   minWidthColumn,
   minWidthColumnEmpty,
+  renderEventPaddingTop,
+  renderEventPaddingBottom,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -108,6 +110,8 @@ const Calendar = ({
       minWidthColumnEmpty={minWidthColumnEmpty}
       renderStepDetail={renderStepDetail}
       renderSelectSlotIndicator={renderSelectSlotIndicator}
+      renderEventPaddingTop={renderEventPaddingTop}
+      renderEventPaddingBottom={renderEventPaddingBottom}
     />
   );
 };
@@ -116,6 +120,8 @@ Calendar.defaultProps = {
   renderEvent: null,
   renderCorner: () => null,
   renderEventGroupHeader: () => null,
+  renderEventPaddingTop: () => null,
+  renderEventPaddingBottom: () => null,
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
@@ -148,6 +154,8 @@ Calendar.propTypes = {
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
+  renderEventPaddingBottom: PropTypes.func,
+  renderEventPaddingTop: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

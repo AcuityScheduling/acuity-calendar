@@ -40,16 +40,18 @@ const getMungedEvents = ({ events, stepMinutes }) => {
  */
 const expandAllDayEvents = events => {
   return events.reduce((accumulator, event) => {
+    const padding = {};
+    if (event.paddingTopStart) {
+      padding.paddingTopStart = moment(event.paddingTopStart);
+    }
+    if (event.paddingBottomStart) {
+      padding.paddingBottomStart = moment(event.paddingBottomStart);
+    }
     // Turn event strings into moment objects
     const newEvent = Object.assign({}, event, {
       start: moment(new Date(event.start)),
       end: moment(new Date(event.end)),
-      paddingTopStart: event.paddingTopStart
-        ? moment(event.paddingTopStart)
-        : undefined,
-      paddingBottomEnd: event.paddingBottomEnd
-        ? moment(event.paddingBottomEnd)
-        : undefined,
+      ...padding,
     });
 
     const totalDays = Math.abs(
@@ -111,6 +113,7 @@ const addEventLocation = ({ event, stepMinutes }) => {
     top: eventTopOffset,
   };
 
+  location.paddingTopHeight = 0;
   if (event.paddingTopStart) {
     const paddingTopDuration = event.paddingTopStart
       .clone()
@@ -119,6 +122,8 @@ const addEventLocation = ({ event, stepMinutes }) => {
       paddingTopDuration * pixelsPerMinute + borderHeightAdjustment
     );
   }
+
+  location.paddingBottomHeight = 0;
   if (event.paddingBottomEnd) {
     const paddingBottomDuration = event.paddingBottomEnd
       .clone()

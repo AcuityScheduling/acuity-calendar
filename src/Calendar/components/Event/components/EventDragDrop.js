@@ -142,8 +142,12 @@ const EventDragDrop = ({
   });
   updatedEvent.start = eventStartEnd.start;
   updatedEvent.end = eventStartEnd.end;
-  updatedEvent.paddingTopStart = eventStartEnd.paddingTopStart;
-  updatedEvent.paddingBottomEnd = eventStartEnd.paddingBottomEnd;
+  if (event.paddingTopStart) {
+    updatedEvent.paddingTopStart = eventStartEnd.paddingTopStart;
+  }
+  if (event.paddingBottomEnd) {
+    updatedEvent.paddingBottomEnd = eventStartEnd.paddingBottomEnd;
+  }
 
   updatedEvent = getUpdatedDraggedEvent({
     event: updatedEvent,

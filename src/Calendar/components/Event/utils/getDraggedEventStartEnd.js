@@ -47,12 +47,19 @@ const getDraggedEventStartEnd = ({
       .add(totalMinutes, 'minutes');
   }
 
-  return {
+  const newTimes = {
     start,
     end,
-    paddingTopStart: paddingTopStart ? paddingTopStart : undefined,
-    paddingBottomEnd: paddingBottomEnd ? paddingBottomEnd : undefined,
   };
+
+  if (paddingTopStart) {
+    newTimes.paddingTopStart = paddingTopStart;
+  }
+  if (paddingBottomEnd) {
+    newTimes.paddingBottomEnd = paddingBottomEnd;
+  }
+
+  return newTimes;
 };
 
 export default getDraggedEventStartEnd;

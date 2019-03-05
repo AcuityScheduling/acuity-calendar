@@ -32,6 +32,10 @@ const useSelectRange = ({
     setIsMouseDown(false);
   };
 
+  const onContextMenu = e => {
+    setIsMouseDown(false);
+  };
+
   const onMouseDown = e => {
     if (!isSelectable) return false;
     setIsMouseDown(true);
@@ -101,7 +105,7 @@ const useSelectRange = ({
   };
 
   return {
-    selectRangeHandlers: { onMouseUp, onMouseDown, onMouseMove },
+    selectRangeHandlers: { onMouseUp, onMouseDown, onMouseMove, onContextMenu },
     isSelectRangeFinished,
     resetSelectRangeDrag,
     selectRangeHeight: height,

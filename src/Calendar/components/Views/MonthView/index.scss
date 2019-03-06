@@ -19,9 +19,14 @@
       flex: 1 1 0;
     }
     &__date {
-      display: block;
-      text-align: right;
+      position: absolute;
+      font-size: 14px;
+      right: 5px;
+      top: 5px;
       color: #2c2929;
+      &--not-in-range {
+        color: #a9a5a5;
+      }
     }
     &__row {
       position: relative;
@@ -34,6 +39,7 @@
       }
     }
     &__cell {
+      position: relative;
       &:not(:last-child) {
         border-right: 1px solid #e7e7e7;
       }

@@ -19,7 +19,7 @@ const getTotalGridSize = ({ totalDates, forceSixWeeks }) => {
  * @param {0|1|2|3|4|5|6} params.firstDay - the firstDay of the week
  * @param {boolean} params.forceSixWeeks - Having 6 rows _all_ of the time may sometimes be wanted
  */
-const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
+export const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
   const grid = getGrid({ date, firstDay, forceSixWeeks });
 
   const lastDayOfLastMonth = date
@@ -42,7 +42,6 @@ const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
         if (day === lastDayOfLastMonth) {
           isLastMonth = false;
           isCurrentMonth = true;
-          return getDetails({ date, day, isInRange: false, type: 'last' });
         }
         return getDetails({ date, day, isInRange: false, type: 'last' });
       }
@@ -50,7 +49,6 @@ const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
         if (day === lastDayOfMonth) {
           isCurrentMonth = false;
           isNextMonth = true;
-          return getDetails({ date, day, isInRange: true, type: 'current' });
         }
         return getDetails({ date, day, isInRange: true, type: 'current' });
       }

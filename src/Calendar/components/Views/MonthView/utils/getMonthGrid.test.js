@@ -1,4 +1,4 @@
-import { getGrid } from './getMonthGrid';
+import { getGrid, getMonthGrid } from './getMonthGrid';
 import moment from 'moment';
 
 const getTestInfo = ({ dateString, firstDay, forceSixWeeks = true }) => {
@@ -7,6 +7,20 @@ const getTestInfo = ({ dateString, firstDay, forceSixWeeks = true }) => {
 };
 
 describe('The monthly grid function', () => {
+  it('should have the correct days in range', () => {
+    const date = moment(new Date('2019-01-12'));
+    const monthGrid = getMonthGrid({ date });
+    expect(monthGrid[4][0].isInRange).toBeTruthy();
+    expect(monthGrid[4][5].isInRange).toBeFalsy();
+  });
+
+  it('should have the correct days in range if first day of month lands on first day', () => {
+    const date = moment(new Date('2019-09-12'));
+    const monthGrid = getMonthGrid({ date });
+    expect(monthGrid[0][0].isInRange).toBeTruthy();
+    expect(monthGrid[4][2].isInRange).toBeFalsy();
+  });
+
   it('should have 42 days and 6 columns', () => {
     const result = getTestInfo({
       dateString: '2019-01-15',

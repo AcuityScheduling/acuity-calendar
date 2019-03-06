@@ -67,37 +67,33 @@ const MonthView = ({
                       onSelectSlot({ date: new Date(dayDetails.date) })
                     }
                   >
-                    {renderMonthCell ? (
-                      renderMonthCell({
-                        date: dayDetails.date,
-                        isInRange: dayDetails.isInRange,
-                        events: eventsForCell,
-                      })
-                    ) : (
-                      <Fragment>
-                        <div
-                          className={makeClass(
-                            'month__date',
-                            !dayDetails.isInRange && 'month__date--not-in-range'
-                          )}
-                        >
-                          {dayDetails.date.date()}
-                        </div>
-                        {eventsForCell.length > 0 &&
-                          eventsForCell.map(
-                            event =>
-                              dayDetails.isInRange && (
-                                <MonthEvent
-                                  event={event}
-                                  key={event.id}
-                                  onSelect={onSelectEvent}
-                                >
-                                  {renderEvent}
-                                </MonthEvent>
-                              )
-                          )}
-                      </Fragment>
-                    )}
+                    <div
+                      className={makeClass(
+                        'month__date',
+                        !dayDetails.isInRange && 'month__date--not-in-range'
+                      )}
+                    >
+                      {dayDetails.date.date()}
+                    </div>
+                    {renderMonthCell
+                      ? renderMonthCell({
+                          date: dayDetails.date,
+                          isInRange: dayDetails.isInRange,
+                          events: eventsForCell,
+                        })
+                      : eventsForCell.length > 0 &&
+                        eventsForCell.map(
+                          event =>
+                            dayDetails.isInRange && (
+                              <MonthEvent
+                                event={event}
+                                key={event.id}
+                                onSelect={onSelectEvent}
+                              >
+                                {renderEvent}
+                              </MonthEvent>
+                            )
+                        )}
                   </div>
                 );
               })}

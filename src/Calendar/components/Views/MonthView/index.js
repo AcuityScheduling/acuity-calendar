@@ -63,7 +63,9 @@ const MonthView = ({
                       !dayDetails.isInRange && 'month__cell--not-in-range'
                     )}
                     role="button"
-                    onClick={() => onSelectSlot(dayDetails.date)}
+                    onClick={() =>
+                      onSelectSlot({ date: new Date(dayDetails.date) })
+                    }
                   >
                     {renderMonthCell ? (
                       renderMonthCell({

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CALENDAR_VIEWS } from '../Calendar/constants';
@@ -8,6 +8,8 @@ import {
   DATE_TYPE,
 } from '../Calendar/types';
 import { getWeekList } from '../Calendar/components/Views/WeekView/utils';
+import { makeClass } from '../Calendar/utils';
+import './index.scss';
 
 const { month, week, calendar } = CALENDAR_VIEWS;
 
@@ -75,18 +77,10 @@ const Toolbar = ({
     currentDate: moment(selectedDate),
   });
 
-  const styles = `
-    button {
-      margin-right: 4px;
-    }
-  `;
-
   return (
-    <div style={{ marginBottom: '15px' }}>
-      <style>{styles}</style>
-      <h1>{getRangeTitle({ date: moment(selectedDate), view, firstDay })}</h1>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: '20px' }}>
+    <Fragment>
+      <div className={makeClass('toolbar')}>
+        <div className={makeClass('toolbar__views')}>
           <button type="button" onClick={() => onViewChange(month)}>
             Month
           </button>
@@ -97,7 +91,7 @@ const Toolbar = ({
             Day
           </button>
         </div>
-        <div>
+        <div className={makeClass('toolbar__navigate')}>
           <button type="button" onClick={() => onNavigate(prevDate)}>
             Back
           </button>
@@ -105,8 +99,11 @@ const Toolbar = ({
             Next
           </button>
         </div>
+        <h1 className={makeClass('toolbar__title')}>
+          {getRangeTitle({ date: moment(selectedDate), view, firstDay })}
+        </h1>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

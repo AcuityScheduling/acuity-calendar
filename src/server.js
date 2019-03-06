@@ -35,6 +35,7 @@ server
             margin: 0;
             font-family: Open Sans, Helvetica, Arial, sans-serif; 
             display: flex;
+            color: #2C2929;
           } 
           #root { 
             flex: 1 1 0;

@@ -4,8 +4,8 @@ import moment from 'moment';
 
 // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
 // If we just want a 5 week grid then 35
-const getTotalGridSize = ({ totalDates, forceSixRows }) => {
-  if (totalDates > 35 || forceSixRows) {
+const getTotalGridSize = ({ totalDates, forceSixWeeks }) => {
+  if (totalDates > 35 || forceSixWeeks) {
     return 42;
   }
   return 35;
@@ -17,10 +17,10 @@ const getTotalGridSize = ({ totalDates, forceSixRows }) => {
  * @param {Object} params
  * @param {moment} params.date - the selected date
  * @param {0|1|2|3|4|5|6} params.firstDay - the firstDay of the week
- * @param {boolean} params.forceSixRows - Having 6 rows _all_ of the time may sometimes be wanted
+ * @param {boolean} params.forceSixWeeks - Having 6 rows _all_ of the time may sometimes be wanted
  */
-const getMonthGrid = ({ date, firstDay = 0, forceSixRows = false }) => {
-  const grid = getGrid({ date, firstDay, forceSixRows });
+const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
+  const grid = getGrid({ date, firstDay, forceSixWeeks });
 
   const lastDayOfLastMonth = date
     .clone()
@@ -104,19 +104,19 @@ const getDetails = ({ date, day, isInRange, type }) => {
  * @param {Object} params
  * @param {moment} params.date - the selected date we want the month grid for
  * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
- * @param {boolean} params.forceSixRows - If you want 6 rows all the time or only when needed
+ * @param {boolean} params.forceSixWeeks - If you want 6 rows all the time or only when needed
  * @returns {number[]}
  */
-export const getGrid = ({ date, firstDay, forceSixRows }) => {
+export const getGrid = ({ date, firstDay, forceSixWeeks }) => {
   const startOfGrid = getStartOfGrid({ date, firstDay });
   const middleOfGrid = getArrayOfDays(date);
 
   const totalDates = startOfGrid.length + middleOfGrid.length;
-  const totalGridSize = getTotalGridSize({ totalDates, forceSixRows });
+  const totalGridSize = getTotalGridSize({ totalDates, forceSixWeeks });
 
   const endOfGrid = getEndOfGrid({
     totalDates,
-    forceSixRows,
+    forceSixWeeks,
   });
 
   const grid = [].concat(startOfGrid, middleOfGrid, endOfGrid);
@@ -200,11 +200,11 @@ export const getArrayOfDays = date => {
  *
  * @param {Object} params
  * @param {moment} params.totalGridSize - The total size of the grid
- * @param {number} params.forceSixRows - Do we want to force 6 rows in the grid regardless of date?
+ * @param {number} params.forceSixWeeks - Do we want to force 6 rows in the grid regardless of date?
  */
-const getEndOfGrid = ({ totalDates, forceSixRows }) => {
+const getEndOfGrid = ({ totalDates, forceSixWeeks }) => {
   const remainingDates =
-    getTotalGridSize({ totalDates, forceSixRows }) - totalDates;
+    getTotalGridSize({ totalDates, forceSixWeeks }) - totalDates;
 
   const days = [];
   for (let i = 1; i <= remainingDates; i += 1) {

@@ -14,9 +14,16 @@
     }
     &__header {
       display: flex;
+      border-left: 1px solid #e7e7e7;
     }
     &__column-header {
       flex: 1 1 0;
+      text-align: center;
+      border-top: 1px solid #e7e7e7;
+      border-right: 1px solid #e7e7e7;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: 600;
     }
     &__date {
       position: absolute;

@@ -27,6 +27,7 @@ const Calendar = ({
   onCurrentTimeChange,
   onDragEnd,
   firstDay,
+  forceSixWeeks,
   onSelectEvent,
   onSelectRangeEnd,
   onSelectSlot,
@@ -97,6 +98,7 @@ const Calendar = ({
       onSelectEvent={onSelectEvent}
       onSelectRangeEnd={onSelectRangeEnd}
       onSelectSlot={onSelectSlot}
+      forceSixWeeks={forceSixWeeks}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
@@ -138,11 +140,13 @@ Calendar.defaultProps = {
   renderSelectSlotIndicator: null,
   onSelectRangeEnd: () => null,
   renderSelectRange: null,
+  forceSixWeeks: false,
 };
 
 Calendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE.isRequired,
+  forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

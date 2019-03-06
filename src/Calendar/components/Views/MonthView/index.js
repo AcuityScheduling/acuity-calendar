@@ -13,9 +13,14 @@ const MonthView = ({
   firstDay,
   onSelectEvent,
   onSelectSlot,
+  forceSixWeeks,
   renderEvent,
 }) => {
-  const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
+  const monthGrid = getMonthGrid({
+    date: selectedDate,
+    firstDay,
+    forceSixWeeks,
+  });
   const dayNames = getDayNames({ firstDay });
 
   let countDays = 0;
@@ -52,7 +57,10 @@ const MonthView = ({
                 return (
                   <div
                     key={`monthCells${countDays}`}
-                    className={makeClass('month__cell')}
+                    className={makeClass(
+                      'month__cell',
+                      !dayDetails.isInRange && 'month_cell--not-in-range'
+                    )}
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
@@ -85,11 +93,13 @@ const MonthView = ({
 
 MonthView.defaultProps = {
   renderEvent: null,
+  forceSixWeeks: false,
 };
 
 MonthView.propTypes = {
   events: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
+  forceSixWeeks: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,

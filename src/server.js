@@ -32,7 +32,7 @@ server
             height: 100% 
           } 
           body {
-            margin: 0;
+            margin: 0 10px;
             font-family: Open Sans, Helvetica, Arial, sans-serif; 
             display: flex;
             color: #2C2929;

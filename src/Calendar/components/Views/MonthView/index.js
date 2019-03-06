@@ -59,12 +59,17 @@ const MonthView = ({
                     key={`monthCells${countDays}`}
                     className={makeClass(
                       'month__cell',
-                      !dayDetails.isInRange && 'month_cell--not-in-range'
+                      !dayDetails.isInRange && 'month__cell--not-in-range'
                     )}
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
-                    <div className={makeClass('month__date')}>
+                    <div
+                      className={makeClass(
+                        'month__date',
+                        !dayDetails.isInRange && 'month__date--not-in-range'
+                      )}
+                    >
                       {dayDetails.date.date()}
                     </div>
                     {eventsForCell.length > 0 &&

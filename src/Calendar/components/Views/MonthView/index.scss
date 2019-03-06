@@ -21,6 +21,7 @@
     &__date {
       display: block;
       text-align: right;
+      color: #2c2929;
     }
     &__row {
       position: relative;
@@ -37,6 +38,9 @@
         border-right: 1px solid #e7e7e7;
       }
       width: 100%;
+      &--not-in-range {
+        background: #fbf9f9;
+      }
     }
   }
 }

@@ -73,9 +73,9 @@ export const MOCKED_EVENTS = [
 ];
 
 export const MOCKED_CALENDARS = [
-  { id: 5, name: 'Brian Jenkins' },
-  { id: 6, name: 'Becki Jenkins' },
-  { id: 7, name: 'Gavin Zuchlinski' },
+  { id: 5, name: 'Shannah Miriam' },
+  { id: 6, name: 'Mari Barker' },
+  { id: 7, name: 'Arissa Farmer' },
 ];
 
 export const MOCKED_STEP_DETAILS = [

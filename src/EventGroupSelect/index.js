@@ -18,7 +18,8 @@ const EventGroupSelect = ({
   };
 
   return (
-    <div style={{ marginBottom: '30px' }}>
+    <div style={{ marginBottom: 30 }}>
+      <strong style={{ marginRight: 25 }}>Calendars:</strong>
       {eventGroups.map(group => {
         const isSelected = selectedEventGroups.includes(group.id);
         return (

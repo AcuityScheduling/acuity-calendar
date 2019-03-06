@@ -12,7 +12,7 @@ const getEventContainerClass = className => {
 
 const EventWrapper = React.forwardRef(
   (
-    { className, event, isSelectable, onSelectEvent, children, ...restProps },
+    { className, event, isSelectable, onSelect, children, ...restProps },
     ref
   ) => (
     <div
@@ -23,7 +23,7 @@ const EventWrapper = React.forwardRef(
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
-        onSelectEvent(resetEventFormat(event));
+        onSelect(resetEventFormat(event));
       }}
     >
       {children}
@@ -36,7 +36,7 @@ EventWrapper.displayName = 'EventWrapper';
 EventWrapper.defaultProps = {
   className: '',
   isSelectable: true,
-  onSelectEvent: () => null,
+  onSelect: () => null,
 };
 
 EventWrapper.propTypes = {
@@ -44,7 +44,7 @@ EventWrapper.propTypes = {
   className: PropTypes.string,
   event: PropTypes.object.isRequired,
   isSelectable: PropTypes.bool,
-  onSelectEvent: PropTypes.func,
+  onSelect: PropTypes.func,
 };
 
 export default EventWrapper;

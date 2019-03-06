@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { getMonthGrid, getDayNames } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
-import Event from '../../Event';
+import MonthEvent from './components/MonthEvent';
 import './index.scss';
 
 const MonthView = ({
@@ -87,13 +87,13 @@ const MonthView = ({
                           eventsForCell.map(
                             event =>
                               dayDetails.isInRange && (
-                                <Event
+                                <MonthEvent
                                   event={event}
                                   key={event.id}
-                                  onSelectEvent={onSelectEvent}
+                                  onSelect={onSelectEvent}
                                 >
                                   {renderEvent}
-                                </Event>
+                                </MonthEvent>
                               )
                           )}
                       </Fragment>

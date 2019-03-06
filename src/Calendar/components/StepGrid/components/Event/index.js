@@ -14,7 +14,7 @@ const Event = ({
   className,
   event,
   isSelectable,
-  onSelectEvent,
+  onSelect,
   ...restProps
 }) => {
   const wrapperRef = useRef(null);
@@ -37,7 +37,7 @@ const Event = ({
     <EventWrapper
       ref={wrapperRef}
       event={event}
-      onSelectEvent={onSelectEvent}
+      onSelect={onSelect}
       isSelectable={isSelectable}
       {...restProps}
     >
@@ -80,7 +80,7 @@ Event.propTypes = {
   className: PropTypes.string,
   event: EVENT_TYPE.isRequired,
   isSelectable: PropTypes.bool,
-  onSelectEvent: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default Event;

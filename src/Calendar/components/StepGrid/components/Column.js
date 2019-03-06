@@ -264,7 +264,7 @@ const Column = React.forwardRef(
                             style={{
                               height: `${draggedEvent.height}px`,
                             }}
-                            onSelectEvent={onSelectEvent}
+                            onSelect={onSelectEvent}
                             isSelectable={!isDragging && !isExtending}
                           >
                             {renderEvent}

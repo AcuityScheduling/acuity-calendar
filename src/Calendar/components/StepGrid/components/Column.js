@@ -17,9 +17,9 @@ import {
 } from '../utils';
 import './Column.scss';
 import { makeClass } from '../../../utils';
-import Event from '../../Event';
-import EventDragDrop from '../../Event/components/EventDragDrop';
-import EventExtend from '../../Event/components/EventExtend';
+import Event from './Event';
+import EventDragDrop from './Event/components/EventDragDrop';
+import EventExtend from './Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,

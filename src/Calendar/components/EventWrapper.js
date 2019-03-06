@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { resetEventFormat, makeClass } from '../../../utils';
+import { makeClass, resetEventFormat } from '../utils';
 
 const getEventContainerClass = className => {
   const eventClass = makeClass('step-grid__event');

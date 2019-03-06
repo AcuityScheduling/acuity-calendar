@@ -5,14 +5,14 @@ import {
   EVENT_TYPE,
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
-} from '../../../types';
-import { makeClass, resetEventFormat } from '../../../utils';
+} from '../../../../../types';
 import {
   getSelectMinutesHeight,
   getDragVerticalChange,
   getDraggedEventStartEnd,
 } from '../utils';
 import { handleCenterClass } from '..';
+import { makeClass, resetEventFormat } from '../../../../../utils';
 
 /**
  * Get classes that we're going to attach to an event while we're

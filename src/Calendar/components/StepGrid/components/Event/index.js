@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { EVENT_TYPE } from '../../types';
-import { makeClass } from '../../utils';
 import './index.scss';
-import { getDisplayTime } from '../StepGrid/utils';
-import EventWrapper from './components/EventWrapper';
+import EventWrapper from '../../../EventWrapper';
+import { getDisplayTime } from '../../utils';
+import { makeClass } from '../../../../utils';
+import { EVENT_TYPE } from '../../../../types';
 
 export const handleCenterClass = makeClass('step-grid__event-handle-center');
 export const extendHandleClass = makeClass('step-grid__event-handle');

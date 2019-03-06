@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getMonthGrid, getDayNames } from './utils';
@@ -75,25 +75,30 @@ const MonthView = ({
                     >
                       {dayDetails.date.date()}
                     </div>
-                    {renderMonthCell
-                      ? renderMonthCell({
-                          date: dayDetails.date,
-                          isInRange: dayDetails.isInRange,
-                          events: eventsForCell,
-                        })
-                      : eventsForCell.length > 0 &&
-                        eventsForCell.map(
-                          event =>
-                            dayDetails.isInRange && (
-                              <MonthEvent
-                                event={event}
-                                key={event.id}
-                                onSelect={onSelectEvent}
-                              >
-                                {renderEvent}
-                              </MonthEvent>
-                            )
-                        )}
+                    {renderMonthCell ? (
+                      renderMonthCell({
+                        date: dayDetails.date,
+                        isInRange: dayDetails.isInRange,
+                        events: eventsForCell,
+                      })
+                    ) : (
+                      <Fragment>
+                        <div className={makeClass('month__cell-spacer')} />
+                        {eventsForCell.length > 0 &&
+                          eventsForCell.map(
+                            event =>
+                              dayDetails.isInRange && (
+                                <MonthEvent
+                                  event={event}
+                                  key={event.id}
+                                  onSelect={onSelectEvent}
+                                >
+                                  {renderEvent}
+                                </MonthEvent>
+                              )
+                          )}
+                      </Fragment>
+                    )}
                   </div>
                 );
               })}

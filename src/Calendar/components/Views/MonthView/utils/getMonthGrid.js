@@ -33,8 +33,8 @@ export const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
     .endOf('month')
     .date();
 
-  let isLastMonth = true;
-  let isCurrentMonth = false;
+  let isLastMonth = grid[0][0] !== 1 ? true : false;
+  let isCurrentMonth = grid[0][0] !== 1 ? false : true;
   let isNextMonth = false;
   return grid.map(row => {
     return row.map(day => {

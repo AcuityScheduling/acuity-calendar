@@ -7,11 +7,6 @@ import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
 import Event from '../../Event';
 import './index.scss';
 
-const cellWidth = `${100 / 7}%`;
-const dayStyles = {
-  width: cellWidth,
-};
-
 const MonthView = ({
   events,
   selectedDate,
@@ -27,14 +22,10 @@ const MonthView = ({
   let countRows = 0;
   return (
     <div className={makeClass('month')}>
-      <div className={makeClass('month__row', 'month__header')}>
+      <div className={makeClass('month__header')}>
         {dayNames.map(dayName => {
           return (
-            <div
-              className={makeClass('month__day-name')}
-              style={dayStyles}
-              key={dayName}
-            >
+            <div className={makeClass('month__column-header')} key={dayName}>
               {dayName}
             </div>
           );
@@ -62,13 +53,12 @@ const MonthView = ({
                   <div
                     key={`monthCells${countDays}`}
                     className={makeClass('month__cell')}
-                    style={dayStyles}
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
-                    <span className={makeClass('month__date')}>
+                    <div className={makeClass('month__date')}>
                       {dayDetails.date.date()}
-                    </span>
+                    </div>
                     {eventsForCell.length > 0 &&
                       eventsForCell.map(
                         event =>

@@ -27,7 +27,19 @@ server
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="utf-8" />
-        <style>body {font-family: Open Sans, Helvetica, Arial, sans-serif}</style>
+        <style>
+          html, body { 
+            height: 100% 
+          } 
+          body {
+            margin: 0;
+            font-family: Open Sans, Helvetica, Arial, sans-serif; 
+            display: flex;
+          } 
+          #root { 
+            flex: 1 1 0;
+          }
+        </style>
         <title>Welcome to Razzle</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeClass, resetEventFormat } from '../utils';
+import { resetEventFormat, makeClass } from '../utils';
 
-const getEventContainerClass = className => {
-  const eventClass = makeClass('step-grid__event');
+const getEventContainerClass = ({ className, eventClass }) => {
   if (className) {
     return `${eventClass} ${className}`;
   }
@@ -12,12 +11,20 @@ const getEventContainerClass = className => {
 
 const EventWrapper = React.forwardRef(
   (
-    { className, event, isSelectable, onSelect, children, ...restProps },
+    {
+      className,
+      eventClass,
+      event,
+      isSelectable,
+      onSelect,
+      children,
+      ...restProps
+    },
     ref
   ) => (
     <div
       {...restProps}
-      className={getEventContainerClass(className)}
+      className={getEventContainerClass({ className, eventClass })}
       role="button"
       ref={ref}
       onClick={e => {
@@ -37,12 +44,14 @@ EventWrapper.defaultProps = {
   className: '',
   isSelectable: true,
   onSelect: () => null,
+  eventClass: makeClass('step-grid__event'),
 };
 
 EventWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   event: PropTypes.object.isRequired,
+  eventClass: PropTypes.string,
   isSelectable: PropTypes.bool,
   onSelect: PropTypes.func,
 };

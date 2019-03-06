@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getMonthGrid, getDayNames } from './utils';
@@ -15,6 +15,7 @@ const MonthView = ({
   onSelectSlot,
   forceSixWeeks,
   renderEvent,
+  renderMonthCell,
 }) => {
   const monthGrid = getMonthGrid({
     date: selectedDate,
@@ -64,27 +65,37 @@ const MonthView = ({
                     role="button"
                     onClick={() => onSelectSlot(dayDetails.date)}
                   >
-                    <div
-                      className={makeClass(
-                        'month__date',
-                        !dayDetails.isInRange && 'month__date--not-in-range'
-                      )}
-                    >
-                      {dayDetails.date.date()}
-                    </div>
-                    {eventsForCell.length > 0 &&
-                      eventsForCell.map(
-                        event =>
-                          dayDetails.isInRange && (
-                            <Event
-                              event={event}
-                              key={event.id}
-                              onSelectEvent={onSelectEvent}
-                            >
-                              {renderEvent}
-                            </Event>
-                          )
-                      )}
+                    {renderMonthCell ? (
+                      renderMonthCell({
+                        date: dayDetails.date,
+                        isInRange: dayDetails.isInRange,
+                        events: eventsForCell,
+                      })
+                    ) : (
+                      <Fragment>
+                        <div
+                          className={makeClass(
+                            'month__date',
+                            !dayDetails.isInRange && 'month__date--not-in-range'
+                          )}
+                        >
+                          {dayDetails.date.date()}
+                        </div>
+                        {eventsForCell.length > 0 &&
+                          eventsForCell.map(
+                            event =>
+                              dayDetails.isInRange && (
+                                <Event
+                                  event={event}
+                                  key={event.id}
+                                  onSelectEvent={onSelectEvent}
+                                >
+                                  {renderEvent}
+                                </Event>
+                              )
+                          )}
+                      </Fragment>
+                    )}
                   </div>
                 );
               })}
@@ -99,6 +110,7 @@ const MonthView = ({
 MonthView.defaultProps = {
   renderEvent: null,
   forceSixWeeks: false,
+  renderMonthCell: null,
 };
 
 MonthView.propTypes = {
@@ -108,6 +120,7 @@ MonthView.propTypes = {
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
+  renderMonthCell: PropTypes.func,
   selectedDate: MOMENT_TYPE.isRequired,
 };
 

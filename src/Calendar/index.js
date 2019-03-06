@@ -44,6 +44,7 @@ const Calendar = ({
   minWidthColumnEmpty,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  renderMonthCell,
 }) => {
   const getView = () => {
     const { month, week, calendar } = CALENDAR_VIEWS;
@@ -114,6 +115,7 @@ const Calendar = ({
       renderSelectSlotIndicator={renderSelectSlotIndicator}
       renderEventPaddingTop={renderEventPaddingTop}
       renderEventPaddingBottom={renderEventPaddingBottom}
+      renderMonthCell={renderMonthCell}
     />
   );
 };
@@ -140,6 +142,7 @@ Calendar.defaultProps = {
   renderSelectSlotIndicator: null,
   onSelectRangeEnd: () => null,
   renderSelectRange: null,
+  renderMonthCell: null,
   forceSixWeeks: false,
 };
 
@@ -160,6 +163,7 @@ Calendar.propTypes = {
   renderEventGroupHeader: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
+  renderMonthCell: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

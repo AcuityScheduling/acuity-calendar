@@ -1,17 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { EVENT_TYPE } from '../../types';
-import { makeClass, resetEventFormat } from '../../utils';
+import { makeClass } from '../../utils';
 import './index.scss';
 import { getDisplayTime } from '../StepGrid/utils';
-
-const getEventContainerClass = className => {
-  const eventClass = makeClass('step-grid__event');
-  if (className) {
-    return `${eventClass} ${className}`;
-  }
-  return eventClass;
-};
+import EventWrapper from './components/EventWrapper';
 
 export const handleCenterClass = makeClass('step-grid__event-handle-center');
 export const extendHandleClass = makeClass('step-grid__event-handle');
@@ -41,16 +34,12 @@ const Event = ({
   });
 
   return (
-    <div
-      {...restProps}
-      className={getEventContainerClass(className)}
-      role="button"
+    <EventWrapper
       ref={wrapperRef}
-      onClick={e => {
-        e.stopPropagation();
-        if (!isSelectable) return false;
-        onSelectEvent(resetEventFormat(event));
-      }}
+      event={event}
+      onSelectEvent={onSelectEvent}
+      isSelectable={isSelectable}
+      {...restProps}
     >
       <div
         className={handleCenterClass}
@@ -76,7 +65,7 @@ const Event = ({
         )}`}
         ref={extenderRef}
       />
-    </div>
+    </EventWrapper>
   );
 };
 

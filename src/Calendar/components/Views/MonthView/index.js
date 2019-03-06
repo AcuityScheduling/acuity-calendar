@@ -82,8 +82,7 @@ const MonthView = ({
                         events: eventsForCell,
                       })
                     ) : (
-                      <Fragment>
-                        <div className={makeClass('month__cell-spacer')} />
+                      <div className={makeClass('month__event-wrapper')}>
                         {eventsForCell.length > 0 &&
                           eventsForCell.map(
                             event =>
@@ -97,7 +96,7 @@ const MonthView = ({
                                 </MonthEvent>
                               )
                           )}
-                      </Fragment>
+                      </div>
                     )}
                   </div>
                 );

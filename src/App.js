@@ -73,6 +73,11 @@ const App = () => {
         }}
         // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
         firstDay={firstDay}
+        // When clicking on the date in the month view
+        onSelectMonthDate={({ date }) => {
+          setSelectedDate(date);
+          setView(CALENDAR_VIEWS.calendar);
+        }}
         onSelectEvent={event => {
           console.log('CLICK', event);
         }}

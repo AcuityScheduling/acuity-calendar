@@ -3,7 +3,7 @@ import {
   getDragVerticalChange,
   getSelectMinutesHeight,
   getMinutesMoved,
-} from '../../Event/utils';
+} from '../components/Event/utils';
 import { getClickedTime } from '.';
 
 const useSelectRange = ({

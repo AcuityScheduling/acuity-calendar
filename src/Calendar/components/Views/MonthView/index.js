@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getMonthGrid, getDayNames } from './utils';
@@ -13,6 +13,7 @@ const MonthView = ({
   firstDay,
   onSelectEvent,
   onSelectSlot,
+  onSelectMonthDate,
   forceSixWeeks,
   renderEvent,
   renderMonthCell,
@@ -67,13 +68,21 @@ const MonthView = ({
                       onSelectSlot({ date: new Date(dayDetails.date) })
                     }
                   >
-                    <div
-                      className={makeClass(
-                        'month__date',
-                        !dayDetails.isInRange && 'month__date--not-in-range'
-                      )}
-                    >
-                      {dayDetails.date.date()}
+                    <div className={makeClass('month__date-wrapper')}>
+                      <div
+                        className={makeClass(
+                          'month__date',
+                          !dayDetails.isInRange && 'month__date--not-in-range'
+                        )}
+                        onClick={e =>
+                          onSelectMonthDate({
+                            e,
+                            date: new Date(dayDetails.date),
+                          })
+                        }
+                      >
+                        {dayDetails.date.date()}
+                      </div>
                     </div>
                     {renderMonthCell ? (
                       renderMonthCell({
@@ -113,6 +122,7 @@ MonthView.defaultProps = {
   renderEvent: null,
   forceSixWeeks: false,
   renderMonthCell: null,
+  onSelectMonthDate: () => null,
 };
 
 MonthView.propTypes = {
@@ -120,6 +130,7 @@ MonthView.propTypes = {
   firstDay: FIRST_DAY_TYPE.isRequired,
   forceSixWeeks: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectMonthDate: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,

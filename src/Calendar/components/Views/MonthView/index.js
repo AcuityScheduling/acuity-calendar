@@ -74,12 +74,13 @@ const MonthView = ({
                           'month__date',
                           !dayDetails.isInRange && 'month__date--not-in-range'
                         )}
-                        onClick={e =>
+                        onClick={e => {
+                          e.stopPropagation();
                           onSelectMonthDate({
                             e,
                             date: new Date(dayDetails.date),
-                          })
-                        }
+                          });
+                        }}
                       >
                         {dayDetails.date.date()}
                       </div>

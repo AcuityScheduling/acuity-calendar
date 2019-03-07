@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getMonthGrid, getDayNames } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
-import Event from '../../Event';
+import MonthEvent from './components/MonthEvent';
 import './index.scss';
-
-const cellWidth = `${100 / 7}%`;
-const dayStyles = {
-  width: cellWidth,
-};
 
 const MonthView = ({
   events,
@@ -18,29 +13,31 @@ const MonthView = ({
   firstDay,
   onSelectEvent,
   onSelectSlot,
+  forceSixWeeks,
   renderEvent,
+  renderMonthCell,
 }) => {
-  const monthGrid = getMonthGrid({ date: selectedDate, firstDay });
+  const monthGrid = getMonthGrid({
+    date: selectedDate,
+    firstDay,
+    forceSixWeeks,
+  });
   const dayNames = getDayNames({ firstDay });
 
   let countDays = 0;
   let countRows = 0;
   return (
     <div className={makeClass('month')}>
-      <div className={makeClass('month__row', 'month__header')}>
+      <div className={makeClass('month__header')}>
         {dayNames.map(dayName => {
           return (
-            <div
-              className={makeClass('month__day-name')}
-              style={dayStyles}
-              key={dayName}
-            >
+            <div className={makeClass('month__column-header')} key={dayName}>
               {dayName}
             </div>
           );
         })}
       </div>
-      <div>
+      <div className={makeClass('month__days')}>
         {monthGrid.map(row => {
           countRows += 1;
 
@@ -61,27 +58,46 @@ const MonthView = ({
                 return (
                   <div
                     key={`monthCells${countDays}`}
-                    className={makeClass('month__cell')}
-                    style={dayStyles}
+                    className={makeClass(
+                      'month__cell',
+                      !dayDetails.isInRange && 'month__cell--not-in-range'
+                    )}
                     role="button"
-                    onClick={() => onSelectSlot(dayDetails.date)}
+                    onClick={() =>
+                      onSelectSlot({ date: new Date(dayDetails.date) })
+                    }
                   >
-                    <h2 className={makeClass('month__date')}>
-                      {dayDetails.date.date()}
-                    </h2>
-                    {eventsForCell.length > 0 &&
-                      eventsForCell.map(
-                        event =>
-                          dayDetails.isInRange && (
-                            <Event
-                              event={event}
-                              key={event.id}
-                              onSelectEvent={onSelectEvent}
-                            >
-                              {renderEvent}
-                            </Event>
-                          )
+                    <div
+                      className={makeClass(
+                        'month__date',
+                        !dayDetails.isInRange && 'month__date--not-in-range'
                       )}
+                    >
+                      {dayDetails.date.date()}
+                    </div>
+                    {renderMonthCell ? (
+                      renderMonthCell({
+                        date: dayDetails.date,
+                        isInRange: dayDetails.isInRange,
+                        events: eventsForCell,
+                      })
+                    ) : (
+                      <div className={makeClass('month__event-wrapper')}>
+                        {eventsForCell.length > 0 &&
+                          eventsForCell.map(
+                            event =>
+                              dayDetails.isInRange && (
+                                <MonthEvent
+                                  event={event}
+                                  key={event.id}
+                                  onSelect={onSelectEvent}
+                                >
+                                  {renderEvent}
+                                </MonthEvent>
+                              )
+                          )}
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -95,14 +111,18 @@ const MonthView = ({
 
 MonthView.defaultProps = {
   renderEvent: null,
+  forceSixWeeks: false,
+  renderMonthCell: null,
 };
 
 MonthView.propTypes = {
   events: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE.isRequired,
+  forceSixWeeks: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
+  renderMonthCell: PropTypes.func,
   selectedDate: MOMENT_TYPE.isRequired,
 };
 

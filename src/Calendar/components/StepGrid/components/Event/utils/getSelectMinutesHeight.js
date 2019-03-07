@@ -1,4 +1,4 @@
-import { STEP_BORDER_WIDTH, STEP_HEIGHTS } from '../../StepGrid/constants';
+import { STEP_BORDER_WIDTH, STEP_HEIGHTS } from '../../../constants';
 
 /**
  * Get the height of the total amount of select minutues

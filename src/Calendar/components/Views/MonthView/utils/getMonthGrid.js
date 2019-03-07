@@ -3,7 +3,13 @@
 import moment from 'moment';
 
 // A 7x6 grid (7 days a week and 6 potential weeks) has 42 days we need to know
-const totalGridSize = 42;
+// If we just want a 5 week grid then 35
+const getTotalGridSize = ({ totalDates, forceSixWeeks }) => {
+  if (totalDates > 35 || forceSixWeeks) {
+    return 42;
+  }
+  return 35;
+};
 
 /**
  * Get a month grid with details about each date
@@ -11,9 +17,10 @@ const totalGridSize = 42;
  * @param {Object} params
  * @param {moment} params.date - the selected date
  * @param {0|1|2|3|4|5|6} params.firstDay - the firstDay of the week
+ * @param {boolean} params.forceSixWeeks - Having 6 rows _all_ of the time may sometimes be wanted
  */
-const getMonthGrid = ({ date, firstDay = 0 }) => {
-  const grid = getGrid({ date, firstDay });
+export const getMonthGrid = ({ date, firstDay = 0, forceSixWeeks = false }) => {
+  const grid = getGrid({ date, firstDay, forceSixWeeks });
 
   const lastDayOfLastMonth = date
     .clone()
@@ -26,8 +33,8 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
     .endOf('month')
     .date();
 
-  let isLastMonth = true;
-  let isCurrentMonth = false;
+  let isLastMonth = grid[0][0] !== 1 ? true : false;
+  let isCurrentMonth = grid[0][0] !== 1 ? false : true;
   let isNextMonth = false;
   return grid.map(row => {
     return row.map(day => {
@@ -35,7 +42,6 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
         if (day === lastDayOfLastMonth) {
           isLastMonth = false;
           isCurrentMonth = true;
-          return getDetails({ date, day, isInRange: false, type: 'last' });
         }
         return getDetails({ date, day, isInRange: false, type: 'last' });
       }
@@ -43,7 +49,6 @@ const getMonthGrid = ({ date, firstDay = 0 }) => {
         if (day === lastDayOfMonth) {
           isCurrentMonth = false;
           isNextMonth = true;
-          return getDetails({ date, day, isInRange: true, type: 'current' });
         }
         return getDetails({ date, day, isInRange: true, type: 'current' });
       }
@@ -97,12 +102,20 @@ const getDetails = ({ date, day, isInRange, type }) => {
  * @param {Object} params
  * @param {moment} params.date - the selected date we want the month grid for
  * @param {0|1|2|3|4|5|6} params.firstDay - the day of the week the month starts on 0 = Sunday
+ * @param {boolean} params.forceSixWeeks - If you want 6 rows all the time or only when needed
  * @returns {number[]}
  */
-export const getGrid = ({ date, firstDay }) => {
+export const getGrid = ({ date, firstDay, forceSixWeeks }) => {
   const startOfGrid = getStartOfGrid({ date, firstDay });
   const middleOfGrid = getArrayOfDays(date);
-  const endOfGrid = getEndOfGrid(startOfGrid.length + middleOfGrid.length);
+
+  const totalDates = startOfGrid.length + middleOfGrid.length;
+  const totalGridSize = getTotalGridSize({ totalDates, forceSixWeeks });
+
+  const endOfGrid = getEndOfGrid({
+    totalDates,
+    forceSixWeeks,
+  });
 
   const grid = [].concat(startOfGrid, middleOfGrid, endOfGrid);
 
@@ -184,11 +197,13 @@ export const getArrayOfDays = date => {
  * Get the first days of the next month depending on how many days are left
  *
  * @param {Object} params
- * @param {moment} params.date - the selected date
- * @param {number} params.totalDates - the total amount of dates we have so far
+ * @param {moment} params.totalGridSize - The total size of the grid
+ * @param {number} params.forceSixWeeks - Do we want to force 6 rows in the grid regardless of date?
  */
-const getEndOfGrid = totalDates => {
-  const remainingDates = totalGridSize - totalDates;
+const getEndOfGrid = ({ totalDates, forceSixWeeks }) => {
+  const remainingDates =
+    getTotalGridSize({ totalDates, forceSixWeeks }) - totalDates;
+
   const days = [];
   for (let i = 1; i <= remainingDates; i += 1) {
     days.push(i);

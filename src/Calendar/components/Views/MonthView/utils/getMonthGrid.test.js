@@ -1,12 +1,26 @@
-import { getGrid } from './getMonthGrid';
+import { getGrid, getMonthGrid } from './getMonthGrid';
 import moment from 'moment';
 
-const getTestInfo = ({ dateString, firstDay }) => {
+const getTestInfo = ({ dateString, firstDay, forceSixWeeks = true }) => {
   const date = moment(dateString);
-  return getGrid({ date, firstDay });
+  return getGrid({ date, firstDay, forceSixWeeks });
 };
 
 describe('The monthly grid function', () => {
+  it('should have the correct days in range', () => {
+    const date = moment(new Date('2019-01-12'));
+    const monthGrid = getMonthGrid({ date });
+    expect(monthGrid[4][0].isInRange).toBeTruthy();
+    expect(monthGrid[4][5].isInRange).toBeFalsy();
+  });
+
+  it('should have the correct days in range if first day of month lands on first day', () => {
+    const date = moment(new Date('2019-09-12'));
+    const monthGrid = getMonthGrid({ date });
+    expect(monthGrid[0][0].isInRange).toBeTruthy();
+    expect(monthGrid[4][2].isInRange).toBeFalsy();
+  });
+
   it('should have 42 days and 6 columns', () => {
     const result = getTestInfo({
       dateString: '2019-01-15',
@@ -15,6 +29,17 @@ describe('The monthly grid function', () => {
 
     expect(result.length).toEqual(6);
     expect([].concat.apply([], result).length).toEqual(42);
+  });
+
+  it('should have 35 days and 5 columns', () => {
+    const result = getTestInfo({
+      dateString: '2019-01-15',
+      firstDay: 0,
+      forceSixWeeks: false,
+    });
+
+    expect(result.length).toEqual(5);
+    expect([].concat.apply([], result).length).toEqual(35);
   });
 
   it('should have the correct grid for Sunday as the first day', () => {

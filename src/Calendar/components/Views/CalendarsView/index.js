@@ -13,6 +13,7 @@ import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
 } from '../../../defaultProps';
+import { makeClass } from '../../../utils';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
@@ -75,10 +76,12 @@ const CalendarsView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              {renderEventGroupHeader({
-                groupId,
-                events: eventsForDay,
-              })}
+              <div className={makeClass('step-grid__group-header')}>
+                {renderEventGroupHeader({
+                  groupId,
+                  events: eventsForDay,
+                })}
+              </div>
             </ColumnHeader>
           );
         });

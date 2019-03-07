@@ -1,17 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { EVENT_TYPE } from '../../types';
-import { makeClass, resetEventFormat } from '../../utils';
 import './index.scss';
-import { getDisplayTime } from '../StepGrid/utils';
-
-const getEventContainerClass = className => {
-  const eventClass = makeClass('step-grid__event');
-  if (className) {
-    return `${eventClass} ${className}`;
-  }
-  return eventClass;
-};
+import EventWrapper from '../../../EventWrapper';
+import { getDisplayTime } from '../../utils';
+import { makeClass } from '../../../../utils';
+import { EVENT_TYPE } from '../../../../types';
 
 export const handleCenterClass = makeClass('step-grid__event-handle-center');
 export const extendHandleClass = makeClass('step-grid__event-handle');
@@ -21,7 +14,7 @@ const Event = ({
   className,
   event,
   isSelectable,
-  onSelectEvent,
+  onSelect,
   ...restProps
 }) => {
   const wrapperRef = useRef(null);
@@ -41,16 +34,12 @@ const Event = ({
   });
 
   return (
-    <div
-      {...restProps}
-      className={getEventContainerClass(className)}
-      role="button"
+    <EventWrapper
       ref={wrapperRef}
-      onClick={e => {
-        e.stopPropagation();
-        if (!isSelectable) return false;
-        onSelectEvent(resetEventFormat(event));
-      }}
+      event={event}
+      onSelect={onSelect}
+      isSelectable={isSelectable}
+      {...restProps}
     >
       <div
         className={handleCenterClass}
@@ -76,7 +65,7 @@ const Event = ({
         )}`}
         ref={extenderRef}
       />
-    </div>
+    </EventWrapper>
   );
 };
 
@@ -91,7 +80,7 @@ Event.propTypes = {
   className: PropTypes.string,
   event: EVENT_TYPE.isRequired,
   isSelectable: PropTypes.bool,
-  onSelectEvent: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default Event;

@@ -18,14 +18,12 @@ const EventGroupSelect = ({
   };
 
   return (
-    <div style={{ width: '200px', margin: '125px 10px' }}>
+    <div style={{ marginBottom: 30 }}>
+      <strong style={{ marginRight: 25 }}>Calendars:</strong>
       {eventGroups.map(group => {
         const isSelected = selectedEventGroups.includes(group.id);
         return (
-          <label
-            key={`selectGroup${group.id}`}
-            style={{ display: 'block', marginBottom: '7px' }}
-          >
+          <label key={`selectGroup${group.id}`} style={{ marginRight: '15px' }}>
             <input
               type="checkbox"
               checked={isSelected}

@@ -2,17 +2,17 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { extendHandleClass } from '..';
-import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../types';
 import {
   getSelectMinutesHeight,
   getDragVerticalChange,
   getDraggedEventStartEnd,
 } from '../utils';
+import { resetEventFormat } from '../../../../../utils';
 import {
   SELECT_MINUTES_DEFAULT,
   STEP_MINUTES_DEFAULT,
-} from '../../../defaultProps';
-import { resetEventFormat } from '../../../utils';
+} from '../../../../../defaultProps';
+import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../../../types';
 
 const EventExtend = ({
   children,

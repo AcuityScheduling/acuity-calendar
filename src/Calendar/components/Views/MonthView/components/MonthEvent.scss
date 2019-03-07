@@ -1,0 +1,13 @@
+.acuity-calendar {
+  &__month {
+    &__event {
+      font-size: 12px;
+      height: 20px;
+      cursor: pointer;
+    }
+    &__event-time {
+      color: #777;
+      padding: 10px;
+    }
+  }
+}

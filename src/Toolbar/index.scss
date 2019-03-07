@@ -1,0 +1,33 @@
+.acuity-calendar {
+  &__toolbar {
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    height: 33px;
+
+    &__views {
+      margin-right: 20px;
+    }
+
+    & button {
+      border: 1px solid #e7e7e7;
+      padding: 3px 10px;
+      margin-right: 4px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2c2929;
+      border: 1px solid #2c2929;
+      color: #fff;
+    }
+
+    &__title {
+      font-size: 28px;
+      margin: 0;
+      margin-left: 20px;
+    }
+  }
+}

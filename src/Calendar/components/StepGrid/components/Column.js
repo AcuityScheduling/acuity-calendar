@@ -17,9 +17,9 @@ import {
 } from '../utils';
 import './Column.scss';
 import { makeClass } from '../../../utils';
-import Event from '../../Event';
-import EventDragDrop from '../../Event/components/EventDragDrop';
-import EventExtend from '../../Event/components/EventExtend';
+import Event from './Event';
+import EventDragDrop from './Event/components/EventDragDrop';
+import EventExtend from './Event/components/EventExtend';
 import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
@@ -124,7 +124,7 @@ const Column = React.forwardRef(
             columnDate: date,
           })(e);
           setClickedTime(clickedTime);
-          onSelectSlot({ time: new Date(clickedTime), column: columnId });
+          onSelectSlot({ date: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
           resetSelectRangeDrag();
         }}
@@ -264,7 +264,7 @@ const Column = React.forwardRef(
                             style={{
                               height: `${draggedEvent.height}px`,
                             }}
-                            onSelectEvent={onSelectEvent}
+                            onSelect={onSelectEvent}
                             isSelectable={!isDragging && !isExtending}
                           >
                             {renderEvent}

@@ -104,7 +104,11 @@ const addEventLocation = ({ event, stepMinutes, stepHeight }) => {
 
   const duration = event.end.clone().diff(event.start, 'minutes');
   const borderHeightAdjustment = (duration / 60) * STEP_BORDER_WIDTH;
-  const eventTopOffset = getTopOffset({ stepMinutes, date: event.start });
+  const eventTopOffset = getTopOffset({
+    stepMinutes,
+    date: event.start,
+    stepHeight,
+  });
 
   const maxHeight = totalDayHeight - eventTopOffset + STEP_BORDER_WIDTH * 24;
   let height = duration * pixelsPerMinute + borderHeightAdjustment;

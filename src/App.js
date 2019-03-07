@@ -114,7 +114,6 @@ const App = () => {
         // What range of minutes is selectable - for new events
         // and for drag and drop
         selectMinutes={15}
-        stepHeight={90}
         selectedEventGroups={selectedCalendars}
         renderEventGroupHeader={({ groupId }) =>
           MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name

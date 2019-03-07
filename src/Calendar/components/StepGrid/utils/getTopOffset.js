@@ -8,10 +8,11 @@ import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
  * @param {Object} params
  * @param {number} params.stepMinutes
  * @param {moment} params.date
+ * @param {number} params.stepHeight
  */
-const getTopOffset = ({ stepMinutes, date }) => {
-  const stepHeight = STEP_HEIGHTS[stepMinutes];
-  const pixelsPerMinute = stepHeight / stepMinutes;
+const getTopOffset = ({ stepMinutes, date, stepHeight }) => {
+  const pixelsPerMinute =
+    (stepHeight || STEP_HEIGHTS[stepMinutes]) / stepMinutes;
 
   const minutesSinceMidnight = getMinutesSinceMidnight(date);
 

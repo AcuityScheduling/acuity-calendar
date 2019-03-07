@@ -81,7 +81,8 @@ const StepGrid = ({
   };
 
   const renderTimes = () => {
-    const blockHeight = totalStepsPerBlock * STEP_HEIGHTS[stepMinutes];
+    const blockHeight =
+      totalStepsPerBlock * (stepHeight || STEP_HEIGHTS[stepMinutes]);
     const times = [];
     for (let i = 0; i < 24; i += 1) {
       times.push(
@@ -158,7 +159,11 @@ const StepGrid = ({
             <div
               className={currentTimeIndicatorClass}
               style={{
-                top: `${getTopOffset({ stepMinutes, date: currentTime })}px`,
+                top: `${getTopOffset({
+                  stepMinutes,
+                  date: currentTime,
+                  stepHeight,
+                })}px`,
               }}
               ref={timeIndicatorRef}
             >

@@ -138,7 +138,11 @@ const Column = React.forwardRef(
           <div
             className={currentTimeIndicatorClass}
             style={{
-              top: `${getTopOffset({ stepMinutes, date: currentTime })}px`,
+              top: `${getTopOffset({
+                stepMinutes,
+                date: currentTime,
+                stepHeight,
+              })}px`,
             }}
           >
             <div className={`${currentTimeIndicatorClass}__line-today`} />

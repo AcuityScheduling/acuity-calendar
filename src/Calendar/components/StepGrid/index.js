@@ -14,6 +14,7 @@ import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
   STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
 
 const StepGrid = ({
@@ -185,6 +186,7 @@ StepGrid.defaultProps = {
   timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
   stepHeight: null,
   onCurrentTimeChange: () => null,
@@ -196,7 +198,7 @@ StepGrid.propTypes = {
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

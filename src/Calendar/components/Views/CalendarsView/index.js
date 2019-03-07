@@ -12,6 +12,8 @@ import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
 } from '../../../defaultProps';
 import { makeClass } from '../../../utils';
 
@@ -165,6 +167,8 @@ CalendarsView.defaultProps = {
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
   stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
 };
 
 CalendarsView.propTypes = {
@@ -186,12 +190,12 @@ CalendarsView.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
   stepDetailsWithEventGroups: PropTypes.object,
   stepHeight: PropTypes.number,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE,
   timeGutterWidth: PropTypes.number,
 };
 

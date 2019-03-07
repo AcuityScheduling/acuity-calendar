@@ -15,6 +15,8 @@ import {
   SELECTED_DATE_DEFAULT,
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
 } from './defaultProps';
 
 const Calendar = ({
@@ -150,6 +152,8 @@ Calendar.defaultProps = {
   forceSixWeeks: false,
   onSelectMonthDate: () => null,
   stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
 };
 
 Calendar.propTypes = {
@@ -174,12 +178,18 @@ Calendar.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  // What range of minutes is selectable - for new events
+  // and for drag and drop
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
+  // The height in pixels that we want each step to be. This will be like
+  // zooming in and out on the calendar
   stepHeight: PropTypes.number,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  // How many grid lines there are between an hour. 30 means
+  // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
+  stepMinutes: STEP_MINUTES_TYPE,
   timeGutterWidth: PropTypes.number,
   view: CALENDAR_VIEW_TYPE,
 };

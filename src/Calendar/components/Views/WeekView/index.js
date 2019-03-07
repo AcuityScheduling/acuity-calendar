@@ -11,6 +11,8 @@ import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
 } from '../../../defaultProps';
 
 const WeekView = ({
@@ -164,6 +166,8 @@ WeekView.defaultProps = {
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
   stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
 };
 
 WeekView.propTypes = {
@@ -184,11 +188,11 @@ WeekView.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE.isRequired,
   stepDetails: PropTypes.object,
   stepHeight: PropTypes.number,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  stepMinutes: STEP_MINUTES_TYPE,
   timeGutterWidth: PropTypes.number,
 };
 

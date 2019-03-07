@@ -21,6 +21,7 @@ const EventExtend = ({
   onExtendEnd,
   selectMinutes,
   stepMinutes,
+  stepHeight,
 }) => {
   const [isExtending, setIsExtending] = useState(false);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
@@ -30,6 +31,7 @@ const EventExtend = ({
       getSelectMinutesHeight({
         stepMinutes,
         selectMinutes,
+        stepHeight,
       }),
     [stepMinutes, selectMinutes]
   );
@@ -86,6 +88,7 @@ EventExtend.defaultProps = {
   onExtend: () => null,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
+  stepHeight: null,
 };
 
 EventExtend.propTypes = {
@@ -94,6 +97,7 @@ EventExtend.propTypes = {
   onExtend: PropTypes.func,
   onExtendEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
 };
 

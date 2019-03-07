@@ -192,6 +192,7 @@ const Column = React.forwardRef(
               <EventExtend
                 key={event.id}
                 event={event}
+                stepHeight={stepHeight}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
                 onExtend={() => {
@@ -212,6 +213,7 @@ const Column = React.forwardRef(
                     columnHeight={totalHeight}
                     columnIndex={columnIndex}
                     columnWidths={columnWidths}
+                    stepHeight={stepHeight}
                     stepMinutes={stepMinutes}
                     selectMinutes={selectMinutes}
                     onDrag={() => {

@@ -44,6 +44,7 @@ const CalendarsView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  stepHeight,
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
@@ -56,6 +57,7 @@ const CalendarsView = ({
       onCurrentTimeChange={onCurrentTimeChange}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
+      stepHeight={stepHeight}
       timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() => {
@@ -112,6 +114,7 @@ const CalendarsView = ({
               key={`groupColumn${groupId}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
+              stepHeight={stepHeight}
               date={selectedDate}
               columnId={groupId}
               columnWidths={elementWidths}
@@ -161,6 +164,7 @@ CalendarsView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  stepHeight: null,
 };
 
 CalendarsView.propTypes = {
@@ -186,6 +190,7 @@ CalendarsView.propTypes = {
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
   stepDetailsWithEventGroups: PropTypes.object,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
 };

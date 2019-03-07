@@ -63,6 +63,7 @@ const EventDragDrop = ({
   onDrag,
   onDragEnd,
   children,
+  stepHeight,
   getUpdatedDraggedEvent,
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
@@ -76,6 +77,7 @@ const EventDragDrop = ({
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
 
   const selectMinutesHeight = getSelectMinutesHeight({
+    stepHeight,
     stepMinutes,
     selectMinutes,
   });
@@ -209,6 +211,7 @@ EventDragDrop.defaultProps = {
   isDraggable: true,
   getUpdatedDraggedEvent: () => null,
   onDrag: () => null,
+  stepHeight: null,
 };
 
 EventDragDrop.propTypes = {
@@ -222,6 +225,7 @@ EventDragDrop.propTypes = {
   onDrag: PropTypes.func,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
 };
 

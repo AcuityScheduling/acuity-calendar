@@ -12,6 +12,7 @@ const useSelectRange = ({
   selectMinutes,
   columnHeight,
   columnDate,
+  stepHeight,
 }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startMousePosition, setStartMousePosition] = useState(0);
@@ -48,6 +49,7 @@ const useSelectRange = ({
     setTop(top);
     setOriginalTop(top);
     const clickedTime = getClickedTime({
+      stepHeight,
       stepMinutes,
       selectMinutes,
       columnDate,

@@ -12,10 +12,13 @@ import {
  * details that are needed when displaying - we're doing it all here
  * so we don't have to do more than one loop
  *
- * @param {Object[]} events
+ * @param {Object} params
+ * @param {Object[]} params.events
+ * @param {number} params.stepMinutes
+ * @param {number} params.stepHeight
  * @returns {Object}
  */
-const getMungedEvents = ({ events, stepMinutes }) => {
+const getMungedEvents = ({ events, stepMinutes, stepHeight }) => {
   const expandedEvents = expandAllDayEvents(events);
   const sortedEvents = getSortedEvents(expandedEvents);
 
@@ -23,6 +26,7 @@ const getMungedEvents = ({ events, stepMinutes }) => {
     const newEvent = addEventLocation({
       event,
       stepMinutes,
+      stepHeight,
     });
 
     // We're turning the event array into a nested object with the group id
@@ -93,9 +97,9 @@ const expandAllDayEvents = events => {
  * @param {Object} params.event
  * @param {5|10|15|20|25|30|60} params.stepMinutes
  */
-const addEventLocation = ({ event, stepMinutes }) => {
-  const stepHeight = STEP_HEIGHTS[stepMinutes];
-  const pixelsPerMinute = stepHeight / stepMinutes;
+const addEventLocation = ({ event, stepMinutes, stepHeight }) => {
+  const pixelsPerMinute =
+    (stepHeight || STEP_HEIGHTS[stepMinutes]) / stepMinutes;
   const totalDayHeight = pixelsPerMinute * 60 * 24;
 
   const duration = event.end.clone().diff(event.start, 'minutes');

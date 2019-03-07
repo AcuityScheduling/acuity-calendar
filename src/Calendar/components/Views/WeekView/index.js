@@ -36,6 +36,7 @@ const WeekView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -50,6 +51,7 @@ const WeekView = ({
       onSelectSlot={onSelectSlot}
       onCurrentTimeChange={onCurrentTimeChange}
       selectMinutes={selectMinutes}
+      stepHeight={stepHeight}
       timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() =>
@@ -110,6 +112,7 @@ const WeekView = ({
               renderSelectRange={renderSelectRange}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
+              stepHeight={stepHeight}
               currentTime={currentTime}
               renderEvent={renderEvent}
               renderEventPaddingTop={renderEventPaddingTop}
@@ -160,6 +163,7 @@ WeekView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  stepHeight: null,
 };
 
 WeekView.propTypes = {
@@ -183,6 +187,7 @@ WeekView.propTypes = {
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE.isRequired,
   stepDetails: PropTypes.object,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
 };

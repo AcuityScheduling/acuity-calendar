@@ -33,6 +33,7 @@ const Calendar = ({
   onSelectSlot,
   onSelectMonthDate,
   stepMinutes,
+  stepHeight,
   selectMinutes,
   timeGutterWidth,
   renderEvent,
@@ -59,10 +60,10 @@ const Calendar = ({
 
   const View = getView();
 
-  const mungedEvents = useMemo(() => getMungedEvents({ events, stepMinutes }), [
-    events,
-    stepMinutes,
-  ]);
+  const mungedEvents = useMemo(
+    () => getMungedEvents({ events, stepMinutes, stepHeight }),
+    [events, stepMinutes]
+  );
 
   const eventsWithSelectedEventGroups = useMemo(
     () =>
@@ -74,7 +75,7 @@ const Calendar = ({
   );
 
   const mungedStepDetails = useMemo(
-    () => getMungedEvents({ events: stepDetails, stepMinutes }),
+    () => getMungedEvents({ events: stepDetails, stepMinutes, stepHeight }),
     [stepDetails, stepMinutes]
   );
 
@@ -106,6 +107,7 @@ const Calendar = ({
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
       selectedEventGroups={selectedEventGroups}
+      stepHeight={stepHeight}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
       renderSelectRange={renderSelectRange}
@@ -147,6 +149,7 @@ Calendar.defaultProps = {
   renderMonthCell: null,
   forceSixWeeks: false,
   onSelectMonthDate: () => null,
+  stepHeight: null,
 };
 
 Calendar.propTypes = {
@@ -175,6 +178,7 @@ Calendar.propTypes = {
   selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE.isRequired,
   timeGutterWidth: PropTypes.number,
   view: CALENDAR_VIEW_TYPE,

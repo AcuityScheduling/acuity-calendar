@@ -20,6 +20,7 @@ const StepGrid = ({
   selectedDate,
   firstDay,
   stepMinutes,
+  stepHeight,
   selectMinutes,
   onCurrentTimeChange,
   timeGutterWidth,
@@ -57,8 +58,8 @@ const StepGrid = ({
 
   const renderStepLines = () => {
     const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
-    const stepHeight = STEP_HEIGHTS[stepMinutes];
-    const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
+    const stepHeightWithBorder = `${(stepHeight || STEP_HEIGHTS[stepMinutes]) +
+      extraBorderHeight}px`;
     const times = [];
     for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
       const minorStep = i % totalStepsPerBlock;
@@ -180,6 +181,7 @@ StepGrid.defaultProps = {
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
+  stepHeight: null,
   onCurrentTimeChange: () => null,
 };
 
@@ -191,6 +193,7 @@ StepGrid.propTypes = {
   renderHeader: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE.isRequired,
   selectedDate: MOMENT_TYPE,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   timeGutterWidth: PropTypes.number,
 };

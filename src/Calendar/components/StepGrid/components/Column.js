@@ -53,6 +53,7 @@ const Column = React.forwardRef(
       renderSelectRange,
       renderEventPaddingTop,
       renderEventPaddingBottom,
+      stepHeight,
     },
     ref
   ) => {
@@ -60,7 +61,7 @@ const Column = React.forwardRef(
       const totalStepsPerBlock = 60 / stepMinutes;
       const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
       return (
-        STEP_HEIGHTS[stepMinutes] * totalStepsPerBlock * 24 +
+        (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
         (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
       );
     }, [stepMinutes]);
@@ -81,6 +82,7 @@ const Column = React.forwardRef(
       selectMinutes,
       columnHeight: totalHeight,
       columnDate: date,
+      stepHeight,
     });
 
     // If we remove a column it's not going to remove it from the columnWidths
@@ -119,6 +121,7 @@ const Column = React.forwardRef(
           }
           if (!isSlotClickable) return false;
           const clickedTime = getClickedTime({
+            stepHeight,
             stepMinutes,
             selectMinutes,
             columnDate: date,
@@ -333,6 +336,7 @@ Column.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  stepHeight: null,
 };
 
 Column.propTypes = {
@@ -359,6 +363,7 @@ Column.propTypes = {
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   stepDetails: PropTypes.array,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
 };
 

@@ -72,20 +72,22 @@ const MonthView = ({
                       })
                     }
                   >
-                    <div className={makeClass('month__date-wrapper')}>
+                    <div
+                      className={makeClass('month__date-wrapper')}
+                      onClick={e => {
+                        e.stopPropagation();
+                        onSelectMonthDate({
+                          e,
+                          date: new Date(dayDetails.date),
+                          isInrange: dayDetails.isInRange,
+                        });
+                      }}
+                    >
                       <div
                         className={makeClass(
                           'month__date',
                           !dayDetails.isInRange && 'month__date--not-in-range'
                         )}
-                        onClick={e => {
-                          e.stopPropagation();
-                          onSelectMonthDate({
-                            e,
-                            date: new Date(dayDetails.date),
-                            isInrange: dayDetails.isInRange,
-                          });
-                        }}
                       >
                         {dayDetails.date.date()}
                       </div>

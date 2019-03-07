@@ -64,8 +64,12 @@ const MonthView = ({
                       !dayDetails.isInRange && 'month__cell--not-in-range'
                     )}
                     role="button"
-                    onClick={() =>
-                      onSelectSlot({ date: new Date(dayDetails.date) })
+                    onClick={e =>
+                      onSelectSlot({
+                        e,
+                        date: new Date(dayDetails.date),
+                        isInRange: dayDetails.isInRange,
+                      })
                     }
                   >
                     <div className={makeClass('month__date-wrapper')}>
@@ -79,6 +83,7 @@ const MonthView = ({
                           onSelectMonthDate({
                             e,
                             date: new Date(dayDetails.date),
+                            isInrange: dayDetails.isInRange,
                           });
                         }}
                       >

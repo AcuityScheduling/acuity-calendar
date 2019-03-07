@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { getMonthGrid, getDayNames } from './utils';
+import { getMonthGrid, getDayNames, useTotalEventsToShow } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
 import MonthEvent from './components/MonthEvent';
@@ -15,16 +15,48 @@ const MonthView = ({
   onSelectEvent,
   onSelectSlot,
   onSelectMonthDate,
+  onSelectMoreEvents,
   forceSixWeeks,
   renderEvent,
   renderMonthCell,
 }) => {
+  const {
+    rowRef,
+    eventRef,
+    eventWrapperRef,
+    totalEventsToShow,
+  } = useTotalEventsToShow();
+
   const monthGrid = getMonthGrid({
     date: selectedDate,
     firstDay,
     forceSixWeeks,
   });
   const dayNames = getDayNames({ firstDay });
+
+  const renderAllEvents = events => {
+    let count = 0;
+
+    return events.map(event => {
+      count += 1;
+
+      if (!totalEventsToShow || totalEventsToShow >= count) {
+        return (
+          <MonthEvent
+            event={event}
+            key={event.id}
+            onSelect={onSelectEvent}
+            ref={eventRef}
+            style={{ opacity: !totalEventsToShow ? 0 : 1 }}
+          >
+            {renderEvent}
+          </MonthEvent>
+        );
+      }
+
+      return null;
+    });
+  };
 
   let countDays = 0;
   let countRows = 0;
@@ -47,6 +79,7 @@ const MonthView = ({
             <div
               className={makeClass('month__row')}
               key={`monthColumn${countRows}`}
+              ref={rowRef}
             >
               {row.map(dayDetails => {
                 countDays += 1;
@@ -100,20 +133,30 @@ const MonthView = ({
                         events: eventsForCell,
                       })
                     ) : (
-                      <div className={makeClass('month__event-wrapper')}>
-                        {eventsForCell.length > 0 &&
-                          eventsForCell.map(
-                            event =>
-                              dayDetails.isInRange && (
-                                <MonthEvent
-                                  event={event}
-                                  key={event.id}
-                                  onSelect={onSelectEvent}
-                                >
-                                  {renderEvent}
-                                </MonthEvent>
-                              )
-                          )}
+                      <div
+                        className={makeClass('month__event-wrapper')}
+                        ref={eventWrapperRef}
+                      >
+                        {eventsForCell.length > 0 && dayDetails.isInRange && (
+                          <Fragment>
+                            {renderAllEvents(eventsForCell)}
+                            {totalEventsToShow < eventsForCell.length && (
+                              <div
+                                className={makeClass('month__more-events')}
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  onSelectMoreEvents({
+                                    e,
+                                    events: eventsForCell,
+                                    date: new Date(dayDetails.date),
+                                  });
+                                }}
+                              >
+                                {eventsForCell.length - totalEventsToShow} more
+                              </div>
+                            )}
+                          </Fragment>
+                        )}
                       </div>
                     )}
                   </div>
@@ -133,6 +176,7 @@ MonthView.defaultProps = {
   renderMonthCell: null,
   onSelectMonthDate: () => null,
   firstDay: FIRST_DAY_DEFAULT,
+  onSelectMoreEvents: () => null,
 };
 
 MonthView.propTypes = {
@@ -141,6 +185,7 @@ MonthView.propTypes = {
   forceSixWeeks: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectMonthDate: PropTypes.func,
+  onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,

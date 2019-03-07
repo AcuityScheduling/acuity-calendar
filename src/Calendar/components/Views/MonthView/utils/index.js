@@ -1,4 +1,5 @@
 import getMonthGrid from './getMonthGrid';
 import getDayNames from './getDayNames';
+import useTotalEventsToShow from './useTotalEventsToShow';
 
-export { getMonthGrid, getDayNames };
+export { getMonthGrid, getDayNames, useTotalEventsToShow };

@@ -13,27 +13,30 @@ const getDisplayTime = time => {
   return `${time.format('h')}${timeMinutes}${time.format('a')}`;
 };
 
-const MonthEvent = ({ event, onSelect, children, ...restProps }) => {
-  return (
-    <EventWrapper
-      event={event}
-      onSelect={onSelect}
-      eventClass={makeClass('month__event')}
-      {...restProps}
-    >
-      {children ? (
-        children(event)
-      ) : (
-        <div className={makeClass('month__event-details')}>
-          <div className={makeClass('month__event-time')}>
-            {getDisplayTime(event.start)}
+const MonthEvent = React.forwardRef(
+  ({ event, onSelect, children, ...restProps }, ref) => {
+    return (
+      <EventWrapper
+        event={event}
+        onSelect={onSelect}
+        eventClass={makeClass('month__event')}
+        ref={ref}
+        {...restProps}
+      >
+        {children ? (
+          children(event)
+        ) : (
+          <div className={makeClass('month__event-details')}>
+            <div className={makeClass('month__event-time')}>
+              {getDisplayTime(event.start)}
+            </div>
+            <div className={makeClass('month__event-title')}>{event.title}</div>
           </div>
-          <div className={makeClass('month__event-title')}>{event.title}</div>
-        </div>
-      )}
-    </EventWrapper>
-  );
-};
+        )}
+      </EventWrapper>
+    );
+  }
+);
 
 MonthEvent.defaultProps = {
   onSelect: () => null,

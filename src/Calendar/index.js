@@ -35,6 +35,7 @@ const Calendar = ({
   onSelectRangeEnd,
   onSelectSlot,
   onSelectMonthDate,
+  onSelectMoreEvents,
   stepMinutes,
   stepHeight,
   selectMinutes,
@@ -104,6 +105,7 @@ const Calendar = ({
       onSelectRangeEnd={onSelectRangeEnd}
       onSelectSlot={onSelectSlot}
       onSelectMonthDate={onSelectMonthDate}
+      onSelectMoreEvents={onSelectMoreEvents}
       forceSixWeeks={forceSixWeeks}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
@@ -153,6 +155,7 @@ Calendar.defaultProps = {
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
+  onSelectMoreEvents: () => null,
 };
 
 Calendar.propTypes = {
@@ -167,6 +170,7 @@ Calendar.propTypes = {
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectMonthDate: PropTypes.func,
+  onSelectMoreEvents: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,

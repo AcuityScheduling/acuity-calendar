@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
-import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 import ColumnHeader from '../../StepGrid/components/ColumnHeader';
@@ -39,7 +38,6 @@ const CalendarsView = ({
   selectMinutes,
   stepDetailsWithEventGroups,
   eventsWithEventGroups,
-  timeGutterWidth,
   renderEvent,
   renderCorner,
   renderStepDetail,
@@ -61,7 +59,6 @@ const CalendarsView = ({
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
       stepHeight={stepHeight}
-      timeGutterWidth={timeGutterWidth}
       renderCorner={renderCorner}
       renderHeader={() => {
         const totalColumns = selectedEventGroups.length;
@@ -153,7 +150,6 @@ const CalendarsView = ({
 CalendarsView.defaultProps = {
   renderCorner: () => null,
   renderEvent: null,
-  timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: moment(),
   onExtendEnd: () => null,
   onCurrentTimeChange: () => null,
@@ -198,7 +194,6 @@ CalendarsView.propTypes = {
   stepDetailsWithEventGroups: PropTypes.object,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
-  timeGutterWidth: PropTypes.number,
 };
 
 export default CalendarsView;

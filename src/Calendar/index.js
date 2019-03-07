@@ -38,7 +38,6 @@ const Calendar = ({
   stepMinutes,
   stepHeight,
   selectMinutes,
-  timeGutterWidth,
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
@@ -114,7 +113,6 @@ const Calendar = ({
       renderEvent={renderEvent}
       renderCorner={renderCorner}
       renderSelectRange={renderSelectRange}
-      timeGutterWidth={timeGutterWidth}
       renderEventGroupHeader={renderEventGroupHeader}
       minWidthColumn={minWidthColumn}
       minWidthColumnEmpty={minWidthColumnEmpty}
@@ -133,7 +131,6 @@ Calendar.defaultProps = {
   renderEventGroupHeader: () => null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
-  timeGutterWidth: 50,
   stepDetails: [],
   events: [],
   firstDay: FIRST_DAY_DEFAULT,
@@ -193,7 +190,6 @@ Calendar.propTypes = {
   // How many grid lines there are between an hour. 30 means
   // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
   stepMinutes: STEP_MINUTES_TYPE,
-  timeGutterWidth: PropTypes.number,
   view: CALENDAR_VIEW_TYPE,
 };
 

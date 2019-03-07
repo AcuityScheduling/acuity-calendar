@@ -17,6 +17,7 @@ import {
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from './defaultProps';
 
 const Calendar = ({
@@ -135,6 +136,7 @@ Calendar.defaultProps = {
   timeGutterWidth: 50,
   stepDetails: [],
   events: [],
+  firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.week,
   calendars: [],
@@ -158,7 +160,8 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
+  firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,

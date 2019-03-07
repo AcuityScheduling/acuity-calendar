@@ -6,6 +6,7 @@ import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
 import MonthEvent from './components/MonthEvent';
 import './index.scss';
+import { FIRST_DAY_DEFAULT } from '../../../defaultProps';
 
 const MonthView = ({
   events,
@@ -131,11 +132,12 @@ MonthView.defaultProps = {
   forceSixWeeks: false,
   renderMonthCell: null,
   onSelectMonthDate: () => null,
+  firstDay: FIRST_DAY_DEFAULT,
 };
 
 MonthView.propTypes = {
   events: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectMonthDate: PropTypes.func,

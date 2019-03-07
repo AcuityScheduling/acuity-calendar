@@ -17,8 +17,6 @@ const App = () => {
   const [events, setEvents] = useState(MOCKED_EVENTS);
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
 
-  const firstDay = 0;
-
   const updateEvent = event => {
     // Find the event key we're going to replace
     let alteredEventKey = false;
@@ -50,7 +48,6 @@ const App = () => {
         onViewChange={setView}
         selectedDate={selectedDate}
         onNavigate={setSelectedDate}
-        firstDay={firstDay}
       />
       <EventGroupSelect
         selectedEventGroups={selectedCalendars}
@@ -71,8 +68,6 @@ const App = () => {
           updateEvent(event);
           console.log('DRAG', event);
         }}
-        // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
-        firstDay={firstDay}
         // When clicking on the date in the month view
         onSelectMonthDate={({ date }) => {
           setSelectedDate(date);

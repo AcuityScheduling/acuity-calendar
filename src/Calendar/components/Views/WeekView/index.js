@@ -13,6 +13,7 @@ import {
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
 
 const WeekView = ({
@@ -168,11 +169,12 @@ WeekView.defaultProps = {
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
+  firstDay: FIRST_DAY_DEFAULT,
 };
 
 WeekView.propTypes = {
   events: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

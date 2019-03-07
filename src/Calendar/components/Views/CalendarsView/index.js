@@ -14,6 +14,7 @@ import {
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
 import { makeClass } from '../../../utils';
 
@@ -169,11 +170,12 @@ CalendarsView.defaultProps = {
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
+  firstDay: FIRST_DAY_DEFAULT,
 };
 
 CalendarsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

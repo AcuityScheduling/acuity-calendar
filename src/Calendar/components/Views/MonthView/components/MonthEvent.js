@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import EventWrapper from '../../../EventWrapper';
 import { EVENT_TYPE } from '../../../../types';
@@ -24,12 +24,12 @@ const MonthEvent = ({ event, onSelect, children, ...restProps }) => {
       {children ? (
         children(event)
       ) : (
-        <Fragment>
-          <span className={makeClass('month__event-time')}>
+        <div className={makeClass('month__event-details')}>
+          <div className={makeClass('month__event-time')}>
             {getDisplayTime(event.start)}
-          </span>
-          <span className={makeClass('month__event-title')}>{event.title}</span>
-        </Fragment>
+          </div>
+          <div className={makeClass('month__event-title')}>{event.title}</div>
+        </div>
       )}
     </EventWrapper>
   );

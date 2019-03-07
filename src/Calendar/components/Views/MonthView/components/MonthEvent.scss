@@ -2,12 +2,22 @@
   &__month {
     &__event {
       font-size: 12px;
-      height: 20px;
       cursor: pointer;
     }
+
+    &__event-details {
+      display: flex;
+      height: 20px;
+      padding: 0 10px;
+    }
+
     &__event-time {
       color: #777;
-      padding: 10px;
+      margin-right: 8px;
+    }
+
+    &__event-details {
+      white-space: nowrap;
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { makeClass } from '../../../../utils';
+import { makeClass, resetEventFormat } from '../../../../utils';
 import { EVENT_TYPE, MOMENT_TYPE, REF_TYPE } from '../../../../types';
 import MonthEvent from './MonthEvent';
 
@@ -17,6 +17,17 @@ const MonthCell = ({
   onSelectMoreEvents,
   totalEventsToShow,
 }) => {
+  // Get the list of events that should be showing in "more"
+  const getEventsForMore = () => {
+    const totalMore = events.length - totalEventsToShow;
+    return events.filter((event, index) => {
+      if (index >= events.length - totalMore) {
+        return true;
+      }
+      return false;
+    });
+  };
+
   const renderAllEvents = events => {
     let count = 0;
 
@@ -97,7 +108,9 @@ const MonthCell = ({
                     e.stopPropagation();
                     onSelectMoreEvents({
                       e,
-                      events: events,
+                      events: getEventsForMore().map(event =>
+                        resetEventFormat(event)
+                      ),
                       date: new Date(dayDetails.date),
                     });
                   }}

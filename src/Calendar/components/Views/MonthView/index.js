@@ -23,8 +23,10 @@ const MonthView = ({
   const {
     rowRef,
     eventRef,
+    cellRef,
     eventWrapperRef,
     totalEventsToShow,
+    cellDimensions,
   } = useTotalEventsToShow();
 
   const monthGrid = getMonthGrid({
@@ -69,6 +71,8 @@ const MonthView = ({
                 return (
                   <MonthCell
                     events={eventsForCell}
+                    ref={cellRef}
+                    cellDimensions={cellDimensions}
                     key={`monthCells${countDays}`}
                     dayDetails={dayDetails}
                     onSelectSlot={onSelectSlot}

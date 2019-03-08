@@ -7,7 +7,9 @@ const useTotalEventsToShow = () => {
   const rowRef = useRef(null);
   const eventRef = useRef(null);
   const eventWrapperRef = useRef(null);
+  const cellRef = useRef(null);
   const [rowHeight, setRowHeight] = useState(0);
+  const [cellWidth, setCellWidth] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
   const [eventWrapperMargin, setEventWrapperMargin] = useState(0);
   const [totalEventsToShow, setTotalEventsToShow] = useState(0);
@@ -21,11 +23,13 @@ const useTotalEventsToShow = () => {
 
   const rowHeightThrottled = throttle(() => {
     setRowHeight(get(rowRef, 'current.offsetHeight', 0));
+    setCellWidth(get(rowRef, 'current.offsetWidth', 0));
   }, 300);
 
   useEffect(() => {
     if (rowRef.current) {
       setRowHeight(rowRef.current.offsetHeight);
+      setCellWidth(cellRef.current.offsetWidth);
       addListener(rowRef.current, rowHeightThrottled);
     }
     return () => removeListener(rowRef.current, rowHeightThrottled);
@@ -49,6 +53,8 @@ const useTotalEventsToShow = () => {
     rowRef,
     eventRef,
     eventWrapperRef,
+    cellRef,
+    cellDimensions: { width: cellWidth, height: rowHeight },
     totalEventsToShow,
   };
 };

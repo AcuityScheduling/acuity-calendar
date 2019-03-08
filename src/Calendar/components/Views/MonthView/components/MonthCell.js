@@ -3,128 +3,147 @@ import PropTypes from 'prop-types';
 import { makeClass, resetEventFormat } from '../../../../utils';
 import { EVENT_TYPE, MOMENT_TYPE, REF_TYPE } from '../../../../types';
 import MonthEvent from './MonthEvent';
+import MonthDragDrop from './MonthDragDrop';
 
-const MonthCell = ({
-  events,
-  dayDetails,
-  onSelectSlot,
-  onSelectMonthDate,
-  renderMonthCell,
-  renderEvent,
-  eventRef,
-  eventWrapperRef,
-  onSelectEvent,
-  onSelectMoreEvents,
-  totalEventsToShow,
-}) => {
-  // Get the list of events that should be showing in "more"
-  const getEventsForMore = () => {
-    const totalMore = events.length - totalEventsToShow;
-    return events.filter((event, index) => {
-      if (index >= events.length - totalMore) {
-        return true;
-      }
-      return false;
-    });
-  };
+const MonthCell = React.forwardRef(
+  (
+    {
+      events,
+      cellDimensions,
+      dayDetails,
+      onSelectSlot,
+      onSelectMonthDate,
+      renderMonthCell,
+      renderEvent,
+      eventRef,
+      eventWrapperRef,
+      onSelectEvent,
+      onSelectMoreEvents,
+      totalEventsToShow,
+    },
+    ref
+  ) => {
+    // Get the list of events that should be showing in "more"
+    const getEventsForMore = () => {
+      const totalMore = events.length - totalEventsToShow;
+      return events.filter((event, index) => {
+        if (index >= events.length - totalMore) {
+          return true;
+        }
+        return false;
+      });
+    };
 
-  const renderAllEvents = events => {
-    let count = 0;
+    const renderAllEvents = events => {
+      let count = 0;
 
-    return events.map(event => {
-      count += 1;
+      return events.map(event => {
+        count += 1;
 
-      if (!totalEventsToShow || totalEventsToShow >= count) {
-        return (
-          <MonthEvent
-            event={event}
-            key={event.id}
-            onSelect={onSelectEvent}
-            ref={eventRef}
-            style={{ opacity: !totalEventsToShow ? 0 : 1 }}
-          >
-            {renderEvent}
-          </MonthEvent>
-        );
-      }
+        if (!totalEventsToShow || totalEventsToShow >= count) {
+          return (
+            <MonthDragDrop
+              cellDimensions={cellDimensions}
+              event={event}
+              key={event.id}
+            >
+              {({ draggedEvent }) => {
+                return (
+                  <MonthEvent
+                    event={draggedEvent}
+                    onSelect={onSelectEvent}
+                    ref={eventRef}
+                    style={{ opacity: !totalEventsToShow ? 0 : 1 }}
+                  >
+                    {renderEvent}
+                  </MonthEvent>
+                );
+              }}
+            </MonthDragDrop>
+          );
+        }
 
-      return null;
-    });
-  };
+        return null;
+      });
+    };
 
-  return (
-    <div
-      className={makeClass(
-        'month__cell',
-        !dayDetails.isInRange && 'month__cell--not-in-range'
-      )}
-      role="button"
-      onClick={e =>
-        onSelectSlot({
-          e,
-          date: new Date(dayDetails.date),
-          isInRange: dayDetails.isInRange,
-        })
-      }
-    >
+    return (
       <div
-        className={makeClass('month__date-wrapper')}
-        onClick={e => {
-          e.stopPropagation();
-          onSelectMonthDate({
+        className={makeClass(
+          'month__cell',
+          !dayDetails.isInRange && 'month__cell--not-in-range'
+        )}
+        role="button"
+        ref={ref}
+        onClick={e =>
+          onSelectSlot({
             e,
             date: new Date(dayDetails.date),
-            isInrange: dayDetails.isInRange,
-          });
-        }}
+            isInRange: dayDetails.isInRange,
+          })
+        }
       >
         <div
-          className={makeClass(
-            'month__date',
-            !dayDetails.isInRange && 'month__date--not-in-range'
-          )}
+          className={makeClass('month__date-wrapper')}
+          onClick={e => {
+            e.stopPropagation();
+            onSelectMonthDate({
+              e,
+              date: new Date(dayDetails.date),
+              isInrange: dayDetails.isInRange,
+            });
+          }}
         >
-          {dayDetails.date.date()}
+          <div
+            className={makeClass(
+              'month__date',
+              !dayDetails.isInRange && 'month__date--not-in-range'
+            )}
+          >
+            {dayDetails.date.date()}
+          </div>
         </div>
+        {renderMonthCell ? (
+          renderMonthCell({
+            date: dayDetails.date,
+            isInRange: dayDetails.isInRange,
+            events,
+          })
+        ) : (
+          <div
+            className={makeClass('month__event-wrapper')}
+            ref={eventWrapperRef}
+          >
+            {events.length > 0 && dayDetails.isInRange && (
+              <Fragment>
+                {renderAllEvents(events)}
+                {totalEventsToShow < events.length && totalEventsToShow > 0 && (
+                  <div
+                    className={makeClass('month__more-events')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      onSelectMoreEvents({
+                        e,
+                        events: getEventsForMore().map(event =>
+                          resetEventFormat(event)
+                        ),
+                        date: new Date(dayDetails.date),
+                      });
+                    }}
+                  >
+                    {events.length - totalEventsToShow} more
+                  </div>
+                )}
+              </Fragment>
+            )}
+          </div>
+        )}
       </div>
-      {renderMonthCell ? (
-        renderMonthCell({
-          date: dayDetails.date,
-          isInRange: dayDetails.isInRange,
-          events,
-        })
-      ) : (
-        <div
-          className={makeClass('month__event-wrapper')}
-          ref={eventWrapperRef}
-        >
-          {events.length > 0 && dayDetails.isInRange && (
-            <Fragment>
-              {renderAllEvents(events)}
-              {totalEventsToShow < events.length && totalEventsToShow > 0 && (
-                <div
-                  className={makeClass('month__more-events')}
-                  onClick={e => {
-                    e.stopPropagation();
-                    onSelectMoreEvents({
-                      e,
-                      events: getEventsForMore().map(event =>
-                        resetEventFormat(event)
-                      ),
-                      date: new Date(dayDetails.date),
-                    });
-                  }}
-                >
-                  {events.length - totalEventsToShow} more
-                </div>
-              )}
-            </Fragment>
-          )}
-        </div>
-      )}
-    </div>
-  );
-};
+    );
+  }
+);
+
+MonthCell.displayName = 'MonthCell';
 
 MonthCell.defaultProps = {
   events: [],
@@ -137,6 +156,10 @@ MonthCell.defaultProps = {
 };
 
 MonthCell.propTypes = {
+  cellDimensions: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }).isRequired,
   dayDetails: PropTypes.shape({
     date: MOMENT_TYPE.isRequired,
     isInRange: PropTypes.bool.isRequired,

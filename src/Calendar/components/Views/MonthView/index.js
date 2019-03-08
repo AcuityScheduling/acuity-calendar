@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { getMonthGrid, getDayNames, useTotalEventsToShow } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
-import MonthEvent from './components/MonthEvent';
 import './index.scss';
+import MonthCell from './components/MonthCell';
 import { FIRST_DAY_DEFAULT } from '../../../defaultProps';
 
 const MonthView = ({
@@ -34,30 +34,6 @@ const MonthView = ({
   });
   const dayNames = getDayNames({ firstDay });
 
-  const renderAllEvents = events => {
-    let count = 0;
-
-    return events.map(event => {
-      count += 1;
-
-      if (!totalEventsToShow || totalEventsToShow >= count) {
-        return (
-          <MonthEvent
-            event={event}
-            key={event.id}
-            onSelect={onSelectEvent}
-            ref={eventRef}
-            style={{ opacity: !totalEventsToShow ? 0 : 1 }}
-          >
-            {renderEvent}
-          </MonthEvent>
-        );
-      }
-
-      return null;
-    });
-  };
-
   let countDays = 0;
   let countRows = 0;
   return (
@@ -78,8 +54,8 @@ const MonthView = ({
           return (
             <div
               className={makeClass('month__row')}
-              key={`monthColumn${countRows}`}
               ref={rowRef}
+              key={`monthColumn${countRows}`}
             >
               {row.map(dayDetails => {
                 countDays += 1;
@@ -91,75 +67,17 @@ const MonthView = ({
                 );
 
                 return (
-                  <div
+                  <MonthCell
+                    events={eventsForCell}
                     key={`monthCells${countDays}`}
-                    className={makeClass(
-                      'month__cell',
-                      !dayDetails.isInRange && 'month__cell--not-in-range'
-                    )}
-                    role="button"
-                    onClick={e =>
-                      onSelectSlot({
-                        e,
-                        date: new Date(dayDetails.date),
-                        isInRange: dayDetails.isInRange,
-                      })
-                    }
-                  >
-                    <div
-                      className={makeClass('month__date-wrapper')}
-                      onClick={e => {
-                        e.stopPropagation();
-                        onSelectMonthDate({
-                          e,
-                          date: new Date(dayDetails.date),
-                          isInrange: dayDetails.isInRange,
-                        });
-                      }}
-                    >
-                      <div
-                        className={makeClass(
-                          'month__date',
-                          !dayDetails.isInRange && 'month__date--not-in-range'
-                        )}
-                      >
-                        {dayDetails.date.date()}
-                      </div>
-                    </div>
-                    {renderMonthCell ? (
-                      renderMonthCell({
-                        date: dayDetails.date,
-                        isInRange: dayDetails.isInRange,
-                        events: eventsForCell,
-                      })
-                    ) : (
-                      <div
-                        className={makeClass('month__event-wrapper')}
-                        ref={eventWrapperRef}
-                      >
-                        {eventsForCell.length > 0 && dayDetails.isInRange && (
-                          <Fragment>
-                            {renderAllEvents(eventsForCell)}
-                            {totalEventsToShow < eventsForCell.length && (
-                              <div
-                                className={makeClass('month__more-events')}
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  onSelectMoreEvents({
-                                    e,
-                                    events: eventsForCell,
-                                    date: new Date(dayDetails.date),
-                                  });
-                                }}
-                              >
-                                {eventsForCell.length - totalEventsToShow} more
-                              </div>
-                            )}
-                          </Fragment>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                    dayDetails={dayDetails}
+                    onSelectSlot={onSelectSlot}
+                    onSelectMonthDate={onSelectMonthDate}
+                    onSelectMoreEvents={onSelectMoreEvents}
+                    totalEventsToShow={totalEventsToShow}
+                    eventRef={eventRef}
+                    eventWrapperRef={eventWrapperRef}
+                  />
                 );
               })}
             </div>

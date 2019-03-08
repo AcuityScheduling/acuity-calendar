@@ -124,7 +124,8 @@ const MonthCell = React.forwardRef(
                       e.stopPropagation();
                       onSelectMoreEvents({
                         e,
-                        events: getEventsForMore().map(event =>
+                        events: events.map(event => resetEventFormat(event)),
+                        eventsMore: getEventsForMore().map(event =>
                           resetEventFormat(event)
                         ),
                         date: new Date(dayDetails.date),

@@ -20,18 +20,19 @@ const useCalendarSticky = () => {
     timeIndicatorRef,
     stepLinesRef,
     timeIndicatorWidth:
-      wrapperWidth - get(timeGutterRef, 'current.offsetWidth', 0),
+      wrapperWidth - get(timeGutterRef, 'current.scrollWidth', 0),
   });
 
   const wrapperWidthThrottled = throttle(() => {
-    setWrapperWidth(get(wrapperRef, 'current.offsetWidth'));
+    setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
   }, 300);
 
   // Add listener to wrapper to update when needed
   useEffect(() => {
     if (!wrapperWidth) {
-      setWrapperWidth(get(wrapperRef, 'current.offsetWidth'));
+      setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
     }
+    console.log('wrapperWidth: ', wrapperWidth);
 
     if (wrapperRef.current) {
       addListener(wrapperRef.current, wrapperWidthThrottled);

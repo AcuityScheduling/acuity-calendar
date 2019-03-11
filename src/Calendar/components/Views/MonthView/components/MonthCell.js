@@ -9,6 +9,7 @@ const MonthCell = React.forwardRef(
   (
     {
       events,
+      eventHeight,
       cellDimensions,
       dayDetails,
       onSelectSlot,
@@ -45,6 +46,7 @@ const MonthCell = React.forwardRef(
             <MonthDragDrop
               cellDimensions={cellDimensions}
               event={event}
+              topEventOffset={(count - 1) * eventHeight * -1}
               key={event.id}
             >
               {({ draggedEvent }) => {
@@ -53,7 +55,6 @@ const MonthCell = React.forwardRef(
                     event={draggedEvent}
                     onSelect={onSelectEvent}
                     ref={eventRef}
-                    style={{ opacity: !totalEventsToShow ? 0 : 1 }}
                   >
                     {renderEvent}
                   </MonthEvent>
@@ -113,6 +114,7 @@ const MonthCell = React.forwardRef(
           <div
             className={makeClass('month__event-wrapper')}
             ref={eventWrapperRef}
+            style={{ opacity: !totalEventsToShow ? 0 : 1 }}
           >
             {events.length > 0 && dayDetails.isInRange && (
               <Fragment>
@@ -165,6 +167,7 @@ MonthCell.propTypes = {
     date: MOMENT_TYPE.isRequired,
     isInRange: PropTypes.bool.isRequired,
   }).isRequired,
+  eventHeight: PropTypes.number.isRequired,
   eventRef: REF_TYPE.isRequired,
   eventWrapperRef: REF_TYPE.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE),

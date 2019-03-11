@@ -52,6 +52,7 @@ const useTotalEventsToShow = () => {
   return {
     rowRef,
     eventRef,
+    eventHeight,
     eventWrapperRef,
     eventWrapperMargin,
     cellRef,

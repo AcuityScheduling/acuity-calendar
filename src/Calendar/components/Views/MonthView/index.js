@@ -25,6 +25,7 @@ const MonthView = ({
     eventRef,
     cellRef,
     eventWrapperRef,
+    eventHeight,
     totalEventsToShow,
     cellDimensions,
   } = useTotalEventsToShow();
@@ -72,6 +73,7 @@ const MonthView = ({
                   <MonthCell
                     events={eventsForCell}
                     ref={cellRef}
+                    eventHeight={eventHeight}
                     cellDimensions={cellDimensions}
                     key={`monthCells${countDays}`}
                     dayDetails={dayDetails}

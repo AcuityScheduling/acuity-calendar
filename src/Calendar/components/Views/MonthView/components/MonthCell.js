@@ -83,7 +83,6 @@ const MonthCell = React.forwardRef(
         )}
         role="button"
         ref={ref}
-        style={{ width: `${100 / totalColumns}%` }}
         onClick={e =>
           onSelectSlot({
             e,

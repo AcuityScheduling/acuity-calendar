@@ -1,7 +1,7 @@
-import { useRef, useEffect } from 'react';
-
-let timeIndicatorWidth = 0;
-let stepLinesWidth = 0;
+import { useRef, useEffect, useState } from 'react';
+import get from 'lodash/get';
+import throttle from 'lodash/throttle';
+import { addListener, removeListener } from 'resize-detector';
 
 const useCalendarSticky = () => {
   const wrapperRef = useRef(null);
@@ -10,6 +10,7 @@ const useCalendarSticky = () => {
   const cornerRef = useRef(null);
   const timeIndicatorRef = useRef(null);
   const stepLinesRef = useRef(null);
+  const [wrapperWidth, setWrapperWidth] = useState(0);
 
   const onScroll = getOnScroll({
     wrapperRef,
@@ -18,7 +19,24 @@ const useCalendarSticky = () => {
     cornerRef,
     timeIndicatorRef,
     stepLinesRef,
-    timeIndicatorWidth,
+    timeIndicatorWidth:
+      wrapperWidth - get(timeGutterRef, 'current.offsetWidth', 0),
+  });
+
+  const wrapperWidthThrottled = throttle(() => {
+    setWrapperWidth(get(wrapperRef, 'current.offsetWidth'));
+  }, 300);
+
+  // Add listener to wrapper to update when needed
+  useEffect(() => {
+    if (!wrapperWidth) {
+      setWrapperWidth(get(wrapperRef, 'current.offsetWidth'));
+    }
+
+    if (wrapperRef.current) {
+      addListener(wrapperRef.current, wrapperWidthThrottled);
+    }
+    return () => removeListener(wrapperRef.current, wrapperWidthThrottled);
   });
 
   // Make sure stepLines and time indicator are the full width of the scroll
@@ -26,7 +44,8 @@ const useCalendarSticky = () => {
     if (
       timeIndicatorRef.current &&
       wrapperRef.current &&
-      stepLinesRef.current
+      stepLinesRef.current &&
+      timeGutterRef.current
     ) {
       wrapperRef.current.scrollLeft = 0;
       timeIndicatorRef.current.style.width = '100%';
@@ -35,10 +54,9 @@ const useCalendarSticky = () => {
       // We have to wait for the width to be set to 100% before
       // we can do more calculations
       const timeout = setTimeout(() => {
-        timeIndicatorWidth = wrapperRef.current.clientWidth - 51;
-        stepLinesWidth = wrapperRef.current.scrollWidth;
-        timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
-        stepLinesRef.current.style.width = `${stepLinesWidth}px`;
+        timeIndicatorRef.current.style.width = `${wrapperWidth -
+          timeGutterRef.current.offsetWidth}px`;
+        stepLinesRef.current.style.width = `${wrapperWidth}px`;
       });
 
       return () => clearTimeout(timeout);
@@ -92,7 +110,8 @@ const update = ({
   // Make sure the time indicator stays in the right place while scrolling horiz
   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
   if (timeIndicatorWidth) {
-    timeIndicatorRef.current.style.width = `${timeIndicatorWidth}px`;
+    timeIndicatorRef.current.style.width = `${timeIndicatorWidth -
+      latestKnownScrollX}px`;
   }
 };
 

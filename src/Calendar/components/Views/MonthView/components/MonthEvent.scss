@@ -16,8 +16,15 @@
       margin-right: 8px;
     }
 
-    &__event-details {
+    &__event-title {
+      flex: 0 1 auto;
       white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &__event-details {
+      display: flex;
+      overflow: hidden;
     }
   }
 }

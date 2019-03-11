@@ -21,6 +21,7 @@ const MonthCell = React.forwardRef(
       onSelectEvent,
       onSelectMoreEvents,
       totalEventsToShow,
+      width,
     },
     ref
   ) => {
@@ -49,12 +50,15 @@ const MonthCell = React.forwardRef(
               topEventOffset={(count - 1) * eventHeight * -1}
               key={event.id}
             >
-              {({ draggedEvent }) => {
+              {({ draggedEvent, vertChange, horizChange }) => {
                 return (
                   <MonthEvent
                     event={draggedEvent}
                     onSelect={onSelectEvent}
                     ref={eventRef}
+                    style={{
+                      transform: `translate(${horizChange}px, ${vertChange}px)`,
+                    }}
                   >
                     {renderEvent}
                   </MonthEvent>
@@ -76,6 +80,7 @@ const MonthCell = React.forwardRef(
         )}
         role="button"
         ref={ref}
+        style={{ width }}
         onClick={e =>
           onSelectSlot({
             e,
@@ -178,6 +183,7 @@ MonthCell.propTypes = {
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,
   totalEventsToShow: PropTypes.number.isRequired,
+  width: PropTypes.string.isRequired,
 };
 
 export default MonthCell;

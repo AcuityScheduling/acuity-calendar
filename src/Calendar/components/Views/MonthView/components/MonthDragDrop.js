@@ -7,15 +7,37 @@ import { EVENT_TYPE } from '../../../../types';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'moveUp':
-      return { ...state, rowMoves: state.rowMoves - 1 };
+      return {
+        ...state,
+        rowMoves: state.rowMoves - 1,
+        vertChange: state.vertChange - action.vertChange,
+      };
     case 'moveRight':
-      return { ...state, columnMoves: state.columnMoves + 1 };
+      return {
+        ...state,
+        columnMoves: state.columnMoves + 1,
+        horizChange: state.horizChange + action.horizChange,
+      };
     case 'moveDown':
-      return { ...state, rowMoves: state.rowMoves + 1 };
+      return {
+        ...state,
+        rowMoves: state.rowMoves + 1,
+        vertChange: state.vertChange + action.vertChange,
+      };
     case 'moveLeft':
-      return { ...state, columnMoves: state.columnMoves - 1 };
+      return {
+        ...state,
+        columnMoves: state.columnMoves - 1,
+        horizChange: state.horizChange - action.horizChange,
+      };
     case 'startDragging':
-      return { ...state, isDragging: true, position: action.value };
+      const { vertChange } = state;
+      return {
+        ...state,
+        isDragging: true,
+        position: action.position,
+        vertChange: vertChange === 0 ? action.initialVertChange : vertChange,
+      };
     case 'stopDragging':
       return { ...state, isDragging: false };
     default:
@@ -28,6 +50,8 @@ const initialState = {
   columnMoves: 0,
   isDragging: false,
   position: { x: 0, y: 0 },
+  vertChange: 0,
+  horizChange: 0,
 };
 
 const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
@@ -35,34 +59,34 @@ const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
 
   const { width, height } = cellDimensions;
   const { x, y } = state.position;
-  const { columnMoves, rowMoves, isDragging } = state;
+  const { columnMoves, rowMoves, isDragging, vertChange, horizChange } = state;
+
   if (y < height * rowMoves) {
-    console.log('up');
-    dispatch({ type: 'moveUp' });
+    dispatch({ type: 'moveUp', vertChange: height });
   }
 
   if (x > width * (columnMoves + 1)) {
-    // moved right
-    console.log('right');
-    dispatch({ type: 'moveRight' });
+    dispatch({ type: 'moveRight', horizChange: width });
   }
 
   if (y > height * (rowMoves + 1)) {
-    // Moved down
-    console.log('down');
-    dispatch({ type: 'moveDown' });
+    dispatch({ type: 'moveDown', vertChange: height });
   }
 
   if (x < width * columnMoves) {
-    // moved left
-    console.log('left');
-    dispatch({ type: 'moveLeft' });
+    dispatch({ type: 'moveLeft', horizChange: width });
   }
 
+  console.log('vertChange: ', vertChange);
+  console.log('horizChange: ', horizChange);
   return (
     <DraggableCore
       onDrag={(e, ui) => {
-        dispatch({ type: 'startDragging', value: { x: ui.x, y: ui.y } });
+        dispatch({
+          type: 'startDragging',
+          position: { x: ui.x, y: ui.y },
+          initialVertChange: topEventOffset,
+        });
         // onDrag(e, ui);
       }}
       onStop={(e, ui) => {
@@ -74,7 +98,7 @@ const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
         // onDragEnd(resetEventFormat(updatedEvent));
       }}
     >
-      {children({ draggedEvent: event })}
+      {children({ draggedEvent: event, vertChange, horizChange })}
     </DraggableCore>
   );
 };

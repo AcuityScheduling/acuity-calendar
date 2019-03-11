@@ -53,6 +53,7 @@ const MonthView = ({
       <div className={makeClass('month__days')}>
         {monthGrid.map(row => {
           countRows += 1;
+          const totalColumns = row.length;
 
           return (
             <div
@@ -71,6 +72,7 @@ const MonthView = ({
 
                 return (
                   <MonthCell
+                    width={`${100 / totalColumns}%`}
                     events={eventsForCell}
                     ref={cellRef}
                     eventHeight={eventHeight}

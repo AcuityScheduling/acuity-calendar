@@ -6,9 +6,8 @@
     }
 
     &__event-details {
-      display: flex;
       height: 20px;
-      padding: 0 10px;
+      padding-left: 10px;
     }
 
     &__event-time {
@@ -17,7 +16,6 @@
     }
 
     &__event-title {
-      flex: 0 1 auto;
       white-space: nowrap;
       overflow: hidden;
     }

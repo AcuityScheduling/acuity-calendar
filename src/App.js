@@ -64,7 +64,7 @@ const App = () => {
           updateEvent(event);
           console.log('EXTEND', event);
         }}
-        onDragEnd={event => {
+        onDragEnd={({ event }) => {
           updateEvent(event);
           console.log('DRAG', event);
         }}

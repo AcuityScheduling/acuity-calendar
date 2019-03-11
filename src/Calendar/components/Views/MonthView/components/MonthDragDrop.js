@@ -128,7 +128,7 @@ const MonthDragDrop = ({
       onStop={(e, ui) => {
         // Check if we hit the onDrag event. If we didn't, this is a click
         if (!isDragging) return false;
-        onDragEnd({ e, event: resetEventFormat(event) });
+        onDragEnd({ e, event: resetEventFormat(draggedEvent) });
         setTimeout(() => dispatch({ type: 'stopDragging' }));
       }}
     >

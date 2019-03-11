@@ -184,7 +184,7 @@ const EventDragDrop = ({
           setDeltaPosition({ x: 0, y: 0 });
           setTimeout(() => setIsDragging(false));
           setWasDragged(true);
-          onDragEnd(resetEventFormat(updatedEvent));
+          onDragEnd({ e, event: resetEventFormat(updatedEvent) });
         }}
       >
         {children({

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {
-  STEP_HEIGHTS,
-  TIME_GUTTER_WIDTH,
-  STEP_BORDER_WIDTH,
-} from './constants';
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
 import { useCalendarSticky, getScrollbarWidth, getTopOffset } from './utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../types';
 import { makeClass } from '../../utils';
@@ -14,15 +10,16 @@ import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
   STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
 
 const StepGrid = ({
   selectedDate,
   firstDay,
   stepMinutes,
+  stepHeight,
   selectMinutes,
   onCurrentTimeChange,
-  timeGutterWidth,
   renderHeader,
   renderColumns,
   renderCorner,
@@ -42,12 +39,18 @@ const StepGrid = ({
 
   const {
     wrapperRef,
-    timeColumnRef,
+    timeGutterRef,
     headerRef,
     cornerRef,
     timeIndicatorRef,
     stepLinesRef,
   } = useCalendarSticky();
+
+  // Default to something sensible
+  let timeGutterWidth = 50;
+  if (timeGutterRef.current) {
+    timeGutterWidth = timeGutterRef.current.offsetWidth - STEP_BORDER_WIDTH;
+  }
 
   const totalStepsPerBlock = 60 / stepMinutes;
   const scrollbarWidth = getScrollbarWidth();
@@ -57,8 +60,8 @@ const StepGrid = ({
 
   const renderStepLines = () => {
     const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
-    const stepHeight = STEP_HEIGHTS[stepMinutes];
-    const stepHeightWithBorder = `${stepHeight + extraBorderHeight}px`;
+    const stepHeightWithBorder = `${(stepHeight || STEP_HEIGHTS[stepMinutes]) +
+      extraBorderHeight}px`;
     const times = [];
     for (let i = 0; i < 24 * totalStepsPerBlock; i += 1) {
       const minorStep = i % totalStepsPerBlock;
@@ -80,7 +83,8 @@ const StepGrid = ({
   };
 
   const renderTimes = () => {
-    const blockHeight = totalStepsPerBlock * STEP_HEIGHTS[stepMinutes];
+    const blockHeight =
+      totalStepsPerBlock * (stepHeight || STEP_HEIGHTS[stepMinutes]);
     const times = [];
     for (let i = 0; i < 24; i += 1) {
       times.push(
@@ -148,8 +152,7 @@ const StepGrid = ({
         <div className={makeClass('step-grid__column-wrapper')}>
           <div
             className={makeClass('step-grid__time-gutter')}
-            style={{ width: timeGutterWidth }}
-            ref={timeColumnRef}
+            ref={timeGutterRef}
           >
             {renderTimes()}
           </div>
@@ -157,7 +160,11 @@ const StepGrid = ({
             <div
               className={currentTimeIndicatorClass}
               style={{
-                top: `${getTopOffset({ stepMinutes, date: currentTime })}px`,
+                top: `${getTopOffset({
+                  stepMinutes,
+                  date: currentTime,
+                  stepHeight,
+                })}px`,
               }}
               ref={timeIndicatorRef}
             >
@@ -176,10 +183,11 @@ const StepGrid = ({
 
 StepGrid.defaultProps = {
   renderCorner: () => null,
-  timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
+  stepHeight: null,
   onCurrentTimeChange: () => null,
 };
 
@@ -189,10 +197,10 @@ StepGrid.propTypes = {
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
+  stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
-  timeGutterWidth: PropTypes.number,
 };
 
 export default StepGrid;

@@ -15,6 +15,9 @@ import {
   SELECTED_DATE_DEFAULT,
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from './defaultProps';
 
 const Calendar = ({
@@ -31,9 +34,11 @@ const Calendar = ({
   onSelectEvent,
   onSelectRangeEnd,
   onSelectSlot,
+  onSelectMonthDate,
+  onSelectMoreEvents,
   stepMinutes,
+  stepHeight,
   selectMinutes,
-  timeGutterWidth,
   renderEvent,
   renderCorner,
   renderEventGroupHeader,
@@ -58,10 +63,10 @@ const Calendar = ({
 
   const View = getView();
 
-  const mungedEvents = useMemo(() => getMungedEvents({ events, stepMinutes }), [
-    events,
-    stepMinutes,
-  ]);
+  const mungedEvents = useMemo(
+    () => getMungedEvents({ events, stepMinutes, stepHeight }),
+    [events, stepMinutes]
+  );
 
   const eventsWithSelectedEventGroups = useMemo(
     () =>
@@ -73,7 +78,7 @@ const Calendar = ({
   );
 
   const mungedStepDetails = useMemo(
-    () => getMungedEvents({ events: stepDetails, stepMinutes }),
+    () => getMungedEvents({ events: stepDetails, stepMinutes, stepHeight }),
     [stepDetails, stepMinutes]
   );
 
@@ -99,15 +104,17 @@ const Calendar = ({
       onSelectEvent={onSelectEvent}
       onSelectRangeEnd={onSelectRangeEnd}
       onSelectSlot={onSelectSlot}
+      onSelectMonthDate={onSelectMonthDate}
+      onSelectMoreEvents={onSelectMoreEvents}
       forceSixWeeks={forceSixWeeks}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
       selectedEventGroups={selectedEventGroups}
+      stepHeight={stepHeight}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
       renderSelectRange={renderSelectRange}
-      timeGutterWidth={timeGutterWidth}
       renderEventGroupHeader={renderEventGroupHeader}
       minWidthColumn={minWidthColumn}
       minWidthColumnEmpty={minWidthColumnEmpty}
@@ -126,9 +133,9 @@ Calendar.defaultProps = {
   renderEventGroupHeader: () => null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
-  timeGutterWidth: 50,
   stepDetails: [],
   events: [],
+  firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.week,
   calendars: [],
@@ -144,11 +151,17 @@ Calendar.defaultProps = {
   renderSelectRange: null,
   renderMonthCell: null,
   forceSixWeeks: false,
+  onSelectMonthDate: () => null,
+  stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
+  onSelectMoreEvents: () => null,
 };
 
 Calendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
+  firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
@@ -156,6 +169,8 @@ Calendar.propTypes = {
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectMonthDate: PropTypes.func,
+  onSelectMoreEvents: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
@@ -167,12 +182,18 @@ Calendar.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  // What range of minutes is selectable - for new events
+  // and for drag and drop
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  timeGutterWidth: PropTypes.number,
+  // The height in pixels that we want each step to be. This will be like
+  // zooming in and out on the calendar
+  stepHeight: PropTypes.number,
+  // How many grid lines there are between an hour. 30 means
+  // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
+  stepMinutes: STEP_MINUTES_TYPE,
   view: CALENDAR_VIEW_TYPE,
 };
 

@@ -5,13 +5,15 @@ import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
-import { TIME_GUTTER_WIDTH } from '../../StepGrid/constants';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
 import { makeClass } from '../../../utils';
 
@@ -36,7 +38,6 @@ const CalendarsView = ({
   selectMinutes,
   stepDetailsWithEventGroups,
   eventsWithEventGroups,
-  timeGutterWidth,
   renderEvent,
   renderCorner,
   renderStepDetail,
@@ -44,6 +45,7 @@ const CalendarsView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  stepHeight,
 }) => {
   const { assignRef, elementWidths } = useElementWidths();
 
@@ -56,7 +58,7 @@ const CalendarsView = ({
       onCurrentTimeChange={onCurrentTimeChange}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
-      timeGutterWidth={timeGutterWidth}
+      stepHeight={stepHeight}
       renderCorner={renderCorner}
       renderHeader={() => {
         const totalColumns = selectedEventGroups.length;
@@ -112,6 +114,7 @@ const CalendarsView = ({
               key={`groupColumn${groupId}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
+              stepHeight={stepHeight}
               date={selectedDate}
               columnId={groupId}
               columnWidths={elementWidths}
@@ -147,7 +150,6 @@ const CalendarsView = ({
 CalendarsView.defaultProps = {
   renderCorner: () => null,
   renderEvent: null,
-  timeGutterWidth: TIME_GUTTER_WIDTH,
   selectedDate: moment(),
   onExtendEnd: () => null,
   onCurrentTimeChange: () => null,
@@ -161,11 +163,15 @@ CalendarsView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
+  firstDay: FIRST_DAY_DEFAULT,
 };
 
 CalendarsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,
@@ -182,12 +188,12 @@ CalendarsView.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
   selectedEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
   stepDetailsWithEventGroups: PropTypes.object,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  timeGutterWidth: PropTypes.number,
+  stepHeight: PropTypes.number,
+  stepMinutes: STEP_MINUTES_TYPE,
 };
 
 export default CalendarsView;

@@ -25,20 +25,33 @@
       padding: 10px;
       font-weight: 600;
     }
-    &__date {
+    &__date-wrapper {
       position: absolute;
       z-index: 4;
       font-size: 14px;
+      color: #2c2929;
+      cursor: pointer;
       right: 5px;
       top: 5px;
-      color: #2c2929;
+      padding: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      &:hover {
+        background: #e7e7e7;
+      }
+    }
+    &__date {
+      line-height: 1em;
+      margin: 0 auto;
       &--not-in-range {
         color: #a9a5a5;
       }
     }
     &__row {
       position: relative;
-      overflow: hidden;
       display: flex;
       flex: 1 1 0;
       width: 100%;
@@ -48,16 +61,30 @@
     }
     &__cell {
       position: relative;
+      flex: 1 1;
+      /* Some width needs to be set. Not a fan of doing this, but I've spent too long on it
+         come up with an obvious easy fix. My brain is too fried today.
+         If you take this out, make SURE you're testing with events in the month view that get 
+         cut off for being too long. They make their cells 1 pixel too wide without this
+         This could be set to anything as long as it is less than the actual width of 14.29%
+      */
+      width: 0;
       &:not(:last-child) {
         border-right: 1px solid #e7e7e7;
       }
-      width: 100%;
       &--not-in-range {
         background: #fbf9f9;
       }
     }
     &__event-wrapper {
-      margin-top: 35px;
+      margin-top: 50px;
+    }
+    &__more-events {
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+      height: 20px;
+      font-size: 12px;
     }
   }
 }

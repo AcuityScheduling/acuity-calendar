@@ -24,7 +24,7 @@ export const MOCKED_EVENTS = [
     group_id: 5,
     start: '2019-02-12 09:00:00',
     end: '2019-02-12 09:30:00',
-    title: 'Unicorns are pretty',
+    title: 'Unicorns are pretty no seriously they are super duper pretty',
     allDay: false,
   },
   {

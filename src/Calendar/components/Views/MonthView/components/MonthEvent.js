@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import EventWrapper from '../../../EventWrapper';
 import { EVENT_TYPE } from '../../../../types';
@@ -13,27 +13,30 @@ const getDisplayTime = time => {
   return `${time.format('h')}${timeMinutes}${time.format('a')}`;
 };
 
-const MonthEvent = ({ event, onSelect, children, ...restProps }) => {
-  return (
-    <EventWrapper
-      event={event}
-      onSelect={onSelect}
-      eventClass={makeClass('month__event')}
-      {...restProps}
-    >
-      {children ? (
-        children(event)
-      ) : (
-        <Fragment>
-          <span className={makeClass('month__event-time')}>
-            {getDisplayTime(event.start)}
-          </span>
-          <span className={makeClass('month__event-title')}>{event.title}</span>
-        </Fragment>
-      )}
-    </EventWrapper>
-  );
-};
+const MonthEvent = React.forwardRef(
+  ({ event, onSelect, children, ...restProps }, ref) => {
+    return (
+      <EventWrapper
+        event={event}
+        onSelect={onSelect}
+        eventClass={makeClass('month__event')}
+        ref={ref}
+        {...restProps}
+      >
+        {children ? (
+          children(event)
+        ) : (
+          <div className={makeClass('month__event-details')}>
+            <div className={makeClass('month__event-time')}>
+              {getDisplayTime(event.start)}
+            </div>
+            <div className={makeClass('month__event-title')}>{event.title}</div>
+          </div>
+        )}
+      </EventWrapper>
+    );
+  }
+);
 
 MonthEvent.defaultProps = {
   onSelect: () => null,

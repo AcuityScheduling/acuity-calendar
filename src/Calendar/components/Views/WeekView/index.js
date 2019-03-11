@@ -11,6 +11,9 @@ import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+  SELECT_MINUTES_DEFAULT,
+  FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
 
 const WeekView = ({
@@ -28,7 +31,6 @@ const WeekView = ({
   onSelectRangeEnd,
   selectMinutes,
   renderEvent,
-  timeGutterWidth,
   stepDetails,
   renderCorner,
   renderStepDetail,
@@ -36,6 +38,7 @@ const WeekView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
   const { assignRef, elementWidths } = useElementWidths();
@@ -50,7 +53,7 @@ const WeekView = ({
       onSelectSlot={onSelectSlot}
       onCurrentTimeChange={onCurrentTimeChange}
       selectMinutes={selectMinutes}
-      timeGutterWidth={timeGutterWidth}
+      stepHeight={stepHeight}
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
@@ -110,6 +113,7 @@ const WeekView = ({
               renderSelectRange={renderSelectRange}
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
+              stepHeight={stepHeight}
               currentTime={currentTime}
               renderEvent={renderEvent}
               renderEventPaddingTop={renderEventPaddingTop}
@@ -147,7 +151,6 @@ const WeekView = ({
 WeekView.defaultProps = {
   renderEvent: null,
   renderCorner: null,
-  timeGutterWidth: 50,
   stepDetails: null,
   onExtendEnd: () => null,
   onCurrentTimeChange: () => null,
@@ -160,11 +163,15 @@ WeekView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
+  firstDay: FIRST_DAY_DEFAULT,
 };
 
 WeekView.propTypes = {
   events: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,
@@ -180,11 +187,11 @@ WeekView.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE.isRequired,
   stepDetails: PropTypes.object,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
-  timeGutterWidth: PropTypes.number,
+  stepHeight: PropTypes.number,
+  stepMinutes: STEP_MINUTES_TYPE,
 };
 
 export default WeekView;

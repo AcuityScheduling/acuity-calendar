@@ -10,6 +10,7 @@ import {
 import { getWeekList } from '../Calendar/components/Views/WeekView/utils';
 import { makeClass } from '../Calendar/utils';
 import './index.scss';
+import { FIRST_DAY_DEFAULT } from '../Calendar/defaultProps';
 
 const { month, week, calendar } = CALENDAR_VIEWS;
 
@@ -107,8 +108,12 @@ const Toolbar = ({
   );
 };
 
+Toolbar.defaultProps = {
+  firstDay: FIRST_DAY_DEFAULT,
+};
+
 Toolbar.propTypes = {
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   onNavigate: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: DATE_TYPE.isRequired,

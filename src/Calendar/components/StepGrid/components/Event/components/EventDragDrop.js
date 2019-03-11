@@ -13,6 +13,10 @@ import {
 } from '../utils';
 import { handleCenterClass } from '..';
 import { makeClass, resetEventFormat } from '../../../../../utils';
+import {
+  SELECT_MINUTES_DEFAULT,
+  STEP_MINUTES_DEFAULT,
+} from '../../../../../defaultProps';
 
 /**
  * Get classes that we're going to attach to an event while we're
@@ -63,6 +67,7 @@ const EventDragDrop = ({
   onDrag,
   onDragEnd,
   children,
+  stepHeight,
   getUpdatedDraggedEvent,
 }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
@@ -76,6 +81,7 @@ const EventDragDrop = ({
   const [currentColumn, setCurrentColumn] = useState(columnIndex);
 
   const selectMinutesHeight = getSelectMinutesHeight({
+    stepHeight,
     stepMinutes,
     selectMinutes,
   });
@@ -178,7 +184,7 @@ const EventDragDrop = ({
           setDeltaPosition({ x: 0, y: 0 });
           setTimeout(() => setIsDragging(false));
           setWasDragged(true);
-          onDragEnd(resetEventFormat(updatedEvent));
+          onDragEnd({ e, event: resetEventFormat(updatedEvent) });
         }}
       >
         {children({
@@ -209,6 +215,9 @@ EventDragDrop.defaultProps = {
   isDraggable: true,
   getUpdatedDraggedEvent: () => null,
   onDrag: () => null,
+  stepHeight: null,
+  selectMinutes: SELECT_MINUTES_DEFAULT,
+  stepMinutes: STEP_MINUTES_DEFAULT,
 };
 
 EventDragDrop.propTypes = {
@@ -221,8 +230,9 @@ EventDragDrop.propTypes = {
   isDraggable: PropTypes.bool,
   onDrag: PropTypes.func,
   onDragEnd: PropTypes.func.isRequired,
-  selectMinutes: STEP_MINUTES_TYPE.isRequired,
-  stepMinutes: STEP_MINUTES_TYPE.isRequired,
+  selectMinutes: STEP_MINUTES_TYPE,
+  stepHeight: PropTypes.number,
+  stepMinutes: STEP_MINUTES_TYPE,
 };
 
 export default EventDragDrop;

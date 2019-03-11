@@ -1,22 +1,36 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { getMonthGrid, getDayNames } from './utils';
+import { getMonthGrid, getDayNames, useTotalEventsToShow } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
-import MonthEvent from './components/MonthEvent';
 import './index.scss';
+import MonthCell from './components/MonthCell';
+import { FIRST_DAY_DEFAULT } from '../../../defaultProps';
 
 const MonthView = ({
   events,
   selectedDate,
   firstDay,
+  onDragEnd,
   onSelectEvent,
   onSelectSlot,
+  onSelectMonthDate,
+  onSelectMoreEvents,
   forceSixWeeks,
   renderEvent,
   renderMonthCell,
 }) => {
+  const {
+    rowRef,
+    eventRef,
+    cellRef,
+    eventWrapperRef,
+    eventHeight,
+    totalEventsToShow,
+    cellDimensions,
+  } = useTotalEventsToShow();
+
   const monthGrid = getMonthGrid({
     date: selectedDate,
     firstDay,
@@ -40,10 +54,12 @@ const MonthView = ({
       <div className={makeClass('month__days')}>
         {monthGrid.map(row => {
           countRows += 1;
+          const totalColumns = row.length;
 
           return (
             <div
               className={makeClass('month__row')}
+              ref={rowRef}
               key={`monthColumn${countRows}`}
             >
               {row.map(dayDetails => {
@@ -56,49 +72,22 @@ const MonthView = ({
                 );
 
                 return (
-                  <div
+                  <MonthCell
+                    totalColumns={totalColumns}
+                    events={eventsForCell}
+                    ref={cellRef}
+                    eventHeight={eventHeight}
+                    cellDimensions={cellDimensions}
                     key={`monthCells${countDays}`}
-                    className={makeClass(
-                      'month__cell',
-                      !dayDetails.isInRange && 'month__cell--not-in-range'
-                    )}
-                    role="button"
-                    onClick={() =>
-                      onSelectSlot({ date: new Date(dayDetails.date) })
-                    }
-                  >
-                    <div
-                      className={makeClass(
-                        'month__date',
-                        !dayDetails.isInRange && 'month__date--not-in-range'
-                      )}
-                    >
-                      {dayDetails.date.date()}
-                    </div>
-                    {renderMonthCell ? (
-                      renderMonthCell({
-                        date: dayDetails.date,
-                        isInRange: dayDetails.isInRange,
-                        events: eventsForCell,
-                      })
-                    ) : (
-                      <div className={makeClass('month__event-wrapper')}>
-                        {eventsForCell.length > 0 &&
-                          eventsForCell.map(
-                            event =>
-                              dayDetails.isInRange && (
-                                <MonthEvent
-                                  event={event}
-                                  key={event.id}
-                                  onSelect={onSelectEvent}
-                                >
-                                  {renderEvent}
-                                </MonthEvent>
-                              )
-                          )}
-                      </div>
-                    )}
-                  </div>
+                    dayDetails={dayDetails}
+                    onDragEnd={onDragEnd}
+                    onSelectSlot={onSelectSlot}
+                    onSelectMonthDate={onSelectMonthDate}
+                    onSelectMoreEvents={onSelectMoreEvents}
+                    totalEventsToShow={totalEventsToShow}
+                    eventRef={eventRef}
+                    eventWrapperRef={eventWrapperRef}
+                  />
                 );
               })}
             </div>
@@ -113,13 +102,20 @@ MonthView.defaultProps = {
   renderEvent: null,
   forceSixWeeks: false,
   renderMonthCell: null,
+  onSelectMonthDate: () => null,
+  firstDay: FIRST_DAY_DEFAULT,
+  onSelectMoreEvents: () => null,
+  onDragEnd: () => null,
 };
 
 MonthView.propTypes = {
   events: PropTypes.object.isRequired,
-  firstDay: FIRST_DAY_TYPE.isRequired,
+  firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
+  onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
+  onSelectMonthDate: PropTypes.func,
+  onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func.isRequired,
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,

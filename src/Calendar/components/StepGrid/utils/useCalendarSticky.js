@@ -5,7 +5,7 @@ let stepLinesWidth = 0;
 
 const useCalendarSticky = () => {
   const wrapperRef = useRef(null);
-  const timeColumnRef = useRef(null);
+  const timeGutterRef = useRef(null);
   const headerRef = useRef(null);
   const cornerRef = useRef(null);
   const timeIndicatorRef = useRef(null);
@@ -14,7 +14,7 @@ const useCalendarSticky = () => {
   const onScroll = getOnScroll({
     wrapperRef,
     headerRef,
-    timeColumnRef,
+    timeGutterRef,
     cornerRef,
     timeIndicatorRef,
     stepLinesRef,
@@ -55,7 +55,7 @@ const useCalendarSticky = () => {
 
   return {
     wrapperRef,
-    timeColumnRef,
+    timeGutterRef,
     headerRef,
     cornerRef,
     timeIndicatorRef,
@@ -75,7 +75,7 @@ let ticking = false;
 
 const update = ({
   headerRef,
-  timeColumnRef,
+  timeGutterRef,
   cornerRef,
   timeIndicatorRef,
   stepLinesRef,
@@ -87,7 +87,7 @@ const update = ({
   ticking = false;
 
   headerRef.current.style.transform = `translateX(-${latestKnownScrollX}px)`;
-  timeColumnRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+  timeGutterRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
   // Make sure the time indicator stays in the right place while scrolling horiz
   timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;

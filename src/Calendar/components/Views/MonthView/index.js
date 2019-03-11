@@ -12,6 +12,7 @@ const MonthView = ({
   events,
   selectedDate,
   firstDay,
+  onDragEnd,
   onSelectEvent,
   onSelectSlot,
   onSelectMonthDate,
@@ -72,13 +73,14 @@ const MonthView = ({
 
                 return (
                   <MonthCell
-                    width={`${100 / totalColumns}%`}
+                    totalColumns={totalColumns}
                     events={eventsForCell}
                     ref={cellRef}
                     eventHeight={eventHeight}
                     cellDimensions={cellDimensions}
                     key={`monthCells${countDays}`}
                     dayDetails={dayDetails}
+                    onDragEnd={onDragEnd}
                     onSelectSlot={onSelectSlot}
                     onSelectMonthDate={onSelectMonthDate}
                     onSelectMoreEvents={onSelectMoreEvents}
@@ -103,12 +105,14 @@ MonthView.defaultProps = {
   onSelectMonthDate: () => null,
   firstDay: FIRST_DAY_DEFAULT,
   onSelectMoreEvents: () => null,
+  onDragEnd: () => null,
 };
 
 MonthView.propTypes = {
   events: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
+  onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func.isRequired,
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,

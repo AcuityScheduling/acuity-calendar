@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DraggableCore } from 'react-draggable';
 import { EVENT_TYPE } from '../../../../types';
+import { resetEventFormat } from '../../../../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,7 +40,16 @@ const reducer = (state, action) => {
         vertChange: vertChange === 0 ? action.initialVertChange : vertChange,
       };
     case 'stopDragging':
-      return { ...state, isDragging: false };
+      return {
+        ...state,
+        isDragging: false,
+        wasDragged: true,
+        position: { x: 0, y: 0 },
+        vertChange: 0,
+        horizChange: 0,
+        rowMoves: 0,
+        columnMoves: 0,
+      };
     default:
       throw new Error('Dispatch action not recognized');
   }
@@ -49,12 +59,33 @@ const initialState = {
   rowMoves: 0,
   columnMoves: 0,
   isDragging: false,
+  wasDragged: false,
   position: { x: 0, y: 0 },
   vertChange: 0,
   horizChange: 0,
 };
 
-const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
+const updateEvent = ({
+  event,
+  columnMoves,
+  rowMoves,
+  columnMovesPerRowChange,
+}) => {
+  const totalDayMoves = columnMoves + rowMoves * columnMovesPerRowChange;
+  const start = event.start.clone().add(totalDayMoves, 'days');
+  const end = event.end.clone().add(totalDayMoves, 'days');
+  return { ...event, start, end };
+};
+
+const MonthDragDrop = ({
+  children,
+  cellDimensions,
+  event,
+  topEventOffset,
+  onDrag,
+  onDragEnd,
+  columnMovesPerRowChange,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { width, height } = cellDimensions;
@@ -77,8 +108,13 @@ const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
     dispatch({ type: 'moveLeft', horizChange: width });
   }
 
-  console.log('vertChange: ', vertChange);
-  console.log('horizChange: ', horizChange);
+  const draggedEvent = updateEvent({
+    event,
+    columnMoves,
+    rowMoves,
+    columnMovesPerRowChange,
+  });
+
   return (
     <DraggableCore
       onDrag={(e, ui) => {
@@ -87,20 +123,23 @@ const MonthDragDrop = ({ children, cellDimensions, event, topEventOffset }) => {
           position: { x: ui.x, y: ui.y },
           initialVertChange: topEventOffset,
         });
-        // onDrag(e, ui);
+        onDrag(e, ui);
       }}
       onStop={(e, ui) => {
         // Check if we hit the onDrag event. If we didn't, this is a click
         if (!isDragging) return false;
-        // setDeltaPosition({ x: 0, y: 0 });
+        onDragEnd({ e, event: resetEventFormat(event) });
         setTimeout(() => dispatch({ type: 'stopDragging' }));
-        // setWasDragged(true);
-        // onDragEnd(resetEventFormat(updatedEvent));
       }}
     >
-      {children({ draggedEvent: event, vertChange, horizChange })}
+      {children({ draggedEvent, vertChange, horizChange })}
     </DraggableCore>
   );
+};
+
+MonthDragDrop.defaultProps = {
+  onDrag: () => null,
+  onDragEnd: () => null,
 };
 
 MonthDragDrop.propTypes = {
@@ -109,10 +148,13 @@ MonthDragDrop.propTypes = {
     height: PropTypes.number.isRequired,
   }).isRequired,
   children: PropTypes.func.isRequired,
-  event: EVENT_TYPE.isRequired,
+  columnMovesPerRowChange: PropTypes.number.isRequired,
   // When we start dragging and dropping we want to move the month
   // event up to the first position if it's not there already this top offset
   // is the pixels from the top position we have to move
+  event: EVENT_TYPE.isRequired,
+  onDrag: PropTypes.func,
+  onDragEnd: PropTypes.func,
   topEventOffset: PropTypes.number.isRequired,
 };
 

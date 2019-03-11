@@ -12,6 +12,7 @@ const MonthCell = React.forwardRef(
       eventHeight,
       cellDimensions,
       dayDetails,
+      onDragEnd,
       onSelectSlot,
       onSelectMonthDate,
       renderMonthCell,
@@ -21,7 +22,7 @@ const MonthCell = React.forwardRef(
       onSelectEvent,
       onSelectMoreEvents,
       totalEventsToShow,
-      width,
+      totalColumns,
     },
     ref
   ) => {
@@ -49,6 +50,8 @@ const MonthCell = React.forwardRef(
               event={event}
               topEventOffset={(count - 1) * eventHeight * -1}
               key={event.id}
+              columnMovesPerRowChange={totalColumns}
+              onDragEnd={onDragEnd}
             >
               {({ draggedEvent, vertChange, horizChange }) => {
                 return (
@@ -80,7 +83,7 @@ const MonthCell = React.forwardRef(
         )}
         role="button"
         ref={ref}
-        style={{ width }}
+        style={{ width: `${100 / totalColumns}%` }}
         onClick={e =>
           onSelectSlot({
             e,
@@ -155,6 +158,7 @@ MonthCell.displayName = 'MonthCell';
 
 MonthCell.defaultProps = {
   events: [],
+  onDragEnd: () => null,
   onSelectSlot: () => null,
   onSelectMonthDate: () => null,
   onSelectEvent: () => null,
@@ -176,14 +180,15 @@ MonthCell.propTypes = {
   eventRef: REF_TYPE.isRequired,
   eventWrapperRef: REF_TYPE.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE),
+  onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,
+  totalColumns: PropTypes.number.isRequired,
   totalEventsToShow: PropTypes.number.isRequired,
-  width: PropTypes.string.isRequired,
 };
 
 export default MonthCell;

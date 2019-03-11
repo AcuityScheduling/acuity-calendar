@@ -53,8 +53,8 @@ const expandAllDayEvents = events => {
     }
     // Turn event strings into moment objects
     const newEvent = Object.assign({}, event, {
-      start: moment(new Date(event.start)),
-      end: moment(new Date(event.end)),
+      start: moment(event.start),
+      end: moment(event.end),
       ...padding,
     });
 
@@ -193,7 +193,6 @@ const setNestedObject = ({ eventsKeyed, event }) => {
   const newEventsKeyed = Object.assign({}, eventsKeyed);
 
   const thisDate = event.start.format('YYYY-MM-DD');
-
   const eventsForDate = get(eventsKeyed, `${event.group_id}.${thisDate}`, []);
   eventsForDate.push(event);
 

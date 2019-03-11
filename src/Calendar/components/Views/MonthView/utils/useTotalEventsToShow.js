@@ -32,7 +32,11 @@ const useTotalEventsToShow = () => {
       setCellWidth(cellRef.current.offsetWidth);
       addListener(rowRef.current, rowHeightThrottled);
     }
-    return () => removeListener(rowRef.current, rowHeightThrottled);
+    return () => {
+      if (rowRef.current) {
+        return removeListener(rowRef.current, rowHeightThrottled);
+      }
+    };
   });
 
   useEffect(() => {

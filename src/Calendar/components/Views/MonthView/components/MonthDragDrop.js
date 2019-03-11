@@ -74,7 +74,19 @@ const updateEvent = ({
   const totalDayMoves = columnMoves + rowMoves * columnMovesPerRowChange;
   const start = event.start.clone().add(totalDayMoves, 'days');
   const end = event.end.clone().add(totalDayMoves, 'days');
-  return { ...event, start, end };
+  const padding = {};
+  if (event.paddingTopStart) {
+    padding.paddingTopStart = event.paddingTopStart
+      .clone()
+      .add(totalDayMoves, 'days');
+  }
+  if (event.paddingBottomEnd) {
+    padding.paddingBottomEnd = event.paddingBottomEnd
+      .clone()
+      .add(totalDayMoves, 'days');
+  }
+
+  return { ...event, start, end, ...padding };
 };
 
 const MonthDragDrop = ({

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { EVENT_TYPE } from '../../../../types';
 import { resetEventFormat } from '../../../../utils';
+import { STEP_BORDER_WIDTH } from '../../../StepGrid/constants';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -109,7 +110,10 @@ const MonthDragDrop = ({
   }
 
   if (x > width * (columnMoves + 1)) {
-    dispatch({ type: 'moveRight', horizChange: width });
+    dispatch({
+      type: 'moveRight',
+      horizChange: width + STEP_BORDER_WIDTH * columnMoves,
+    });
   }
 
   if (y > height * (rowMoves + 1)) {
@@ -117,7 +121,7 @@ const MonthDragDrop = ({
   }
 
   if (x < width * columnMoves) {
-    dispatch({ type: 'moveLeft', horizChange: width });
+    dispatch({ type: 'moveLeft', horizChange: width + STEP_BORDER_WIDTH });
   }
 
   const draggedEvent = updateEvent({

@@ -7,14 +7,41 @@ import { EVENT_TYPE } from '../../../../types';
 const MonthDragDrop = ({ children, cellDimensions, event }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [columnMoves, setColumnMoves] = useState(0);
+  const [rowMoves, setRowMoves] = useState(0);
 
-  console.log('cellDimensions: ', cellDimensions);
+  const { width, height } = cellDimensions;
+  const { x, y } = position;
+
+  if (x < width * columnMoves) {
+    // moved left
+    console.log('left');
+    setColumnMoves(columnMoves - 1);
+  }
+
+  if (x > width * (columnMoves + 1)) {
+    // moved right
+    console.log('right');
+    setColumnMoves(columnMoves + 1);
+  }
+
+  if (y < height * rowMoves) {
+    // moved up
+    console.log('up');
+    setRowMoves(rowMoves - 1);
+  }
+
+  if (y > height * (rowMoves + 1)) {
+    // Moved down
+    console.log('down');
+    setRowMoves(rowMoves + 1);
+  }
+
   return (
     <DraggableCore
       onDrag={(e, ui) => {
         setPosition({ x: ui.x, y: ui.y });
         setIsDragging(true);
-        console.log('position: ', position);
         // onDrag(e, ui);
       }}
       onStop={(e, ui) => {

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import { storiesOf } from '@storybook/react';
 
@@ -8,19 +8,7 @@ import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 const eventsMocked = [];
 
 // eslint-disable-next-line react/prop-types
-const CalendarWrapper = ({ view }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  return (
-    <Calendar
-      events={eventsMocked}
-      view={view}
-      selectedDate={selectedDate}
-      onNavigate={setSelectedDate}
-      onSelectSlot={start => console.log(start)}
-    />
-  );
-};
+const CalendarWrapper = props => <Calendar events={eventsMocked} {...props} />;
 
 storiesOf('Calendar Views', module)
   .add('Calendar', () => <CalendarWrapper view={CALENDAR_VIEWS.calendar} />)

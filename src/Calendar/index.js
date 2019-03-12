@@ -10,7 +10,7 @@ import {
   EVENT_TYPE,
   DATE_TYPE,
 } from './types';
-import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
+import { getMungedEvents, getEventsWithEventGroups } from './utils';
 import {
   SELECTED_DATE_DEFAULT,
   MIN_WIDTH_COLUMN_DEFAULT,
@@ -25,7 +25,7 @@ const Calendar = ({
   stepDetails,
   view,
   selectedDate,
-  selectedEventGroups,
+  eventGroups,
   onExtendEnd,
   onCurrentTimeChange,
   onDragEnd,
@@ -70,11 +70,11 @@ const Calendar = ({
 
   const eventsWithSelectedEventGroups = useMemo(
     () =>
-      getEventsWithSelectedEventGroups({
+      getEventsWithEventGroups({
         mungedEvents,
-        selectedEventGroups,
+        eventGroups,
       }),
-    [mungedEvents, selectedEventGroups]
+    [mungedEvents, eventGroups]
   );
 
   const mungedStepDetails = useMemo(
@@ -84,11 +84,11 @@ const Calendar = ({
 
   const mungedStepDetailsGroups = useMemo(
     () =>
-      getEventsWithSelectedEventGroups({
+      getEventsWithEventGroups({
         mungedEvents: mungedStepDetails,
-        selectedEventGroups,
+        eventGroups,
       }),
-    [mungedStepDetails, selectedEventGroups]
+    [mungedStepDetails, eventGroups]
   );
 
   return (
@@ -110,7 +110,7 @@ const Calendar = ({
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
-      selectedEventGroups={selectedEventGroups}
+      eventGroups={eventGroups}
       stepHeight={stepHeight}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
@@ -139,7 +139,7 @@ Calendar.defaultProps = {
   selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.week,
   calendars: [],
-  selectedEventGroups: false,
+  eventGroups: false,
   onExtendEnd: () => null,
   onDragEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
@@ -157,11 +157,13 @@ Calendar.defaultProps = {
   selectMinutes: SELECT_MINUTES_DEFAULT,
   onSelectMoreEvents: () => null,
   onSelectEvent: () => null,
+  onSelectSlot: () => null,
 };
 
 Calendar.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE),
+  eventGroups: PropTypes.arrayOf(PropTypes.number),
   // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
+  events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
@@ -173,7 +175,7 @@ Calendar.propTypes = {
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
-  onSelectSlot: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
@@ -182,12 +184,11 @@ Calendar.propTypes = {
   renderMonthCell: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
-  renderStepDetail: PropTypes.func,
   // What range of minutes is selectable - for new events
   // and for drag and drop
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
-  selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
   // The height in pixels that we want each step to be. This will be like
   // zooming in and out on the calendar

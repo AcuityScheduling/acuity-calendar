@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { makeClass } from '../../../utils';
 import { getTodayClass } from '../utils';
 import { MOMENT_TYPE } from '../../../types';
-import './ColumnHeader.scss';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
@@ -26,7 +25,9 @@ const ColumnHeader = ({
         minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
       }}
     >
-      {children}
+      <div className={`${makeClass('step-grid__header-column-container')}`}>
+        {children}
+      </div>
     </div>
   );
 };

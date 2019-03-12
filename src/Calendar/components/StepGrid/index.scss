@@ -8,6 +8,7 @@
       display: flex;
       border-top: 1px solid #e7e7e7;
       position: relative;
+      overflow: hidden;
     }
 
     &__corner {
@@ -26,7 +27,6 @@
       display: flex;
       width: 100%;
       background: white;
-      position: relative;
       z-index: 4;
       text-align: center;
     }
@@ -34,6 +34,21 @@
     &__header-column {
       font-size: 12px;
       flex: 1;
+      display: flex;
+      align-items: center;
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      h2 {
+        font-size: 12px;
+        color: #444;
+        font-weight: 400;
+        padding: 25px;
+      }
+    }
+
+    &__header-column-container {
+      margin: 0 auto;
     }
 
     &__scroll-gutter {

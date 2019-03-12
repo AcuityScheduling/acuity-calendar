@@ -1,96 +1,64 @@
 import React, { useState, Fragment } from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { linkTo } from '@storybook/addon-links';
 
 import Calendar from '../src/Calendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 
-import { Welcome } from '@storybook/react/demo';
-
-storiesOf('Welcome', module).add('to Storybook', () => (
-  <Welcome showApp={linkTo('Button')} />
-));
-
 const eventsMocked = [];
 
 // eslint-disable-next-line react/prop-types
-const SillyWrappingComponentToUseHooks = ({ view }) => {
+const CalendarWrapper = ({ view }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
     <Calendar
       events={eventsMocked}
       view={view}
-      // onViewChange={setView}
-      // calendars={calendarsMocked}
-      // selectedCalendars={selectedCalendars}
       selectedDate={selectedDate}
       onNavigate={setSelectedDate}
-      // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
-      firstDay={0}
-      // onSelectEvent={event => {
-      // console.log(`Selected ${event.title}`);
-      // }}
-      // When clicking and dragging to create a new event on a stepgrid view
-      // onSelecting={({ start, end }) =>
-      //   console.log(`Selecting ${start} - ${end}`)
-      // }
-      // A callback fired when a date selection is made
       onSelectSlot={start => console.log(start)}
-      // How many grid lines there are between an hour. 30 means
-      // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
-      stepMinutes={20}
-      // What range of minutes is selectable - for new events
-      // and for drag and drop
-      selectMinutes={15}
     />
   );
 };
 
-storiesOf('Calendar', module)
-  .add('day calendar', () => (
-    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
-  ))
-  .add('week calendar', () => (
-    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.week} />
-  ))
-  .add('month calendar', () => (
-    <SillyWrappingComponentToUseHooks view={CALENDAR_VIEWS.month} />
-  ))
-  .add('month heatmap', () => {
-    const events = [
-      {
-        id: 3,
-        group_id: 5,
-        start: '2019-02-11 00:00:00',
-        end: '2019-02-11 00:00:00',
-        weight: 0.7,
-      },
-      {
-        id: 3,
-        group_id: 5,
-        start: '2019-02-12 00:00:00',
-        end: '2019-02-12 00:00:00',
-        weight: 0.4,
-      },
-      {
-        id: 3,
-        group_id: 5,
-        start: '2019-02-13 00:00:00',
-        end: '2019-02-13 00:00:00',
-        weight: 0.5,
-      },
-      {
-        id: 3,
-        group_id: 5,
-        start: '2019-02-14 00:00:00',
-        end: '2019-02-14 00:00:00',
-        weight: 0.8,
-      },
-    ];
-    const calendars = [{ id: 5, name: 'Brian Jenkins' }];
-    const styles = `
+storiesOf('Calendar Views', module)
+  .add('Calendar', () => <CalendarWrapper view={CALENDAR_VIEWS.calendar} />)
+  .add('Week', () => <CalendarWrapper view={CALENDAR_VIEWS.week} />)
+  .add('Month', () => <CalendarWrapper view={CALENDAR_VIEWS.month} />);
+
+storiesOf('Other').add('month heatmap', () => {
+  const events = [
+    {
+      id: 3,
+      group_id: 5,
+      start: '2019-02-11 00:00:00',
+      end: '2019-02-11 00:00:00',
+      weight: 0.7,
+    },
+    {
+      id: 3,
+      group_id: 5,
+      start: '2019-02-12 00:00:00',
+      end: '2019-02-12 00:00:00',
+      weight: 0.4,
+    },
+    {
+      id: 3,
+      group_id: 5,
+      start: '2019-02-13 00:00:00',
+      end: '2019-02-13 00:00:00',
+      weight: 0.5,
+    },
+    {
+      id: 3,
+      group_id: 5,
+      start: '2019-02-14 00:00:00',
+      end: '2019-02-14 00:00:00',
+      weight: 0.8,
+    },
+  ];
+  const styles = `
       .acuity-calendar__month__cell {
         position: relative;
       }
@@ -116,22 +84,22 @@ storiesOf('Calendar', module)
         border-radius: 50%;
       }
     `;
-    return (
-      <Fragment>
-        <style>{styles}</style>
-        <Calendar
-          view={CALENDAR_VIEWS.month}
-          selectedEventGroups={[5]}
-          events={events}
-          renderEvent={event => (
-            <div
-              className="heatmap__cell"
-              style={{
-                background: 'rgba(0, 0, 255, ' + event.weight + ')',
-              }}
-            />
-          )}
-        />
-      </Fragment>
-    );
-  });
+  return (
+    <Fragment>
+      <style>{styles}</style>
+      <Calendar
+        view={CALENDAR_VIEWS.month}
+        selectedEventGroups={[5]}
+        events={events}
+        renderEvent={event => (
+          <div
+            className="heatmap__cell"
+            style={{
+              background: 'rgba(0, 0, 255, ' + event.weight + ')',
+            }}
+          />
+        )}
+      />
+    </Fragment>
+  );
+});

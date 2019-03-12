@@ -62,6 +62,7 @@ const CalendarsView = ({
       stepHeight={stepHeight}
       renderCorner={renderCorner}
       renderHeader={() => {
+        if (!eventGroups) return null;
         const totalColumns = eventGroups.length;
         return eventGroups.map(groupId => {
           const eventsForDay = getEventsForDay({
@@ -90,6 +91,7 @@ const CalendarsView = ({
         });
       }}
       renderColumns={({ currentTime, totalGridHeight }) => {
+        if (!eventGroups) return null;
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
           return eventGroups[newIndex];

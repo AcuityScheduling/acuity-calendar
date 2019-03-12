@@ -56,6 +56,7 @@ const CalendarsView = ({
       ref={stepGridRef}
       selectedDate={selectedDate}
       firstDay={firstDay}
+      totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       onCurrentTimeChange={onCurrentTimeChange}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
@@ -89,7 +90,7 @@ const CalendarsView = ({
           );
         });
       }}
-      renderColumns={({ currentTime, columnWidths }) => {
+      renderColumns={({ currentTime, totalGridHeight }) => {
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
           return selectedEventGroups[newIndex];
@@ -115,6 +116,7 @@ const CalendarsView = ({
               key={`groupColumn${groupId}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
+              totalGridHeight={totalGridHeight}
               stepHeight={stepHeight}
               date={selectedDate}
               columnId={groupId}

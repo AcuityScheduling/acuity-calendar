@@ -86,6 +86,7 @@
       width: 100%;
       position: absolute;
       top: -1px;
+      z-index: 2;
     }
     &__step-line:after {
       width: 100%;

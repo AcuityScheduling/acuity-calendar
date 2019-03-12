@@ -25,6 +25,7 @@ const StepGrid = ({
   renderCorner,
 }) => {
   const [currentTime, setCurrentTime] = useState(moment());
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -53,7 +54,14 @@ const StepGrid = ({
   }
 
   const totalStepsPerBlock = 60 / stepMinutes;
-  const scrollbarWidth = getScrollbarWidth();
+
+  useEffect(() => {
+    if (scrollbarWidth === 0) {
+      setScrollbarWidth(getScrollbarWidth());
+    }
+  }, [scrollbarWidth]);
+  console.log('scrollbarWidth: ', scrollbarWidth);
+
   const currentTimeIndicatorClass = makeClass(
     'step-grid__current-time-indicator'
   );

@@ -156,6 +156,7 @@ Calendar.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   onSelectMoreEvents: () => null,
+  onSelectEvent: () => null,
 };
 
 Calendar.propTypes = {
@@ -168,7 +169,7 @@ Calendar.propTypes = {
   onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
-  onSelectEvent: PropTypes.func.isRequired,
+  onSelectEvent: PropTypes.func,
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,

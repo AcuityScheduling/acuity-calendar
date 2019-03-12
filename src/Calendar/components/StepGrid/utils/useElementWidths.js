@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import isEqual from 'react-fast-compare';
 import { addListener, removeListener } from 'resize-detector';
+import throttle from 'lodash/throttle';
 
 /**
  * Create the ref Map for all the elements and get the widths
@@ -10,7 +11,6 @@ const useElementWidths = props => {
   const elementRefs = useRef(new Map()).current;
   const stepGridRef = useRef(null);
   const [elementWidths, setElementWidths] = useState([]);
-  let resizeId = setTimeout(() => null);
 
   const getElementsMeasurements = () => {
     const widths = [];
@@ -26,11 +26,9 @@ const useElementWidths = props => {
     }
   };
 
-  const resizable = () => {
-    // If the user stopped resizing the browser
-    clearTimeout(resizeId);
-    resizeId = setTimeout(setAllWidths, 500);
-  };
+  const resizable = throttle(() => {
+    setAllWidths();
+  }, 300);
 
   useEffect(() => {
     if (stepGridRef.current) {

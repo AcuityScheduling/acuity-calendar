@@ -22,6 +22,7 @@ const useCalendarSticky = totalWidth => {
     timeIndicatorWidth:
       totalWidth - get(timeGutterRef, 'current.offsetWidth', 0),
   });
+  console.log('totalWidth: ', totalWidth);
 
   const wrapperWidthThrottled = throttle(() => {
     setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
@@ -48,8 +49,6 @@ const useCalendarSticky = totalWidth => {
       timeGutterRef.current
     ) {
       wrapperRef.current.scrollLeft = 0;
-      timeIndicatorRef.current.style.width = '100%';
-      stepLinesRef.current.style.width = '100%';
 
       // We have to wait for the width to be set to 100% before
       // we can do more calculations

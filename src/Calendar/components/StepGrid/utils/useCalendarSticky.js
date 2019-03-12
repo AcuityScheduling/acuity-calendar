@@ -51,9 +51,9 @@ const useCalendarSticky = totalWidth => {
       const timeout = setTimeout(() => {
         timeIndicatorRef.current.style.width = `${totalWidth}px`;
 
-        stepLinesRef.current.style.transform = `translateX(${
+        stepLinesRef.current.style.left = `${
           timeGutterRef.current.offsetWidth
-        }px)`;
+        }px`;
         stepLinesRef.current.style.width = `${totalWidth}px`;
       });
 

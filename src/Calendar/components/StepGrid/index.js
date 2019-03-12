@@ -171,7 +171,7 @@ const StepGrid = ({
             </span>
             <div className={`${currentTimeIndicatorClass}__line`} />
           </div>
-          {renderColumns({ currentTime })}
+          {renderColumns({ currentTime, totalGridHeight })}
         </div>
       </div>
     </div>

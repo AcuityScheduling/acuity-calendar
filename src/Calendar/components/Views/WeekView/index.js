@@ -75,7 +75,7 @@ const WeekView = ({
           );
         })
       }
-      renderColumns={({ currentTime }) => {
+      renderColumns={({ currentTime, totalGridHeight }) => {
         return dateList.map((date, index) => {
           const stepDetailsForDay = get(
             stepDetails,
@@ -114,6 +114,7 @@ const WeekView = ({
               stepMinutes={stepMinutes}
               selectMinutes={selectMinutes}
               stepHeight={stepHeight}
+              gridHeight={totalGridHeight}
               currentTime={currentTime}
               renderEvent={renderEvent}
               renderEventPaddingTop={renderEventPaddingTop}

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
@@ -7,7 +7,6 @@ import {
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 import {
   getTodayClass,
   getTopOffset,
@@ -35,6 +34,7 @@ const Column = React.forwardRef(
       currentTime,
       date,
       events,
+      gridHeight,
       stepMinutes,
       onDragEnd,
       onExtendEnd,
@@ -87,7 +87,8 @@ const Column = React.forwardRef(
         )}`}
         key={`weekView${date.day()}`}
         style={{
-          minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
+          height: gridHeight,
+          minWidth: totalEventColumns * minWidth || minWidthEmpty,
         }}
         onClick={e => {
           if (isSelectRangeFinished) {
@@ -333,6 +334,7 @@ Column.propTypes = {
   date: MOMENT_TYPE,
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
+  gridHeight: PropTypes.number.isRequired,
   minWidth: PropTypes.number,
   minWidthEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,

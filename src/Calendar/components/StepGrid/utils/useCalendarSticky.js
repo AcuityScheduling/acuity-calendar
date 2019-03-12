@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import { addListener, removeListener } from 'resize-detector';
 
-const useCalendarSticky = () => {
+const useCalendarSticky = totalWidth => {
   const wrapperRef = useRef(null);
   const timeGutterRef = useRef(null);
   const headerRef = useRef(null);
@@ -19,20 +19,18 @@ const useCalendarSticky = () => {
     cornerRef,
     timeIndicatorRef,
     stepLinesRef,
-    timeIndicatorWidth:
-      wrapperWidth - get(timeGutterRef, 'current.scrollWidth', 0),
+    timeIndicatorWidth: totalWidth,
   });
 
   const wrapperWidthThrottled = throttle(() => {
-    setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
+    setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
   }, 300);
 
   // Add listener to wrapper to update when needed
   useEffect(() => {
     if (!wrapperWidth) {
-      setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
+      setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
     }
-    console.log('wrapperWidth: ', wrapperWidth);
 
     if (wrapperRef.current) {
       addListener(wrapperRef.current, wrapperWidthThrottled);
@@ -48,16 +46,15 @@ const useCalendarSticky = () => {
       stepLinesRef.current &&
       timeGutterRef.current
     ) {
-      wrapperRef.current.scrollLeft = 0;
-      timeIndicatorRef.current.style.width = '100%';
-      stepLinesRef.current.style.width = '100%';
-
       // We have to wait for the width to be set to 100% before
       // we can do more calculations
       const timeout = setTimeout(() => {
-        timeIndicatorRef.current.style.width = `${wrapperWidth -
-          timeGutterRef.current.offsetWidth}px`;
-        stepLinesRef.current.style.width = `${wrapperWidth}px`;
+        timeIndicatorRef.current.style.width = `${totalWidth}px`;
+
+        stepLinesRef.current.style.transform = `translateX(${
+          timeGutterRef.current.offsetWidth
+        }px)`;
+        stepLinesRef.current.style.width = `${totalWidth}px`;
       });
 
       return () => clearTimeout(timeout);

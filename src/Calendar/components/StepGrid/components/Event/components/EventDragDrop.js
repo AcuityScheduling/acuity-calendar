@@ -61,7 +61,6 @@ const EventDragDrop = ({
   event,
   stepMinutes,
   selectMinutes,
-  columnHeight,
   columnWidths,
   columnIndex,
   onDrag,
@@ -222,7 +221,6 @@ EventDragDrop.defaultProps = {
 
 EventDragDrop.propTypes = {
   children: PropTypes.func.isRequired,
-  columnHeight: PropTypes.number.isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,

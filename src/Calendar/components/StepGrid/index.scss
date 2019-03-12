@@ -1,33 +1,23 @@
 .acuity-calendar {
   &__step-grid {
-    width: 100%;
-    flex: 1 1 0;
-    overflow-y: auto;
-    position: relative;
-    border: 1px solid #e7e7e7;
-    background: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid #e7e7e7;
 
-    &__wrapper {
-      position: relative;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
+    /* ------ Header START ------ */
     &__header-wrapper {
       display: flex;
-      overflow: hidden;
       border-top: 1px solid #e7e7e7;
+      position: relative;
     }
 
     &__corner {
       position: relative;
-      width: 50px;
       z-index: 5;
       background: white;
       border-right: 1px solid #e7e7e7;
       border-left: 1px solid #e7e7e7;
-      flex-shrink: 0;
     }
     &__corner h2 {
       margin: 0;
@@ -36,14 +26,34 @@
 
     &__header {
       display: flex;
+      width: 100%;
       background: white;
-      position: relative;
       z-index: 4;
       text-align: center;
     }
 
-    &__header-scroll-gutter {
-      height: 43px;
+    &__header-column {
+      font-size: 12px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      h2 {
+        font-size: 12px;
+        color: #444;
+        font-weight: 400;
+        padding: 25px 0;
+      }
+    }
+
+    &__header-column-container {
+      margin: 0 auto;
+    }
+
+    &__scroll-gutter {
+      height: 100%;
       background: white;
       position: absolute;
       z-index: 5;
@@ -52,43 +62,31 @@
       border-left: 1px solid #e7e7e7;
     }
 
-    &__header-scroll-gutter-padding {
-      height: 39px;
-    }
-
-    &__header-scroll-gutter-connector {
+    &__scroll-gutter-connector {
       width: 100%;
       background: white;
       height: 1px;
       bottom: -1px;
       position: absolute;
     }
+    /* ------ Header END ------ */
 
-    &__time-gutter {
-      background: white;
+    /* ------ Grid START ------ */
+    &__grid-wrapper {
       position: relative;
-      width: 50px;
-      text-align: center;
-      border-right: 1px solid #e7e7e7;
-      z-index: 2;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    &__time-label {
-      font-size: 10px;
-      color: #444;
-      transform: translateY(-8px);
-      display: block;
-      margin-right: 4px;
-    }
-    &__time-label-0 {
-      display: none;
+      width: 100%;
+      display: flex;
+      overflow: auto;
+      position: relative;
+      border: 1px solid #e7e7e7;
+      background: #f3f3f3;
     }
 
     &__step-lines {
+      width: 100%;
       position: absolute;
       top: -1px;
-      width: 100%;
+      z-index: 2;
     }
     &__step-line:after {
       width: 100%;
@@ -102,18 +100,50 @@
       border-bottom: 1px dashed #e7e7e7;
     }
 
-    &__column-wrapper {
-      display: flex;
+    &__time-gutter {
+      background: white;
+      position: relative;
+      flex: 1 0 50px;
+      text-align: center;
+      border-right: 1px solid #e7e7e7;
+      z-index: 5;
+      text-align: right;
     }
+    &__time-label {
+      font-size: 10px;
+      color: #444;
+      transform: translateY(-8px);
+      display: block;
+      margin-right: 4px;
+    }
+    &__time-label-0 {
+      display: none;
+    }
+
+    &__grid {
+      display: flex;
+      width: 100%;
+    }
+
+    &__grid-column {
+      &:not(:last-child) {
+        border-right: 1px solid #e7e7e7;
+      }
+      text-align: center;
+      position: relative;
+      flex: 1;
+    }
+
+    &__step-detail-wrapper {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
+
+    /* ------ Grid END ------ */
 
     &__today {
       background: #edf8f2;
-    }
-
-    &__columns {
-      display: flex;
-      width: 100%;
-      position: relative;
     }
 
     &__select-slot-indicator {
@@ -142,14 +172,10 @@
       user-select: none;
     }
 
-    &__group-header {
-      margin-top: 8px;
-    }
-
     &__current-time-indicator {
       width: 100%;
       position: absolute;
-      z-index: 4;
+      z-index: 6;
       &__line {
         height: 1px;
         background: #af5b55;

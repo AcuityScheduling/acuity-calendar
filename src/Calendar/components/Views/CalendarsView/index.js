@@ -15,7 +15,6 @@ import {
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
-import { makeClass } from '../../../utils';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
@@ -47,14 +46,16 @@ const CalendarsView = ({
   renderEventPaddingBottom,
   stepHeight,
 }) => {
-  const { assignRef, elementWidths } = useElementWidths();
+  const { stepGridRef, assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
 
   return (
     <StepGrid
+      ref={stepGridRef}
       selectedDate={selectedDate}
       firstDay={firstDay}
+      totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       onCurrentTimeChange={onCurrentTimeChange}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
@@ -78,17 +79,17 @@ const CalendarsView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              <div className={makeClass('step-grid__group-header')}>
+              <h2>
                 {renderEventGroupHeader({
                   groupId,
                   events: eventsForDay,
                 })}
-              </div>
+              </h2>
             </ColumnHeader>
           );
         });
       }}
-      renderColumns={({ currentTime, columnWidths }) => {
+      renderColumns={({ currentTime, totalGridHeight }) => {
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
           return selectedEventGroups[newIndex];
@@ -114,6 +115,7 @@ const CalendarsView = ({
               key={`groupColumn${groupId}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
+              totalGridHeight={totalGridHeight}
               stepHeight={stepHeight}
               date={selectedDate}
               columnId={groupId}
@@ -136,7 +138,10 @@ const CalendarsView = ({
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
-                  group_id: getNewGroupId({ columnMoves, columnIndex: index }),
+                  group_id: getNewGroupId({
+                    columnMoves,
+                    columnIndex: index,
+                  }),
                 };
               }}
             />

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
@@ -7,7 +7,6 @@ import {
   STEP_MINUTES_TYPE,
   COLUMN_WIDTHS_TYPE,
 } from '../../../types';
-import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 import {
   getTodayClass,
   getTopOffset,
@@ -15,7 +14,6 @@ import {
   getClickedTime,
   getDisplayTime,
 } from '../utils';
-import './Column.scss';
 import { makeClass } from '../../../utils';
 import Event from './Event';
 import EventDragDrop from './Event/components/EventDragDrop';
@@ -36,6 +34,7 @@ const Column = React.forwardRef(
       currentTime,
       date,
       events,
+      gridHeight,
       stepMinutes,
       onDragEnd,
       onExtendEnd,
@@ -57,15 +56,6 @@ const Column = React.forwardRef(
     },
     ref
   ) => {
-    const totalHeight = useMemo(() => {
-      const totalStepsPerBlock = 60 / stepMinutes;
-      const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
-      return (
-        (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
-        (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
-      );
-    }, [stepMinutes]);
-
     const [isSlotClickable, setIsSlotClickable] = useState(true);
     const [clickedTime, setClickedTime] = useState(null);
 
@@ -80,20 +70,10 @@ const Column = React.forwardRef(
       isSelectable: isSlotClickable,
       stepMinutes,
       selectMinutes,
-      columnHeight: totalHeight,
       columnDate: date,
       stepHeight,
     });
 
-    // If we remove a column it's not going to remove it from the columnWidths
-    // array it will just set it to 0. So in this case don't want to count it
-    // which is why we're not doing columnWidths.length here
-    const totalColumns = columnWidths.reduce((total, columnWidth) => {
-      if (columnWidth !== 0) {
-        return total + 1;
-      }
-      return total;
-    }, 0);
     const totalEventColumns = Object.keys(events).length;
     const percentWidth = 100 / totalEventColumns - 1;
     const currentTimeIndicatorClass = makeClass(
@@ -102,12 +82,13 @@ const Column = React.forwardRef(
 
     return (
       <div
-        className={`${makeClass('step-grid__column')}${getTodayClass(date)}`}
+        className={`${makeClass('step-grid__grid-column')}${getTodayClass(
+          date
+        )}`}
         key={`weekView${date.day()}`}
         style={{
-          height: `${totalHeight}px`,
-          minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
-          width: `${100 / totalColumns}%`,
+          height: gridHeight,
+          minWidth: totalEventColumns * minWidth || minWidthEmpty,
         }}
         onClick={e => {
           if (isSelectRangeFinished) {
@@ -210,7 +191,6 @@ const Column = React.forwardRef(
                 {({ isExtending, extendedEvent, heightChange }) => (
                   <EventDragDrop
                     event={extendedEvent}
-                    columnHeight={totalHeight}
                     columnIndex={columnIndex}
                     columnWidths={columnWidths}
                     stepHeight={stepHeight}
@@ -354,6 +334,7 @@ Column.propTypes = {
   date: MOMENT_TYPE,
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
+  gridHeight: PropTypes.number.isRequired,
   minWidth: PropTypes.number,
   minWidthEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,

@@ -20,7 +20,7 @@ const useCalendarSticky = totalWidth => {
     timeIndicatorRef,
     stepLinesRef,
     timeIndicatorWidth:
-      wrapperWidth - get(timeGutterRef, 'current.clientWidth', 0),
+      totalWidth - get(timeGutterRef, 'current.offsetWidth', 0),
   });
 
   const wrapperWidthThrottled = throttle(() => {

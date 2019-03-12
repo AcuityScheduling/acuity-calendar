@@ -83,6 +83,7 @@
     }
 
     &__step-lines {
+      width: 100%;
       position: absolute;
       top: -1px;
     }
@@ -177,7 +178,7 @@
     &__current-time-indicator {
       width: 100%;
       position: absolute;
-      z-index: 4;
+      z-index: 6;
       &__line {
         height: 1px;
         background: #af5b55;

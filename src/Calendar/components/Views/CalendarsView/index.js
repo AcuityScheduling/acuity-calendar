@@ -15,7 +15,6 @@ import {
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
-import { makeClass } from '../../../utils';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);

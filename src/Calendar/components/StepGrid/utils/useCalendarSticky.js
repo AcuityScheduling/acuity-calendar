@@ -22,6 +22,19 @@ const useCalendarSticky = totalWidth => {
     timeIndicatorWidth: totalWidth,
   });
 
+  // Make sure stepLines and time indicator are the full width of the scroll
+  if (
+    timeIndicatorRef.current &&
+    wrapperRef.current &&
+    stepLinesRef.current &&
+    timeGutterRef.current
+  ) {
+    timeIndicatorRef.current.style.width = `${totalWidth}px`;
+
+    stepLinesRef.current.style.left = `${timeGutterRef.current.offsetWidth}px`;
+    stepLinesRef.current.style.width = `${totalWidth}px`;
+  }
+
   const wrapperWidthThrottled = throttle(() => {
     setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
   }, 300);
@@ -36,23 +49,6 @@ const useCalendarSticky = totalWidth => {
       addListener(wrapperRef.current, wrapperWidthThrottled);
     }
     return () => removeListener(wrapperRef.current, wrapperWidthThrottled);
-  });
-
-  // Make sure stepLines and time indicator are the full width of the scroll
-  useEffect(() => {
-    if (
-      timeIndicatorRef.current &&
-      wrapperRef.current &&
-      stepLinesRef.current &&
-      timeGutterRef.current
-    ) {
-      timeIndicatorRef.current.style.width = `${totalWidth}px`;
-
-      stepLinesRef.current.style.left = `${
-        timeGutterRef.current.offsetWidth
-      }px`;
-      stepLinesRef.current.style.width = `${totalWidth}px`;
-    }
   });
 
   useEffect(() => {

@@ -10,7 +10,6 @@ const useSelectRange = ({
   isSelectable,
   stepMinutes,
   selectMinutes,
-  columnHeight,
   columnDate,
   stepHeight,
 }) => {

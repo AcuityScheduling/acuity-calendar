@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
@@ -58,6 +58,14 @@ const StepGrid = ({
     'step-grid__current-time-indicator'
   );
 
+  const totalGridHeight = useMemo(() => {
+    const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
+    return (
+      (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
+      (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
+    );
+  }, [stepMinutes]);
+
   const renderStepLines = () => {
     const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
     const stepHeightWithBorder = `${(stepHeight || STEP_HEIGHTS[stepMinutes]) +
@@ -112,69 +120,58 @@ const StepGrid = ({
   };
 
   return (
-    <div className={makeClass('step-grid__wrapper')}>
+    <div className={makeClass('step-grid')}>
       <div className={makeClass('step-grid__header-wrapper')}>
         <div
           className={makeClass('step-grid__corner')}
-          style={{ width: `${timeGutterWidth}px` }}
+          style={{ flex: `1 0 ${timeGutterWidth}px` }}
           ref={cornerRef}
         >
           {renderCorner({ currentTime })}
         </div>
         <div
-          style={{
-            width: '100%',
-          }}
           className={makeClass('step-grid__header')}
+          style={{ marginRight: scrollbarWidth }}
           ref={headerRef}
         >
           {renderHeader()}
         </div>
         <div
-          className={makeClass('step-grid__header-scroll-gutter-padding')}
-          style={{
-            width: `${scrollbarWidth}px`,
-          }}
-        />
-        <div
-          className={makeClass('step-grid__header-scroll-gutter')}
-          style={{ width: `${scrollbarWidth - STEP_BORDER_WIDTH}px` }}
+          className={makeClass('step-grid__scroll-gutter')}
+          style={{ width: scrollbarWidth - STEP_BORDER_WIDTH }}
         >
-          <div
-            className={makeClass('step-grid__header-scroll-gutter-connector')}
-          />
+          <div className={makeClass('step-grid__scroll-gutter-connector')} />
         </div>
       </div>
-      <div className={makeClass('step-grid')} ref={wrapperRef}>
+      <div className={makeClass('step-grid__grid-wrapper')} ref={wrapperRef}>
         <div className={makeClass('step-grid__step-lines')} ref={stepLinesRef}>
           {renderStepLines()}
         </div>
-        <div className={makeClass('step-grid__column-wrapper')}>
+        <div
+          className={makeClass('step-grid__time-gutter')}
+          ref={timeGutterRef}
+          style={{ height: totalGridHeight }}
+        >
+          {renderTimes()}
+        </div>
+        <div className={makeClass('step-grid__grid')}>
           <div
-            className={makeClass('step-grid__time-gutter')}
-            ref={timeGutterRef}
+            className={currentTimeIndicatorClass}
+            style={{
+              top: `${getTopOffset({
+                stepMinutes,
+                date: currentTime,
+                stepHeight,
+              })}px`,
+            }}
+            ref={timeIndicatorRef}
           >
-            {renderTimes()}
+            <span className={`${currentTimeIndicatorClass}__time`}>
+              {moment().format('h:mma')}
+            </span>
+            <div className={`${currentTimeIndicatorClass}__line`} />
           </div>
-          <div className={makeClass('step-grid__columns')}>
-            <div
-              className={currentTimeIndicatorClass}
-              style={{
-                top: `${getTopOffset({
-                  stepMinutes,
-                  date: currentTime,
-                  stepHeight,
-                })}px`,
-              }}
-              ref={timeIndicatorRef}
-            >
-              <span className={`${currentTimeIndicatorClass}__time`}>
-                {moment().format('h:mma')}
-              </span>
-              <div className={`${currentTimeIndicatorClass}__line`} />
-            </div>
-            {renderColumns({ currentTime })}
-          </div>
+          {renderColumns({ currentTime })}
         </div>
       </div>
     </div>

@@ -24,7 +24,6 @@ const ColumnHeader = ({
       )}`}
       style={{
         minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
-        width: `${100 / totalColumns}%`,
       }}
     >
       {children}

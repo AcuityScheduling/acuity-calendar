@@ -12,6 +12,8 @@ const useCalendarSticky = () => {
   const stepLinesRef = useRef(null);
   const [wrapperWidth, setWrapperWidth] = useState(0);
 
+  // const scrollbarWidth = getScrollbarWidth() + 2;
+
   const onScroll = getOnScroll({
     wrapperRef,
     headerRef,

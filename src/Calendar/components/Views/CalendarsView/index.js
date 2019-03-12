@@ -80,12 +80,12 @@ const CalendarsView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              <div className={makeClass('step-grid__group-header')}>
+              <h2>
                 {renderEventGroupHeader({
                   groupId,
                   events: eventsForDay,
                 })}
-              </div>
+              </h2>
             </ColumnHeader>
           );
         });

@@ -46,18 +46,12 @@ const useCalendarSticky = totalWidth => {
       stepLinesRef.current &&
       timeGutterRef.current
     ) {
-      // We have to wait for the width to be set to 100% before
-      // we can do more calculations
-      const timeout = setTimeout(() => {
-        timeIndicatorRef.current.style.width = `${totalWidth}px`;
+      timeIndicatorRef.current.style.width = `${totalWidth}px`;
 
-        stepLinesRef.current.style.left = `${
-          timeGutterRef.current.offsetWidth
-        }px`;
-        stepLinesRef.current.style.width = `${totalWidth}px`;
-      });
-
-      return () => clearTimeout(timeout);
+      stepLinesRef.current.style.left = `${
+        timeGutterRef.current.offsetWidth
+      }px`;
+      stepLinesRef.current.style.width = `${totalWidth}px`;
     }
   });
 

@@ -72,7 +72,11 @@ const WeekView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              <h2>{date.format('dddd, MMM D')}</h2>
+              <h2>
+                {date.format('dddd')}
+                <br />
+                {date.format('MMM, D')}
+              </h2>
             </ColumnHeader>
           );
         })

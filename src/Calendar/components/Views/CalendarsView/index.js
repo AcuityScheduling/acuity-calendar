@@ -47,12 +47,13 @@ const CalendarsView = ({
   renderEventPaddingBottom,
   stepHeight,
 }) => {
-  const { assignRef, elementWidths } = useElementWidths();
+  const { stepGridRef, assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
 
   return (
     <StepGrid
+      ref={stepGridRef}
       selectedDate={selectedDate}
       firstDay={firstDay}
       onCurrentTimeChange={onCurrentTimeChange}
@@ -136,7 +137,10 @@ const CalendarsView = ({
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 return {
                   ...event,
-                  group_id: getNewGroupId({ columnMoves, columnIndex: index }),
+                  group_id: getNewGroupId({
+                    columnMoves,
+                    columnIndex: index,
+                  }),
                 };
               }}
             />

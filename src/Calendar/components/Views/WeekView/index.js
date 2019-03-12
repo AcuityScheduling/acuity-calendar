@@ -41,12 +41,14 @@ const WeekView = ({
   stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
-  const { assignRef, elementWidths } = useElementWidths();
+  const { stepGridRef, assignRef, elementWidths } = useElementWidths();
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   return (
     <StepGrid
+      ref={stepGridRef}
       selectedDate={selectedDate}
+      totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}

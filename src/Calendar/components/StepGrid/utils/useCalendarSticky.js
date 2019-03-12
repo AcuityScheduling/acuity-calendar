@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import { addListener, removeListener } from 'resize-detector';
 
-const useCalendarSticky = () => {
+const useCalendarSticky = totalWidth => {
   const wrapperRef = useRef(null);
   const timeGutterRef = useRef(null);
   const headerRef = useRef(null);
@@ -20,17 +20,17 @@ const useCalendarSticky = () => {
     timeIndicatorRef,
     stepLinesRef,
     timeIndicatorWidth:
-      wrapperWidth - get(timeGutterRef, 'current.scrollWidth', 0),
+      wrapperWidth - get(timeGutterRef, 'current.clientWidth', 0),
   });
 
   const wrapperWidthThrottled = throttle(() => {
-    setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
+    setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
   }, 300);
 
   // Add listener to wrapper to update when needed
   useEffect(() => {
     if (!wrapperWidth) {
-      setWrapperWidth(get(wrapperRef, 'current.scrollWidth'));
+      setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
     }
 
     if (wrapperRef.current) {
@@ -54,9 +54,10 @@ const useCalendarSticky = () => {
       // We have to wait for the width to be set to 100% before
       // we can do more calculations
       const timeout = setTimeout(() => {
-        timeIndicatorRef.current.style.width = `${wrapperWidth -
+        timeIndicatorRef.current.style.width = `${totalWidth -
           timeGutterRef.current.offsetWidth}px`;
-        stepLinesRef.current.style.width = `${wrapperWidth}px`;
+        stepLinesRef.current.style.left = timeGutterRef.current.offsetWidth;
+        stepLinesRef.current.style.width = `${totalWidth}px`;
       });
 
       return () => clearTimeout(timeout);

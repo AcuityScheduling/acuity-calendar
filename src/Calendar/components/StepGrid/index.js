@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
 import { useCalendarSticky, getScrollbarWidth, getTopOffset } from './utils';
-import {
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  COLUMN_WIDTHS_TYPE,
-} from '../../types';
+import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../types';
 import { makeClass } from '../../utils';
 import './index.scss';
 import {

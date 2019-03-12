@@ -21,7 +21,6 @@ const useCalendarSticky = totalWidth => {
     stepLinesRef,
     timeIndicatorWidth: totalWidth,
   });
-  console.log('totalWidth: ', totalWidth);
 
   const wrapperWidthThrottled = throttle(() => {
     setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
@@ -47,8 +46,6 @@ const useCalendarSticky = totalWidth => {
       stepLinesRef.current &&
       timeGutterRef.current
     ) {
-      wrapperRef.current.scrollLeft = 0;
-
       // We have to wait for the width to be set to 100% before
       // we can do more calculations
       const timeout = setTimeout(() => {
@@ -109,11 +106,11 @@ const update = ({
   timeGutterRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
   // Make sure the time indicator stays in the right place while scrolling horiz
-  // timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-  // if (timeIndicatorWidth) {
-  //   timeIndicatorRef.current.style.width = `${timeIndicatorWidth -
-  //     latestKnownScrollX}px`;
-  // }
+  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+  if (timeIndicatorWidth) {
+    timeIndicatorRef.current.style.width = `${timeIndicatorWidth -
+      latestKnownScrollX}px`;
+  }
 };
 
 const getOnScroll = elements => e => {

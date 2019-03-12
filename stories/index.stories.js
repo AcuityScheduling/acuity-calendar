@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import Calendar from '../src/Calendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
+import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
 
 const eventsMocked = [];
 
@@ -11,9 +12,17 @@ const eventsMocked = [];
 const CalendarWrapper = props => <Calendar events={eventsMocked} {...props} />;
 
 storiesOf('Calendar Views', module)
-  .add('Calendar', () => <CalendarWrapper view={CALENDAR_VIEWS.calendar} />)
+  .add('Month', () => <CalendarWrapper view={CALENDAR_VIEWS.month} />)
   .add('Week', () => <CalendarWrapper view={CALENDAR_VIEWS.week} />)
-  .add('Month', () => <CalendarWrapper view={CALENDAR_VIEWS.month} />);
+  .add('Calendar', () => (
+    <CalendarWrapper
+      view={CALENDAR_VIEWS.calendar}
+      eventGroups={[5, 6, 7]}
+      renderEventGroupHeader={({ groupId }) => {
+        return MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name;
+      }}
+    />
+  ));
 
 storiesOf('Other').add('month heatmap', () => {
   const events = [

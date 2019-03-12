@@ -87,6 +87,7 @@ const MonthView = ({
                     totalEventsToShow={totalEventsToShow}
                     eventRef={eventRef}
                     eventWrapperRef={eventWrapperRef}
+                    onSelectEvent={onSelectEvent}
                   />
                 );
               })}

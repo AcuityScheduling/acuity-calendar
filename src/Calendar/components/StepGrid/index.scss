@@ -2,13 +2,14 @@
   &__step-grid {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid #e7e7e7;
 
     /* ------ Header START ------ */
     &__header-wrapper {
       display: flex;
       border-top: 1px solid #e7e7e7;
       position: relative;
-      overflow: hidden;
     }
 
     &__corner {
@@ -43,7 +44,7 @@
         font-size: 12px;
         color: #444;
         font-weight: 400;
-        padding: 25px;
+        padding: 25px 0;
       }
     }
 
@@ -75,7 +76,7 @@
       position: relative;
       width: 100%;
       display: flex;
-      overflow-y: auto;
+      overflow: auto;
       position: relative;
       border: 1px solid #e7e7e7;
       background: #f3f3f3;
@@ -84,7 +85,6 @@
     &__step-lines {
       position: absolute;
       top: -1px;
-      width: 100%;
     }
     &__step-line:after {
       width: 100%;
@@ -104,7 +104,7 @@
       flex: 1 0 50px;
       text-align: center;
       border-right: 1px solid #e7e7e7;
-      z-index: 2;
+      z-index: 4;
       text-align: right;
     }
     &__time-label {

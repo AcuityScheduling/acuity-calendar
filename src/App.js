@@ -37,7 +37,7 @@ const App = () => {
   return (
     <div
       style={{
-        height: '100vh',
+        height: '98vh',
         display: 'flex',
         flexDirection: 'column',
       }}

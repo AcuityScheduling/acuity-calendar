@@ -10,7 +10,7 @@ import {
   EVENT_TYPE,
   DATE_TYPE,
 } from './types';
-import { getMungedEvents, getEventsWithSelectedEventGroups } from './utils';
+import { getMungedEvents, getEventsWithEventGroups } from './utils';
 import {
   SELECTED_DATE_DEFAULT,
   MIN_WIDTH_COLUMN_DEFAULT,
@@ -25,7 +25,7 @@ const Calendar = ({
   stepDetails,
   view,
   selectedDate,
-  selectedEventGroups,
+  visibleEventGroups,
   onExtendEnd,
   onCurrentTimeChange,
   onDragEnd,
@@ -70,11 +70,11 @@ const Calendar = ({
 
   const eventsWithSelectedEventGroups = useMemo(
     () =>
-      getEventsWithSelectedEventGroups({
+      getEventsWithEventGroups({
         mungedEvents,
-        selectedEventGroups,
+        visibleEventGroups,
       }),
-    [mungedEvents, selectedEventGroups]
+    [mungedEvents, visibleEventGroups]
   );
 
   const mungedStepDetails = useMemo(
@@ -84,11 +84,11 @@ const Calendar = ({
 
   const mungedStepDetailsGroups = useMemo(
     () =>
-      getEventsWithSelectedEventGroups({
+      getEventsWithEventGroups({
         mungedEvents: mungedStepDetails,
-        selectedEventGroups,
+        visibleEventGroups,
       }),
-    [mungedStepDetails, selectedEventGroups]
+    [mungedStepDetails, visibleEventGroups]
   );
 
   return (
@@ -110,7 +110,7 @@ const Calendar = ({
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
-      selectedEventGroups={selectedEventGroups}
+      visibleEventGroups={visibleEventGroups}
       stepHeight={stepHeight}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
@@ -135,11 +135,11 @@ Calendar.defaultProps = {
   renderEventPaddingBottom: () => null,
   stepDetails: [],
   events: [],
+  visibleEventGroups: null,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.week,
   calendars: [],
-  selectedEventGroups: false,
   onExtendEnd: () => null,
   onDragEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
@@ -156,6 +156,8 @@ Calendar.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   onSelectMoreEvents: () => null,
+  onSelectEvent: () => null,
+  onSelectSlot: () => null,
 };
 
 Calendar.propTypes = {
@@ -168,11 +170,11 @@ Calendar.propTypes = {
   onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
-  onSelectEvent: PropTypes.func.isRequired,
+  onSelectEvent: PropTypes.func,
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
-  onSelectSlot: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
   renderEventGroupHeader: PropTypes.func,
@@ -186,15 +188,15 @@ Calendar.propTypes = {
   // and for drag and drop
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
-  selectedEventGroups: PropTypes.arrayOf(PropTypes.number),
   stepDetails: PropTypes.array,
+  stepHeight: PropTypes.number,
   // The height in pixels that we want each step to be. This will be like
   // zooming in and out on the calendar
-  stepHeight: PropTypes.number,
+  stepMinutes: STEP_MINUTES_TYPE,
   // How many grid lines there are between an hour. 30 means
   // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
-  stepMinutes: STEP_MINUTES_TYPE,
   view: CALENDAR_VIEW_TYPE,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default Calendar;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import moment from 'moment';
 import { getMonthGrid, getDayNames, useTotalEventsToShow } from './utils';
 import { makeClass } from '../../../utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
@@ -107,6 +108,9 @@ MonthView.defaultProps = {
   firstDay: FIRST_DAY_DEFAULT,
   onSelectMoreEvents: () => null,
   onDragEnd: () => null,
+  onSelectSlot: () => null,
+  onSelectEvent: () => null,
+  selectedDate: moment(),
 };
 
 MonthView.propTypes = {
@@ -114,13 +118,13 @@ MonthView.propTypes = {
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   onDragEnd: PropTypes.func,
-  onSelectEvent: PropTypes.func.isRequired,
+  onSelectEvent: PropTypes.func,
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
-  onSelectSlot: PropTypes.func.isRequired,
+  onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
   renderMonthCell: PropTypes.func,
-  selectedDate: MOMENT_TYPE.isRequired,
+  selectedDate: MOMENT_TYPE,
 };
 
 export default MonthView;

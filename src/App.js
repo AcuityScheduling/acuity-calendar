@@ -11,8 +11,8 @@ import {
 import EventGroupSelect from './EventGroupSelect';
 
 const App = () => {
-  const [view, setView] = useState(CALENDAR_VIEWS.week);
-  const [selectedDate, setSelectedDate] = useState(new Date('2019-02-13'));
+  const [view, setView] = useState(CALENDAR_VIEWS.month);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const [events, setEvents] = useState(MOCKED_EVENTS);
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
@@ -105,7 +105,7 @@ const App = () => {
         onSelectSlot={({ date, column }) => {
           console.log('SLOT', { date, column });
         }}
-        selectedEventGroups={selectedCalendars}
+        visibleEventGroups={selectedCalendars}
         renderEventGroupHeader={({ groupId }) =>
           MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
         }
@@ -117,13 +117,14 @@ const App = () => {
             return (
               <div
                 style={{
-                  background: 'green',
                   height: '100%',
                   width: '30px',
                   opacity: '.13',
                   backgroundImage:
                     'linear-gradient(135deg,#fff 25%,#111 25%,#111 50%,#fff 50%,#fff 75%,#111 75%)',
                   backgroundSize: '8px 8px',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               />
             );

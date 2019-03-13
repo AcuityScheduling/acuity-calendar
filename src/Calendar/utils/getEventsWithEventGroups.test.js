@@ -1,4 +1,4 @@
-import getEventsWithSelectedEventGroups from './getEventsWithSelectedEventGroups';
+import getEventsWithEventGroups from './getEventsWithEventGroups';
 import getMungedEvents from './getMungedEvents';
 import { MOCKED_EVENTS } from '../mocks';
 
@@ -9,7 +9,7 @@ describe('Munged Event Object', () => {
       stepMinutes: 30,
     });
 
-    const events = getEventsWithSelectedEventGroups({
+    const events = getEventsWithEventGroups({
       mungedEvents,
       selectedEventGroups: [5, 6],
     });

@@ -6,26 +6,25 @@ import getSortedEvents from './getSortedEvents';
  *
  * @param {Object} params
  * @param {Object} params.mungedEvents - These events need to be keyed all fun for this function to work
- * @param {array} params.selectedEventGroups - An array of selected calendar ids
+ * @param {array} params.visibleEventGroups - An array of visible event groups
  */
-const getEventsWithSelectedEventGroups = ({
-  mungedEvents,
-  selectedEventGroups,
-}) => {
+const getEventsWithEventGroups = ({ mungedEvents, visibleEventGroups }) => {
   const newEvents = Object.assign({}, mungedEvents);
-  Object.keys(newEvents).forEach(calendarId => {
-    if (!selectedEventGroups.includes(Number(calendarId))) {
-      delete newEvents[calendarId];
-    }
-  });
+  if (visibleEventGroups) {
+    Object.keys(newEvents).forEach(groupId => {
+      if (!visibleEventGroups.includes(Number(groupId))) {
+        delete newEvents[groupId];
+      }
+    });
+  }
 
   const selectedCalendarEvents = Object.keys(newEvents).reduce(
-    (accumulator, calendarId) => {
-      const datesWithEvents = Object.keys(newEvents[calendarId]);
+    (accumulator, groupId) => {
+      const datesWithEvents = Object.keys(newEvents[groupId]);
       datesWithEvents.forEach(date => {
         accumulator[date] = getSortedEvents([
           ...get(accumulator, date, []),
-          ...newEvents[calendarId][date],
+          ...newEvents[groupId][date],
         ]);
       });
       return accumulator;
@@ -35,4 +34,4 @@ const getEventsWithSelectedEventGroups = ({
   return selectedCalendarEvents;
 };
 
-export default getEventsWithSelectedEventGroups;
+export default getEventsWithEventGroups;

@@ -72,11 +72,11 @@ const EventExtend = ({
         onExtend(resetEventFormat(newEvent));
         setIsExtending(true);
       }}
-      onStop={() => {
+      onStop={(e, ui) => {
         if (!isExtending) return false;
         setDeltaPosition({ x: 0, y: 0 });
         setTimeout(() => setIsExtending(false));
-        onExtendEnd(newEvent);
+        onExtendEnd({ e, ui, event: newEvent });
       }}
     >
       <span>{children({ isExtending, extendedEvent: newEvent })}</span>

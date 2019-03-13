@@ -94,6 +94,7 @@ const Column = React.forwardRef(
           if (isSelectRangeFinished) {
             resetSelectRangeDrag();
             onSelectRangeEnd({
+              e,
               start: new Date(selectRange.start),
               end: new Date(selectRange.end),
               column: columnId,
@@ -108,7 +109,7 @@ const Column = React.forwardRef(
             columnDate: date,
           })(e);
           setClickedTime(clickedTime);
-          onSelectSlot({ date: new Date(clickedTime), column: columnId });
+          onSelectSlot({ e, date: new Date(clickedTime), column: columnId });
           setTimeout(() => setClickedTime(null), 300);
           resetSelectRangeDrag();
         }}

@@ -3,18 +3,16 @@ import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 
 import Calendar from '../src/Calendar';
+import CalendarExample from './CalendarExample';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
-import { MOCKED_CALENDARS, MOCKED_EVENTS } from '../src/Calendar/mocks';
-
-// eslint-disable-next-line react/prop-types
-const CalendarWrapper = props => <Calendar events={MOCKED_EVENTS} {...props} />;
+import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
 
 storiesOf('Calendar Views', module)
-  .add('Month', () => <CalendarWrapper view={CALENDAR_VIEWS.month} />)
-  .add('Week', () => <CalendarWrapper view={CALENDAR_VIEWS.week} />)
+  .add('Month', () => <CalendarExample view={CALENDAR_VIEWS.month} />)
+  .add('Week', () => <CalendarExample view={CALENDAR_VIEWS.week} />)
   .add('Calendar', () => {
     return (
-      <CalendarWrapper
+      <CalendarExample
         view={CALENDAR_VIEWS.calendar}
         visibleEventGroups={[5, 6, 7]}
         renderEventGroupHeader={({ groupId }) => {

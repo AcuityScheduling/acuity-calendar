@@ -59,7 +59,7 @@ const App = () => {
         view={view}
         selectedDate={selectedDate}
         // After extending an event's duration
-        onExtendEnd={event => {
+        onExtendEnd={({ event }) => {
           updateEvent(event);
           console.log('EXTEND', event);
         }}

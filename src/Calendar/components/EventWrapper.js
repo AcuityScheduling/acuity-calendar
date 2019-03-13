@@ -30,7 +30,7 @@ const EventWrapper = React.forwardRef(
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
-        onSelect(resetEventFormat(event));
+        onSelect(resetEventFormat({ e, event }));
       }}
     >
       {children}

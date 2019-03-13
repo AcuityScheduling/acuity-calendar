@@ -10,11 +10,13 @@ import getSortedEvents from './getSortedEvents';
  */
 const getEventsWithEventGroups = ({ mungedEvents, eventGroups }) => {
   const newEvents = Object.assign({}, mungedEvents);
-  Object.keys(newEvents).forEach(groupId => {
-    if (!eventGroups.includes(Number(groupId))) {
-      delete newEvents[groupId];
-    }
-  });
+  if (eventGroups) {
+    Object.keys(newEvents).forEach(groupId => {
+      if (!eventGroups.includes(Number(groupId))) {
+        delete newEvents[groupId];
+      }
+    });
+  }
 
   const selectedCalendarEvents = Object.keys(newEvents).reduce(
     (accumulator, groupId) => {

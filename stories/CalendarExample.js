@@ -5,7 +5,10 @@ import Calendar from '../src/Calendar';
 
 const calendarWrapperStyles = `
   .acuity-calendar__step-grid { 
-    height: 400px;
+    height: 700px;
+  }
+  .acuity-calendar__month { 
+    height: 800px;
   }
 `;
 

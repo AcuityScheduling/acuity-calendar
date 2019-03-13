@@ -10,19 +10,19 @@ import getSortedEvents from './getSortedEvents';
  */
 const getEventsWithEventGroups = ({ mungedEvents, eventGroups }) => {
   const newEvents = Object.assign({}, mungedEvents);
-  Object.keys(newEvents).forEach(calendarId => {
-    if (!eventGroups.includes(Number(calendarId))) {
-      delete newEvents[calendarId];
+  Object.keys(newEvents).forEach(groupId => {
+    if (!eventGroups.includes(Number(groupId))) {
+      delete newEvents[groupId];
     }
   });
 
   const selectedCalendarEvents = Object.keys(newEvents).reduce(
-    (accumulator, calendarId) => {
-      const datesWithEvents = Object.keys(newEvents[calendarId]);
+    (accumulator, groupId) => {
+      const datesWithEvents = Object.keys(newEvents[groupId]);
       datesWithEvents.forEach(date => {
         accumulator[date] = getSortedEvents([
           ...get(accumulator, date, []),
-          ...newEvents[calendarId][date],
+          ...newEvents[groupId][date],
         ]);
       });
       return accumulator;

@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-const now = moment().format('YYYY-MM-DD HH:mm:ss');
+const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+const now = moment().format(dateFormat);
 
 export const MOCKED_EVENTS = [
   {
@@ -22,8 +23,14 @@ export const MOCKED_EVENTS = [
   {
     id: 3,
     group_id: 5,
-    start: '2019-02-12 09:00:00',
-    end: '2019-02-12 09:30:00',
+    start: moment()
+      .hour(9)
+      .minute(0)
+      .format(dateFormat),
+    end: moment()
+      .hour(9)
+      .minute(30)
+      .format(dateFormat),
     title: 'Unicorns are pretty no seriously they are super duper pretty',
     allDay: false,
   },

@@ -4,25 +4,26 @@ import { storiesOf } from '@storybook/react';
 
 import Calendar from '../src/Calendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
-import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
-
-const eventsMocked = [];
+import { MOCKED_CALENDARS, MOCKED_EVENTS } from '../src/Calendar/mocks';
 
 // eslint-disable-next-line react/prop-types
-const CalendarWrapper = props => <Calendar events={eventsMocked} {...props} />;
+const CalendarWrapper = props => <Calendar events={MOCKED_EVENTS} {...props} />;
 
 storiesOf('Calendar Views', module)
   .add('Month', () => <CalendarWrapper view={CALENDAR_VIEWS.month} />)
   .add('Week', () => <CalendarWrapper view={CALENDAR_VIEWS.week} />)
-  .add('Calendar', () => (
-    <CalendarWrapper
-      view={CALENDAR_VIEWS.calendar}
-      eventGroups={[5, 6, 7]}
-      renderEventGroupHeader={({ groupId }) => {
-        return MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name;
-      }}
-    />
-  ));
+  .add('Calendar', () => {
+    return (
+      <CalendarWrapper
+        view={CALENDAR_VIEWS.calendar}
+        eventGroups={[5, 6, 7]}
+        renderEventGroupHeader={({ groupId }) => {
+          return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
+            .name;
+        }}
+      />
+    );
+  });
 
 storiesOf('Other').add('month heatmap', () => {
   const events = [

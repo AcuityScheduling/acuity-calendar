@@ -54,20 +54,25 @@ const CalendarExample = props => {
         }}
         // When clicking on the date in the month view
         onSelectMonthDate={results => {
+          props.onSelectMonthDate(results);
           console.log(results.date);
         }}
         onSelectEvent={results => {
+          props.onSelectEvent(results);
           console.log('CLICK', results);
         }}
         // When clicking and dragging to create a new event on a stepgrid view
         onSelectRangeEnd={results => {
+          props.onSelectRangeEnd(results);
           console.log('SELECTING RANGE', results);
         }}
         onCurrentTimeChange={currentTime => {
+          props.onCurrentTimeChange(currentTime);
           console.log('CURRENT TIME CHANGE', currentTime);
         }}
         // A callback fired when a date selection is made
         onSelectSlot={results => {
+          props.onSelectSlot(results);
           console.log('SLOT', results);
         }}
       />
@@ -79,12 +84,22 @@ CalendarExample.defaultProps = {
   onDragEnd: () => null,
   onExtendEnd: () => null,
   onSelectMoreEvents: () => null,
+  onSelectMonthDate: () => null,
+  onSelectEvent: () => null,
+  onSelectRangeEnd: () => null,
+  onCurrentTimeChange: () => null,
+  onSelectSlot: () => null,
 };
 
 CalendarExample.propTypes = {
+  onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
+  onSelectEvent: PropTypes.func,
+  onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
+  onSelectRangeEnd: PropTypes.func,
+  onSelectSlot: PropTypes.func,
 };
 
 export default CalendarExample;

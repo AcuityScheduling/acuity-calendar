@@ -67,6 +67,7 @@ const Calendar = ({
     () => getMungedEvents({ events, stepMinutes, stepHeight }),
     [events, stepMinutes]
   );
+  console.log('mungedEvents: ', mungedEvents);
 
   const eventsWithSelectedEventGroups = useMemo(
     () =>

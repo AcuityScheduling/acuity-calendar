@@ -46,15 +46,15 @@ const expandAllDayEvents = events => {
   return events.reduce((accumulator, event) => {
     const padding = {};
     if (event.paddingTopStart) {
-      padding.paddingTopStart = moment(event.paddingTopStart);
+      padding.paddingTopStart = moment(event.paddingTopStart).seconds(0);
     }
     if (event.paddingBottomEnd) {
-      padding.paddingBottomEnd = moment(event.paddingBottomEnd);
+      padding.paddingBottomEnd = moment(event.paddingBottomEnd).seconds(0);
     }
     // Turn event strings into moment objects
     const newEvent = Object.assign({}, event, {
-      start: moment(event.start),
-      end: moment(event.end),
+      start: moment(event.start).seconds(0),
+      end: moment(event.end).seconds(0),
       ...padding,
     });
 
@@ -62,7 +62,9 @@ const expandAllDayEvents = events => {
       newEvent.start
         .clone()
         .startOf('day')
-        .diff(newEvent.end, 'days')
+        // If the day ends at 12am we don't want that to count as a new day
+        // so we're going to subtract a second just to make sure
+        .diff(newEvent.end.clone().subtract(1, 'seconds'), 'days')
     );
 
     accumulator = [...accumulator, newEvent];

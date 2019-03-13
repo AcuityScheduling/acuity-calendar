@@ -1,11 +1,15 @@
 import React, { Fragment, useState } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import { MOCKED_EVENTS } from '../src/Calendar/mocks';
+import { MOCKED_EVENTS, MOCKED_CALENDARS } from '../src/Calendar/mocks';
 import Calendar from '../src/Calendar';
 
 const calendarWrapperStyles = `
   .acuity-calendar__step-grid { 
     height: 700px;
+  }
+  .acuity-calendar__step-grid__event {
+      font-size: 14px;
   }
   .acuity-calendar__month { 
     height: 800px;
@@ -31,12 +35,32 @@ const CalendarExample = props => {
     setEvents([...newAlteredEvents]);
   };
 
+  const getEventColor = groupId => {
+    return MOCKED_CALENDARS.find(calendar => {
+      return calendar.id === groupId;
+    }).color;
+  };
+
   return (
     <Fragment>
       <style>{calendarWrapperStyles}</style>
       <Calendar
         events={events}
         {...props}
+        renderEvent={event => {
+          return (
+            <div
+              style={{
+                height: '100%',
+                background: getEventColor(event.group_id),
+              }}
+            >
+              {event.title}
+              <br /> {moment(event.start).format('H:mma')} -{' '}
+              {moment(event.end).format('H:mma')}
+            </div>
+          );
+        }}
         onDragEnd={results => {
           props.onDragEnd(results);
           updateEvent(results.event);

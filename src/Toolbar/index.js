@@ -93,6 +93,9 @@ const Toolbar = ({
           </button>
         </div>
         <div className={makeClass('toolbar__navigate')}>
+          <button type="button" onClick={() => onNavigate(moment())}>
+            Today
+          </button>
           <button type="button" onClick={() => onNavigate(prevDate)}>
             Back
           </button>

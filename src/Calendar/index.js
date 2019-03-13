@@ -25,7 +25,7 @@ const Calendar = ({
   stepDetails,
   view,
   selectedDate,
-  eventGroups,
+  visibleEventGroups,
   onExtendEnd,
   onCurrentTimeChange,
   onDragEnd,
@@ -72,9 +72,9 @@ const Calendar = ({
     () =>
       getEventsWithEventGroups({
         mungedEvents,
-        eventGroups,
+        visibleEventGroups,
       }),
-    [mungedEvents, eventGroups]
+    [mungedEvents, visibleEventGroups]
   );
 
   const mungedStepDetails = useMemo(
@@ -86,9 +86,9 @@ const Calendar = ({
     () =>
       getEventsWithEventGroups({
         mungedEvents: mungedStepDetails,
-        eventGroups,
+        visibleEventGroups,
       }),
-    [mungedStepDetails, eventGroups]
+    [mungedStepDetails, visibleEventGroups]
   );
 
   return (
@@ -110,7 +110,7 @@ const Calendar = ({
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       selectMinutes={selectMinutes}
-      eventGroups={eventGroups}
+      visibleEventGroups={visibleEventGroups}
       stepHeight={stepHeight}
       renderEvent={renderEvent}
       renderCorner={renderCorner}
@@ -135,7 +135,7 @@ Calendar.defaultProps = {
   renderEventPaddingBottom: () => null,
   stepDetails: [],
   events: [],
-  eventGroups: null,
+  visibleEventGroups: null,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   view: CALENDAR_VIEWS.week,
@@ -161,9 +161,8 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-  eventGroups: PropTypes.arrayOf(PropTypes.number),
-  // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
   events: PropTypes.arrayOf(EVENT_TYPE),
+  // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
@@ -184,19 +183,20 @@ Calendar.propTypes = {
   renderMonthCell: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
+  renderStepDetail: PropTypes.func,
   // What range of minutes is selectable - for new events
   // and for drag and drop
-  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   stepDetails: PropTypes.array,
+  stepHeight: PropTypes.number,
   // The height in pixels that we want each step to be. This will be like
   // zooming in and out on the calendar
-  stepHeight: PropTypes.number,
+  stepMinutes: STEP_MINUTES_TYPE,
   // How many grid lines there are between an hour. 30 means
   // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
-  stepMinutes: STEP_MINUTES_TYPE,
   view: CALENDAR_VIEW_TYPE,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default Calendar;

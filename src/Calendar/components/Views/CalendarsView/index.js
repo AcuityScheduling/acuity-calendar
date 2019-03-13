@@ -22,7 +22,7 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
 
 const CalendarsView = ({
   selectedDate,
-  eventGroups,
+  visibleEventGroups,
   renderEventGroupHeader,
   firstDay,
   stepMinutes,
@@ -62,9 +62,9 @@ const CalendarsView = ({
       stepHeight={stepHeight}
       renderCorner={renderCorner}
       renderHeader={() => {
-        if (!eventGroups) return null;
-        const totalColumns = eventGroups.length;
-        return eventGroups.map(groupId => {
+        if (!visibleEventGroups) return null;
+        const totalColumns = visibleEventGroups.length;
+        return visibleEventGroups.map(groupId => {
           const eventsForDay = getEventsForDay({
             events: eventsWithColumns,
             groupId,
@@ -91,13 +91,13 @@ const CalendarsView = ({
         });
       }}
       renderColumns={({ currentTime, totalGridHeight }) => {
-        if (!eventGroups) return null;
+        if (!visibleEventGroups) return null;
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
-          return eventGroups[newIndex];
+          return visibleEventGroups[newIndex];
         };
 
-        return eventGroups.map((groupId, index) => {
+        return visibleEventGroups.map((groupId, index) => {
           const eventsForDay =
             getEventsForDay({
               events: eventsWithColumns,
@@ -177,7 +177,6 @@ CalendarsView.defaultProps = {
 };
 
 CalendarsView.propTypes = {
-  eventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
   eventsWithEventGroups: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
@@ -201,6 +200,7 @@ CalendarsView.propTypes = {
   stepDetailsWithEventGroups: PropTypes.object,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default CalendarsView;

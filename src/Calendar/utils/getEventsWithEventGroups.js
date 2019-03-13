@@ -6,13 +6,13 @@ import getSortedEvents from './getSortedEvents';
  *
  * @param {Object} params
  * @param {Object} params.mungedEvents - These events need to be keyed all fun for this function to work
- * @param {array} params.eventGroups - An array of event groups
+ * @param {array} params.visibleEventGroups - An array of visible event groups
  */
-const getEventsWithEventGroups = ({ mungedEvents, eventGroups }) => {
+const getEventsWithEventGroups = ({ mungedEvents, visibleEventGroups }) => {
   const newEvents = Object.assign({}, mungedEvents);
-  if (eventGroups) {
+  if (visibleEventGroups) {
     Object.keys(newEvents).forEach(groupId => {
-      if (!eventGroups.includes(Number(groupId))) {
+      if (!visibleEventGroups.includes(Number(groupId))) {
         delete newEvents[groupId];
       }
     });

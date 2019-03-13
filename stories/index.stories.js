@@ -16,7 +16,7 @@ storiesOf('Calendar Views', module)
     return (
       <CalendarWrapper
         view={CALENDAR_VIEWS.calendar}
-        eventGroups={[5, 6, 7]}
+        visibleEventGroups={[5, 6, 7]}
         renderEventGroupHeader={({ groupId }) => {
           return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
             .name;

@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Calendar from '../../Calendar';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
-import { EVENT_TYPE, DATE_TYPE } from '../../Calendar/types';
-import { SELECTED_DATE_DEFAULT } from '../../Calendar/defaultProps';
+import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
+import {
+  SELECTED_DATE_DEFAULT,
+  FIRST_DAY_DEFAULT,
+} from '../../Calendar/defaultProps';
 
 const CalendarGroups = ({
   events,
+  firstDay,
   selectedDate,
   onCurrentTimeChange,
   onDragEnd,
@@ -25,6 +29,7 @@ const CalendarGroups = ({
     <Calendar
       view={CALENDAR_VIEWS.calendar}
       events={events}
+      firstDay={firstDay}
       stepDetails={stepDetails}
       selectedDate={selectedDate}
       onDragEnd={onDragEnd}
@@ -44,6 +49,7 @@ const CalendarGroups = ({
 
 CalendarGroups.defaultProps = {
   events: [],
+  firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
@@ -62,6 +68,7 @@ CalendarGroups.defaultProps = {
 
 CalendarGroups.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
+  firstDay: FIRST_DAY_TYPE,
   onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,

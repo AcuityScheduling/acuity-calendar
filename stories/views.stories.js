@@ -14,9 +14,11 @@ storiesOf('Calendar Views', module)
       <CalendarExample
         view={CALENDAR_VIEWS.calendar}
         visibleEventGroups={[5, 6, 7]}
-        renderHeader={({ groupId }) => {
-          return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
-            .name;
+        renderHeader={{
+          [CALENDAR_VIEWS.calendar]: ({ groupId }) => {
+            return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
+              .name;
+          },
         }}
       />
     );

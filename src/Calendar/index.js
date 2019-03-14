@@ -9,6 +9,7 @@ import {
   STEP_MINUTES_TYPE,
   EVENT_TYPE,
   DATE_TYPE,
+  VIEW_RENDER_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithEventGroups } from './utils';
 import {
@@ -18,6 +19,7 @@ import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
+  VIEW_RENDER_DEFAULT,
 } from './defaultProps';
 
 const Calendar = ({
@@ -130,8 +132,8 @@ const Calendar = ({
 Calendar.defaultProps = {
   renderEvent: null,
   renderCorner: () => null,
-  renderHeader: () => null,
   renderEventPaddingTop: () => null,
+  renderHeader: VIEW_RENDER_DEFAULT,
   renderEventPaddingBottom: () => null,
   stepDetails: [],
   events: [],
@@ -179,7 +181,7 @@ Calendar.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
-  renderHeader: PropTypes.func,
+  renderHeader: VIEW_RENDER_TYPE,
   renderMonthCell: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,

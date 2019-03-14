@@ -39,7 +39,9 @@ const CalendarHeatmap = ({
           const { weight, count } = getWeight(data.date);
           onSelectCell({ ...data, weight, count });
         }}
-        renderHeader={renderHeader}
+        renderHeader={{
+          [CALENDAR_VIEWS.month]: renderHeader,
+        }}
         renderMonthCell={data => {
           const { weight, count } = getWeight(data.date);
           return (

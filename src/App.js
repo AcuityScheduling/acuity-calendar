@@ -106,9 +106,10 @@ const App = () => {
           console.log('SLOT', { date, column });
         }}
         visibleEventGroups={selectedCalendars}
-        renderHeader={({ groupId }) =>
-          MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
-        }
+        renderHeader={{
+          [CALENDAR_VIEWS.calendars]: ({ groupId }) =>
+            MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name,
+        }}
         renderStepDetail={stepDetail => {
           if (stepDetail.availability) {
             return <div style={{ background: 'white', height: '100%' }} />;

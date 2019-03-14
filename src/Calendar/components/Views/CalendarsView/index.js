@@ -4,7 +4,12 @@ import moment from 'moment';
 import get from 'lodash/get';
 import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
-import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import {
+  MOMENT_TYPE,
+  FIRST_DAY_TYPE,
+  STEP_MINUTES_TYPE,
+  VIEW_RENDER_TYPE,
+} from '../../../types';
 import { useElementWidths } from '../../StepGrid/utils';
 import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
 import ColumnHeader from '../../StepGrid/components/ColumnHeader';
@@ -15,6 +20,7 @@ import {
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
 } from '../../../defaultProps';
+import { CALENDAR_VIEWS } from '../../../constants';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
@@ -49,6 +55,11 @@ const CalendarsView = ({
   const { stepGridRef, assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
+  const renderCalendarsHeader = get(
+    renderHeader,
+    CALENDAR_VIEWS.calendar,
+    null
+  );
 
   return (
     <StepGrid
@@ -81,10 +92,11 @@ const CalendarsView = ({
               minWidthEmpty={minWidthColumnEmpty}
             >
               <h2>
-                {renderHeader({
-                  data: groupId,
-                  events: eventsForDay,
-                })}
+                {renderCalendarsHeader &&
+                  renderCalendarsHeader({
+                    groupId,
+                    events: eventsForDay,
+                  })}
               </h2>
             </ColumnHeader>
           );
@@ -191,7 +203,7 @@ CalendarsView.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
-  renderHeader: PropTypes.func.isRequired,
+  renderHeader: VIEW_RENDER_TYPE.isRequired,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

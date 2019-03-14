@@ -4,10 +4,11 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { getMonthGrid, getDayNames, useTotalEventsToShow } from './utils';
 import { makeClass } from '../../../utils';
-import { FIRST_DAY_TYPE, MOMENT_TYPE } from '../../../types';
+import { FIRST_DAY_TYPE, MOMENT_TYPE, VIEW_RENDER_TYPE } from '../../../types';
 import './index.scss';
 import MonthCell from './components/MonthCell';
-import { FIRST_DAY_DEFAULT } from '../../../defaultProps';
+import { FIRST_DAY_DEFAULT, VIEW_RENDER_DEFAULT } from '../../../defaultProps';
+import { CALENDAR_VIEWS } from '../../../constants';
 
 const MonthView = ({
   events,
@@ -21,6 +22,7 @@ const MonthView = ({
   forceSixWeeks,
   renderEvent,
   renderMonthCell,
+  renderHeader,
 }) => {
   const {
     rowRef,
@@ -44,10 +46,17 @@ const MonthView = ({
   return (
     <div className={makeClass('month')}>
       <div className={makeClass('month__header')}>
-        {dayNames.map(dayName => {
+        {dayNames.full.map((dayName, index) => {
+          const weekday = {
+            full: dayName,
+            min: dayNames.min[index],
+            short: dayNames.short[index],
+          };
           return (
             <div className={makeClass('month__column-header')} key={dayName}>
-              {dayName}
+              {get(renderHeader, CALENDAR_VIEWS.month, null)
+                ? renderHeader[CALENDAR_VIEWS.month]({ data: weekday })
+                : dayName}
             </div>
           );
         })}
@@ -105,12 +114,13 @@ MonthView.defaultProps = {
   renderEvent: null,
   forceSixWeeks: false,
   renderMonthCell: null,
-  onSelectMonthDate: () => null,
+  onSelectMonthDate: null,
   firstDay: FIRST_DAY_DEFAULT,
   onSelectMoreEvents: () => null,
   onDragEnd: () => null,
   onSelectSlot: () => null,
   onSelectEvent: () => null,
+  renderHeader: VIEW_RENDER_DEFAULT,
   selectedDate: moment(),
 };
 
@@ -124,6 +134,7 @@ MonthView.propTypes = {
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderHeader: VIEW_RENDER_TYPE,
   renderMonthCell: PropTypes.func,
   selectedDate: MOMENT_TYPE,
 };

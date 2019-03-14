@@ -28,3 +28,10 @@ export const REF_TYPE = PropTypes.shape({
   ),
 });
 export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
+
+const getViewShape = type => {
+  return Object.keys(CALENDAR_VIEWS).reduce((accumulator, view) => {
+    return { ...accumulator, [view]: type };
+  }, {});
+};
+export const VIEW_RENDER_TYPE = PropTypes.shape(getViewShape(PropTypes.func));

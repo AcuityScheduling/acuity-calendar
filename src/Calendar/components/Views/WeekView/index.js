@@ -6,7 +6,12 @@ import StepGrid from '../../StepGrid';
 import Column from '../../StepGrid/components/Column';
 import { getWeekList } from './utils';
 import { useElementWidths } from '../../StepGrid/utils';
-import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../../types';
+import {
+  MOMENT_TYPE,
+  FIRST_DAY_TYPE,
+  STEP_MINUTES_TYPE,
+  VIEW_RENDER_TYPE,
+} from '../../../types';
 import ColumnHeader from '../../StepGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
@@ -14,7 +19,9 @@ import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
+  VIEW_RENDER_DEFAULT,
 } from '../../../defaultProps';
+import { CALENDAR_VIEWS } from '../../../constants';
 
 const WeekView = ({
   events,
@@ -38,6 +45,7 @@ const WeekView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  renderHeader,
   stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
@@ -72,11 +80,15 @@ const WeekView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              <h2>
-                {date.format('dddd')}
-                <br />
-                {date.format('MMM, D')}
-              </h2>
+              {get(renderHeader, CALENDAR_VIEWS.week, null) ? (
+                renderHeader({ data: date, events })
+              ) : (
+                <h2>
+                  {date.format('dddd')}
+                  <br />
+                  {date.format('MMM, D')}
+                </h2>
+              )}
             </ColumnHeader>
           );
         })
@@ -170,6 +182,7 @@ WeekView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  renderHeader: VIEW_RENDER_DEFAULT,
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
@@ -191,6 +204,7 @@ WeekView.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
+  renderHeader: VIEW_RENDER_TYPE,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

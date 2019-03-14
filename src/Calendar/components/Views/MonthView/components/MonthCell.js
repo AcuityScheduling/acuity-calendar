@@ -94,6 +94,7 @@ const MonthCell = React.forwardRef(
         <div
           className={makeClass('month__date-wrapper')}
           onClick={e => {
+            if (!onSelectMonthDate) return;
             e.stopPropagation();
             onSelectMonthDate({
               e,
@@ -159,7 +160,7 @@ MonthCell.defaultProps = {
   events: [],
   onDragEnd: () => null,
   onSelectSlot: () => null,
-  onSelectMonthDate: () => null,
+  onSelectMonthDate: null,
   onSelectEvent: () => null,
   renderMonthCell: null,
   renderEvent: null,

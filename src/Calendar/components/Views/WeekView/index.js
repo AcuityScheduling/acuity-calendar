@@ -38,6 +38,7 @@ const WeekView = ({
   renderSelectRange,
   renderEventPaddingTop,
   renderEventPaddingBottom,
+  renderHeader,
   stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
@@ -72,11 +73,15 @@ const WeekView = ({
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
             >
-              <h2>
-                {date.format('dddd')}
-                <br />
-                {date.format('MMM, D')}
-              </h2>
+              {renderHeader ? (
+                renderHeader({ data: date, events })
+              ) : (
+                <h2>
+                  {date.format('dddd')}
+                  <br />
+                  {date.format('MMM, D')}
+                </h2>
+              )}
             </ColumnHeader>
           );
         })
@@ -170,6 +175,7 @@ WeekView.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  renderHeader: () => null,
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
@@ -191,6 +197,7 @@ WeekView.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
+  renderHeader: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

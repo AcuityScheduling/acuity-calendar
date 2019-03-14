@@ -23,7 +23,7 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
 const CalendarsView = ({
   selectedDate,
   visibleEventGroups,
-  renderEventGroupHeader,
+  renderHeader,
   firstDay,
   stepMinutes,
   minWidthColumn,
@@ -81,8 +81,8 @@ const CalendarsView = ({
               minWidthEmpty={minWidthColumnEmpty}
             >
               <h2>
-                {renderEventGroupHeader({
-                  groupId,
+                {renderHeader({
+                  data: groupId,
                   events: eventsForDay,
                 })}
               </h2>
@@ -189,9 +189,9 @@ CalendarsView.propTypes = {
   onSelectSlot: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderEvent: PropTypes.func,
-  renderEventGroupHeader: PropTypes.func.isRequired,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
+  renderHeader: PropTypes.func.isRequired,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

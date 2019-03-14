@@ -106,7 +106,7 @@ const App = () => {
           console.log('SLOT', { date, column });
         }}
         visibleEventGroups={selectedCalendars}
-        renderEventGroupHeader={({ groupId }) =>
+        renderHeader={({ groupId }) =>
           MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
         }
         renderStepDetail={stepDetail => {

@@ -21,6 +21,7 @@ const MonthView = ({
   forceSixWeeks,
   renderEvent,
   renderMonthCell,
+  renderHeader,
 }) => {
   const {
     rowRef,
@@ -44,10 +45,15 @@ const MonthView = ({
   return (
     <div className={makeClass('month')}>
       <div className={makeClass('month__header')}>
-        {dayNames.map(dayName => {
+        {dayNames.full.map((dayName, index) => {
+          const weekday = {
+            full: dayName,
+            min: dayNames.min[index],
+            short: dayNames.short[index],
+          };
           return (
             <div className={makeClass('month__column-header')} key={dayName}>
-              {dayName}
+              {renderHeader ? renderHeader({ data: weekday }) : dayName}
             </div>
           );
         })}
@@ -105,12 +111,13 @@ MonthView.defaultProps = {
   renderEvent: null,
   forceSixWeeks: false,
   renderMonthCell: null,
-  onSelectMonthDate: () => null,
+  onSelectMonthDate: null,
   firstDay: FIRST_DAY_DEFAULT,
   onSelectMoreEvents: () => null,
   onDragEnd: () => null,
   onSelectSlot: () => null,
   onSelectEvent: () => null,
+  renderHeader: () => null,
   selectedDate: moment(),
 };
 
@@ -124,6 +131,7 @@ MonthView.propTypes = {
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderEvent: PropTypes.func,
+  renderHeader: PropTypes.func,
   renderMonthCell: PropTypes.func,
   selectedDate: MOMENT_TYPE,
 };

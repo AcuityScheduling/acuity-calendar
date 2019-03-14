@@ -93,6 +93,7 @@ const Calendar = ({
     [mungedStepDetails, visibleEventGroups]
   );
 
+  console.log('eventsWithSelectedEventGroups: ', eventsWithSelectedEventGroups);
   return (
     <View
       eventsWithEventGroups={mungedEvents}

@@ -23,41 +23,33 @@ export const useEvents = props => {
 
   const handlers = {
     onDragEnd: results => {
-      props.onDragEnd(results);
       updateEvent(results.event);
       console.log('DRAG END', results);
     },
     // After extending an event's duration
     onExtendEnd: results => {
-      props.onExtendEnd(results);
       updateEvent(results.event);
       console.log('EXTEND', results);
     },
     onSelectMoreEvents: results => {
-      props.onSelectMoreEvents(results);
       console.log('MORE', results);
     },
     // When clicking on the date in the month view
     onSelectMonthDate: results => {
-      props.onSelectMonthDate(results);
       console.log(results.date);
     },
     onSelectEvent: results => {
-      props.onSelectEvent(results);
       console.log('CLICK', results);
     },
     // When clicking and dragging to create a new event on a stepgrid view
     onSelectRangeEnd: results => {
-      props.onSelectRangeEnd(results);
       console.log('SELECTING RANGE', results);
     },
     onCurrentTimeChange: currentTime => {
-      props.onCurrentTimeChange(currentTime);
       console.log('CURRENT TIME CHANGE', currentTime);
     },
     // A callback fired when a date selection is made
     onSelectSlot: results => {
-      props.onSelectSlot(results);
       console.log('SLOT', results);
     },
   };

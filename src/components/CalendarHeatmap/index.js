@@ -8,7 +8,7 @@ import { CALENDAR_VIEWS } from '../../Calendar/constants';
 import { DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
 import { FIRST_DAY_DEFAULT } from '../../Calendar/defaultProps';
 import { makeClass } from '../../Calendar/utils';
-import './index.scss';
+import styles from './styles';
 
 const CalendarHeatmap = ({
   counts,
@@ -31,31 +31,34 @@ const CalendarHeatmap = ({
   };
 
   return (
-    <Calendar
-      firstDay={firstDay}
-      onSelectSlot={data => {
-        const { weight, count } = getWeight(data.date);
-        onSelectCell({ ...data, weight, count });
-      }}
-      renderHeader={renderHeader}
-      renderMonthCell={data => {
-        const { weight, count } = getWeight(data.date);
-        return (
-          <Fragment>
-            {renderCell ? (
-              renderCell({ ...data, weight, count })
-            ) : (
-              <div
-                className={makeClass('heatmap__cell')}
-                style={{ opacity: weight }}
-              />
-            )}
-          </Fragment>
-        );
-      }}
-      selectedDate={selectedDate}
-      view={CALENDAR_VIEWS.month}
-    />
+    <Fragment>
+      <style>{styles}</style>
+      <Calendar
+        firstDay={firstDay}
+        onSelectSlot={data => {
+          const { weight, count } = getWeight(data.date);
+          onSelectCell({ ...data, weight, count });
+        }}
+        renderHeader={renderHeader}
+        renderMonthCell={data => {
+          const { weight, count } = getWeight(data.date);
+          return (
+            <Fragment>
+              {renderCell ? (
+                renderCell({ ...data, weight, count })
+              ) : (
+                <div
+                  className={makeClass('heatmap__cell')}
+                  style={{ opacity: weight }}
+                />
+              )}
+            </Fragment>
+          );
+        }}
+        selectedDate={selectedDate}
+        view={CALENDAR_VIEWS.month}
+      />
+    </Fragment>
   );
 };
 

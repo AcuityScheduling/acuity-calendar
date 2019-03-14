@@ -113,7 +113,7 @@ const MonthCell = React.forwardRef(
         </div>
         {renderMonthCell ? (
           renderMonthCell({
-            date: dayDetails.date,
+            date: new Date(dayDetails.date.startOf('day')),
             isInRange: dayDetails.isInRange,
             events,
           })

@@ -81,6 +81,7 @@ const MonthView = ({
                     cellDimensions={cellDimensions}
                     key={`monthCells${countDays}`}
                     dayDetails={dayDetails}
+                    renderMonthCell={renderMonthCell}
                     onDragEnd={onDragEnd}
                     onSelectSlot={onSelectSlot}
                     onSelectMonthDate={onSelectMonthDate}

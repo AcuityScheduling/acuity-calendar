@@ -13,6 +13,7 @@ import styles from './styles';
 const CalendarHeatmap = ({
   counts,
   firstDay,
+  forceSixWeeks,
   onSelectCell,
   renderCell,
   renderHeader,
@@ -34,6 +35,7 @@ const CalendarHeatmap = ({
     <Fragment>
       <style>{styles}</style>
       <Calendar
+        forceSixWeeks={forceSixWeeks}
         firstDay={firstDay}
         onSelectSlot={data => {
           const { weight, count } = getWeight(data.date);
@@ -65,7 +67,9 @@ const CalendarHeatmap = ({
 };
 
 CalendarHeatmap.defaultProps = {
+  counts: {},
   firstDay: FIRST_DAY_DEFAULT,
+  forceSixWeeks: true,
   onSelectCell: () => null,
   renderCell: null,
   // eslint-disable-next-line react/prop-types
@@ -76,8 +80,9 @@ CalendarHeatmap.defaultProps = {
 };
 
 CalendarHeatmap.propTypes = {
-  counts: COUNT_TYPE.isRequired,
+  counts: COUNT_TYPE,
   firstDay: FIRST_DAY_TYPE,
+  forceSixWeeks: PropTypes.bool,
   onSelectCell: PropTypes.func,
   renderCell: PropTypes.func,
   renderHeader: PropTypes.func,

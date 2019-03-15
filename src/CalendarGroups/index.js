@@ -40,6 +40,7 @@ const CalendarGroups = ({
       renderStepDetail={renderStepDetail}
       onCurrentTimeChange={onCurrentTimeChange}
       visibleEventGroups={visibleEventGroups}
+      renderEvent={renderEvent}
       renderHeader={{
         [CALENDAR_VIEWS.groups]: renderHeader,
       }}

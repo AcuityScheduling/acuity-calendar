@@ -7,7 +7,7 @@ import { MOCKED_CALENDARS } from '../src/Grid/mocks';
 // import FullCalendar from './FullCalendar';
 import CalendarMonth from '../src/components/CalendarMonth';
 import CalendarWeek from '../src/components/CalendarWeek';
-// import CalendarGroups from '../src/CalendarGroups';
+import CalendarGroups from '../src/components/CalendarGroups';
 import styles from './styles';
 import { useEvents } from './utils';
 
@@ -58,29 +58,28 @@ const Week = props => {
   );
 };
 
-// const Groups = props => {
-//   const { events, handlers } = useEvents(props);
+const Groups = props => {
+  const { events, handlers } = useEvents(props);
 
-//   return (
-//     <Fragment>
-//       <style>{styles}</style>
-//       <CalendarGroups
-//         events={events}
-//         visibleEventGroups={[5, 6, 7]}
-//         renderEvent={renderColorEvent}
-//         renderHeader={({ groupId }) => {
-//           return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
-//             .name;
-//         }}
-//         {...handlers}
-//       />
-//     </Fragment>
-//   );
-// };
+  return (
+    <Fragment>
+      <style>{styles}</style>
+      <CalendarGroups
+        events={events}
+        visibleEventGroups={[5, 6, 7]}
+        renderEvent={renderColorEvent}
+        renderHeader={({ groupId }) => {
+          return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
+            .name;
+        }}
+        {...handlers}
+      />
+    </Fragment>
+  );
+};
 
 storiesOf('Calendar Views', module)
   // .add('Full Calendar', () => <FullCalendar />)
   .add('Month', () => <Month />)
-  .add('Week', () => <Week />);
-// .add('Week', () => <Week />)
-// .add('Groups', () => <Groups />);
+  .add('Week', () => <Week />)
+  .add('Groups', () => <Groups />);

@@ -30,5 +30,8 @@ storiesOf('Month Calendars', module)
     />
   ))
   .add('Datepicker', () => (
-    <Datepicker onSelectCell={result => console.log('result: ', result)} />
+    <Datepicker
+      counts={eventCounts}
+      onSelectCell={result => console.log('result: ', result)}
+    />
   ));

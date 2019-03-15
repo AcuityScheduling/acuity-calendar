@@ -5,7 +5,8 @@ import { useTotalEventsToShow } from './utils';
 import { makeClass } from '../../utils';
 import DayCell from './components/DayCell';
 import './index.scss';
-import { VIEW_RENDER_TYPE, DAY_GRID_TYPE } from '../../types';
+import { DAY_GRID_TYPE, EVENT_TYPE } from '../../types';
+import useMungeData from '../../utils/useMungeData';
 
 const DayGrid = ({
   events,
@@ -18,6 +19,7 @@ const DayGrid = ({
   onSelectMoreEvents,
   onSelectEvent,
 }) => {
+  const { mungedEvents } = useMungeData({ events });
   const {
     rowRef,
     eventRef,
@@ -30,7 +32,6 @@ const DayGrid = ({
 
   let countDays = 0;
   let countRows = 0;
-  console.log('renderHeader: ', renderHeader);
   return (
     <div className={makeClass('day-grid')}>
       <div className={makeClass('day-grid__header')}>
@@ -65,7 +66,7 @@ const DayGrid = ({
                       countDays += 1;
 
                       const eventsForCell = get(
-                        events,
+                        mungedEvents,
                         dayDetails.date.format('YYYY-MM-DD'),
                         []
                       );
@@ -102,7 +103,7 @@ const DayGrid = ({
 };
 
 DayGrid.defaultProps = {
-  events: {},
+  events: [],
   renderCell: null,
   renderHeader: null,
   onDragEnd: () => null,
@@ -113,7 +114,7 @@ DayGrid.defaultProps = {
 };
 
 DayGrid.propTypes = {
-  events: PropTypes.object,
+  events: PropTypes.arrayOf(EVENT_TYPE),
   grid: DAY_GRID_TYPE.isRequired,
   onDragEnd: PropTypes.func,
   onSelectDate: PropTypes.func,
@@ -121,7 +122,7 @@ DayGrid.propTypes = {
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderCell: PropTypes.func,
-  renderHeader: VIEW_RENDER_TYPE,
+  renderHeader: PropTypes.func,
 };
 
 export default DayGrid;

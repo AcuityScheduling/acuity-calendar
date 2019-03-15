@@ -18,11 +18,20 @@ import {
  * @param {number} params.stepHeight
  * @returns {Object}
  */
-const getMungedEvents = ({ events, stepMinutes, stepHeight }) => {
+const getMungedEvents = ({
+  events,
+  stepMinutes = false,
+  stepHeight = false,
+}) => {
   const expandedEvents = expandAllDayEvents(events);
   const sortedEvents = getSortedEvents(expandedEvents);
 
   return sortedEvents.reduce((eventsKeyed, event, index) => {
+    // If there are no step minutes that means we're getting
+    // munged data for something OTHER than TimeGrid
+    if (!stepMinutes) {
+      return setNestedObject({ eventsKeyed, event });
+    }
     const newEvent = addEventLocation({
       event,
       stepMinutes,

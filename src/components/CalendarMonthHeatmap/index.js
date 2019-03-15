@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import moment from 'moment';
 import { COUNT_TYPE } from './types';
-import Calendar from '../Calendar';
-import { CALENDAR_VIEWS } from '../Calendar/constants';
-import { DATE_TYPE, FIRST_DAY_TYPE } from '../Calendar/types';
-import { FIRST_DAY_DEFAULT } from '../Calendar/defaultProps';
-import { makeClass } from '../Calendar/utils';
+import CalendarMonth from '../CalendarMonth';
+import { DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
+import { FIRST_DAY_DEFAULT } from '../../Calendar/defaultProps';
+import { makeClass } from '../../Calendar/utils';
 import styles from './styles';
 
-const CalendarHeatmap = ({
+const CalendarMonthHeatmap = ({
   counts,
   firstDay,
   forceSixWeeks,
@@ -36,17 +35,15 @@ const CalendarHeatmap = ({
   return (
     <Fragment>
       <style>{styles}</style>
-      <Calendar
+      <CalendarMonth
         forceSixWeeks={forceSixWeeks}
         firstDay={firstDay}
         onSelectSlot={data => {
           const { weight, count } = getWeight(data.date);
           onSelectCell({ ...data, weight, count });
         }}
-        renderHeader={{
-          [CALENDAR_VIEWS.month]: renderHeader,
-        }}
-        renderMonthCell={data => {
+        renderHeader={renderHeader}
+        renderCell={data => {
           const { weight, count } = getWeight(data.date);
           return (
             <Fragment>
@@ -62,26 +59,27 @@ const CalendarHeatmap = ({
           );
         }}
         selectedDate={selectedDate}
-        view={CALENDAR_VIEWS.month}
       />
     </Fragment>
   );
 };
 
-CalendarHeatmap.defaultProps = {
+CalendarMonthHeatmap.defaultProps = {
   counts: {},
   firstDay: FIRST_DAY_DEFAULT,
   forceSixWeeks: true,
   onSelectCell: () => null,
   renderCell: null,
   // eslint-disable-next-line react/prop-types
-  renderHeader: ({ data }) => (
-    <span className={makeClass('heatmap-header')}>{data.min}</span>
-  ),
+  renderHeader: ({ date }) => {
+    return (
+      <span className={makeClass('heatmap-header')}>{date.format('dd')}</span>
+    );
+  },
   selectedDate: new Date(),
 };
 
-CalendarHeatmap.propTypes = {
+CalendarMonthHeatmap.propTypes = {
   counts: COUNT_TYPE,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
@@ -91,4 +89,4 @@ CalendarHeatmap.propTypes = {
   selectedDate: DATE_TYPE,
 };
 
-export default CalendarHeatmap;
+export default CalendarMonthHeatmap;

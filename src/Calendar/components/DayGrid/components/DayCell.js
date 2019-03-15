@@ -15,7 +15,7 @@ const DayCell = React.forwardRef(
       onDragEnd,
       onSelectSlot,
       onSelectMonthDate,
-      renderMonthCell,
+      renderCell,
       renderEvent,
       eventRef,
       eventWrapperRef,
@@ -112,8 +112,8 @@ const DayCell = React.forwardRef(
             {dayDetails.date.date()}
           </div>
         </div>
-        {renderMonthCell ? (
-          renderMonthCell({
+        {renderCell ? (
+          renderCell({
             date: new Date(dayDetails.date.startOf('day')),
             isInRange: dayDetails.isInRange,
             events,
@@ -162,7 +162,7 @@ DayCell.defaultProps = {
   onSelectSlot: () => null,
   onSelectMonthDate: null,
   onSelectEvent: () => null,
-  renderMonthCell: null,
+  renderCell: null,
   renderEvent: null,
   onSelectMoreEvents: () => null,
 };
@@ -185,8 +185,8 @@ DayCell.propTypes = {
   onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
+  renderCell: PropTypes.func,
   renderEvent: PropTypes.func,
-  renderMonthCell: PropTypes.func,
   totalColumns: PropTypes.number.isRequired,
   totalEventsToShow: PropTypes.number.isRequired,
 };

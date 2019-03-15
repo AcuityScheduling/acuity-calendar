@@ -3,6 +3,7 @@ import getSortedEvents from './getSortedEvents';
 import getEventsWithEventGroups from './getEventsWithEventGroups';
 import makeClass from './makeClass';
 import resetEventFormat from './resetEventFormat';
+import useMungeData from './useMungeData';
 
 export {
   getMungedEvents,
@@ -10,4 +11,5 @@ export {
   getEventsWithEventGroups,
   makeClass,
   resetEventFormat,
+  useMungeData,
 };

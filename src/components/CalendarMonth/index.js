@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Calendar from '../../Calendar';
-import { CALENDARS } from '../../Calendar/constants';
+import DayGrid from '../../Calendar/components/DayGrid';
 import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
 import {
   SELECTED_DATE_DEFAULT,
@@ -22,6 +21,7 @@ const CalendarMonth = ({
   onSelectEvent,
   visibleEventGroups,
   renderHeader,
+  renderCell,
   renderEvent,
 }) => {
   const monthGrid = getMonthGrid({
@@ -29,9 +29,9 @@ const CalendarMonth = ({
     firstDay,
     forceSixWeeks,
   });
+
   return (
-    <Calendar
-      calendarType={CALENDARS.day}
+    <DayGrid
       grid={monthGrid}
       events={events}
       firstDay={firstDay}
@@ -44,6 +44,7 @@ const CalendarMonth = ({
       visibleEventGroups={visibleEventGroups}
       renderEvent={renderEvent}
       renderHeader={renderHeader}
+      renderCell={renderCell}
     />
   );
 };
@@ -59,6 +60,7 @@ CalendarMonth.defaultProps = {
   onSelectEvent: () => null,
   onSelectSlot: () => null,
   visibleEventGroups: null,
+  renderCell: null,
   renderEvent: null,
   renderHeader: null,
 };
@@ -72,6 +74,7 @@ CalendarMonth.propTypes = {
   onSelectEvent: PropTypes.func,
   onSelectMore: PropTypes.func,
   onSelectSlot: PropTypes.func,
+  renderCell: PropTypes.func,
   renderEvent: PropTypes.func,
   renderHeader: PropTypes.func,
   selectedDate: DATE_TYPE,

@@ -1,4 +1,4 @@
-import { CLASS_PREFIX } from '../Calendar/constants';
+import { CLASS_PREFIX } from '../../Calendar/constants';
 
 const cp = `.${CLASS_PREFIX}`;
 const dayGrid = `.${CLASS_PREFIX}__day-grid`;

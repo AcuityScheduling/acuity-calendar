@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import CalendarHeatmap from '../src/components/CalendarMonthHeatmap';
 import moment from 'moment';
-// import Datepicker from '../src/Datepicker';
+import Datepicker from '../src/components/Datepicker';
 
 const getDay = addDays => {
   return moment()
@@ -22,15 +22,16 @@ const eventCounts = {
   [getDay(7)]: 3,
 };
 
-storiesOf('Month Calendars', module).add('Heatmap', () => (
-  <CalendarHeatmap
-    counts={eventCounts}
-    onSelectCell={result => console.log('result: ', result)}
-  />
-));
-// .add('Datepicker', () => (
-//   <Datepicker
-//     counts={eventCounts}
-//     onSelectCell={result => console.log('result: ', result)}
-//   />
-// ));
+storiesOf('Month Calendars', module)
+  .add('Heatmap', () => (
+    <CalendarHeatmap
+      counts={eventCounts}
+      onSelectCell={result => console.log('result: ', result)}
+    />
+  ))
+  .add('Datepicker', () => (
+    <Datepicker
+      counts={eventCounts}
+      onSelectCell={result => console.log('result: ', result)}
+    />
+  ));

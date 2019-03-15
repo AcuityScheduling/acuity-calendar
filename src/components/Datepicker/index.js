@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import CalendarHeatmap from '../CalendarHeatmap';
+import CalendarMonthHeatmap from '../CalendarMonthHeatmap';
 import moment from 'moment';
-import { COUNT_TYPE } from '../CalendarHeatmap/types';
-import { FIRST_DAY_TYPE, DATE_TYPE } from '../Calendar/types';
-import { FIRST_DAY_DEFAULT } from '../Calendar/defaultProps';
-import { makeClass } from '../Calendar/utils';
+import { COUNT_TYPE } from '../CalendarMonthHeatmap/types';
+import { FIRST_DAY_TYPE, DATE_TYPE } from '../../Calendar/types';
+import { FIRST_DAY_DEFAULT } from '../../Calendar/defaultProps';
+import { makeClass } from '../../Calendar/utils';
 import './index.scss';
 
 const Datepicker = ({
@@ -56,7 +56,7 @@ const Datepicker = ({
           {renderNext ? renderNext() : <Fragment>&raquo;</Fragment>}
         </button>
       </div>
-      <CalendarHeatmap
+      <CalendarMonthHeatmap
         counts={counts}
         firstDay={firstDay}
         onSelectCell={onSelectCell}
@@ -77,8 +77,8 @@ Datepicker.defaultProps = {
   renderCurrentMonth: null,
   renderCell: null,
   // eslint-disable-next-line react/prop-types
-  renderDayHeader: ({ data }) => (
-    <span className={makeClass('heatmap-header')}>{data.min}</span>
+  renderDayHeader: ({ date }) => (
+    <span className={makeClass('heatmap-header')}>{date.format('dd')}</span>
   ),
   renderNext: null,
   renderPrev: null,

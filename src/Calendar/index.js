@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { GRIDS } from './constants';
+import { CALENDARS } from './constants';
 import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
   EVENT_TYPE,
   DATE_TYPE,
   VIEW_RENDER_TYPE,
-  GRIDS_TYPE,
+  CALENDAR_TYPE,
+  GRID_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithEventGroups } from './utils';
 import {
@@ -23,8 +24,8 @@ import {
 import DayGrid from './components/DayGrid';
 import TimeGrid from './components/TimeGrid';
 
-const Grid = ({
-  grid,
+const Calendar = ({
+  calendarType,
   events,
   stepDetails,
   selectedDate,
@@ -34,6 +35,7 @@ const Grid = ({
   onDragEnd,
   firstDay,
   forceSixWeeks,
+  grid,
   onSelectEvent,
   onSelectRangeEnd,
   onSelectSlot,
@@ -54,16 +56,16 @@ const Grid = ({
   renderEventPaddingBottom,
   renderMonthCell,
 }) => {
-  const getGrid = () => {
-    const { day, time } = GRIDS;
-    const grids = {
+  const getCalendarType = () => {
+    const { day, time } = CALENDARS;
+    const calendarTypes = {
       [day]: DayGrid,
       [time]: TimeGrid,
     };
-    return grids[grid];
+    return calendarTypes[calendarType];
   };
 
-  const Grid = getGrid();
+  const Calendar = getCalendarType();
 
   const mungedEvents = useMemo(
     () => getMungedEvents({ events, stepMinutes, stepHeight }),
@@ -94,9 +96,10 @@ const Grid = ({
   );
 
   return (
-    <Grid
+    <Calendar
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
+      grid={grid}
       stepDetails={mungedStepDetailsGroups}
       stepDetailsWithEventGroups={mungedStepDetails}
       selectedDate={moment(new Date(selectedDate))}
@@ -129,7 +132,7 @@ const Grid = ({
   );
 };
 
-Grid.defaultProps = {
+Calendar.defaultProps = {
   renderEvent: null,
   renderCorner: () => null,
   renderEventPaddingTop: () => null,
@@ -140,7 +143,7 @@ Grid.defaultProps = {
   visibleEventGroups: null,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
-  grid: GRIDS.time,
+  calendarType: CALENDARS.time,
   calendars: [],
   onExtendEnd: () => null,
   onDragEnd: () => null,
@@ -162,12 +165,13 @@ Grid.defaultProps = {
   onSelectSlot: () => null,
 };
 
-Grid.propTypes = {
-  events: PropTypes.arrayOf(EVENT_TYPE),
+Calendar.propTypes = {
+  calendarType: CALENDAR_TYPE,
   // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
+  events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
-  grid: GRIDS_TYPE,
+  grid: GRID_TYPE.isRequired,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,
@@ -201,4 +205,4 @@ Grid.propTypes = {
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
-export default Grid;
+export default Calendar;

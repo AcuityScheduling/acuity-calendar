@@ -4,7 +4,7 @@ export const CALENDAR_VIEWS = {
   groups: 'groups',
 };
 
-export const GRIDS = {
+export const CALENDARS = {
   day: 'day',
   time: 'time',
 };

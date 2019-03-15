@@ -5,7 +5,7 @@ import { useTotalEventsToShow } from './utils';
 import { makeClass } from '../../utils';
 import DayCell from './components/DayCell';
 import './index.scss';
-import { DATE_TYPE, VIEW_RENDER_TYPE } from '../../types';
+import { VIEW_RENDER_TYPE, DAY_GRID_TYPE } from '../../types';
 
 const DayGrid = ({
   events,
@@ -30,6 +30,7 @@ const DayGrid = ({
 
   let countDays = 0;
   let countRows = 0;
+  console.log('renderHeader: ', renderHeader);
   return (
     <div className={makeClass('day-grid')}>
       <div className={makeClass('day-grid__header')}>
@@ -113,15 +114,7 @@ DayGrid.defaultProps = {
 
 DayGrid.propTypes = {
   events: PropTypes.object,
-  grid: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        day: PropTypes.number,
-        isInRange: PropTypes.bool,
-        date: DATE_TYPE,
-      })
-    )
-  ).isRequired,
+  grid: DAY_GRID_TYPE.isRequired,
   onDragEnd: PropTypes.func,
   onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,

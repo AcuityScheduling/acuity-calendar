@@ -4,7 +4,8 @@ import moment from 'moment';
 import { getMonthGrid } from './utils';
 import { FIRST_DAY_TYPE, MOMENT_TYPE, VIEW_RENDER_TYPE } from '../../../types';
 import { FIRST_DAY_DEFAULT, VIEW_RENDER_DEFAULT } from '../../../defaultProps';
-import DayGrid from '../../DayGrid';
+import Grid from '../../../../Grid';
+import { GRIDS } from '../../../../Grid/constants';
 
 const MonthView = ({
   events,
@@ -27,7 +28,8 @@ const MonthView = ({
   });
 
   return (
-    <DayGrid
+    <Grid
+      gridType={GRIDS.day}
       grid={monthGrid}
       events={events}
       selectedDate={selectedDate}

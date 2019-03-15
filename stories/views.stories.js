@@ -79,7 +79,7 @@ const Groups = props => {
 };
 
 storiesOf('Calendar Views', module)
-  .add('@Full Calendar', () => <FullCalendar />)
+  .add('Full Calendar', () => <FullCalendar />)
   .add('Month', () => <Month />)
   .add('Week', () => <Week />)
   .add('Groups', () => <Groups />);

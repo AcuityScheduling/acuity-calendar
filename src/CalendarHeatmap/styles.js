@@ -1,4 +1,4 @@
-import { CLASS_PREFIX } from '../../Calendar/constants';
+import { CLASS_PREFIX } from '../Calendar/constants';
 
 const cp = `.${CLASS_PREFIX}`;
 const month = `.${CLASS_PREFIX}__month`;

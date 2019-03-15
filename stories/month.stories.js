@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import CalendarHeatmap from '../src/components/CalendarHeatmap';
+import CalendarHeatmap from '../src/CalendarHeatmap';
 import moment from 'moment';
 
 const getDay = addDays => {

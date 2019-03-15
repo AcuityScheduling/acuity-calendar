@@ -25,6 +25,7 @@ const MonthView = ({
     firstDay,
     forceSixWeeks,
   });
+
   return (
     <DayGrid
       grid={monthGrid}

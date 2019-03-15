@@ -30,7 +30,7 @@ export const useEvents = props => {
       updateEvent(results.event);
       console.log('EXTEND', results);
     },
-    onSelectMoreEvents: results => {
+    onSelectMore: results => {
       console.log('MORE', results);
     },
     // When clicking on the date in the month view

@@ -13,7 +13,7 @@ import {
   SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
 
-const StepGrid = React.forwardRef(
+const TimeGrid = React.forwardRef(
   (
     {
       selectedDate,
@@ -196,7 +196,7 @@ const StepGrid = React.forwardRef(
   }
 );
 
-StepGrid.defaultProps = {
+TimeGrid.defaultProps = {
   renderCorner: () => null,
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
@@ -206,7 +206,7 @@ StepGrid.defaultProps = {
   onCurrentTimeChange: () => null,
 };
 
-StepGrid.propTypes = {
+TimeGrid.propTypes = {
   firstDay: FIRST_DAY_TYPE,
   onCurrentTimeChange: PropTypes.func,
   renderColumns: PropTypes.func.isRequired,
@@ -219,4 +219,4 @@ StepGrid.propTypes = {
   totalWidth: PropTypes.number.isRequired,
 };
 
-export default StepGrid;
+export default TimeGrid;

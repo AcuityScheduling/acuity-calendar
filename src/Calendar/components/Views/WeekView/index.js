@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { getEventColumns } from '../../StepGrid/utils';
-import StepGrid from '../../StepGrid';
-import Column from '../../StepGrid/components/Column';
+import { getEventColumns } from '../../TimeGrid/utils';
+import TimeGrid from '../../TimeGrid';
+import Column from '../../TimeGrid/components/Column';
 import { getWeekList } from './utils';
-import { useElementWidths } from '../../StepGrid/utils';
+import { useElementWidths } from '../../TimeGrid/utils';
 import {
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
   VIEW_RENDER_TYPE,
 } from '../../../types';
-import ColumnHeader from '../../StepGrid/components/ColumnHeader';
+import ColumnHeader from '../../TimeGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
@@ -49,12 +49,12 @@ const WeekView = ({
   stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
-  const { stepGridRef, assignRef, elementWidths } = useElementWidths();
+  const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 
   return (
-    <StepGrid
-      ref={stepGridRef}
+    <TimeGrid
+      ref={TimeGridRef}
       selectedDate={selectedDate}
       totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       firstDay={firstDay}

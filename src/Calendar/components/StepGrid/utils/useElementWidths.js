@@ -9,7 +9,7 @@ import throttle from 'lodash/throttle';
  */
 const useElementWidths = props => {
   const elementRefs = useRef(new Map()).current;
-  const stepGridRef = useRef(null);
+  const TimeGridRef = useRef(null);
   const [elementWidths, setElementWidths] = useState([]);
 
   const getElementsMeasurements = () => {
@@ -31,12 +31,12 @@ const useElementWidths = props => {
   }, 300);
 
   useEffect(() => {
-    if (stepGridRef.current) {
-      addListener(stepGridRef.current, resizable);
+    if (TimeGridRef.current) {
+      addListener(TimeGridRef.current, resizable);
     }
     setAllWidths();
     return () => {
-      removeListener(stepGridRef.current, resizable);
+      removeListener(TimeGridRef.current, resizable);
     };
   });
 
@@ -46,7 +46,7 @@ const useElementWidths = props => {
     inst === null ? elementRefs.delete() : elementRefs.set(key, inst);
 
   return {
-    stepGridRef,
+    TimeGridRef,
     elementWidths,
     assignRef,
   };

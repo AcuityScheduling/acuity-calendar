@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 import { EVENT_TYPE } from '../../../../types';
 import { resetEventFormat } from '../../../../utils';
-import { STEP_BORDER_WIDTH } from '../../../StepGrid/constants';
+import { STEP_BORDER_WIDTH } from '../../../TimeGrid/constants';
 
 const reducer = (state, action) => {
   switch (action.type) {

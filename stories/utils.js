@@ -40,7 +40,7 @@ export const useEvents = props => {
     onSelectEvent: results => {
       console.log('CLICK', results);
     },
-    // When clicking and dragging to create a new event on a stepgrid view
+    // When clicking and dragging to create a new event on a TimeGrid view
     onSelectRangeEnd: results => {
       console.log('SELECTING RANGE', results);
     },

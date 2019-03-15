@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash/get';
-import StepGrid from '../../StepGrid';
-import Column from '../../StepGrid/components/Column';
+import TimeGrid from '../../TimeGrid';
+import Column from '../../TimeGrid/components/Column';
 import {
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
   VIEW_RENDER_TYPE,
 } from '../../../types';
-import { useElementWidths } from '../../StepGrid/utils';
-import { getEventColumnsByGroup } from '../../StepGrid/utils/getEventColumns';
-import ColumnHeader from '../../StepGrid/components/ColumnHeader';
+import { useElementWidths } from '../../TimeGrid/utils';
+import { getEventColumnsByGroup } from '../../TimeGrid/utils/getEventColumns';
+import ColumnHeader from '../../TimeGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
@@ -52,14 +52,14 @@ const GroupsView = ({
   renderEventPaddingBottom,
   stepHeight,
 }) => {
-  const { stepGridRef, assignRef, elementWidths } = useElementWidths();
+  const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
   const renderCalendarsHeader = get(renderHeader, CALENDAR_VIEWS.groups, null);
 
   return (
-    <StepGrid
-      ref={stepGridRef}
+    <TimeGrid
+      ref={TimeGridRef}
       selectedDate={selectedDate}
       firstDay={firstDay}
       totalWidth={elementWidths.reduce((total, value) => total + value, 0)}

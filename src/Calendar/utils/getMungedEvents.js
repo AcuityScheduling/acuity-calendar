@@ -1,11 +1,11 @@
 import get from 'lodash/get';
 import moment from 'moment';
 import getSortedEvents from './getSortedEvents';
-import { getTopOffset } from '../components/StepGrid/utils';
+import { getTopOffset } from '../components/TimeGrid/utils';
 import {
   STEP_HEIGHTS,
   STEP_BORDER_WIDTH,
-} from '../components/StepGrid/constants';
+} from '../components/TimeGrid/constants';
 
 /**
  * Get all the events keyed by date for easy lookup - and add some

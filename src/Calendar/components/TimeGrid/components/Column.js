@@ -77,12 +77,12 @@ const Column = React.forwardRef(
     const totalEventColumns = Object.keys(events).length;
     const percentWidth = 100 / totalEventColumns - 1;
     const currentTimeIndicatorClass = makeClass(
-      'step-grid__current-time-indicator'
+      'time-grid__current-time-indicator'
     );
 
     return (
       <div
-        className={`${makeClass('step-grid__grid-column')}${getTodayClass(
+        className={`${makeClass('time-grid__grid-column')}${getTodayClass(
           date
         )}`}
         key={`weekView${date.day()}`}
@@ -132,7 +132,7 @@ const Column = React.forwardRef(
         )}
         {clickedTime && (
           <div
-            className={makeClass('step-grid__select-slot-indicator')}
+            className={makeClass('time-grid__select-slot-indicator')}
             style={{
               top: `${getTopOffset({ stepMinutes, date: clickedTime })}px`,
             }}
@@ -144,7 +144,7 @@ const Column = React.forwardRef(
               })
             ) : (
               <div
-                className={makeClass('step-grid__select-slot-indicator-time')}
+                className={makeClass('time-grid__select-slot-indicator-time')}
               >
                 {clickedTime.format('h:mma')}
               </div>
@@ -153,7 +153,7 @@ const Column = React.forwardRef(
         )}
         {selectRangeHeight !== 0 && isSlotClickable && (
           <div
-            className={makeClass('step-grid__select-range')}
+            className={makeClass('time-grid__select-range')}
             style={{
               height: selectRangeHeight,
               top: selectRangeTop,
@@ -224,7 +224,7 @@ const Column = React.forwardRef(
                       return (
                         <div
                           className={`${dndClassName} ${makeClass(
-                            'step-grid__event-wrapper'
+                            'time-grid__event-wrapper'
                           )}`}
                           style={{
                             top: draggedEvent.top - event.paddingTopHeight,
@@ -239,8 +239,8 @@ const Column = React.forwardRef(
                           {event.paddingTopStart && !isDndPlaceholder && (
                             <div
                               className={makeClass(
-                                'step-grid__event-padding',
-                                'step-grid__event-padding-top'
+                                'time-grid__event-padding',
+                                'time-grid__event-padding-top'
                               )}
                               style={{
                                 height: event.paddingTopHeight,
@@ -262,8 +262,8 @@ const Column = React.forwardRef(
                           {event.paddingBottomEnd && !isDndPlaceholder && (
                             <div
                               className={makeClass(
-                                'step-grid__event-padding',
-                                'step-grid__event-padding-bottom'
+                                'time-grid__event-padding',
+                                'time-grid__event-padding-bottom'
                               )}
                               style={{
                                 height: event.paddingBottomHeight,
@@ -285,7 +285,7 @@ const Column = React.forwardRef(
           return (
             <div
               key={stepDetail.id}
-              className={makeClass('step-grid__step-detail-wrapper')}
+              className={makeClass('time-grid__step-detail-wrapper')}
               style={{
                 top: `${stepDetail.top}px`,
                 height: `${stepDetail.height}px`,

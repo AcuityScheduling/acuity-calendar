@@ -6,8 +6,8 @@ import { getDisplayTime } from '../../utils';
 import { makeClass } from '../../../../utils';
 import { EVENT_TYPE } from '../../../../types';
 
-export const handleCenterClass = makeClass('step-grid__event-handle-center');
-export const extendHandleClass = makeClass('step-grid__event-handle');
+export const handleCenterClass = makeClass('time-grid__event-handle-center');
+export const extendHandleClass = makeClass('time-grid__event-handle');
 
 const Event = ({
   children,
@@ -50,18 +50,18 @@ const Event = ({
       {children ? (
         children(event)
       ) : (
-        <div className={makeClass('step-grid__event-details-wrapper')}>
-          <span className={makeClass('step-grid__event-title')}>
+        <div className={makeClass('time-grid__event-details-wrapper')}>
+          <span className={makeClass('time-grid__event-title')}>
             {event.title}
           </span>
-          <span className={makeClass('step-grid__event-time')}>
+          <span className={makeClass('time-grid__event-time')}>
             {getDisplayTime(event)}
           </span>
         </div>
       )}
       <div
         className={`${extendHandleClass} ${makeClass(
-          'step-grid__event-handle-bottom'
+          'time-grid__event-handle-bottom'
         )}`}
         ref={extenderRef}
       />

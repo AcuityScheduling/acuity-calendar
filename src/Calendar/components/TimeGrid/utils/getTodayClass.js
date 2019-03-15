@@ -8,7 +8,7 @@ import { makeClass } from '../../../utils';
  */
 const getTodayClass = date => {
   if (!date.isSame(moment(), 'day')) return '';
-  return ` ${makeClass('step-grid__today')}`;
+  return ` ${makeClass('time-grid__today')}`;
 };
 
 export default getTodayClass;

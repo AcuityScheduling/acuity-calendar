@@ -18,14 +18,14 @@ const ColumnHeader = ({
 }) => {
   return (
     <div
-      className={`${makeClass('step-grid__header-column')}${getTodayClass(
+      className={`${makeClass('time-grid__header-column')}${getTodayClass(
         date
       )}`}
       style={{
         minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
       }}
     >
-      <div className={`${makeClass('step-grid__header-column-container')}`}>
+      <div className={`${makeClass('time-grid__header-column-container')}`}>
         {children}
       </div>
     </div>

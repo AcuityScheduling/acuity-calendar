@@ -28,9 +28,9 @@ import {
  */
 const getDraggableClasses = ({ isDragging, wasDragged }) => {
   return makeClass(
-    'step-grid__draggable-event',
-    isDragging && 'step-grid__dragging-event',
-    wasDragged && 'step-grid__dragged-event'
+    'time-grid__draggable-event',
+    isDragging && 'time-grid__dragging-event',
+    wasDragged && 'time-grid__dragged-event'
   );
 };
 
@@ -197,7 +197,7 @@ const EventDragDrop = ({
         })}
       </DraggableCore>
       {isDragging && (
-        <div className={makeClass('step-grid__dragging-placeholder-event')}>
+        <div className={makeClass('time-grid__dragging-placeholder-event')}>
           {children({
             draggedEvent: event,
             isDragging,

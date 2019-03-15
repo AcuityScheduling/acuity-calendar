@@ -44,7 +44,7 @@ EventWrapper.defaultProps = {
   className: '',
   isSelectable: true,
   onSelect: () => null,
-  eventClass: makeClass('step-grid__event'),
+  eventClass: makeClass('time-grid__event'),
 };
 
 EventWrapper.propTypes = {

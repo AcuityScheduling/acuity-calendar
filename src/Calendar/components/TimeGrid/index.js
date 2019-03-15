@@ -69,7 +69,7 @@ const TimeGrid = React.forwardRef(
     }, [scrollbarWidth]);
 
     const currentTimeIndicatorClass = makeClass(
-      'step-grid__current-time-indicator'
+      'time-grid__current-time-indicator'
     );
 
     const totalGridHeight = useMemo(() => {
@@ -90,8 +90,8 @@ const TimeGrid = React.forwardRef(
         times.push(
           <div
             className={makeClass(
-              'step-grid__step-line',
-              minorStep && 'step-grid__step-line-minor'
+              'time-grid__step-line',
+              minorStep && 'time-grid__step-line-minor'
             )}
             key={`timeBlock${i}`}
             style={{
@@ -111,7 +111,7 @@ const TimeGrid = React.forwardRef(
       for (let i = 0; i < 24; i += 1) {
         times.push(
           <div
-            className={makeClass('step-grid__time-label-wrapper')}
+            className={makeClass('time-grid__time-label-wrapper')}
             key={`dayTime${i}`}
             style={{
               height: `${blockHeight + STEP_BORDER_WIDTH}px`,
@@ -119,8 +119,8 @@ const TimeGrid = React.forwardRef(
           >
             <span
               className={makeClass(
-                'step-grid__time-label',
-                `step-grid__time-label-${i}`
+                'time-grid__time-label',
+                `time-grid__time-label-${i}`
               )}
             >
               {moment()
@@ -134,44 +134,44 @@ const TimeGrid = React.forwardRef(
     };
 
     return (
-      <div className={makeClass('step-grid')} ref={ref}>
-        <div className={makeClass('step-grid__header-wrapper')}>
+      <div className={makeClass('time-grid')} ref={ref}>
+        <div className={makeClass('time-grid__header-wrapper')}>
           <div
-            className={makeClass('step-grid__corner')}
+            className={makeClass('time-grid__corner')}
             style={{ flex: `1 0 ${timeGutterWidth}px` }}
             ref={cornerRef}
           >
             {renderCorner({ currentTime })}
           </div>
           <div
-            className={makeClass('step-grid__header')}
+            className={makeClass('time-grid__header')}
             style={{ marginRight: scrollbarWidth - STEP_BORDER_WIDTH }}
             ref={headerRef}
           >
             {renderHeader()}
           </div>
           <div
-            className={makeClass('step-grid__scroll-gutter')}
+            className={makeClass('time-grid__scroll-gutter')}
             style={{ width: scrollbarWidth - STEP_BORDER_WIDTH }}
           >
-            <div className={makeClass('step-grid__scroll-gutter-connector')} />
+            <div className={makeClass('time-grid__scroll-gutter-connector')} />
           </div>
         </div>
-        <div className={makeClass('step-grid__grid-wrapper')} ref={wrapperRef}>
+        <div className={makeClass('time-grid__grid-wrapper')} ref={wrapperRef}>
           <div
-            className={makeClass('step-grid__step-lines')}
+            className={makeClass('time-grid__step-lines')}
             ref={stepLinesRef}
           >
             {renderStepLines()}
           </div>
           <div
-            className={makeClass('step-grid__time-gutter')}
+            className={makeClass('time-grid__time-gutter')}
             ref={timeGutterRef}
             style={{ height: totalGridHeight }}
           >
             {renderTimes()}
           </div>
-          <div className={makeClass('step-grid__grid')}>
+          <div className={makeClass('time-grid__grid')}>
             <div
               className={currentTimeIndicatorClass}
               style={{

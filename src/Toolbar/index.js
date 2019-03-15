@@ -12,7 +12,7 @@ import { makeClass } from '../Calendar/utils';
 import './index.scss';
 import { FIRST_DAY_DEFAULT } from '../Calendar/defaultProps';
 
-const { month, week, calendar } = CALENDAR_VIEWS;
+const { month, week, groups } = CALENDAR_VIEWS;
 
 /**
  * Get the next date we're navigating to in the calendar depending on the view
@@ -23,7 +23,7 @@ const { month, week, calendar } = CALENDAR_VIEWS;
  * @param {moment} params.currentDate - the current date we're using to navigate
  */
 const getNavigateDate = ({ view, direction, currentDate }) => {
-  const { month, week, calendar } = CALENDAR_VIEWS;
+  const { month, week, groups } = CALENDAR_VIEWS;
 
   const getDate = time => {
     return currentDate.clone().add(direction, time);
@@ -32,7 +32,7 @@ const getNavigateDate = ({ view, direction, currentDate }) => {
   const viewMap = {
     [month]: getDate('months'),
     [week]: getDate('weeks'),
-    [calendar]: getDate('days'),
+    [groups]: getDate('days'),
   };
 
   return viewMap[view];
@@ -53,7 +53,7 @@ const getRangeTitle = ({ date, view, firstDay }) => {
   const viewMap = {
     [month]: date.format('MMMM YYYY'),
     [week]: `Week of ${weekList[0].format('MMMM D, YYYY')}`,
-    [calendar]: date.format('dddd, MMMM D, YYYY'),
+    [groups]: date.format('dddd, MMMM D, YYYY'),
   };
 
   return viewMap[view];
@@ -88,7 +88,7 @@ const Toolbar = ({
           <button type="button" onClick={() => onViewChange(week)}>
             Week
           </button>
-          <button type="button" onClick={() => onViewChange(calendar)}>
+          <button type="button" onClick={() => onViewChange(groups)}>
             Day
           </button>
         </div>

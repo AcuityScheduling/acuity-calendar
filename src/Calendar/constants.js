@@ -1,7 +1,7 @@
 export const CALENDAR_VIEWS = {
   month: 'month',
   week: 'week',
-  calendar: 'calendar',
+  groups: 'groups',
 };
 
 export const CLASS_PREFIX = 'acuity-calendar';

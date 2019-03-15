@@ -1,13 +1,36 @@
 import React, { Fragment } from 'react';
+import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';
 
 import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
-import CalendarMonth from '../src/components/CalendarMonth';
-import CalendarWeek from '../src/components/CalendarWeek';
-import CalendarGroups from '../src/components/CalendarGroups';
+import FullCalendar from './FullCalendar';
+import CalendarMonth from '../src/CalendarMonth';
+import CalendarWeek from '../src/CalendarWeek';
+import CalendarGroups from '../src/CalendarGroups';
 import styles from './styles';
-import { useEvents, renderColorEvent } from './utils';
+import { useEvents } from './utils';
+
+const getEventColor = groupId => {
+  return MOCKED_CALENDARS.find(calendar => {
+    return calendar.id === groupId;
+  }).color;
+};
+
+export const renderColorEvent = event => {
+  return (
+    <div
+      style={{
+        height: '100%',
+        background: getEventColor(event.group_id),
+      }}
+    >
+      {event.title}
+      <br /> {moment(event.start).format('H:mma')} -{' '}
+      {moment(event.end).format('H:mma')}
+    </div>
+  );
+};
 
 const Month = props => {
   const { events, handlers } = useEvents(props);
@@ -56,6 +79,7 @@ const Groups = props => {
 };
 
 storiesOf('Calendar Views', module)
+  .add('@Full Calendar', () => <FullCalendar />)
   .add('Month', () => <Month />)
   .add('Week', () => <Week />)
-  .add('Calendar', () => <Groups />);
+  .add('Groups', () => <Groups />);

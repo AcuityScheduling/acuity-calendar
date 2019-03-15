@@ -26,6 +26,5 @@ storiesOf('Month Calendars', module).add('Heatmap', () => (
     counts={eventCounts}
     selectedDate={new Date()}
     onSelectCell={result => console.log('result: ', result)}
-    firstDay={1}
   />
 ));

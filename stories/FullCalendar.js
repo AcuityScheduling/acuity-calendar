@@ -1,38 +1,18 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import Calendar from './Calendar';
-import Toolbar from './Toolbar';
-import { CALENDAR_VIEWS } from './Calendar/constants';
-import {
-  MOCKED_EVENTS,
-  MOCKED_CALENDARS,
-  MOCKED_STEP_DETAILS,
-} from './Calendar/mocks';
-import EventGroupSelect from './EventGroupSelect';
+import Calendar from '../src/Calendar';
+import Toolbar from '../src/Toolbar';
+import { CALENDAR_VIEWS } from '../src/Calendar/constants';
+import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from '../src/Calendar/mocks';
+import EventGroupSelect from '../src/EventGroupSelect';
+import { useEvents } from './utils';
 
-const App = () => {
+const FullCalendar = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
-  const [events, setEvents] = useState(MOCKED_EVENTS);
+  const { events, handlers } = useEvents(props);
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
-
-  const updateEvent = event => {
-    // Find the event key we're going to replace
-    let alteredEventKey = false;
-    events.some((alteredEvent, index) => {
-      if (alteredEvent.id === event.id) {
-        alteredEventKey = index;
-        return true;
-      }
-      return false;
-    });
-
-    const newAlteredEvents = [...events];
-    newAlteredEvents[alteredEventKey] = event;
-
-    setEvents([...newAlteredEvents]);
-  };
 
   return (
     <div
@@ -58,29 +38,11 @@ const App = () => {
         events={events}
         view={view}
         selectedDate={selectedDate}
-        // After extending an event's duration
-        onExtendEnd={({ event }) => {
-          updateEvent(event);
-          console.log('EXTEND', event);
-        }}
-        onDragEnd={({ event }) => {
-          updateEvent(event);
-          console.log('DRAG', event);
-        }}
-        onSelectMoreEvents={({ events, date }) => {
-          console.log('MORE', events);
-        }}
+        {...handlers}
         // When clicking on the date in the month view
         onSelectMonthDate={({ date }) => {
           setSelectedDate(date);
-          setView(CALENDAR_VIEWS.calendar);
-        }}
-        onSelectEvent={event => {
-          console.log('CLICK', event);
-        }}
-        // When clicking and dragging to create a new event on a stepgrid view
-        onSelectRangeEnd={({ start, end, column }) => {
-          console.log('SELECTING RANGE', { start, end, column });
+          setView(CALENDAR_VIEWS.groups);
         }}
         onCurrentTimeChange={currentTime => {
           const newStepDetails = stepDetails.map(stepDetail => {
@@ -101,13 +63,9 @@ const App = () => {
           });
           setStepDetails(newStepDetails);
         }}
-        // A callback fired when a date selection is made
-        onSelectSlot={({ date, column }) => {
-          console.log('SLOT', { date, column });
-        }}
         visibleEventGroups={selectedCalendars}
         renderHeader={{
-          [CALENDAR_VIEWS.calendars]: ({ groupId }) =>
+          [CALENDAR_VIEWS.groups]: ({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name,
         }}
         renderStepDetail={stepDetail => {
@@ -136,4 +94,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default FullCalendar;

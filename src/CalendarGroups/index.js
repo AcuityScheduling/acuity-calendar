@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Calendar from '../../Calendar';
-import { CALENDAR_VIEWS } from '../../Calendar/constants';
-import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
+import Calendar from '../Calendar';
+import { CALENDAR_VIEWS } from '../Calendar/constants';
+import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../Calendar/types';
 import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
-} from '../../Calendar/defaultProps';
+} from '../Calendar/defaultProps';
 
 const CalendarGroups = ({
   events,
@@ -27,7 +27,7 @@ const CalendarGroups = ({
 }) => {
   return (
     <Calendar
-      view={CALENDAR_VIEWS.calendar}
+      view={CALENDAR_VIEWS.groups}
       events={events}
       firstDay={firstDay}
       stepDetails={stepDetails}
@@ -40,8 +40,9 @@ const CalendarGroups = ({
       renderStepDetail={renderStepDetail}
       onCurrentTimeChange={onCurrentTimeChange}
       visibleEventGroups={visibleEventGroups}
+      renderEvent={renderEvent}
       renderHeader={{
-        [CALENDAR_VIEWS.calendar]: renderHeader,
+        [CALENDAR_VIEWS.groups]: renderHeader,
       }}
     />
   );

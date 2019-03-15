@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import moment from 'moment';
-import { MOCKED_EVENTS, MOCKED_CALENDARS } from '../src/Calendar/mocks';
+import { useState } from 'react';
+import { MOCKED_EVENTS } from '../src/Calendar/mocks';
 
 export const useEvents = props => {
   const [events, setEvents] = useState(MOCKED_EVENTS);
@@ -58,25 +57,4 @@ export const useEvents = props => {
     events,
     handlers,
   };
-};
-
-const getEventColor = groupId => {
-  return MOCKED_CALENDARS.find(calendar => {
-    return calendar.id === groupId;
-  }).color;
-};
-
-export const renderColorEvent = event => {
-  return (
-    <div
-      style={{
-        height: '100%',
-        background: getEventColor(event.group_id),
-      }}
-    >
-      {event.title}
-      <br /> {moment(event.start).format('H:mma')} -{' '}
-      {moment(event.end).format('H:mma')}
-    </div>
-  );
 };

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { MonthView, CalendarsView, WeekView } from './components/Views';
+import { MonthView, GroupsView, WeekView } from './components/Views';
 import { CALENDAR_VIEWS } from './constants';
 import {
   FIRST_DAY_TYPE,
@@ -58,7 +58,7 @@ const Calendar = ({
     const views = {
       [month]: MonthView,
       [week]: WeekView,
-      [groups]: CalendarsView,
+      [groups]: GroupsView,
     };
     return views[view];
   };

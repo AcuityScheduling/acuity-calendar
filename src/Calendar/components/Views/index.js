@@ -1,5 +1,5 @@
-import CalendarsView from './CalendarsView';
+import GroupsView from './GroupsView';
 import MonthView from './MonthView';
 import WeekView from './WeekView';
 
-export { CalendarsView, MonthView, WeekView };
+export { GroupsView, MonthView, WeekView };

@@ -26,7 +26,7 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
 };
 
-const CalendarsView = ({
+const GroupsView = ({
   selectedDate,
   visibleEventGroups,
   renderHeader,
@@ -162,7 +162,7 @@ const CalendarsView = ({
   );
 };
 
-CalendarsView.defaultProps = {
+GroupsView.defaultProps = {
   renderCorner: () => null,
   renderEvent: null,
   selectedDate: moment(),
@@ -184,7 +184,7 @@ CalendarsView.defaultProps = {
   firstDay: FIRST_DAY_DEFAULT,
 };
 
-CalendarsView.propTypes = {
+GroupsView.propTypes = {
   eventsWithEventGroups: PropTypes.object.isRequired,
   firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
@@ -211,4 +211,4 @@ CalendarsView.propTypes = {
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default CalendarsView;
+export default GroupsView;

@@ -20,11 +20,13 @@ const CalendarHeatmap = ({
   selectedDate,
 }) => {
   const max = Math.max.apply(Math, Object.values(counts));
+  const totalDates = Object.keys(counts).length;
 
   const getWeight = date => {
     const key = moment(date).format('YYYY-MM-DD');
     const count = get(counts, key, 0);
-    const weight = Math.round((count / max) * 100) / 100;
+    const weight = totalDates > 0 ? Math.round((count / max) * 100) / 100 : 0;
+
     return {
       count,
       weight,

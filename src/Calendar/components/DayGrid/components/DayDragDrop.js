@@ -2,9 +2,9 @@ import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { DraggableCore } from 'react-draggable';
-import { EVENT_TYPE } from '../../../../types';
-import { resetEventFormat } from '../../../../utils';
-import { STEP_BORDER_WIDTH } from '../../../TimeGrid/constants';
+import { EVENT_TYPE } from '../../../types';
+import { resetEventFormat } from '../../../utils';
+import { STEP_BORDER_WIDTH } from '../../TimeGrid/constants';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -90,7 +90,7 @@ const updateEvent = ({
   return { ...event, start, end, ...padding };
 };
 
-const MonthDragDrop = ({
+const DayDragDrop = ({
   children,
   cellDimensions,
   event,
@@ -153,12 +153,12 @@ const MonthDragDrop = ({
   );
 };
 
-MonthDragDrop.defaultProps = {
+DayDragDrop.defaultProps = {
   onDrag: () => null,
   onDragEnd: () => null,
 };
 
-MonthDragDrop.propTypes = {
+DayDragDrop.propTypes = {
   cellDimensions: PropTypes.shape({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -174,4 +174,4 @@ MonthDragDrop.propTypes = {
   topEventOffset: PropTypes.number.isRequired,
 };
 
-export default MonthDragDrop;
+export default DayDragDrop;

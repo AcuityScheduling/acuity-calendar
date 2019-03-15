@@ -1,7 +1,7 @@
 import { CLASS_PREFIX } from '../Calendar/constants';
 
 const cp = `.${CLASS_PREFIX}`;
-const month = `.${CLASS_PREFIX}__month`;
+const dayGrid = `.${CLASS_PREFIX}__day-grid`;
 
 const styles = `
     ${cp}__heatmap-header {
@@ -15,30 +15,30 @@ const styles = `
         top: 0;
         left: 0;
     }
-    ${month} {
+    ${dayGrid} {
         height: 250px;
         width: 250px;
     }
-    ${month}__date-wrapper:hover {
+    ${dayGrid}__date-wrapper:hover {
         background: none;
     }
-    ${month}__date-wrapper {
+    ${dayGrid}__date-wrapper {
         position: relative;
         cursor: default;
         top: auto;
         right: auto;
         margin: 0 auto;
     }
-    ${month}__column-header {
+    ${dayGrid}__column-header {
         text-transform: none;
         padding: 5px;
     }
-    ${month}__cell {
+    ${dayGrid}__cell {
         position: relative;
         display: flex;
         align-items: center;
     }
-    ${month}__date {
+    ${dayGrid}__date {
         text-align: center;
         position: relative;
         z-index: 10;

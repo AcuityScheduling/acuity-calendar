@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { makeClass, resetEventFormat } from '../../../../utils';
-import { EVENT_TYPE, MOMENT_TYPE, REF_TYPE } from '../../../../types';
-import MonthEvent from './MonthEvent';
-import MonthDragDrop from './MonthDragDrop';
+import DayDragDrop from './DayDragDrop';
+import DayEvent from './DayEvent';
+import { makeClass, resetEventFormat } from '../../../utils';
+import { EVENT_TYPE, MOMENT_TYPE, REF_TYPE } from '../../../types';
 
-const MonthCell = React.forwardRef(
+const DayCell = React.forwardRef(
   (
     {
       events,
@@ -45,7 +45,7 @@ const MonthCell = React.forwardRef(
 
         if (!totalEventsToShow || totalEventsToShow >= count) {
           return (
-            <MonthDragDrop
+            <DayDragDrop
               cellDimensions={cellDimensions}
               event={event}
               topEventOffset={(count - 1) * eventHeight * -1}
@@ -55,7 +55,7 @@ const MonthCell = React.forwardRef(
             >
               {({ draggedEvent, vertChange, horizChange }) => {
                 return (
-                  <MonthEvent
+                  <DayEvent
                     event={draggedEvent}
                     onSelect={onSelectEvent}
                     ref={eventRef}
@@ -64,10 +64,10 @@ const MonthCell = React.forwardRef(
                     }}
                   >
                     {renderEvent}
-                  </MonthEvent>
+                  </DayEvent>
                 );
               }}
-            </MonthDragDrop>
+            </DayDragDrop>
           );
         }
 
@@ -78,8 +78,8 @@ const MonthCell = React.forwardRef(
     return (
       <div
         className={makeClass(
-          'month__cell',
-          !dayDetails.isInRange && 'month__cell--not-in-range'
+          'day-grid__cell',
+          !dayDetails.isInRange && 'day-grid__cell--not-in-range'
         )}
         role="button"
         ref={ref}
@@ -92,7 +92,7 @@ const MonthCell = React.forwardRef(
         }
       >
         <div
-          className={makeClass('month__date-wrapper')}
+          className={makeClass('day-grid__date-wrapper')}
           onClick={e => {
             if (!onSelectMonthDate) return;
             e.stopPropagation();
@@ -105,8 +105,8 @@ const MonthCell = React.forwardRef(
         >
           <div
             className={makeClass(
-              'month__date',
-              !dayDetails.isInRange && 'month__date--not-in-range'
+              'day-grid__date',
+              !dayDetails.isInRange && 'day-grid__date--not-in-range'
             )}
           >
             {dayDetails.date.date()}
@@ -120,7 +120,7 @@ const MonthCell = React.forwardRef(
           })
         ) : (
           <div
-            className={makeClass('month__event-wrapper')}
+            className={makeClass('day-grid__event-wrapper')}
             ref={eventWrapperRef}
             style={{ opacity: !totalEventsToShow ? 0 : 1 }}
           >
@@ -129,7 +129,7 @@ const MonthCell = React.forwardRef(
                 {renderAllEvents(events)}
                 {totalEventsToShow < events.length && totalEventsToShow > 0 && (
                   <div
-                    className={makeClass('month__more-events')}
+                    className={makeClass('day-grid__more-events')}
                     onClick={e => {
                       e.stopPropagation();
                       onSelectMoreEvents({
@@ -154,9 +154,9 @@ const MonthCell = React.forwardRef(
   }
 );
 
-MonthCell.displayName = 'MonthCell';
+DayCell.displayName = 'DayCell';
 
-MonthCell.defaultProps = {
+DayCell.defaultProps = {
   events: [],
   onDragEnd: () => null,
   onSelectSlot: () => null,
@@ -167,7 +167,7 @@ MonthCell.defaultProps = {
   onSelectMoreEvents: () => null,
 };
 
-MonthCell.propTypes = {
+DayCell.propTypes = {
   cellDimensions: PropTypes.shape({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -191,4 +191,4 @@ MonthCell.propTypes = {
   totalEventsToShow: PropTypes.number.isRequired,
 };
 
-export default MonthCell;
+export default DayCell;

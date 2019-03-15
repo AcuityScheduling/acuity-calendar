@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MOCKED_EVENTS } from '../src/Calendar/mocks';
+import { MOCKED_EVENTS } from '../src/Grid/mocks';
 
 export const useEvents = props => {
   const [events, setEvents] = useState(MOCKED_EVENTS);

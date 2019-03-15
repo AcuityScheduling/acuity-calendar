@@ -5,13 +5,13 @@ import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
 import { useCalendarSticky, getScrollbarWidth, getTopOffset } from './utils';
 import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../types';
 import { makeClass } from '../../utils';
-import './index.scss';
 import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
+import './index.scss';
 
 const TimeGrid = React.forwardRef(
   (
@@ -195,6 +195,8 @@ const TimeGrid = React.forwardRef(
     );
   }
 );
+
+TimeGrid.displayName = 'TimeGrid';
 
 TimeGrid.defaultProps = {
   renderCorner: () => null,

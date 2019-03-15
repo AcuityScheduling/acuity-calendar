@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { CALENDAR_VIEWS } from './constants';
+import { CALENDAR_VIEWS, GRIDS } from './constants';
 
 export const DATE_TYPE = PropTypes.oneOfType([
   PropTypes.instanceOf(Date),
@@ -35,3 +35,5 @@ const getViewShape = type => {
   }, {});
 };
 export const VIEW_RENDER_TYPE = PropTypes.shape(getViewShape(PropTypes.func));
+
+export const GRIDS_TYPE = PropTypes.oneOf(Object.values(GRIDS));

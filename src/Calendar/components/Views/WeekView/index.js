@@ -49,6 +49,7 @@ const WeekView = ({
   stepHeight,
 }) => {
   const dateList = getWeekList({ date: selectedDate, firstDay });
+  console.log('dateList: ', dateList);
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
   const eventsWithColumns = useMemo(() => getEventColumns(events), [events]);
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Calendar from '../Calendar';
-import { CALENDAR_VIEWS } from '../Calendar/constants';
-import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../Calendar/types';
+import Grid from '../../Grid';
+import { CALENDAR_VIEWS } from '../../Grid/constants';
+import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Grid/types';
 import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
-} from '../Calendar/defaultProps';
+} from '../../Grid/defaultProps';
+import { GRIDS } from '../../Grid/constants';
 
 const CalendarMonth = ({
   events,
@@ -22,7 +23,8 @@ const CalendarMonth = ({
   renderEvent,
 }) => {
   return (
-    <Calendar
+    <Grid
+      grid={GRIDS.day}
       view={CALENDAR_VIEWS.month}
       events={events}
       firstDay={firstDay}

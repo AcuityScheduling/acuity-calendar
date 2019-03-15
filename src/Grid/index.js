@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { MonthView, GroupsView, WeekView } from './components/Views';
-import { CALENDAR_VIEWS } from './constants';
+import { GRIDS } from './constants';
 import {
   FIRST_DAY_TYPE,
-  CALENDAR_VIEW_TYPE,
   STEP_MINUTES_TYPE,
   EVENT_TYPE,
   DATE_TYPE,
   VIEW_RENDER_TYPE,
+  GRIDS_TYPE,
 } from './types';
 import { getMungedEvents, getEventsWithEventGroups } from './utils';
 import {
@@ -21,11 +20,13 @@ import {
   FIRST_DAY_DEFAULT,
   VIEW_RENDER_DEFAULT,
 } from './defaultProps';
+import DayGrid from './components/DayGrid';
+import TimeGrid from './components/TimeGrid';
 
-const Calendar = ({
+const Grid = ({
+  grid,
   events,
   stepDetails,
-  view,
   selectedDate,
   visibleEventGroups,
   onExtendEnd,
@@ -53,17 +54,16 @@ const Calendar = ({
   renderEventPaddingBottom,
   renderMonthCell,
 }) => {
-  const getView = () => {
-    const { month, week, groups } = CALENDAR_VIEWS;
-    const views = {
-      [month]: MonthView,
-      [week]: WeekView,
-      [groups]: GroupsView,
+  const getGrid = () => {
+    const { day, time } = GRIDS;
+    const grids = {
+      [day]: DayGrid,
+      [time]: TimeGrid,
     };
-    return views[view];
+    return grids[grid];
   };
 
-  const View = getView();
+  const Grid = getGrid();
 
   const mungedEvents = useMemo(
     () => getMungedEvents({ events, stepMinutes, stepHeight }),
@@ -94,7 +94,7 @@ const Calendar = ({
   );
 
   return (
-    <View
+    <Grid
       eventsWithEventGroups={mungedEvents}
       events={eventsWithSelectedEventGroups}
       stepDetails={mungedStepDetailsGroups}
@@ -129,7 +129,7 @@ const Calendar = ({
   );
 };
 
-Calendar.defaultProps = {
+Grid.defaultProps = {
   renderEvent: null,
   renderCorner: () => null,
   renderEventPaddingTop: () => null,
@@ -140,7 +140,7 @@ Calendar.defaultProps = {
   visibleEventGroups: null,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
-  view: CALENDAR_VIEWS.week,
+  grid: GRIDS.time,
   calendars: [],
   onExtendEnd: () => null,
   onDragEnd: () => null,
@@ -162,11 +162,12 @@ Calendar.defaultProps = {
   onSelectSlot: () => null,
 };
 
-Calendar.propTypes = {
+Grid.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   // First day of the week - 0 indexed on Sunday - Sunday = 0, Monday = 1
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
+  grid: GRIDS_TYPE,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,
@@ -185,20 +186,19 @@ Calendar.propTypes = {
   renderMonthCell: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
-  renderStepDetail: PropTypes.func,
   // What range of minutes is selectable - for new events
   // and for drag and drop
+  renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   stepDetails: PropTypes.array,
-  stepHeight: PropTypes.number,
   // The height in pixels that we want each step to be. This will be like
   // zooming in and out on the calendar
-  stepMinutes: STEP_MINUTES_TYPE,
+  stepHeight: PropTypes.number,
   // How many grid lines there are between an hour. 30 means
   // break the hour into 30 minute blocks. 20 means to break it into 20 etc.
-  view: CALENDAR_VIEW_TYPE,
+  stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
-export default Calendar;
+export default Grid;

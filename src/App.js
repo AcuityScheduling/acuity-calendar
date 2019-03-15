@@ -107,7 +107,7 @@ const App = () => {
         }}
         visibleEventGroups={selectedCalendars}
         renderHeader={{
-          [CALENDAR_VIEWS.calendars]: ({ groupId }) =>
+          [CALENDAR_VIEWS.calendar]: ({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name,
         }}
         renderStepDetail={stepDetail => {

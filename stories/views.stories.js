@@ -3,9 +3,9 @@ import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
-import CalendarMonth from '../src/components/CalendarMonth';
-import CalendarWeek from '../src/components/CalendarWeek';
-import CalendarGroups from '../src/components/CalendarGroups';
+import CalendarMonth from '../src/CalendarMonth';
+import CalendarWeek from '../src/CalendarWeek';
+import CalendarGroups from '../src/CalendarGroups';
 import styles from './styles';
 import { useEvents, renderColorEvent } from './utils';
 

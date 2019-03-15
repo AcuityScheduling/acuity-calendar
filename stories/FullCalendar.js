@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import Calendar from './Calendar';
-import Toolbar from './Toolbar';
-import { CALENDAR_VIEWS } from './Calendar/constants';
-import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from './Calendar/mocks';
-import EventGroupSelect from './EventGroupSelect';
-import { useEvents } from '../stories/utils';
+import Calendar from '../src/Calendar';
+import Toolbar from '../src/Toolbar';
+import { CALENDAR_VIEWS } from '../src/Calendar/constants';
+import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from '../src/Calendar/mocks';
+import EventGroupSelect from '../src/EventGroupSelect';
+import { useEvents } from './utils';
 
-const App = props => {
+const FullCalendar = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
@@ -94,4 +94,4 @@ const App = props => {
   );
 };
 
-export default App;
+export default FullCalendar;

@@ -4,6 +4,7 @@ import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 
 import { MOCKED_CALENDARS } from '../src/Calendar/mocks';
+import FullCalendar from './FullCalendar';
 import CalendarMonth from '../src/CalendarMonth';
 import CalendarWeek from '../src/CalendarWeek';
 import CalendarGroups from '../src/CalendarGroups';
@@ -78,6 +79,7 @@ const Groups = props => {
 };
 
 storiesOf('Calendar Views', module)
+  .add('@Full Calendar', () => <FullCalendar />)
   .add('Month', () => <Month />)
   .add('Week', () => <Week />)
-  .add('Calendar', () => <Groups />);
+  .add('Groups', () => <Groups />);

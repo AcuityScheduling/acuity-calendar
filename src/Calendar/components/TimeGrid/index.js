@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
 import { useCalendarSticky, getScrollbarWidth, getTopOffset } from './utils';
-import { MOMENT_TYPE, FIRST_DAY_TYPE, STEP_MINUTES_TYPE } from '../../types';
+import {
+  MOMENT_TYPE,
+  FIRST_DAY_TYPE,
+  STEP_MINUTES_TYPE,
+  DATE_TYPE,
+} from '../../types';
 import { makeClass } from '../../utils';
 import {
   SELECTED_DATE_DEFAULT,
@@ -215,7 +220,7 @@ TimeGrid.propTypes = {
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,
-  selectedDate: MOMENT_TYPE,
+  selectedDate: DATE_TYPE,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   totalWidth: PropTypes.number.isRequired,

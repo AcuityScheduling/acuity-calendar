@@ -55,11 +55,7 @@ const CalendarsView = ({
   const { stepGridRef, assignRef, elementWidths } = useElementWidths();
 
   const eventsWithColumns = getEventColumnsByGroup(eventsWithEventGroups);
-  const renderCalendarsHeader = get(
-    renderHeader,
-    CALENDAR_VIEWS.calendar,
-    null
-  );
+  const renderCalendarsHeader = get(renderHeader, CALENDAR_VIEWS.groups, null);
 
   return (
     <StepGrid

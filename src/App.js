@@ -73,7 +73,7 @@ const App = () => {
         // When clicking on the date in the month view
         onSelectMonthDate={({ date }) => {
           setSelectedDate(date);
-          setView(CALENDAR_VIEWS.calendar);
+          setView(CALENDAR_VIEWS.groups);
         }}
         onSelectEvent={event => {
           console.log('CLICK', event);
@@ -107,7 +107,7 @@ const App = () => {
         }}
         visibleEventGroups={selectedCalendars}
         renderHeader={{
-          [CALENDAR_VIEWS.calendar]: ({ groupId }) =>
+          [CALENDAR_VIEWS.groups]: ({ groupId }) =>
             MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name,
         }}
         renderStepDetail={stepDetail => {

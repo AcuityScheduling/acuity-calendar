@@ -27,7 +27,7 @@ const CalendarGroups = ({
 }) => {
   return (
     <Calendar
-      view={CALENDAR_VIEWS.calendar}
+      view={CALENDAR_VIEWS.groups}
       events={events}
       firstDay={firstDay}
       stepDetails={stepDetails}
@@ -41,7 +41,7 @@ const CalendarGroups = ({
       onCurrentTimeChange={onCurrentTimeChange}
       visibleEventGroups={visibleEventGroups}
       renderHeader={{
-        [CALENDAR_VIEWS.calendar]: renderHeader,
+        [CALENDAR_VIEWS.groups]: renderHeader,
       }}
     />
   );

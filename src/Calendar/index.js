@@ -54,11 +54,11 @@ const Calendar = ({
   renderMonthCell,
 }) => {
   const getView = () => {
-    const { month, week, calendar } = CALENDAR_VIEWS;
+    const { month, week, groups } = CALENDAR_VIEWS;
     const views = {
       [month]: MonthView,
       [week]: WeekView,
-      [calendar]: CalendarsView,
+      [groups]: CalendarsView,
     };
     return views[view];
   };

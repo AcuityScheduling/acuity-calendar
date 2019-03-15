@@ -25,7 +25,8 @@ const useMungeData = ({
 
   if (!stepDetails) {
     return {
-      mungedEvents: eventsWithSelectedEventGroups,
+      mungedEvents,
+      eventsWithSelectedEventGroups,
     };
   }
 

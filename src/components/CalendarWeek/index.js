@@ -51,15 +51,17 @@ const WeekView = ({
 }) => {
   const dateList = getWeekList({ date: moment(selectedDate), firstDay });
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
-  const { mungedEvents } = useMungeData({
+
+  const { eventsWithSelectedEventGroups } = useMungeData({
     events,
     stepMinutes,
     stepHeight,
     stepDetails,
   });
-  const eventsWithColumns = useMemo(() => getEventColumns(mungedEvents), [
-    mungedEvents,
-  ]);
+  const eventsWithColumns = useMemo(
+    () => getEventColumns(eventsWithSelectedEventGroups),
+    [eventsWithSelectedEventGroups]
+  );
 
   return (
     <TimeGrid

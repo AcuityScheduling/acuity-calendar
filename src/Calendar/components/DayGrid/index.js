@@ -19,7 +19,7 @@ const DayGrid = ({
   onSelectMoreEvents,
   onSelectEvent,
 }) => {
-  const { mungedEvents } = useMungeData({ events });
+  const { eventsWithSelectedEventGroups } = useMungeData({ events });
   const {
     rowRef,
     eventRef,
@@ -66,7 +66,7 @@ const DayGrid = ({
                       countDays += 1;
 
                       const eventsForCell = get(
-                        mungedEvents,
+                        eventsWithSelectedEventGroups,
                         dayDetails.date.format('YYYY-MM-DD'),
                         []
                       );

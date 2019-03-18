@@ -46,18 +46,23 @@ export const CALENDAR_RENDER_TYPE = PropTypes.shape(
 
 export const CALENDAR_TYPE = PropTypes.oneOf(Object.values(CALENDARS));
 
-export const DAY_GRID_TYPE = PropTypes.arrayOf(
+// You can pass in the grid itself, or a way to make the grid with an object that gets passed
+// into our getGrid function
+export const DAY_GRID_TYPE = PropTypes.oneOfType([
   PropTypes.arrayOf(
-    PropTypes.shape({
-      day: PropTypes.number,
-      isInRange: PropTypes.bool,
-      date: DATE_TYPE,
-    })
-  )
-);
-
-export const TIME_GRID_TYPE = PropTypes.arrayOf(
-  PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-);
-
-export const GRID_TYPE = PropTypes.oneOfType([DAY_GRID_TYPE, TIME_GRID_TYPE]);
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        isInRange: PropTypes.bool.isRequired,
+        date: DATE_TYPE.isRequired,
+      })
+    )
+  ),
+  PropTypes.shape({
+    firstDate: DATE_TYPE.isRequired,
+    lastDate: DATE_TYPE.isRequired,
+    totalColumns: PropTypes.number,
+    allowPartialRows: PropTypes.bool,
+    getExcludedDates: PropTypes.func,
+    getIsInRange: PropTypes.func,
+  }),
+]);

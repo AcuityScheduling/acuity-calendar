@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { useTotalEventsToShow } from './utils';
+import { useTotalEventsToShow, getGrid } from './utils';
 import { makeClass } from '../../utils';
 import DayCell from './components/DayCell';
 import './index.scss';
@@ -29,6 +29,13 @@ const DayGrid = ({
     totalEventsToShow,
     cellDimensions,
   } = useTotalEventsToShow();
+
+  // The grid can either be an actual grid [ [1, 2, 3], [4, 5, 6] ] - or
+  // and object with parameters to create a grid
+  let dayGrid = grid;
+  if (!Array.isArray(dayGrid)) {
+    dayGrid = getGrid(grid);
+  }
 
   let countDays = 0;
   let countRows = 0;

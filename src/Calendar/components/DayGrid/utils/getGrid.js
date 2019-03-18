@@ -14,6 +14,8 @@ import moment from 'moment';
  *                                            in this case the second array would be removed
  * @param {function} params.getExcludedDates - a function that returns true if the date it's on should
  *                                             not be part of the grid
+ * @param {function} params.getIsInRange - a function that returns true if the date is in a specified
+ *                                         range
  */
 const getGrid = ({
   firstDate,
@@ -21,6 +23,7 @@ const getGrid = ({
   totalColumns = 7,
   allowPartialRows = false,
   getExcludedDates = () => false,
+  getIsInRange = () => true,
 }) => {
   const totalDays = lastDate.diff(firstDate, 'days');
   const grid = [];
@@ -34,7 +37,10 @@ const getGrid = ({
     if (!getExcludedDates(nextDate)) {
       grid[currentRow] = [
         ...grid[currentRow],
-        firstDate.clone().add(i, 'days'),
+        {
+          date: nextDate,
+          isInRange: getIsInRange(nextDate),
+        },
       ];
       if (currentColumn + 1 === totalColumns) {
         currentRow += 1;

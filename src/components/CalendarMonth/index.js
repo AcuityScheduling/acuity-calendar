@@ -35,8 +35,6 @@ const CalendarMonth = ({
     <DayGrid
       grid={monthGrid}
       events={events}
-      firstDay={firstDay}
-      selectedDate={selectedDate}
       onDragEnd={onDragEnd}
       onSelectMoreEvents={onSelectMore}
       onSelectMonthDate={onSelectDate}

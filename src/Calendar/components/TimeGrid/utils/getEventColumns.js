@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import get from 'lodash.get';
 
 /**
  * Get event columns and add them to the munged events data if the events that are being

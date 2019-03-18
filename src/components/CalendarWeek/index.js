@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import moment from 'moment';
 import { getEventColumns } from '../../Calendar/components/TimeGrid/utils';
 import TimeGrid from '../../Calendar/components/TimeGrid';

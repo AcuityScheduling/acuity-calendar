@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import { useTotalEventsToShow, getGrid } from './utils';
 import { makeClass } from '../../utils';
 import DayCell from './components/DayCell';

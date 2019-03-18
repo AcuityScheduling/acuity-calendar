@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import get from 'lodash/get';
-import throttle from 'lodash/throttle';
+import get from 'lodash.get';
+import throttle from 'lodash.throttle';
 import { addListener, removeListener } from 'resize-detector';
 
 const useCalendarSticky = totalWidth => {

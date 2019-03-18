@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import TimeGrid from '../../Calendar/components/TimeGrid';
 import Column from '../../Calendar/components/TimeGrid/components/Column';
 import { useElementWidths } from '../../Calendar/components/TimeGrid/utils';

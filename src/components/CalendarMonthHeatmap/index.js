@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import moment from 'moment';
 import { COUNT_TYPE } from './types';
 import CalendarMonth from '../CalendarMonth';

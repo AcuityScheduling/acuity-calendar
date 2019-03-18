@@ -6,8 +6,8 @@
   "module": "src/index.js",
   "scripts": {
     "test": "razzle test --env=jsdom",
-    "lint": "eslint --ignore-path .gitignore --ext .js",
-    "lint:fix": "eslint --fix --ignore-path .gitignore --ext .js",
+    "lint": "eslint --ext .js",
+    "lint:fix": "eslint --fix --ext .js",
     "lint:staged": "lint-staged",
     "prettier": "prettier --write \"**/*.js\" \"!node_modules/**\" \"!build/**\" \"!storybook-static/**\"",
     "storybook": "start-storybook -p 6006",

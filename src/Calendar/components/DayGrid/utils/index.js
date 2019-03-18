@@ -1,3 +1,4 @@
 import useTotalEventsToShow from './useTotalEventsToShow';
+import getGrid from './getGrid';
 
-export { useTotalEventsToShow };
+export { useTotalEventsToShow, getGrid };

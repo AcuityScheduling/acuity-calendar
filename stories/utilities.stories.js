@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 import CalendarHeatmap from '../src/components/CalendarMonthHeatmap';
 import moment from 'moment';
 import Datepicker from '../src/components/Datepicker';
+import DayList from '../src/components/DayList';
 
 const getDay = addDays => {
   return moment()
@@ -33,5 +34,11 @@ storiesOf('Calendar Utilities', module)
     <Datepicker
       counts={eventCounts}
       onSelectCell={result => console.log(result)}
+    />
+  ))
+  .add('Day List', () => (
+    <DayList
+    // counts={eventCounts}
+    // onSelectCell={result => console.log(result)}
     />
   ));

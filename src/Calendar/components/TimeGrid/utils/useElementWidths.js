@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import isEqual from 'react-fast-compare';
 import { addListener, removeListener } from 'resize-detector';
-import throttle from 'lodash/throttle';
+import throttle from 'lodash.throttle';
 
 /**
  * Create the ref Map for all the elements and get the widths

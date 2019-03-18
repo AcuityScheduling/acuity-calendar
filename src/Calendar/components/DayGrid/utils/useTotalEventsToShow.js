@@ -1,5 +1,5 @@
-import get from 'lodash/get';
-import throttle from 'lodash/throttle';
+import get from 'lodash.get';
+import throttle from 'lodash.throttle';
 import { useRef, useState, useEffect } from 'react';
 import { addListener, removeListener } from 'resize-detector';
 

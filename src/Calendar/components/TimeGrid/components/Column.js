@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import {
   MOMENT_TYPE,
   STEP_MINUTES_TYPE,

@@ -2,8 +2,10 @@ import getGrid from './getGrid';
 import moment from 'moment';
 
 const getGridStrings = grid => {
-  return grid.map(date => {
-    return date.format('YYYY-MM-DD');
+  return grid.map(column => {
+    return column.map(date => {
+      return date.format('YYYY-MM-DD');
+    });
   });
 };
 

@@ -22,7 +22,36 @@ const getGrid = ({
   allowPartialRows = false,
   getExcludedDates = () => false,
 }) => {
-  return false;
+  const totalDays = lastDate.diff(firstDate, 'days');
+  const grid = [];
+  let currentRow = 0;
+  let currentColumn = 0;
+  for (let i = 0; i <= totalDays; i += 1) {
+    if (!grid[currentRow]) {
+      grid[currentRow] = [];
+    }
+    const nextDate = firstDate.clone().add(i, 'days');
+    if (!getExcludedDates(nextDate)) {
+      grid[currentRow] = [
+        ...grid[currentRow],
+        firstDate.clone().add(i, 'days'),
+      ];
+      if (currentColumn + 1 === totalColumns) {
+        currentRow += 1;
+        currentColumn = 0;
+      } else {
+        currentColumn += 1;
+      }
+    }
+  }
+
+  if (!allowPartialRows) {
+    if (grid[grid.length - 1].length < totalColumns) {
+      grid.length = grid.length - 1;
+    }
+  }
+
+  return grid;
 };
 
 export default getGrid;

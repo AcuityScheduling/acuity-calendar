@@ -40,4 +40,10 @@ module.exports = {
     react: 'react',
     'react-dom': 'react-dom',
   },
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      minChunks: 2,
+    },
+  },
 };

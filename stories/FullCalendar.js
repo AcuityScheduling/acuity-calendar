@@ -6,6 +6,9 @@ import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from '../src/Calendar/mocks';
 import EventGroupSelect from '../src/EventGroupSelect';
 import { useEvents } from './utils';
+import CalendarMonth from '../src/components/CalendarMonth';
+import CalendarWeek from '../src/components/CalendarWeek';
+import CalendarGroups from '../src/components/CalendarGroups';
 
 const FullCalendar = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
@@ -13,6 +16,22 @@ const FullCalendar = props => {
   const [selectedCalendars, setSelectedCalendars] = useState([5, 6]);
   const { events, handlers } = useEvents(props);
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
+
+  const { month, week, groups } = CALENDAR_VIEWS;
+  const getView = () => {
+    switch (view) {
+      case month:
+        return CalendarMonth;
+      case week:
+        return CalendarWeek;
+      case groups:
+        return CalendarGroups;
+      default:
+        return CalendarWeek;
+    }
+  };
+
+  const View = getView();
 
   return (
     <div
@@ -33,14 +52,14 @@ const FullCalendar = props => {
         setSelectedEventGroups={setSelectedCalendars}
         eventGroups={MOCKED_CALENDARS}
       />
-      <Calendar
+      {}
+      <View
         stepDetails={stepDetails}
         events={events}
-        view={view}
         selectedDate={selectedDate}
         {...handlers}
         // When clicking on the date in the month view
-        onSelectMonthDate={({ date }) => {
+        onSelectDate={({ date }) => {
           setSelectedDate(date);
           setView(CALENDAR_VIEWS.groups);
         }}
@@ -64,10 +83,12 @@ const FullCalendar = props => {
           setStepDetails(newStepDetails);
         }}
         visibleEventGroups={selectedCalendars}
-        renderHeader={{
-          [CALENDAR_VIEWS.groups]: ({ groupId }) =>
-            MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name,
-        }}
+        renderHeader={
+          view === groups
+            ? ({ groupId }) =>
+                MOCKED_CALENDARS.find(calendar => calendar.id === groupId).name
+            : null
+        }
         renderStepDetail={stepDetail => {
           if (stepDetail.availability) {
             return <div style={{ background: 'white', height: '100%' }} />;

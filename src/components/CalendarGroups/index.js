@@ -26,7 +26,7 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
 };
 
-const GroupsView = ({
+const CalendarGroups = ({
   selectedDate,
   visibleEventGroups,
   renderHeader,
@@ -41,7 +41,7 @@ const GroupsView = ({
   onSelectSlot,
   onSelectRangeEnd,
   selectMinutes,
-  stepDetailsWithEventGroups,
+  stepDetails,
   events,
   renderEvent,
   renderCorner,
@@ -53,10 +53,14 @@ const GroupsView = ({
   stepHeight,
 }) => {
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
-  const { mungedEvents } = useMungeData({
+  const {
+    mungedEvents,
+    mungedStepDetails: stepDetailsWithEventGroups,
+  } = useMungeData({
     events,
     stepMinutes,
     stepHeight,
+    stepDetails,
     visibleEventGroups,
   });
 
@@ -167,7 +171,7 @@ const GroupsView = ({
   );
 };
 
-GroupsView.defaultProps = {
+CalendarGroups.defaultProps = {
   events: [],
   renderCorner: () => null,
   renderEvent: null,
@@ -176,7 +180,6 @@ GroupsView.defaultProps = {
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
   onSelectRangeEnd: () => null,
-  stepDetailsWithEventGroups: null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,
@@ -187,10 +190,11 @@ GroupsView.defaultProps = {
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
+  stepDetails: null,
   firstDay: FIRST_DAY_DEFAULT,
 };
 
-GroupsView.propTypes = {
+CalendarGroups.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
@@ -211,10 +215,10 @@ GroupsView.propTypes = {
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
-  stepDetailsWithEventGroups: PropTypes.object,
+  stepDetails: PropTypes.object,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default GroupsView;
+export default CalendarGroups;

@@ -7,7 +7,7 @@ import {
   FIRST_DAY_TYPE,
   DATE_TYPE,
 } from '../Calendar/types';
-import { getWeekList } from '../Calendar/components/Views/WeekView/utils';
+import { getWeekList } from '../components/CalendarWeek/utils';
 import { makeClass } from '../Calendar/utils';
 import './index.scss';
 import { FIRST_DAY_DEFAULT } from '../Calendar/defaultProps';

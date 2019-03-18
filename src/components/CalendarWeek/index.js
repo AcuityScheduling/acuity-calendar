@@ -24,7 +24,7 @@ import {
 } from '../../Calendar/defaultProps';
 import { useMungeData } from '../../Calendar/utils';
 
-const WeekView = ({
+const CalendarWeek = ({
   events,
   selectedDate,
   firstDay,
@@ -48,15 +48,20 @@ const WeekView = ({
   renderEventPaddingBottom,
   renderHeader,
   stepHeight,
+  visibleEventGroups,
 }) => {
   const dateList = getWeekList({ date: moment(selectedDate), firstDay });
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
 
-  const { eventsWithSelectedEventGroups } = useMungeData({
+  const {
+    eventsWithSelectedEventGroups,
+    mungedStepDetailsGroups,
+  } = useMungeData({
     events,
     stepMinutes,
     stepHeight,
     stepDetails,
+    visibleEventGroups,
   });
   const eventsWithColumns = useMemo(
     () => getEventColumns(eventsWithSelectedEventGroups),
@@ -107,7 +112,7 @@ const WeekView = ({
       renderColumns={({ currentTime, totalGridHeight }) => {
         return dateList.map((date, index) => {
           const stepDetailsForDay = get(
-            stepDetails,
+            mungedStepDetailsGroups,
             date.format('YYYY-MM-DD'),
             []
           );
@@ -178,7 +183,7 @@ const WeekView = ({
   );
 };
 
-WeekView.defaultProps = {
+CalendarWeek.defaultProps = {
   events: [],
   renderEvent: null,
   renderCorner: () => null,
@@ -200,9 +205,10 @@ WeekView.defaultProps = {
   selectedDate: SELECTED_DATE_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
+  visibleEventGroups: null,
 };
 
-WeekView.propTypes = {
+CalendarWeek.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   minWidthColumn: PropTypes.number,
@@ -226,6 +232,7 @@ WeekView.propTypes = {
   stepDetails: PropTypes.object,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
-export default WeekView;
+export default CalendarWeek;

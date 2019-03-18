@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MOCKED_EVENTS } from '../src/Grid/mocks';
+import { MOCKED_EVENTS } from '../src/Calendar/mocks';
 
 export const useEvents = props => {
   const [events, setEvents] = useState(MOCKED_EVENTS);
@@ -34,7 +34,7 @@ export const useEvents = props => {
       console.log('MORE', results);
     },
     // When clicking on the date in the month view
-    onSelectMonthDate: results => {
+    onSelectDate: results => {
       console.log(results.date);
     },
     onSelectEvent: results => {

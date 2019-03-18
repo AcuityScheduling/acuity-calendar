@@ -6,6 +6,7 @@ import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
 import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
+  FORCE_SIX_WEEKS_DEFAULT,
 } from '../../Calendar/defaultProps';
 import { getMonthGrid } from './utils';
 
@@ -51,7 +52,7 @@ const CalendarMonth = ({
 
 CalendarMonth.defaultProps = {
   events: [],
-  forceSixWeeks: false,
+  forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   onDragEnd: () => null,

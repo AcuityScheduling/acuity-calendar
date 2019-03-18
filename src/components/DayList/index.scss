@@ -1,0 +1,16 @@
+.acuity-calendar {
+    &__day-list {
+      width: 100%;
+      height: 250px;
+      .acuity-calendar__day-grid {
+        &__column-header {
+          font-size: 12px;
+          font-weight: normal;
+        }
+        &__date {
+            display: none;
+        }
+      }
+    }
+  }
+  

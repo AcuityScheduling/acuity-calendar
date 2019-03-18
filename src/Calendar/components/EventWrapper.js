@@ -30,7 +30,7 @@ const EventWrapper = React.forwardRef(
       onClick={e => {
         e.stopPropagation();
         if (!isSelectable) return false;
-        onSelect(resetEventFormat({ e, event }));
+        onSelect({ e, event: resetEventFormat(event) });
       }}
     >
       {children}
@@ -44,7 +44,7 @@ EventWrapper.defaultProps = {
   className: '',
   isSelectable: true,
   onSelect: () => null,
-  eventClass: makeClass('step-grid__event'),
+  eventClass: makeClass('time-grid__event'),
 };
 
 EventWrapper.propTypes = {

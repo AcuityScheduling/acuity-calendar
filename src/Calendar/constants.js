@@ -4,5 +4,10 @@ export const CALENDAR_VIEWS = {
   groups: 'groups',
 };
 
+export const CALENDARS = {
+  day: 'day',
+  time: 'time',
+};
+
 export const CLASS_PREFIX = 'acuity-calendar';
 export const DATE_FORMAT = 'YYYY-MM-DD';

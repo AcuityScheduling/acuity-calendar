@@ -30,17 +30,17 @@ export const useEvents = props => {
       updateEvent(results.event);
       console.log('EXTEND', results);
     },
-    onSelectMoreEvents: results => {
+    onSelectMore: results => {
       console.log('MORE', results);
     },
     // When clicking on the date in the month view
-    onSelectMonthDate: results => {
+    onSelectDate: results => {
       console.log(results.date);
     },
     onSelectEvent: results => {
       console.log('CLICK', results);
     },
-    // When clicking and dragging to create a new event on a stepgrid view
+    // When clicking and dragging to create a new event on a TimeGrid view
     onSelectRangeEnd: results => {
       console.log('SELECTING RANGE', results);
     },

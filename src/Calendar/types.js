@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { CALENDAR_VIEWS } from './constants';
+import { CALENDAR_VIEWS, CALENDARS } from './constants';
 
 export const DATE_TYPE = PropTypes.oneOfType([
   PropTypes.instanceOf(Date),
@@ -14,6 +14,12 @@ export const EVENT_TYPE = PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   title: PropTypes.string,
+  start: DATE_TYPE.isRequired,
+  end: DATE_TYPE.isRequired,
+});
+export const STEP_DETAILS_TYPE = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   start: DATE_TYPE.isRequired,
   end: DATE_TYPE.isRequired,
 });
@@ -34,4 +40,29 @@ const getViewShape = type => {
     return { ...accumulator, [view]: type };
   }, {});
 };
-export const VIEW_RENDER_TYPE = PropTypes.shape(getViewShape(PropTypes.func));
+export const CALENDAR_RENDER_TYPE = PropTypes.shape(
+  getViewShape(PropTypes.func)
+);
+
+export const CALENDAR_TYPE = PropTypes.oneOf(Object.values(CALENDARS));
+
+// You can pass in the grid itself, or a way to make the grid with an object that gets passed
+// into our getGrid function
+export const DAY_GRID_TYPE = PropTypes.oneOfType([
+  PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        isInRange: PropTypes.bool.isRequired,
+        date: DATE_TYPE.isRequired,
+      })
+    )
+  ),
+  PropTypes.shape({
+    firstDate: DATE_TYPE.isRequired,
+    lastDate: DATE_TYPE.isRequired,
+    totalColumns: PropTypes.number,
+    allowPartialRows: PropTypes.bool,
+    getExcludedDates: PropTypes.func,
+    getIsInRange: PropTypes.func,
+  }),
+]);

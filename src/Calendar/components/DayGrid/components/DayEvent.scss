@@ -1,0 +1,29 @@
+.acuity-calendar {
+    &__day-grid {
+      &__event {
+        font-size: 12px;
+        cursor: pointer;
+      }
+  
+      &__event-details {
+        height: 20px;
+        padding-left: 10px;
+      }
+  
+      &__event-time {
+        color: #777;
+        margin-right: 8px;
+      }
+  
+      &__event-title {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+  
+      &__event-details {
+        display: flex;
+        overflow: hidden;
+      }
+    }
+  }
+  

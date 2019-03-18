@@ -12,19 +12,19 @@ var acuityCalendar = (function(e) {
       n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: r });
     }),
     (n.r = function(e) {
-      'undefined' !== typeof Symbol &&
+      'undefined' != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(e, Symbol.toStringTag, { value: 'Module' }),
         Object.defineProperty(e, '__esModule', { value: !0 });
     }),
     (n.t = function(e, t) {
       if ((1 & t && (e = n(e)), 8 & t)) return e;
-      if (4 & t && 'object' === typeof e && e && e.__esModule) return e;
+      if (4 & t && 'object' == typeof e && e && e.__esModule) return e;
       var r = Object.create(null);
       if (
         (n.r(r),
         Object.defineProperty(r, 'default', { enumerable: !0, value: e }),
-        2 & t && 'string' !== typeof e)
+        2 & t && 'string' != typeof e)
       )
         for (var a in e)
           n.d(
@@ -77,8 +77,8 @@ var acuityCalendar = (function(e) {
         d = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,
         f = /\\(\\)?/g,
         p = /^\[object .+?Constructor\]$/,
-        g = 'object' === typeof t && t && t.Object === Object && t,
-        m = 'object' === typeof self && self && self.Object === Object && self,
+        g = 'object' == typeof t && t && t.Object === Object && t,
+        m = 'object' == typeof self && self && self.Object === Object && self,
         h = g || m || Function('return this')();
       var v,
         y = Array.prototype,
@@ -172,7 +172,7 @@ var acuityCalendar = (function(e) {
           })(e) ||
           (function(e) {
             var t = !1;
-            if (null != e && 'function' !== typeof e.toString)
+            if (null != e && 'function' != typeof e.toString)
               try {
                 t = !!(e + '');
               } catch (e) {}
@@ -206,7 +206,7 @@ var acuityCalendar = (function(e) {
         'boolean' == r
         ? '__proto__' !== n
         : null === n)
-          ? a['string' === typeof t ? 'string' : 'hash']
+          ? a['string' == typeof t ? 'string' : 'hash']
           : a.map;
       }
       function q(e, t) {
@@ -282,7 +282,7 @@ var acuityCalendar = (function(e) {
           null == (t = e)
             ? ''
             : (function(e) {
-                if ('string' === typeof e) return e;
+                if ('string' == typeof e) return e;
                 if (X(e)) return P ? P.call(e) : '';
                 var t = e + '';
                 return '0' == t && 1 / e == -a ? '-0' : t;
@@ -297,12 +297,12 @@ var acuityCalendar = (function(e) {
         );
       });
       function L(e) {
-        if ('string' === typeof e || X(e)) return e;
+        if ('string' == typeof e || X(e)) return e;
         var t = e + '';
         return '0' == t && 1 / e == -a ? '-0' : t;
       }
       function Y(e, t) {
-        if ('function' !== typeof e || (t && 'function' !== typeof t))
+        if ('function' != typeof e || (t && 'function' != typeof t))
           throw new TypeError(n);
         var r = function() {
           var n = arguments,
@@ -322,9 +322,9 @@ var acuityCalendar = (function(e) {
       }
       function X(e) {
         return (
-          'symbol' === typeof e ||
+          'symbol' == typeof e ||
           ((function(e) {
-            return !!e && 'object' === typeof e;
+            return !!e && 'object' == typeof e;
           })(e) &&
             O.call(e) == s)
         );
@@ -345,8 +345,8 @@ var acuityCalendar = (function(e) {
         s = /^0b[01]+$/i,
         u = /^0o[0-7]+$/i,
         c = parseInt,
-        l = 'object' === typeof t && t && t.Object === Object && t,
-        d = 'object' === typeof self && self && self.Object === Object && self,
+        l = 'object' == typeof t && t && t.Object === Object && t,
+        d = 'object' == typeof self && self && self.Object === Object && self,
         f = l || d || Function('return this')(),
         p = Object.prototype.toString,
         g = Math.max,
@@ -365,7 +365,7 @@ var acuityCalendar = (function(e) {
           d = !1,
           f = !1,
           p = !0;
-        if ('function' !== typeof e) throw new TypeError(n);
+        if ('function' != typeof e) throw new TypeError(n);
         function v(t) {
           var n = a,
             r = i;
@@ -421,13 +421,13 @@ var acuityCalendar = (function(e) {
         return !!e && ('object' == t || 'function' == t);
       }
       function b(e) {
-        if ('number' === typeof e) return e;
+        if ('number' == typeof e) return e;
         if (
           (function(e) {
             return (
-              'symbol' === typeof e ||
+              'symbol' == typeof e ||
               ((function(e) {
-                return !!e && 'object' === typeof e;
+                return !!e && 'object' == typeof e;
               })(e) &&
                 p.call(e) == a)
             );
@@ -435,10 +435,10 @@ var acuityCalendar = (function(e) {
         )
           return r;
         if (y(e)) {
-          var t = 'function' === typeof e.valueOf ? e.valueOf() : e;
+          var t = 'function' == typeof e.valueOf ? e.valueOf() : e;
           e = y(t) ? t + '' : t;
         }
-        if ('string' !== typeof e) return 0 === e ? e : +e;
+        if ('string' != typeof e) return 0 === e ? e : +e;
         e = e.replace(i, '');
         var n = s.test(e);
         return n || u.test(e) ? c(e.slice(2), n ? 2 : 8) : o.test(e) ? r : +e;
@@ -446,7 +446,7 @@ var acuityCalendar = (function(e) {
       e.exports = function(e, t, r) {
         var a = !0,
           i = !0;
-        if ('function' !== typeof e) throw new TypeError(n);
+        if ('function' != typeof e) throw new TypeError(n);
         return (
           y(r) &&
             ((a = 'leading' in r ? !!r.leading : a),
@@ -458,6 +458,7 @@ var acuityCalendar = (function(e) {
   },
   function(e, t, n) {
     e.exports = (function(e, t) {
+      'use strict';
       function n(e, t) {
         return e((t = { exports: {} }), t.exports), t.exports;
       }
@@ -529,7 +530,7 @@ var acuityCalendar = (function(e) {
                   e.replace(/%s/g, function() {
                     return n[a++];
                   });
-              'undefined' !== typeof console && console.error(i);
+              'undefined' != typeof console && console.error(i);
               try {
                 throw new Error(i);
               } catch (e) {}
@@ -600,7 +601,7 @@ var acuityCalendar = (function(e) {
               var o;
               try {
                 g(
-                  'function' === typeof e[i],
+                  'function' == typeof e[i],
                   '%s: %s type `%s` is invalid; it must be a function, usually from the `prop-types` package, but received `%s`.',
                   r || 'React class',
                   n,
@@ -629,7 +630,7 @@ var acuityCalendar = (function(e) {
             }
         },
         b = function(e, t) {
-          var n = 'function' === typeof Symbol && Symbol.iterator,
+          var n = 'function' == typeof Symbol && Symbol.iterator,
             r = '@@iterator',
             a = '<<anonymous>>',
             o = {
@@ -643,7 +644,7 @@ var acuityCalendar = (function(e) {
               any: l(i.thatReturnsNull),
               arrayOf: function(e) {
                 return l(function(t, n, r, a, i) {
-                  if ('function' !== typeof e)
+                  if ('function' != typeof e)
                     return new c(
                       'Property `' +
                         i +
@@ -732,7 +733,7 @@ var acuityCalendar = (function(e) {
               }),
               objectOf: function(e) {
                 return l(function(t, n, r, a, i) {
-                  if ('function' !== typeof e)
+                  if ('function' != typeof e)
                     return new c(
                       'Property `' +
                         i +
@@ -808,7 +809,7 @@ var acuityCalendar = (function(e) {
                   );
                 for (var t = 0; t < e.length; t++) {
                   var n = e[t];
-                  if ('function' !== typeof n)
+                  if ('function' != typeof n)
                     return (
                       u(
                         !1,
@@ -909,7 +910,7 @@ var acuityCalendar = (function(e) {
                     !1,
                     'Calling PropTypes validators directly is not supported by the `prop-types` package. Use `PropTypes.checkPropTypes()` to call them. Read more at http://fb.me/use-check-prop-types'
                   );
-                else if ('undefined' !== typeof console) {
+                else if ('undefined' != typeof console) {
                   var h = d + ':' + l;
                   !n[h] &&
                     r < 3 &&
@@ -984,7 +985,7 @@ var acuityCalendar = (function(e) {
                 if (null === t || e(t)) return !0;
                 var a = (function(e) {
                   var t = e && ((n && e[n]) || e[r]);
-                  if ('function' === typeof t) return t;
+                  if ('function' == typeof t) return t;
                 })(t);
                 if (!a) return !1;
                 var i,
@@ -1011,7 +1012,7 @@ var acuityCalendar = (function(e) {
                   return (
                     'symbol' === e ||
                     ('Symbol' === t['@@toStringTag'] ||
-                      ('function' === typeof Symbol && t instanceof Symbol))
+                      ('function' == typeof Symbol && t instanceof Symbol))
                   );
                 })(t, e)
               ? 'symbol'
@@ -1049,12 +1050,12 @@ var acuityCalendar = (function(e) {
         },
         _ = n(function(e) {
           var t =
-            ('function' === typeof Symbol &&
+            ('function' == typeof Symbol &&
               Symbol.for &&
               Symbol.for('react.element')) ||
             60103;
           e.exports = b(function(e) {
-            return 'object' === typeof e && null !== e && e.$$typeof === t;
+            return 'object' == typeof e && null !== e && e.$$typeof === t;
           }, !0);
         }),
         w = n(function(e) {
@@ -1087,12 +1088,12 @@ var acuityCalendar = (function(e) {
       }
       function S(e) {
         return (
-          'function' === typeof e ||
+          'function' == typeof e ||
           '[object Function]' === Object.prototype.toString.call(e)
         );
       }
       function x(e) {
-        return 'number' === typeof e && !isNaN(e);
+        return 'number' == typeof e && !isNaN(e);
       }
       function O(e) {
         return parseInt(e, 10);
@@ -1128,7 +1129,7 @@ var acuityCalendar = (function(e) {
             arguments.length > 0 && void 0 !== arguments[0]
               ? arguments[0]
               : 'transform';
-          if ('undefined' === typeof window || void 0 === window.document)
+          if ('undefined' == typeof window || void 0 === window.document)
             return '';
           var t = window.document.documentElement.style;
           if (e in t) return '';
@@ -1177,7 +1178,7 @@ var acuityCalendar = (function(e) {
             return e;
           },
         k = function(e, t) {
-          if ('function' !== typeof t && null !== t)
+          if ('function' != typeof t && null !== t)
             throw new TypeError(
               'Super expression must either be null or a function, not ' +
                 typeof t
@@ -1200,9 +1201,7 @@ var acuityCalendar = (function(e) {
             throw new ReferenceError(
               "this hasn't been initialised - super() hasn't been called"
             );
-          return !t || ('object' !== typeof t && 'function' !== typeof t)
-            ? e
-            : t;
+          return !t || ('object' != typeof t && 'function' != typeof t) ? e : t;
         },
         I = function(e, t) {
           if (Array.isArray(e)) return e;
@@ -1351,7 +1350,7 @@ var acuityCalendar = (function(e) {
       }
       function K(e, t, n) {
         var r =
-          'number' === typeof t
+          'number' == typeof t
             ? (function(e, t) {
                 return (
                   (e.targetTouches &&
@@ -1365,7 +1364,7 @@ var acuityCalendar = (function(e) {
                 );
               })(e, t)
             : null;
-        if ('number' === typeof t && !r) return null;
+        if ('number' == typeof t && !r) return null;
         var a = ee(n),
           i = n.props.offsetParent || a.offsetParent || a.ownerDocument.body;
         return (function(e, t) {
@@ -1441,7 +1440,7 @@ var acuityCalendar = (function(e) {
                 if (
                   (a.props.onMouseDown(t),
                   !a.props.allowAnyClick &&
-                    'number' === typeof t.button &&
+                    'number' == typeof t.button &&
                     0 !== t.button)
                 )
                   return !1;
@@ -1595,21 +1594,21 @@ var acuityCalendar = (function(e) {
       (re.displayName = 'DraggableCore'),
         (re.propTypes = {
           allowAnyClick: _.bool,
-          cancel: _.string,
-          className: D,
           disabled: _.bool,
           enableUserSelectHack: _.bool,
-          grid: _.arrayOf(_.number),
-          handle: _.string,
           offsetParent: function(e, t) {
             if (e[t] && 1 !== e[t].nodeType)
               throw new Error("Draggable's offsetParent must be a DOM Node.");
           },
-          onDrag: _.func,
-          onMouseDown: _.func,
-          onStart: _.func,
-          onStop: _.func,
+          grid: _.arrayOf(_.number),
           scale: _.number,
+          handle: _.string,
+          cancel: _.string,
+          onStart: _.func,
+          onDrag: _.func,
+          onStop: _.func,
+          onMouseDown: _.func,
+          className: D,
           style: D,
           transform: D,
         }),
@@ -1652,7 +1651,7 @@ var acuityCalendar = (function(e) {
                     if (!e.props.bounds) return [t, n];
                     var r = e.props.bounds;
                     r =
-                      'string' === typeof r
+                      'string' == typeof r
                         ? r
                         : (function(e) {
                             return {
@@ -1663,7 +1662,7 @@ var acuityCalendar = (function(e) {
                             };
                           })(r);
                     var a = ee(e);
-                    if ('string' === typeof r) {
+                    if ('string' == typeof r) {
                       var i = a.ownerDocument,
                         o = i.defaultView,
                         s = void 0;
@@ -1897,7 +1896,7 @@ var acuityCalendar = (function(e) {
               var n = e[1] || '',
                 r = e[3];
               if (!r) return n;
-              if (t && 'function' === typeof btoa) {
+              if (t && 'function' == typeof btoa) {
                 var a = ((o = r),
                   '/*# sourceMappingURL=data:application/json;charset=utf-8;base64,' +
                     btoa(unescape(encodeURIComponent(JSON.stringify(o)))) +
@@ -1917,14 +1916,14 @@ var acuityCalendar = (function(e) {
           }).join('');
         }),
         (t.i = function(e, n) {
-          'string' === typeof e && (e = [[null, e, '']]);
+          'string' == typeof e && (e = [[null, e, '']]);
           for (var r = {}, a = 0; a < this.length; a++) {
             var i = this[a][0];
-            'number' === typeof i && (r[i] = !0);
+            'number' == typeof i && (r[i] = !0);
           }
           for (a = 0; a < e.length; a++) {
             var o = e[a];
-            ('number' === typeof o[0] && r[o[0]]) ||
+            ('number' == typeof o[0] && r[o[0]]) ||
               (n && !o[2]
                 ? (o[2] = n)
                 : n && (o[2] = '(' + o[2] + ') and (' + n + ')'),
@@ -1948,7 +1947,7 @@ var acuityCalendar = (function(e) {
       s = (function(e) {
         var t = {};
         return function(e) {
-          if ('function' === typeof e) return e();
+          if ('function' == typeof e) return e();
           if (void 0 === t[e]) {
             var n = function(e) {
               return document.querySelector(e);
@@ -2011,7 +2010,7 @@ var acuityCalendar = (function(e) {
           l.push(t);
       else if ('bottom' === e.insertAt) n.appendChild(t);
       else {
-        if ('object' !== typeof e.insertAt || !e.insertAt.before)
+        if ('object' != typeof e.insertAt || !e.insertAt.before)
           throw new Error(
             "[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n"
           );
@@ -2047,11 +2046,11 @@ var acuityCalendar = (function(e) {
           (a = w.bind(null, n, o, !0));
       } else
         e.sourceMap &&
-        'function' === typeof URL &&
-        'function' === typeof URL.createObjectURL &&
-        'function' === typeof URL.revokeObjectURL &&
-        'function' === typeof Blob &&
-        'function' === typeof btoa
+        'function' == typeof URL &&
+        'function' == typeof URL.createObjectURL &&
+        'function' == typeof URL.revokeObjectURL &&
+        'function' == typeof Blob &&
+        'function' == typeof btoa
           ? ((n = (function(e) {
               var t = document.createElement('link');
               return (
@@ -2109,12 +2108,12 @@ var acuityCalendar = (function(e) {
       );
     }
     e.exports = function(e, t) {
-      if ('undefined' !== typeof DEBUG && DEBUG && 'object' !== typeof document)
+      if ('undefined' != typeof DEBUG && DEBUG && 'object' != typeof document)
         throw new Error(
           'The style-loader cannot be used in a non-browser environment'
         );
-      ((t = t || {}).attrs = 'object' === typeof t.attrs ? t.attrs : {}),
-        t.singleton || 'boolean' === typeof t.singleton || (t.singleton = o()),
+      ((t = t || {}).attrs = 'object' == typeof t.attrs ? t.attrs : {}),
+        t.singleton || 'boolean' == typeof t.singleton || (t.singleton = o()),
         t.insertInto || (t.insertInto = 'head'),
         t.insertAt || (t.insertAt = 'bottom');
       var n = p(e, t);
@@ -2160,20 +2159,21 @@ var acuityCalendar = (function(e) {
     try {
       n = n || new Function('return this')();
     } catch (e) {
-      'object' === typeof window && (n = window);
+      'object' == typeof window && (n = window);
     }
     e.exports = n;
   },
   function(e, t, n) {
+    'use strict';
     var r = Array.isArray,
       a = Object.keys,
       i = Object.prototype.hasOwnProperty,
-      o = 'undefined' !== typeof Element;
+      o = 'undefined' != typeof Element;
     e.exports = function(e, t) {
       try {
         return (function e(t, n) {
           if (t === n) return !0;
-          if (t && n && 'object' === typeof t && 'object' === typeof n) {
+          if (t && n && 'object' == typeof t && 'object' == typeof n) {
             var s,
               u,
               c,
@@ -2223,6 +2223,7 @@ var acuityCalendar = (function(e) {
     };
   },
   function(e, t, n) {
+    'use strict';
     var r = n(11);
     function a() {}
     e.exports = function() {
@@ -2261,11 +2262,12 @@ var acuityCalendar = (function(e) {
     };
   },
   function(e, t, n) {
+    'use strict';
     e.exports = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
   },
   function(e, t, n) {
     var r = n(13);
-    'string' === typeof r && (r = [[e.i, r, '']]);
+    'string' == typeof r && (r = [[e.i, r, '']]);
     var a = { hmr: !0, transform: void 0, insertInto: void 0 };
     n(7)(r, a);
     r.locals && (e.exports = r.locals);
@@ -2279,9 +2281,9 @@ var acuityCalendar = (function(e) {
   },
   function(e, t) {
     e.exports = function(e) {
-      var t = 'undefined' !== typeof window && window.location;
+      var t = 'undefined' != typeof window && window.location;
       if (!t) throw new Error('fixUrls requires window.location');
-      if (!e || 'string' !== typeof e) return e;
+      if (!e || 'string' != typeof e) return e;
       var n = t.protocol + '//' + t.host,
         r = n + t.pathname.replace(/\/[^\/]*$/, '/');
       return e.replace(
@@ -2311,7 +2313,7 @@ var acuityCalendar = (function(e) {
   },
   function(e, t, n) {
     var r = n(16);
-    'string' === typeof r && (r = [[e.i, r, '']]);
+    'string' == typeof r && (r = [[e.i, r, '']]);
     var a = { hmr: !0, transform: void 0, insertInto: void 0 };
     n(7)(r, a);
     r.locals && (e.exports = r.locals);
@@ -2328,7 +2330,7 @@ var acuityCalendar = (function(e) {
   },
   function(e, t, n) {
     var r = n(19);
-    'string' === typeof r && (r = [[e.i, r, '']]);
+    'string' == typeof r && (r = [[e.i, r, '']]);
     var a = { hmr: !0, transform: void 0, insertInto: void 0 };
     n(7)(r, a);
     r.locals && (e.exports = r.locals);
@@ -2342,7 +2344,7 @@ var acuityCalendar = (function(e) {
   },
   function(e, t, n) {
     var r = n(21);
-    'string' === typeof r && (r = [[e.i, r, '']]);
+    'string' == typeof r && (r = [[e.i, r, '']]);
     var a = { hmr: !0, transform: void 0, insertInto: void 0 };
     n(7)(r, a);
     r.locals && (e.exports = r.locals);
@@ -2355,6 +2357,7 @@ var acuityCalendar = (function(e) {
     ]);
   },
   function(e, t, n) {
+    'use strict';
     n.r(t);
     var r = n(1),
       a = n.n(r),
@@ -2392,7 +2395,7 @@ var acuityCalendar = (function(e) {
       for (var t = 1; t < arguments.length; t++) {
         var n = null != arguments[t] ? arguments[t] : {},
           r = Object.keys(n);
-        'function' === typeof Object.getOwnPropertySymbols &&
+        'function' == typeof Object.getOwnPropertySymbols &&
           (r = r.concat(
             Object.getOwnPropertySymbols(n).filter(function(e) {
               return Object.getOwnPropertyDescriptor(n, e).enumerable;
@@ -2442,7 +2445,7 @@ var acuityCalendar = (function(e) {
           : 1;
       },
       v = function() {
-        if ('undefined' === typeof window || !window.document) return 15;
+        if ('undefined' == typeof window || !window.document) return 15;
         var e = document.createElement('div');
         (e.style.overflowY = 'scroll'), document.body.append(e);
         var t = e.offsetWidth - e.clientWidth;
@@ -2516,7 +2519,7 @@ var acuityCalendar = (function(e) {
                 for (var t = 1; t < arguments.length; t++) {
                   var n = null != arguments[t] ? arguments[t] : {},
                     r = Object.keys(n);
-                  'function' === typeof Object.getOwnPropertySymbols &&
+                  'function' == typeof Object.getOwnPropertySymbols &&
                     (r = r.concat(
                       Object.getOwnPropertySymbols(n).filter(function(e) {
                         return Object.getOwnPropertyDescriptor(n, e).enumerable;
@@ -2689,7 +2692,7 @@ var acuityCalendar = (function(e) {
           for (var t = 1; t < arguments.length; t++) {
             var n = null != arguments[t] ? arguments[t] : {},
               r = Object.keys(n);
-            'function' === typeof Object.getOwnPropertySymbols &&
+            'function' == typeof Object.getOwnPropertySymbols &&
               (r = r.concat(
                 Object.getOwnPropertySymbols(n).filter(function(e) {
                   return Object.getOwnPropertyDescriptor(n, e).enumerable;
@@ -3265,7 +3268,7 @@ var acuityCalendar = (function(e) {
       for (var t = 1; t < arguments.length; t++) {
         var n = null != arguments[t] ? arguments[t] : {},
           r = Object.keys(n);
-        'function' === typeof Object.getOwnPropertySymbols &&
+        'function' == typeof Object.getOwnPropertySymbols &&
           (r = r.concat(
             Object.getOwnPropertySymbols(n).filter(function(e) {
               return Object.getOwnPropertyDescriptor(n, e).enumerable;
@@ -3494,7 +3497,7 @@ var acuityCalendar = (function(e) {
       Me = (o.a.shape({ id: o.a.number, name: o.a.string }),
       o.a.shape({
         current: o.a.instanceOf(
-          'undefined' === typeof Element ? function() {} : Element
+          'undefined' == typeof Element ? function() {} : Element
         ),
       })),
       Re = o.a.arrayOf(o.a.number),
@@ -3505,7 +3508,7 @@ var acuityCalendar = (function(e) {
             for (var t = 1; t < arguments.length; t++) {
               var n = null != arguments[t] ? arguments[t] : {},
                 r = Object.keys(n);
-              'function' === typeof Object.getOwnPropertySymbols &&
+              'function' == typeof Object.getOwnPropertySymbols &&
                 (r = r.concat(
                   Object.getOwnPropertySymbols(n).filter(function(e) {
                     return Object.getOwnPropertyDescriptor(n, e).enumerable;
@@ -4876,7 +4879,7 @@ var acuityCalendar = (function(e) {
                       for (var t = 1; t < arguments.length; t++) {
                         var n = null != arguments[t] ? arguments[t] : {},
                           r = Object.keys(n);
-                        'function' === typeof Object.getOwnPropertySymbols &&
+                        'function' == typeof Object.getOwnPropertySymbols &&
                           (r = r.concat(
                             Object.getOwnPropertySymbols(n).filter(function(e) {
                               return Object.getOwnPropertyDescriptor(
@@ -5166,7 +5169,7 @@ var acuityCalendar = (function(e) {
       for (var t = 1; t < arguments.length; t++) {
         var n = null != arguments[t] ? arguments[t] : {},
           r = Object.keys(n);
-        'function' === typeof Object.getOwnPropertySymbols &&
+        'function' == typeof Object.getOwnPropertySymbols &&
           (r = r.concat(
             Object.getOwnPropertySymbols(n).filter(function(e) {
               return Object.getOwnPropertyDescriptor(n, e).enumerable;

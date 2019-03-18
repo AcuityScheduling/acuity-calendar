@@ -67,6 +67,14 @@ const CalendarGroups = ({
 
   const eventsWithColumns = getEventColumnsByGroup(mungedEvents);
 
+  // If visibleEventGroups isn't passed in let's just show all the event groups
+  let eventGroups = visibleEventGroups;
+  if (!visibleEventGroups) {
+    eventGroups = Object.keys(eventsWithColumns).map(groupId =>
+      Number(groupId)
+    );
+  }
+
   return (
     <TimeGrid
       ref={TimeGridRef}
@@ -79,9 +87,8 @@ const CalendarGroups = ({
       stepHeight={stepHeight}
       renderCorner={renderCorner}
       renderHeader={() => {
-        if (!visibleEventGroups) return null;
-        const totalColumns = visibleEventGroups.length;
-        return visibleEventGroups.map(groupId => {
+        const totalColumns = eventGroups.length;
+        return eventGroups.map(groupId => {
           const eventsForDay = getEventsForDay({
             events: eventsWithColumns,
             groupId,
@@ -109,13 +116,12 @@ const CalendarGroups = ({
         });
       }}
       renderColumns={({ currentTime, totalGridHeight }) => {
-        if (!visibleEventGroups) return null;
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
-          return visibleEventGroups[newIndex];
+          return eventGroups[newIndex];
         };
 
-        return visibleEventGroups.map((groupId, index) => {
+        return eventGroups.map((groupId, index) => {
           const eventsForDay =
             getEventsForDay({
               events: eventsWithColumns,
@@ -193,6 +199,7 @@ CalendarGroups.defaultProps = {
   selectMinutes: SELECT_MINUTES_DEFAULT,
   stepDetails: null,
   firstDay: FIRST_DAY_DEFAULT,
+  visibleEventGroups: null,
 };
 
 CalendarGroups.propTypes = {
@@ -219,7 +226,7 @@ CalendarGroups.propTypes = {
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
-  visibleEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default CalendarGroups;

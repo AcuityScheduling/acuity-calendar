@@ -42,7 +42,7 @@ const DayGrid = ({
   return (
     <div className={makeClass('day-grid')}>
       <div className={makeClass('day-grid__header')}>
-        {get(grid, 0, []).map(dayDetails => {
+        {get(dayGrid, 0, []).map(dayDetails => {
           const dayOfWeek = dayDetails.date.format('dddd');
           return (
             <div
@@ -56,55 +56,53 @@ const DayGrid = ({
           );
         })}
       </div>
-      {
-        <div className={makeClass('day-grid__days')}>
-          {grid
-            ? grid.map(row => {
-                countRows += 1;
-                const totalColumns = row.length;
+      <div className={makeClass('day-grid__days')}>
+        {dayGrid
+          ? dayGrid.map(row => {
+              countRows += 1;
+              const totalColumns = row.length;
 
-                return (
-                  <div
-                    className={makeClass('day-grid__row')}
-                    ref={rowRef}
-                    key={`monthColumn${countRows}`}
-                  >
-                    {row.map(dayDetails => {
-                      countDays += 1;
+              return (
+                <div
+                  className={makeClass('day-grid__row')}
+                  ref={rowRef}
+                  key={`monthColumn${countRows}`}
+                >
+                  {row.map(dayDetails => {
+                    countDays += 1;
 
-                      const eventsForCell = get(
-                        eventsWithSelectedEventGroups,
-                        dayDetails.date.format('YYYY-MM-DD'),
-                        []
-                      );
+                    const eventsForCell = get(
+                      eventsWithSelectedEventGroups,
+                      dayDetails.date.format('YYYY-MM-DD'),
+                      []
+                    );
 
-                      return (
-                        <DayCell
-                          totalColumns={totalColumns}
-                          events={eventsForCell}
-                          ref={cellRef}
-                          eventHeight={eventHeight}
-                          cellDimensions={cellDimensions}
-                          key={`dayCells${countDays}`}
-                          dayDetails={dayDetails}
-                          renderCell={renderCell}
-                          onDragEnd={onDragEnd}
-                          onSelectSlot={onSelectSlot}
-                          onSelectDate={onSelectDate}
-                          onSelectMoreEvents={onSelectMoreEvents}
-                          totalEventsToShow={totalEventsToShow}
-                          eventRef={eventRef}
-                          eventWrapperRef={eventWrapperRef}
-                          onSelectEvent={onSelectEvent}
-                        />
-                      );
-                    })}
-                  </div>
-                );
-              })
-            : null}
-        </div>
-      }
+                    return (
+                      <DayCell
+                        totalColumns={totalColumns}
+                        events={eventsForCell}
+                        ref={cellRef}
+                        eventHeight={eventHeight}
+                        cellDimensions={cellDimensions}
+                        key={`dayCells${countDays}`}
+                        dayDetails={dayDetails}
+                        renderCell={renderCell}
+                        onDragEnd={onDragEnd}
+                        onSelectSlot={onSelectSlot}
+                        onSelectDate={onSelectDate}
+                        onSelectMoreEvents={onSelectMoreEvents}
+                        totalEventsToShow={totalEventsToShow}
+                        eventRef={eventRef}
+                        eventWrapperRef={eventWrapperRef}
+                        onSelectEvent={onSelectEvent}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })
+          : null}
+      </div>
     </div>
   );
 };

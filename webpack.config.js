@@ -9,7 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].js',
     library: 'acuity-calendar',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
   },
   plugins: [new BundleAnalyzerPlugin()],
   module: {

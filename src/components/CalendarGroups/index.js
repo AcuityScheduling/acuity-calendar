@@ -20,6 +20,7 @@ import {
   MOMENT_TYPE,
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
+  STEP_DETAILS_TYPE,
 } from '../../Calendar/types';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
@@ -215,7 +216,7 @@ CalendarGroups.propTypes = {
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
-  stepDetails: PropTypes.object,
+  stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number).isRequired,

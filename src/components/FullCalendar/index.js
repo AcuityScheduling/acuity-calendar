@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import CalendarMonth from '../CalendarMonth';
 import CalendarGroups from '../CalendarGroups';
 import CalendarWeek from '../CalendarWeek';
@@ -20,6 +21,7 @@ import {
   STEP_MINUTES_TYPE,
   DATE_TYPE,
   CALENDAR_VIEW_TYPE,
+  STEP_DETAILS_TYPE,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
@@ -64,7 +66,7 @@ const FullCalendar = ({
     onSelectEvent,
     onSelectSlot,
     events,
-    selectedDate,
+    selectedDate: moment(selectedDate),
     firstDay,
     visibleEventGroups,
   };
@@ -187,7 +189,7 @@ FullCalendar.propTypes = {
   renderWeekHeader: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
-  stepDetails: PropTypes.object,
+  stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   view: CALENDAR_VIEW_TYPE,

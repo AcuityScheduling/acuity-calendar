@@ -12,6 +12,7 @@ import {
   STEP_MINUTES_TYPE,
   EVENT_TYPE,
   DATE_TYPE,
+  STEP_DETAILS_TYPE,
 } from '../../Calendar/types';
 import ColumnHeader from '../../Calendar/components/TimeGrid/components/ColumnHeader';
 import {
@@ -229,7 +230,7 @@ CalendarWeek.propTypes = {
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
-  stepDetails: PropTypes.object,
+  stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),

@@ -17,6 +17,12 @@ export const EVENT_TYPE = PropTypes.shape({
   start: DATE_TYPE.isRequired,
   end: DATE_TYPE.isRequired,
 });
+export const STEP_DETAILS_TYPE = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  start: DATE_TYPE.isRequired,
+  end: DATE_TYPE.isRequired,
+});
 export const STEP_MINUTES_TYPE = PropTypes.oneOf([5, 10, 15, 20, 30, 60]);
 export const GROUP_TYPE = PropTypes.shape({
   id: PropTypes.number,
@@ -34,7 +40,9 @@ const getViewShape = type => {
     return { ...accumulator, [view]: type };
   }, {});
 };
-export const VIEW_RENDER_TYPE = PropTypes.shape(getViewShape(PropTypes.func));
+export const CALENDAR_RENDER_TYPE = PropTypes.shape(
+  getViewShape(PropTypes.func)
+);
 
 export const CALENDAR_TYPE = PropTypes.oneOf(Object.values(CALENDARS));
 

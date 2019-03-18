@@ -3,14 +3,11 @@
   "license": "MIT",
   "version": "0.1.0",
   "scripts": {
-    "start": "razzle start",
-    "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "lint": "eslint --ignore-path .gitignore --ext .js",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ext .js",
     "lint:staged": "lint-staged",
     "prettier": "prettier --write \"**/*.js\" \"!node_modules/**\" \"!build/**\" \"!storybook-static/**\"",
-    "start:prod": "NODE_ENV=production node build/server.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -48,7 +45,6 @@
     "lint-staged": "^8.1.4",
     "pre-commit": "^1.2.2",
     "prettier": "^1.16.4",
-    "prettier-cli": "^0.1.0",
-    "razzle-plugin-scss": "^2.4.1"
+    "prettier-cli": "^0.1.0"
   }
 }

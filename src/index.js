@@ -1,11 +1,11 @@
-import FullCalendar from './components/CalendarGroups';
+import FullCalendar from './components/FullCalendar';
 import CalendarGroups from './components/CalendarGroups';
-import CalendarMonth from './components/CalendarGroups';
-import CalendarMonthHeatmap from './components/CalendarGroups';
-import CalendarWeek from './components/CalendarGroups';
-import DateList from './components/CalendarGroups';
-import Datepicker from './components/CalendarGroups';
-import DayList from './components/CalendarGroups';
+import CalendarMonth from './components/CalendarMonth';
+import CalendarMonthHeatmap from './components/CalendarMonthHeatmap';
+import CalendarWeek from './components/CalendarWeek';
+import DateList from './components/DateList';
+import Datepicker from './components/Datepicker';
+import DayList from './components/DayList';
 import DayGrid from './Calendar/components/DayGrid';
 import TimeGrid from './Calendar/components/TimeGrid';
 
@@ -17,6 +17,7 @@ export {
   CalendarMonthHeatmap,
   CalendarWeek,
   DateList,
+  DayList,
   Datepicker,
   DayGrid,
   TimeGrid,

@@ -9,6 +9,7 @@
     "lint:staged": "lint-staged",
     "prettier": "prettier --write \"**/*.js\" \"!node_modules/**\" \"!build/**\" \"!storybook-static/**\"",
     "storybook": "start-storybook -p 6006",
+    "build": "webpack",
     "build-storybook": "build-storybook"
   },
   "lint-staged": {
@@ -21,15 +22,13 @@
   },
   "pre-commit": "lint:staged",
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "react-dom": ">=16.8",
+    "moment": "2.24.0"
   },
   "dependencies": {
     "express": "^4.16.4",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "razzle": "^2.4.1",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
     "react-draggable": "^3.1.1",
     "react-fast-compare": "^2.0.4",
     "react-router-dom": "^4.3.1",
@@ -37,16 +36,25 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^5.0.1",
     "@storybook/addon-links": "^5.0.1",
     "@storybook/addons": "^5.0.1",
     "@storybook/react": "^5.0.1",
+    "razzle": "^2.4.1",
+    "moment": "^2.24.0",
     "babel-loader": "^8.0.5",
     "lint-staged": "^8.1.4",
+    "node-sass": "^4.11.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.16.4",
     "prettier-cli": "^0.1.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "sass-loader": "^7.1.0",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.1.0",
     "webpack-cli": "^3.3.0"
   }
 }

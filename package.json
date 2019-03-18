@@ -27,11 +27,8 @@
     "moment": "2.24.0"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "lodash": "^4.17.11",
     "react-draggable": "^3.1.1",
     "react-fast-compare": "^2.0.4",
-    "react-router-dom": "^4.3.1",
     "resize-detector": "^0.2.0"
   },
   "devDependencies": {

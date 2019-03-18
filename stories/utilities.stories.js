@@ -22,16 +22,16 @@ const eventCounts = {
   [getDay(7)]: 3,
 };
 
-storiesOf('Month Calendars', module)
-  .add('Heatmap', () => (
+storiesOf('Calendar Utilities', module)
+  .add('Month Heatmap', () => (
     <CalendarHeatmap
       counts={eventCounts}
-      onSelectCell={result => console.log('result: ', result)}
+      onSelectCell={result => console.log(result)}
     />
   ))
   .add('Datepicker', () => (
     <Datepicker
       counts={eventCounts}
-      onSelectCell={result => console.log('result: ', result)}
+      onSelectCell={result => console.log(result)}
     />
   ));

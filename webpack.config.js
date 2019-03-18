@@ -35,11 +35,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.scss'],
   },
-  externals: {
-    moment: 'moment',
-    react: 'react',
-    'react-dom': 'react-dom',
-  },
   optimization: {
     splitChunks: {
       name: 'vendor',

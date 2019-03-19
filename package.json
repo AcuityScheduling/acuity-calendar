@@ -5,6 +5,7 @@
   "main": "build/main.js",
   "module": "src/index.js",
   "scripts": {
+    "test": "jest --watch",
     "lint": "eslint --ext .js",
     "lint:fix": "eslint --fix --ext .js",
     "lint:staged": "lint-staged",
@@ -20,6 +21,12 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+      "\\.(css|less|scss)$": "<rootDir>/mocks/styleMock.js"
+    }
   },
   "pre-commit": "lint:staged",
   "peerDependencies": {
@@ -50,6 +57,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.5.0",
     "lint-staged": "^8.1.4",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",

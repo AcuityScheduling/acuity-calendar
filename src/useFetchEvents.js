@@ -2,13 +2,41 @@
  * This function handles all of the custom event pagination that has to happen with navigating through
  * the calendar
  */
+import { useState } from 'react';
 import moment from 'moment';
+
+const useFetchEvents = ({
+  cursorDate,
+  monthPadding = 1,
+  currentFullRange = null,
+}) => {
+  const actualFullRange = currentFullRange
+    ? currentFullRange
+    : {
+        start: moment()
+          .subtract(monthPadding, 'months')
+          .startOf('month'),
+        end: moment()
+          .add(monthPadding, 'months')
+          .endOf('month'),
+      };
+  const [fullRange, setFullRange] = useState(actualFullRange);
+  return ({ onFetchMore, onResetRange }) => {
+    fetchMore({
+      cursorDate,
+      monthPadding,
+      fullRange,
+      setFullRange,
+      onFetchMore,
+    });
+  };
+};
 
 const fetchMore = ({
   cursorDate,
   fullRange,
-  monthPadding = 1,
   onFetchMore,
+  monthPadding,
   onResetRange,
   setFullRange,
 }) => {
@@ -28,7 +56,17 @@ const fetchMore = ({
       start: new Date(adjustedRanges.fullRange.start),
       end: new Date(adjustedRanges.fullRange.end),
     });
-    return onFetchMore({ ...adjustedRanges });
+    const finalRanges = {
+      fetchMoreRange: {
+        start: new Date(adjustedRanges.fetchMoreRange.start),
+        end: new Date(adjustedRanges.fetchMoreRange.end),
+      },
+      fullRange: {
+        start: new Date(adjustedRanges.fullRange.start),
+        end: new Date(adjustedRanges.fullRange.end),
+      },
+    };
+    return onFetchMore(finalRanges);
   }
 
   //  If there is no fetchMoreRange that means the user navigated far outside our current
@@ -164,4 +202,4 @@ export const getNewRangeOutsideRange = ({ selectedDate, monthPadding }) => {
   };
 };
 
-export default fetchMore;
+export default useFetchEvents;

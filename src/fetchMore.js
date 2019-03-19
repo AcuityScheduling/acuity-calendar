@@ -7,7 +7,7 @@ import moment from 'moment';
 const fetchMore = ({
   cursorDate,
   fullRange,
-  monthPadding,
+  monthPadding = 1,
   onFetchMore,
   onResetRange,
   setFullRange,

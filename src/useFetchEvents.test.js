@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { getNewRanges, getNewRangeOutsideRange } from './fetchMore';
+import { getNewRanges, getNewRangeOutsideRange } from './useFetchEvents';
 
 const monthPadding = 1;
 

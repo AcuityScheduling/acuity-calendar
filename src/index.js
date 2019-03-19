@@ -8,6 +8,7 @@ import Datepicker from './components/Datepicker';
 import DayList from './components/DayList';
 import DayGrid from './Calendar/components/DayGrid';
 import TimeGrid from './Calendar/components/TimeGrid';
+import fetchMore from './fetchMore';
 
 export default FullCalendar;
 
@@ -20,5 +21,6 @@ export {
   DayList,
   Datepicker,
   DayGrid,
+  fetchMore,
   TimeGrid,
 };

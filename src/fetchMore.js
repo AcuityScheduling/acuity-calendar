@@ -63,7 +63,7 @@ const fetchMore = ({
  * not we need to extend the range based on the selected date
  *
  * @param {Object} params
- * @param {Object} params.selectedDate
+ * @param {moment} params.selectedDate
  * @param {Object} params.startDate - Current full range start date
  * @param {Object} params.endDate - Current full range end date
  * @param {number} params.monthPadding
@@ -75,6 +75,7 @@ export const getNewRanges = ({
   monthPadding,
 }) => {
   let ranges = { fetchMoreRange: false, fullRange: false };
+
   if (shouldExtendStart({ selectedDate, startDate, monthPadding })) {
     ranges = getExtendedStartRange({
       startDate,

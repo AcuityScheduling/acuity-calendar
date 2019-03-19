@@ -13,6 +13,7 @@ import FullCalendar from '../src/components/FullCalendar';
 import Toolbar from '../src/Toolbar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import { FIRST_DAY_DEFAULT } from '../src/Calendar/defaultProps';
+import useFetchEvents from '../src/useFetchEvents';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -86,13 +87,26 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
+  const fetchMore = useFetchEvents({
+    cursorDate: selectedDate,
+  });
 
   return (
     <Fragment>
       <style>{styles}</style>
       <Toolbar
         firstDay={FIRST_DAY_DEFAULT}
-        onNavigate={setSelectedDate}
+        onNavigate={date => {
+          setSelectedDate(date);
+          fetchMore({
+            onFetchMore: range => {
+              console.log('FETCH MORE: ', range);
+            },
+            onResetRange: range => {
+              console.log('RESET EVENT FETCH RANGE', range);
+            },
+          });
+        }}
         onViewChange={setView}
         selectedDate={selectedDate}
         view={view}

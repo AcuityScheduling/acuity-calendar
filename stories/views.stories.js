@@ -92,15 +92,8 @@ const Full = props => {
         {...handlers}
         events={events}
         onNavigate={setSelectedDate}
-        fetchEventInitialFullRange={{
-          start: new Date(moment().subtract(8, 'months')),
-          end: new Date(moment().add(8, 'months')),
-        }}
-        onFetchMoreEvents={range => {
-          console.log('range: ', range);
-        }}
-        onResetEventRange={range => {
-          console.log('range: ', range);
+        onFetchEvents={results => {
+          console.log('results: ', results);
         }}
         onViewChange={setView}
         onCurrentTimeChange={currentTime => {

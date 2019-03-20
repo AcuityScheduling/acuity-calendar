@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
@@ -24,24 +24,28 @@ const Toolbar = ({
   fetchEventInitialFullRange,
   fetchEventPadding,
   onNavigate,
-  onFetchMoreEvents,
-  onResetEventRange,
+  onFetchEvents,
   onViewChange,
   selectedDate,
   view,
 }) => {
-  const fetchMore = useFetchEvents({
+  const { fetchMore, fullRange } = useFetchEvents({
     cursorDate: selectedDate,
     monthPadding: fetchEventPadding,
     currentFullRange: fetchEventInitialFullRange,
   });
 
+  useEffect(() => {
+    onFetchEvents({
+      fetchMoreRange: { start: null, end: null },
+      fullRange,
+      initialFetch: true,
+    });
+  }, []);
+
   const changeDate = date => {
     onNavigate(date);
-    fetchMore({
-      onFetchMore: onFetchMoreEvents,
-      onResetRange: onResetEventRange,
-    });
+    fetchMore(onFetchEvents);
   };
 
   const title = getRangeTitle({ date: moment(selectedDate), view, firstDay });
@@ -116,8 +120,7 @@ Toolbar.defaultProps = {
   firstDay: FIRST_DAY_DEFAULT,
   fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
-  onFetchMoreEvents: () => null,
-  onResetEventRange: () => null,
+  onFetchEvents: () => null,
 };
 
 Toolbar.propTypes = {
@@ -125,9 +128,8 @@ Toolbar.propTypes = {
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
-  onFetchMoreEvents: PropTypes.func,
+  onFetchEvents: PropTypes.func,
   onNavigate: PropTypes.func.isRequired,
-  onResetEventRange: PropTypes.func,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: DATE_TYPE.isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,

@@ -47,19 +47,4 @@ storiesOf('Calendar Utilities', module)
       onSelectCell={result => console.log(result)}
     />
   ))
-  .add('Datepicker', () => (
-    <Datepicker
-      counts={eventCounts}
-      onSelectCell={result => console.log(result)}
-    />
-  ))
-  .add('Day List', () => <DayList />)
-  .add('Date List', () => (
-    <DateList
-      renderCell={({ date }) => {
-        const renderCell =
-          AVAILABILITY_MOCKS[moment(date).format('YYYY-MM-DD')];
-        if (renderCell) return renderCell();
-      }}
-    />
-  ));
+  .add('Day List', () => <DayList />);

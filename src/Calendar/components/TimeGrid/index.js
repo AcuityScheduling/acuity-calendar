@@ -43,7 +43,7 @@ const TimeGrid = React.forwardRef(
         const now = moment();
         setCurrentTime(now);
         onCurrentTimeChange(new Date(now.format('YYYY-MM-DD HH:mm:ss')));
-      }, 1000 * 60);
+      }, 1000);
       return () => {
         clearTimeout(timeout);
       };
@@ -146,7 +146,7 @@ const TimeGrid = React.forwardRef(
             style={{ flex: `1 0 ${timeGutterWidth}px` }}
             ref={cornerRef}
           >
-            {renderCorner({ currentTime })}
+            {renderCorner({ currentTime: new Date(currentTime) })}
           </div>
           <div
             className={makeClass('time-grid__header')}

@@ -93,10 +93,7 @@ const Toolbar = ({
       onNext,
       onPrev,
       onToday,
-      onViewChange,
-      selectedDate,
       title,
-      view,
     })
   ) : (
     <div className={makeClass('toolbar')}>

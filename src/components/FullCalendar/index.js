@@ -4,6 +4,7 @@ import moment from 'moment';
 import CalendarMonth from '../CalendarMonth';
 import CalendarGroups from '../CalendarGroups';
 import CalendarWeek from '../CalendarWeek';
+import Toolbar from '../Toolbar';
 import { CALENDAR_VIEWS, CLASS_PREFIX } from '../../Calendar/constants';
 import {
   FIRST_DAY_DEFAULT,
@@ -24,8 +25,6 @@ import {
   CALENDAR_VIEW_TYPE,
   STEP_DETAILS_TYPE,
 } from '../../Calendar/types';
-import { makeClass } from '../../Calendar/utils';
-import Toolbar from './components/Toolbar';
 
 const FullCalendar = ({
   events,

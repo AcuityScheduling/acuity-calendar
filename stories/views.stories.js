@@ -11,7 +11,6 @@ import styles from './styles';
 import { useEvents } from './utils';
 import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
-import useFetchEvents from '../src/useFetchEvents';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -85,9 +84,6 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
-  // const fetchMore = useFetchEvents({
-  //   cursorDate: selectedDate,
-  // });
 
   return (
     <Fragment>

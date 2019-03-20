@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { CALENDAR_VIEWS } from '../../../../Calendar/constants';
-import { CALENDAR_VIEW_TYPE, DATE_TYPE } from '../../../../Calendar/types';
-import { makeClass } from '../../../../Calendar/utils';
+import { CALENDAR_VIEWS } from '../../Calendar/constants';
+import {
+  CALENDAR_VIEW_TYPE,
+  DATE_TYPE,
+  FIRST_DAY_TYPE,
+} from '../../Calendar/types';
+import { makeClass } from '../../Calendar/utils';
 import './index.scss';
-import { getNavigateDate, getRangeTitle } from './utils';
-import { FIRST_DAY_TYPE } from '../../../../Calendar/types';
+import { getNavigateDate, getRangeTitle, useFetchEvents } from './utils';
 import {
   FIRST_DAY_DEFAULT,
   FETCH_EVENT_PADDING_DEFAULT,
-} from '../../../../Calendar/defaultProps';
-import { useFetchEvents } from '../../../..';
+} from '../../Calendar/defaultProps';
 
 const { month, week, groups } = CALENDAR_VIEWS;
 

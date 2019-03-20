@@ -4,7 +4,7 @@ import moment from 'moment';
 import CalendarMonth from '../CalendarMonth';
 import CalendarGroups from '../CalendarGroups';
 import CalendarWeek from '../CalendarWeek';
-import { CALENDAR_VIEWS } from '../../Calendar/constants';
+import { CALENDAR_VIEWS, CLASS_PREFIX } from '../../Calendar/constants';
 import {
   FIRST_DAY_DEFAULT,
   FORCE_SIX_WEEKS_DEFAULT,
@@ -14,6 +14,7 @@ import {
   SELECTED_DATE_DEFAULT,
   STEP_MINUTES_DEFAULT,
   VIEW_DEFAULT,
+  FETCH_EVENT_PADDING_DEFAULT,
 } from '../../Calendar/defaultProps';
 import {
   EVENT_TYPE,
@@ -23,21 +24,28 @@ import {
   CALENDAR_VIEW_TYPE,
   STEP_DETAILS_TYPE,
 } from '../../Calendar/types';
+import { makeClass } from '../../Calendar/utils';
+import Toolbar from './components/Toolbar';
 
 const FullCalendar = ({
   events,
+  fetchEventPadding,
   firstDay,
   forceSixWeeks,
   minWidthColumn,
   minWidthColumnEmpty,
   onDragEnd,
   onExtendEnd,
+  onFetchMoreEvents,
+  onNavigate,
   onSelectMore,
   onSelectDate,
   onSelectEvent,
   onSelectRangeEnd,
   onCurrentTimeChange,
+  onResetEventRange,
   onSelectSlot,
+  onViewChange,
   renderCell,
   renderEvent,
   renderCorner,
@@ -51,6 +59,7 @@ const FullCalendar = ({
   renderWeekHeader,
   renderDayGridEvent,
   renderTimeGridEvent,
+  renderToolbar,
   selectedDate,
   selectMinutes,
   stepDetails,
@@ -122,11 +131,27 @@ const FullCalendar = ({
     ),
   };
 
-  return viewRenderMap[view];
+  return (
+    <div className={CLASS_PREFIX}>
+      <Toolbar
+        firstDay={firstDay}
+        onNavigate={onNavigate}
+        onViewChange={onViewChange}
+        onFetchMoreEvents={onFetchMoreEvents}
+        onResetEventRange={onResetEventRange}
+        selectedDate={selectedDate}
+        view={view}
+      >
+        {renderToolbar}
+      </Toolbar>
+      {viewRenderMap[view]}
+    </div>
+  );
 };
 
 FullCalendar.defaultProps = {
   events: [],
+  fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
@@ -134,14 +159,19 @@ FullCalendar.defaultProps = {
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
   onExtendEnd: () => null,
+  onFetchMoreEvents: () => null,
+  onNavigate: () => null,
+  onResetEventRange: () => null,
   onSelectDate: () => null,
   onSelectEvent: () => null,
   onSelectMore: () => null,
   onSelectRangeEnd: () => null,
   onSelectSlot: () => null,
+  onViewChange: () => null,
   renderCell: null,
   renderCorner: () => null,
   renderDayGridEvent: null,
+  renderEvent: null,
   renderEventPaddingBottom: () => null,
   renderEventPaddingTop: () => null,
   renderGroupsHeader: null,
@@ -150,6 +180,7 @@ FullCalendar.defaultProps = {
   renderSelectSlotIndicator: null,
   renderStepDetail: () => null,
   renderTimeGridEvent: null,
+  renderToolbar: null,
   renderWeekHeader: null,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
@@ -162,6 +193,7 @@ FullCalendar.defaultProps = {
 
 FullCalendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
+  fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
   minWidthColumn: PropTypes.number,
@@ -169,11 +201,15 @@ FullCalendar.propTypes = {
   onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
+  onFetchMoreEvents: PropTypes.func,
+  onNavigate: PropTypes.func,
+  onResetEventRange: PropTypes.func,
   onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectMore: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
+  onViewChange: PropTypes.func,
   renderCell: PropTypes.func,
   renderCorner: PropTypes.func,
   renderDayGridEvent: PropTypes.func,
@@ -186,6 +222,7 @@ FullCalendar.propTypes = {
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   renderTimeGridEvent: PropTypes.func,
+  renderToolbar: PropTypes.func,
   renderWeekHeader: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,

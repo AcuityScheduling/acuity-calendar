@@ -9,3 +9,4 @@ export const SELECT_MINUTES_DEFAULT = 15;
 export const MIN_WIDTH_COLUMN_DEFAULT = 190;
 export const MIN_WIDTH_COLUMN_EMPTY_DEFAULT = 100;
 export const VIEW_RENDER_DEFAULT = {};
+export const FETCH_EVENT_PADDING_DEFAULT = 1;

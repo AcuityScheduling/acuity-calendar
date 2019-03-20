@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
@@ -6,6 +6,7 @@ import {
   CALENDAR_VIEW_TYPE,
   DATE_TYPE,
   FIRST_DAY_TYPE,
+  FETCH_EVENT_INITIAL_FULL_RANGE,
 } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
 import './index.scss';
@@ -20,25 +21,43 @@ const { month, week, groups } = CALENDAR_VIEWS;
 const Toolbar = ({
   children,
   firstDay,
+  fetchEventInitialFullRange,
   fetchEventPadding,
   onNavigate,
-  onFetchMoreEvents,
-  onResetEventRange,
+  onFetchEvents,
   onViewChange,
   selectedDate,
   view,
 }) => {
-  const fetchMore = useFetchEvents({
+  const {
+    fetchMoreRange,
+    fullRange,
+    shouldFetchMore,
+    isOutsideRange,
+  } = useFetchEvents({
     cursorDate: selectedDate,
     monthPadding: fetchEventPadding,
+    currentFullRange: fetchEventInitialFullRange,
   });
+
+  useEffect(() => {
+    onFetchEvents({
+      fetchMoreRange,
+      fullRange,
+      initialFetch: true,
+    });
+  }, []);
+
+  if (shouldFetchMore || isOutsideRange) {
+    onFetchEvents({
+      fetchMoreRange: fetchMoreRange,
+      fullRange: fullRange,
+      outsideRange: isOutsideRange ? true : false,
+    });
+  }
 
   const changeDate = date => {
     onNavigate(date);
-    fetchMore({
-      onFetchMore: onFetchMoreEvents,
-      onResetRange: onResetEventRange,
-    });
   };
 
   const title = getRangeTitle({ date: moment(selectedDate), view, firstDay });
@@ -111,18 +130,18 @@ const Toolbar = ({
 Toolbar.defaultProps = {
   children: null,
   firstDay: FIRST_DAY_DEFAULT,
+  fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
-  onFetchMoreEvents: () => null,
-  onResetEventRange: () => null,
+  onFetchEvents: () => null,
 };
 
 Toolbar.propTypes = {
   children: PropTypes.func,
+  fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
-  onFetchMoreEvents: PropTypes.func,
+  onFetchEvents: PropTypes.func,
   onNavigate: PropTypes.func.isRequired,
-  onResetEventRange: PropTypes.func,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: DATE_TYPE.isRequired,
   view: CALENDAR_VIEW_TYPE.isRequired,

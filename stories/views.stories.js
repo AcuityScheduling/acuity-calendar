@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';
@@ -92,11 +92,8 @@ const Full = props => {
         {...handlers}
         events={events}
         onNavigate={setSelectedDate}
-        onFetchMoreEvents={range => {
-          console.log('range: ', range);
-        }}
-        onResetEventRange={range => {
-          console.log('range: ', range);
+        onFetchEvents={results => {
+          console.log('results: ', results);
         }}
         onViewChange={setView}
         onCurrentTimeChange={currentTime => {

@@ -24,25 +24,26 @@ import {
   DATE_TYPE,
   CALENDAR_VIEW_TYPE,
   STEP_DETAILS_TYPE,
+  FETCH_EVENT_INITIAL_FULL_RANGE,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
   events,
   fetchEventPadding,
+  fetchEventInitialFullRange,
   firstDay,
   forceSixWeeks,
   minWidthColumn,
   minWidthColumnEmpty,
   onDragEnd,
   onExtendEnd,
-  onFetchMoreEvents,
+  onFetchEvents,
   onNavigate,
   onSelectMore,
   onSelectDate,
   onSelectEvent,
   onSelectRangeEnd,
   onCurrentTimeChange,
-  onResetEventRange,
   onSelectSlot,
   onViewChange,
   renderCell,
@@ -64,6 +65,7 @@ const FullCalendar = ({
   stepDetails,
   stepHeight,
   stepMinutes,
+  style,
   view,
   visibleEventGroups,
 }) => {
@@ -131,13 +133,13 @@ const FullCalendar = ({
   };
 
   return (
-    <div className={CLASS_PREFIX}>
+    <div className={CLASS_PREFIX} style={style}>
       <Toolbar
+        fetchEventInitialFullRange={fetchEventInitialFullRange}
         firstDay={firstDay}
         onNavigate={onNavigate}
         onViewChange={onViewChange}
-        onFetchMoreEvents={onFetchMoreEvents}
-        onResetEventRange={onResetEventRange}
+        onFetchEvents={onFetchEvents}
         selectedDate={selectedDate}
         view={view}
       >
@@ -150,6 +152,7 @@ const FullCalendar = ({
 
 FullCalendar.defaultProps = {
   events: [],
+  fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
@@ -158,9 +161,8 @@ FullCalendar.defaultProps = {
   onCurrentTimeChange: () => null,
   onDragEnd: () => null,
   onExtendEnd: () => null,
-  onFetchMoreEvents: () => null,
+  onFetchEvents: () => null,
   onNavigate: () => null,
-  onResetEventRange: () => null,
   onSelectDate: () => null,
   onSelectEvent: () => null,
   onSelectMore: () => null,
@@ -186,12 +188,14 @@ FullCalendar.defaultProps = {
   stepDetails: null,
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
+  style: {},
   view: VIEW_DEFAULT,
   visibleEventGroups: null,
 };
 
 FullCalendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
+  fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
@@ -200,9 +204,8 @@ FullCalendar.propTypes = {
   onCurrentTimeChange: PropTypes.func,
   onDragEnd: PropTypes.func,
   onExtendEnd: PropTypes.func,
-  onFetchMoreEvents: PropTypes.func,
+  onFetchEvents: PropTypes.func,
   onNavigate: PropTypes.func,
-  onResetEventRange: PropTypes.func,
   onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectMore: PropTypes.func,
@@ -228,6 +231,7 @@ FullCalendar.propTypes = {
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
+  style: PropTypes.object,
   view: CALENDAR_VIEW_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };

@@ -30,10 +30,10 @@ const Toolbar = ({
   view,
 }) => {
   const {
+    fetchMoreRange,
+    fullRange,
     shouldFetchMore,
     isOutsideRange,
-    fullRange,
-    fetchMoreRange,
   } = useFetchEvents({
     cursorDate: selectedDate,
     monthPadding: fetchEventPadding,
@@ -48,11 +48,16 @@ const Toolbar = ({
     });
   }, []);
 
+  if (shouldFetchMore || isOutsideRange) {
+    onFetchEvents({
+      fetchMoreRange: fetchMoreRange,
+      fullRange: fullRange,
+      outsideRange: isOutsideRange ? true : false,
+    });
+  }
+
   const changeDate = date => {
     onNavigate(date);
-    if (shouldFetchMore || isOutsideRange) {
-      onFetchEvents({ fullRange, fetchMoreRange });
-    }
   };
 
   const title = getRangeTitle({ date: moment(selectedDate), view, firstDay });

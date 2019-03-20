@@ -24,11 +24,13 @@ import {
   DATE_TYPE,
   CALENDAR_VIEW_TYPE,
   STEP_DETAILS_TYPE,
+  FETCH_EVENT_INITIAL_FULL_RANGE,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
   events,
   fetchEventPadding,
+  fetchEventInitialFullRange,
   firstDay,
   forceSixWeeks,
   minWidthColumn,
@@ -133,6 +135,7 @@ const FullCalendar = ({
   return (
     <div className={CLASS_PREFIX}>
       <Toolbar
+        fetchEventInitialFullRange={fetchEventInitialFullRange}
         firstDay={firstDay}
         onNavigate={onNavigate}
         onViewChange={onViewChange}
@@ -150,6 +153,7 @@ const FullCalendar = ({
 
 FullCalendar.defaultProps = {
   events: [],
+  fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
@@ -192,6 +196,7 @@ FullCalendar.defaultProps = {
 
 FullCalendar.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
+  fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,

@@ -28,6 +28,7 @@ const useFetchEvents = ({
       fullRange,
       setFullRange,
       onFetchMore,
+      onResetRange,
     });
   };
 };
@@ -81,7 +82,17 @@ const fetchMore = ({
       start: new Date(outsideRange.start),
       end: new Date(outsideRange.end),
     });
-    return onResetRange(outsideRange);
+    const finalRanges = {
+      fetchMoreRange: {
+        start: null,
+        end: null,
+      },
+      fullRange: {
+        start: new Date(outsideRange.start),
+        end: new Date(outsideRange.end),
+      },
+    };
+    return onResetRange(finalRanges);
   }
 
   // If we don't want to fetch any more events do nothing

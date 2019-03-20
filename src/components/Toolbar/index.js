@@ -6,6 +6,7 @@ import {
   CALENDAR_VIEW_TYPE,
   DATE_TYPE,
   FIRST_DAY_TYPE,
+  FETCH_EVENT_INITIAL_FULL_RANGE,
 } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
 import './index.scss';
@@ -20,6 +21,7 @@ const { month, week, groups } = CALENDAR_VIEWS;
 const Toolbar = ({
   children,
   firstDay,
+  fetchEventInitialFullRange,
   fetchEventPadding,
   onNavigate,
   onFetchMoreEvents,
@@ -31,6 +33,7 @@ const Toolbar = ({
   const fetchMore = useFetchEvents({
     cursorDate: selectedDate,
     monthPadding: fetchEventPadding,
+    currentFullRange: fetchEventInitialFullRange,
   });
 
   const changeDate = date => {
@@ -111,6 +114,7 @@ const Toolbar = ({
 Toolbar.defaultProps = {
   children: null,
   firstDay: FIRST_DAY_DEFAULT,
+  fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   onFetchMoreEvents: () => null,
   onResetEventRange: () => null,
@@ -118,6 +122,7 @@ Toolbar.defaultProps = {
 
 Toolbar.propTypes = {
   children: PropTypes.func,
+  fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
   onFetchMoreEvents: PropTypes.func,

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';
@@ -92,6 +92,10 @@ const Full = props => {
         {...handlers}
         events={events}
         onNavigate={setSelectedDate}
+        fetchEventInitialFullRange={{
+          start: new Date(moment().subtract(8, 'months')),
+          end: new Date(moment().add(8, 'months')),
+        }}
         onFetchMoreEvents={range => {
           console.log('range: ', range);
         }}

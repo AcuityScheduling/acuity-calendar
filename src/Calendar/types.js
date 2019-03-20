@@ -66,3 +66,8 @@ export const DAY_GRID_TYPE = PropTypes.oneOfType([
     getIsInRange: PropTypes.func,
   }),
 ]);
+
+export const FETCH_EVENT_INITIAL_FULL_RANGE = PropTypes.shape({
+  start: DATE_TYPE.isRequired,
+  end: DATE_TYPE.isRequired,
+});

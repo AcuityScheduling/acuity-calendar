@@ -6,18 +6,20 @@ const getFirstEventStart = ({ mungedEvents, selectedDate }) => {
       const eventArray =
         mungedEvents[groupId][selectedDate.format('YYYY-MM-DD')];
 
-      const minEvent = eventArray.reduce((minEvent, event) => {
-        if (minEvent === false) {
-          return event;
-        }
-        if (event.top < minEvent.top) {
-          return event;
-        }
-        return minEvent;
-      }, false);
+      if (eventArray) {
+        const minEvent = eventArray.reduce((minEvent, event) => {
+          if (minEvent === false) {
+            return event;
+          }
+          if (event.top < minEvent.top) {
+            return event;
+          }
+          return minEvent;
+        }, false);
 
-      if (accumulator === null || accumulator.top > minEvent.top) {
-        return minEvent;
+        if (accumulator === null || accumulator.top > minEvent.top) {
+          return minEvent;
+        }
       }
 
       return accumulator;

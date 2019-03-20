@@ -16,6 +16,7 @@ import {
   STEP_MINUTES_DEFAULT,
   VIEW_DEFAULT,
   FETCH_EVENT_PADDING_DEFAULT,
+  SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
 import {
   EVENT_TYPE,
@@ -25,6 +26,7 @@ import {
   CALENDAR_VIEW_TYPE,
   STEP_DETAILS_TYPE,
   FETCH_EVENT_INITIAL_FULL_RANGE,
+  SCROLL_TO_TIME_TYPE,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
@@ -60,6 +62,7 @@ const FullCalendar = ({
   renderDayGridEvent,
   renderTimeGridEvent,
   renderToolbar,
+  scrollToTime,
   selectedDate,
   selectMinutes,
   stepDetails,
@@ -106,6 +109,7 @@ const FullCalendar = ({
     stepMinutes,
     renderSelectSlotIndicator,
     renderEvent: renderTimeGridEvent,
+    scrollToTime,
   };
 
   const viewRenderMap = {
@@ -189,6 +193,7 @@ FullCalendar.defaultProps = {
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   style: {},
+  scrollToTime: SCROLL_TO_TIME_DEFAULT,
   view: VIEW_DEFAULT,
   visibleEventGroups: null,
 };
@@ -226,6 +231,7 @@ FullCalendar.propTypes = {
   renderTimeGridEvent: PropTypes.func,
   renderToolbar: PropTypes.func,
   renderWeekHeader: PropTypes.func,
+  scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),

@@ -26,6 +26,7 @@ const TimeGrid = React.forwardRef(
       renderColumns,
       renderCorner,
       totalWidth,
+      scrollToTime,
     },
     ref
   ) => {
@@ -38,7 +39,7 @@ const TimeGrid = React.forwardRef(
         const now = moment();
         setCurrentTime(now);
         onCurrentTimeChange(new Date(now.format('YYYY-MM-DD HH:mm:ss')));
-      }, 1000);
+      }, 1000 * 60);
       return () => {
         clearTimeout(timeout);
       };
@@ -53,14 +54,32 @@ const TimeGrid = React.forwardRef(
       stepLinesRef,
     } = useCalendarSticky(totalWidth);
 
+    const totalStepsPerBlock = 60 / stepMinutes;
+    const totalGridHeight = useMemo(() => {
+      const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
+      return (
+        (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
+        (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
+      );
+    }, [stepMinutes]);
+
+    useEffect(() => {
+      if (scrollToTime) {
+        const topOffset = getTopOffset({
+          stepMinutes,
+          date: moment(scrollToTime),
+          stepHeight,
+        });
+        wrapperRef.current.scrollTop = topOffset;
+      }
+    }, [selectedDate.format(), stepMinutes, stepHeight]);
+
     // Default to something sensible - but we're really getting the width from the element
     // so css can change the time gutter
     let timeGutterWidth = 50;
     if (timeGutterRef.current) {
       timeGutterWidth = timeGutterRef.current.offsetWidth - STEP_BORDER_WIDTH;
     }
-
-    const totalStepsPerBlock = 60 / stepMinutes;
 
     useEffect(() => {
       if (scrollbarWidth === 0) {
@@ -71,14 +90,6 @@ const TimeGrid = React.forwardRef(
     const currentTimeIndicatorClass = makeClass(
       'time-grid__current-time-indicator'
     );
-
-    const totalGridHeight = useMemo(() => {
-      const aggregateBorderHeight = totalStepsPerBlock * STEP_BORDER_WIDTH * 24;
-      return (
-        (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
-        (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
-      );
-    }, [stepMinutes]);
 
     const renderStepLines = () => {
       const extraBorderHeight = STEP_BORDER_WIDTH / totalStepsPerBlock;
@@ -202,6 +213,7 @@ TimeGrid.defaultProps = {
   renderCorner: () => null,
   selectedDate: SELECTED_DATE_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
+  scrollToTime: null,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
   stepHeight: null,
@@ -214,6 +226,7 @@ TimeGrid.propTypes = {
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
+  scrollToTime: DATE_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   stepHeight: PropTypes.number,

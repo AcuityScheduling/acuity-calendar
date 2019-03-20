@@ -93,8 +93,9 @@ const Full = props => {
         events={events}
         onNavigate={setSelectedDate}
         onFetchEvents={results => {
-          console.log('results: ', results);
+          console.log('FETCH EVENTS', results);
         }}
+        // scrollToTime={new Date()}
         onViewChange={setView}
         onCurrentTimeChange={currentTime => {
           // We need to update some of the step details to stay _under_ the current time

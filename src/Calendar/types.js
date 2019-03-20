@@ -71,3 +71,8 @@ export const FETCH_EVENT_INITIAL_FULL_RANGE = PropTypes.shape({
   start: DATE_TYPE.isRequired,
   end: DATE_TYPE.isRequired,
 });
+
+export const SCROLL_TO_TIME_TYPE = PropTypes.oneOfType([
+  DATE_TYPE,
+  PropTypes.oneOf(['firstEvent']),
+]);

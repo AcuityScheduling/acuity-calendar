@@ -13,6 +13,7 @@ import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
+  SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
 import { useMungeData } from '../../Calendar/utils';
 import {
@@ -21,7 +22,10 @@ import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
   STEP_DETAILS_TYPE,
+  DATE_TYPE,
+  SCROLL_TO_TIME_TYPE,
 } from '../../Calendar/types';
+import { scrollToEvent } from '../../Calendar/components/TimeGrid/utils';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
@@ -52,6 +56,7 @@ const CalendarGroups = ({
   renderEventPaddingTop,
   renderEventPaddingBottom,
   stepHeight,
+  scrollToTime,
 }) => {
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
   const {
@@ -86,6 +91,11 @@ const CalendarGroups = ({
       selectMinutes={selectMinutes}
       stepHeight={stepHeight}
       renderCorner={renderCorner}
+      scrollToTime={
+        scrollToTime === 'firstEvent'
+          ? scrollToEvent({ mungedEvents, selectedDate })
+          : scrollToTime
+      }
       renderHeader={() => {
         const totalColumns = eventGroups.length;
         return eventGroups.map(groupId => {
@@ -200,6 +210,7 @@ CalendarGroups.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   stepDetails: null,
+  scrollToTime: SCROLL_TO_TIME_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   visibleEventGroups: null,
 };
@@ -223,6 +234,7 @@ CalendarGroups.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
+  scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),

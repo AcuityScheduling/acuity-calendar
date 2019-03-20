@@ -13,6 +13,7 @@ import {
   EVENT_TYPE,
   DATE_TYPE,
   STEP_DETAILS_TYPE,
+  SCROLL_TO_TIME_TYPE,
 } from '../../Calendar/types';
 import ColumnHeader from '../../Calendar/components/TimeGrid/components/ColumnHeader';
 import {
@@ -22,6 +23,7 @@ import {
   SELECT_MINUTES_DEFAULT,
   FIRST_DAY_DEFAULT,
   SELECTED_DATE_DEFAULT,
+  SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
 import { useMungeData } from '../../Calendar/utils';
 
@@ -49,6 +51,7 @@ const CalendarWeek = ({
   renderEventPaddingBottom,
   renderHeader,
   stepHeight,
+  scrollToTime,
   visibleEventGroups,
 }) => {
   const dateList = getWeekList({ date: moment(selectedDate), firstDay });
@@ -81,6 +84,7 @@ const CalendarWeek = ({
       onCurrentTimeChange={onCurrentTimeChange}
       selectMinutes={selectMinutes}
       stepHeight={stepHeight}
+      scrollToTime={scrollToTime}
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {
@@ -207,6 +211,7 @@ CalendarWeek.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
+  scrollToTime: SCROLL_TO_TIME_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   visibleEventGroups: null,
 };
@@ -230,6 +235,7 @@ CalendarWeek.propTypes = {
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
+  scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),

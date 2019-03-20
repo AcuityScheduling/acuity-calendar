@@ -4,6 +4,7 @@ import getTopOffset from './getTopOffset';
 import getTodayClass from './getTodayClass';
 import getClickedTime from './getClickedTime';
 import getDisplayTime from './getDisplayTime';
+import scrollToEvent from './scrollToEvent';
 import useCalendarSticky from './useCalendarSticky';
 import useElementWidths from './useElementWidths';
 import useSelectRange from './useSelectRange';
@@ -15,6 +16,7 @@ export {
   getTopOffset,
   getScrollbarWidth,
   getTodayClass,
+  scrollToEvent,
   useCalendarSticky,
   useElementWidths,
   useSelectRange,

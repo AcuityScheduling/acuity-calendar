@@ -21,28 +21,15 @@ const useFetchEvents = ({
           .endOf('month'),
       };
   const [fullRange, setFullRange] = useState(actualFullRange);
-  return {
-    fetchMore: onFetchEvents => {
-      fetchMore({
-        cursorDate,
-        monthPadding,
-        fullRange,
-        setFullRange,
-        onFetchEvents,
-      });
-    },
+  return fetchMore({
+    cursorDate,
     fullRange,
-  };
+    monthPadding,
+    setFullRange,
+  });
 };
 
-const fetchMore = ({
-  cursorDate,
-  fullRange,
-  onFetchEvents,
-  monthPadding,
-  onResetRange,
-  setFullRange,
-}) => {
+const fetchMore = ({ cursorDate, fullRange, monthPadding, setFullRange }) => {
   const selectedDate = moment(new Date(cursorDate));
   const { start, end } = fullRange;
 
@@ -69,7 +56,10 @@ const fetchMore = ({
         end: new Date(adjustedRanges.fullRange.end),
       },
     };
-    return onFetchEvents(finalRanges);
+    return {
+      shouldFetchMore: true,
+      ...finalRanges,
+    };
   }
 
   //  If there is no fetchMoreRange that means the user navigated far outside our current
@@ -94,11 +84,25 @@ const fetchMore = ({
         end: new Date(outsideRange.end),
       },
     };
-    return onResetRange({ ...finalRanges, resetRange: true });
+    return {
+      isOutsideRange: true,
+      ...finalRanges,
+    };
   }
 
-  // If we don't want to fetch any more events do nothing
-  return null;
+  // If we're not fetching more events just return the full range
+  return {
+    shouldFetchMore: false,
+    isOutsideRange: false,
+    fullRange: {
+      start: new Date(fullRange.start),
+      end: new Date(fullRange.end),
+    },
+    fetchMoreRange: {
+      start: null,
+      end: null,
+    },
+  };
 };
 
 /**
@@ -134,6 +138,7 @@ export const getNewRanges = ({
       monthPadding,
     });
   }
+
   if (shouldExtendEnd({ selectedDate, endDate, monthPadding })) {
     ranges = getExtendedEndRange({ startDate, endDate, monthPadding });
   }

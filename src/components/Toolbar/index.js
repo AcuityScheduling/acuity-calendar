@@ -29,7 +29,12 @@ const Toolbar = ({
   selectedDate,
   view,
 }) => {
-  const { fetchMore, fullRange } = useFetchEvents({
+  const {
+    shouldFetchMore,
+    isOutsideRange,
+    fullRange,
+    fetchMoreRange,
+  } = useFetchEvents({
     cursorDate: selectedDate,
     monthPadding: fetchEventPadding,
     currentFullRange: fetchEventInitialFullRange,
@@ -37,7 +42,7 @@ const Toolbar = ({
 
   useEffect(() => {
     onFetchEvents({
-      fetchMoreRange: { start: null, end: null },
+      fetchMoreRange,
       fullRange,
       initialFetch: true,
     });
@@ -45,7 +50,9 @@ const Toolbar = ({
 
   const changeDate = date => {
     onNavigate(date);
-    fetchMore(onFetchEvents);
+    if (shouldFetchMore || isOutsideRange) {
+      onFetchEvents({ fullRange, fetchMoreRange });
+    }
   };
 
   const title = getRangeTitle({ date: moment(selectedDate), view, firstDay });

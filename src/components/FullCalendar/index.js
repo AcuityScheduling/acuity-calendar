@@ -194,7 +194,6 @@ FullCalendar.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   style: {},
   scrollToTime: SCROLL_TO_TIME_DEFAULT,
-  view: VIEW_DEFAULT,
   visibleEventGroups: null,
 };
 
@@ -216,7 +215,7 @@ FullCalendar.propTypes = {
   onSelectMore: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
-  onViewChange: PropTypes.func,
+  onViewChange: PropTypes.func.isRequired,
   renderCell: PropTypes.func,
   renderCorner: PropTypes.func,
   renderDayGridEvent: PropTypes.func,
@@ -238,7 +237,7 @@ FullCalendar.propTypes = {
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   style: PropTypes.object,
-  view: CALENDAR_VIEW_TYPE,
+  view: CALENDAR_VIEW_TYPE.isRequired,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 

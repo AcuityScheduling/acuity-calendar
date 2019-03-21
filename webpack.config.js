@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 module.exports = {
   mode: 'production',
   entry: './src/index.js',
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].js',

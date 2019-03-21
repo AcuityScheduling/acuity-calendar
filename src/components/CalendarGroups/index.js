@@ -93,7 +93,7 @@ const CalendarGroups = ({
       renderCorner={renderCorner}
       scrollToTime={
         scrollToTime === 'firstEvent'
-          ? scrollToEvent({ mungedEvents, selectedDate })
+          ? scrollToEvent({ mungedEvents, selectedDate, hasGroups: true })
           : scrollToTime
       }
       renderHeader={() => {

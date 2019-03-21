@@ -1,10 +1,16 @@
 import get from 'lodash.get';
 
-const getFirstEventStart = ({ mungedEvents, selectedDate }) => {
+const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
   const firstEvent = Object.keys(mungedEvents).reduce(
-    (accumulator, groupId) => {
-      const eventArray =
-        mungedEvents[groupId][selectedDate.format('YYYY-MM-DD')];
+    (accumulator, firstKey) => {
+      let eventArray = mungedEvents[firstKey];
+      if (hasGroups) {
+        eventArray = mungedEvents[firstKey][selectedDate.format('YYYY-MM-DD')];
+      } else {
+        if (firstKey !== selectedDate.format('YYYY-MM-DD')) {
+          return accumulator;
+        }
+      }
 
       if (eventArray) {
         const minEvent = eventArray.reduce((minEvent, event) => {
@@ -32,8 +38,12 @@ const getFirstEventStart = ({ mungedEvents, selectedDate }) => {
 // The time that we're scrolling to when going to month/week view. Will
 // scroll to make the first event in view on selected date only if it's
 // before 9am or scroll to 9am
-const scrollToEvent = ({ mungedEvents, selectedDate }) => {
-  const firstEventStart = getFirstEventStart({ mungedEvents, selectedDate });
+const scrollToEvent = ({ mungedEvents, selectedDate, hasGroups }) => {
+  const firstEventStart = getFirstEventStart({
+    mungedEvents,
+    selectedDate,
+    hasGroups,
+  });
 
   // This is the total minutes that we're going to pad our scroll by.
   // I think it's better to give a little padding before the event so

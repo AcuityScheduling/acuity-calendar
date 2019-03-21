@@ -2,7 +2,10 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import moment from 'moment';
-import { getEventColumns } from '../../Calendar/components/TimeGrid/utils';
+import {
+  getEventColumns,
+  scrollToEvent,
+} from '../../Calendar/components/TimeGrid/utils';
 import TimeGrid from '../../Calendar/components/TimeGrid';
 import Column from '../../Calendar/components/TimeGrid/components/Column';
 import { getWeekList } from './utils';
@@ -84,7 +87,15 @@ const CalendarWeek = ({
       onCurrentTimeChange={onCurrentTimeChange}
       selectMinutes={selectMinutes}
       stepHeight={stepHeight}
-      scrollToTime={scrollToTime}
+      scrollToTime={
+        scrollToTime === 'firstEvent'
+          ? scrollToEvent({
+              mungedEvents: eventsWithSelectedEventGroups,
+              selectedDate: moment(selectedDate),
+              hasGroups: false,
+            })
+          : scrollToTime
+      }
       renderCorner={renderCorner}
       renderHeader={() =>
         dateList.map(date => {

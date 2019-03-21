@@ -1,5 +1,16 @@
 import get from 'lodash.get';
+// eslint-disable-next-line no-unused-vars
+import moment from 'moment';
 
+/**
+ * Get the start time of the first event on a given selectedDate
+ *
+ * @param {Object} params
+ * @param {Object} params.mungedEvents - the events in there munged format
+ * @param {moment} params.selectedDate
+ * @param {boolean} params.hasGroups - does munged events include groups as the top level key?
+ *                                     this will be true for calendarGroups view
+ */
 const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
   const firstEvent = Object.keys(mungedEvents).reduce(
     (accumulator, firstKey) => {
@@ -35,9 +46,16 @@ const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
   return get(firstEvent, 'start', null);
 };
 
-// The time that we're scrolling to when going to month/week view. Will
-// scroll to make the first event in view on selected date only if it's
-// before 9am or scroll to 9am
+/**
+ * The time that we're scrolling to when going to month/week view. Will
+ * scroll to make the first event in view on selected date only if it's
+ * before 9am or scroll to 9am
+ *
+ * @param {Object} params
+ * @param {Object} params.mungedEvents
+ * @param {moment} params.selectedDate
+ * @param {boolean} params.hasGroups
+ */
 const scrollToEvent = ({ mungedEvents, selectedDate, hasGroups }) => {
   const firstEventStart = getFirstEventStart({
     mungedEvents,

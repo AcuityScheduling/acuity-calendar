@@ -20421,7 +20421,7 @@
                   minWidthEmpty: o,
                 },
                 w
-                  ? w({ data: e, events: t })
+                  ? w({ date: e, events: t })
                   : r.a.createElement(
                       'h2',
                       null,

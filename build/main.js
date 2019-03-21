@@ -21163,9 +21163,6 @@
         onSelectSlot: function() {
           return null;
         },
-        onViewChange: function() {
-          return null;
-        },
         renderCell: null,
         renderCorner: function() {
           return null;
@@ -21222,7 +21219,7 @@
           renderEvent: i.a.func,
           renderEventPaddingBottom: i.a.func,
           renderEventPaddingTop: i.a.func,
-          renderGroupsHeader: i.a.func,
+          renderGroupsHeader: i.a.func.isRequired,
           renderMonthHeader: i.a.func,
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,

@@ -113,7 +113,7 @@ const CalendarWeek = ({
               minWidthEmpty={minWidthColumnEmpty}
             >
               {renderHeader ? (
-                renderHeader({ date, events })
+                renderHeader({ date: new Date(date), events })
               ) : (
                 <h2>
                   {date.format('dddd')}, {date.format('MMM D')}

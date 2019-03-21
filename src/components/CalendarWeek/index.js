@@ -116,9 +116,7 @@ const CalendarWeek = ({
                 renderHeader({ data: date, events })
               ) : (
                 <h2>
-                  {date.format('dddd')}
-                  <br />
-                  {date.format('MMM, D')}
+                  {date.format('dddd')}, {date.format('MMM D')}
                 </h2>
               )}
             </ColumnHeader>

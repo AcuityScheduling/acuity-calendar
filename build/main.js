@@ -20655,23 +20655,7 @@
           Xt(t, tn, n.format('dddd, MMMM D, YYYY')),
           t)[a];
         };
-      function an(e) {
-        for (var t = 1; t < arguments.length; t++) {
-          var n = null != arguments[t] ? arguments[t] : {},
-            a = Object.keys(n);
-          'function' == typeof Object.getOwnPropertySymbols &&
-            (a = a.concat(
-              Object.getOwnPropertySymbols(n).filter(function(e) {
-                return Object.getOwnPropertyDescriptor(n, e).enumerable;
-              })
-            )),
-            a.forEach(function(t) {
-              rn(e, t, n[t]);
-            });
-        }
-        return e;
-      }
-      function rn(e, t, n) {
+      function an(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20684,7 +20668,80 @@
           e
         );
       }
-      function sn(e, t) {
+      var rn = Ye.groups,
+        sn = Ye.week,
+        on = Ye.month,
+        dn = function(e) {
+          var t,
+            n = e.view,
+            a = e.selectedDate,
+            r = e.firstDay;
+          return (an((t = {}), on, function() {
+            return {
+              start: a.clone().startOf('month'),
+              end: a.clone().endOf('month'),
+            };
+          }),
+          an(t, sn, function() {
+            var e = qt({ firstDay: r, date: a });
+            return {
+              start: e[0].clone().startOf('day'),
+              end: e[0]
+                .clone()
+                .add(6, 'days')
+                .endOf('day'),
+            };
+          }),
+          an(t, rn, function() {
+            return {
+              start: a.clone().startOf('day'),
+              end: a.clone().endOf('day'),
+            };
+          }),
+          t)[n]();
+        },
+        un = function(e) {
+          var t = e.events,
+            n = e.view,
+            a = e.selectedDate,
+            r = e.firstDay,
+            s = dn({ view: n, selectedDate: a, firstDay: r }),
+            i = s.start,
+            o = s.end;
+          return t.filter(function(e) {
+            return d()(e.start).isBetween(i, o, 'minutes', '[]');
+          });
+        };
+      function ln(e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var n = null != arguments[t] ? arguments[t] : {},
+            a = Object.keys(n);
+          'function' == typeof Object.getOwnPropertySymbols &&
+            (a = a.concat(
+              Object.getOwnPropertySymbols(n).filter(function(e) {
+                return Object.getOwnPropertyDescriptor(n, e).enumerable;
+              })
+            )),
+            a.forEach(function(t) {
+              _n(e, t, n[t]);
+            });
+        }
+        return e;
+      }
+      function _n(e, t, n) {
+        return (
+          t in e
+            ? Object.defineProperty(e, t, {
+                value: n,
+                enumerable: !0,
+                configurable: !0,
+                writable: !0,
+              })
+            : (e[t] = n),
+          e
+        );
+      }
+      function cn(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -20719,7 +20776,7 @@
           })()
         );
       }
-      var on = function(e) {
+      var mn = function(e) {
           var t = e.cursorDate,
             n = e.fullRange,
             a = e.monthPadding,
@@ -20727,7 +20784,7 @@
             s = d()(new Date(t)),
             i = n.start,
             o = n.end,
-            u = dn({
+            u = hn({
               selectedDate: s,
               startDate: d()(new Date(i)),
               endDate: d()(new Date(o)),
@@ -20739,7 +20796,7 @@
                 start: new Date(u.fullRange.start),
                 end: new Date(u.fullRange.end),
               }),
-              an(
+              ln(
                 { shouldFetchMore: !0 },
                 {
                   fetchMoreRange: {
@@ -20753,11 +20810,11 @@
                 }
               )
             );
-          if (mn({ selectedDate: s, startDate: i, endDate: o })) {
-            var l = hn({ selectedDate: s, monthPadding: a });
+          if (gn({ selectedDate: s, startDate: i, endDate: o })) {
+            var l = Ln({ selectedDate: s, monthPadding: a });
             return (
               r({ start: new Date(l.start), end: new Date(l.end) }),
-              an(
+              ln(
                 { isOutsideRange: !0 },
                 {
                   fetchMoreRange: { start: null, end: null },
@@ -20773,27 +20830,27 @@
             fetchMoreRange: { start: null, end: null },
           };
         },
-        dn = function(e) {
+        hn = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.endDate,
             r = e.monthPadding,
             s = { fetchMoreRange: !1, fullRange: !1 };
           return (
-            un({ selectedDate: t, startDate: n, monthPadding: r }) &&
-              (s = ln({ startDate: n, endDate: a, monthPadding: r })),
-            _n({ selectedDate: t, endDate: a, monthPadding: r }) &&
-              (s = cn({ startDate: n, endDate: a, monthPadding: r })),
+            fn({ selectedDate: t, startDate: n, monthPadding: r }) &&
+              (s = pn({ startDate: n, endDate: a, monthPadding: r })),
+            Mn({ selectedDate: t, endDate: a, monthPadding: r }) &&
+              (s = yn({ startDate: n, endDate: a, monthPadding: r })),
             s
           );
         },
-        un = function(e) {
+        fn = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.monthPadding;
           return t.isBefore(n.clone().add(a, 'months')) && t.isAfter(n);
         },
-        ln = function(e) {
+        pn = function(e) {
           var t = e.startDate,
             n = e.endDate,
             a = e.monthPadding,
@@ -20810,13 +20867,13 @@
             { fetchMoreRange: r, fullRange: s }
           );
         },
-        _n = function(e) {
+        Mn = function(e) {
           var t = e.selectedDate,
             n = e.endDate,
             a = e.monthPadding;
           return t.isAfter(n.clone().subtract(a, 'months')) && t.isBefore(n);
         },
-        cn = function(e) {
+        yn = function(e) {
           var t = e.startDate,
             n = e.endDate,
             a = e.monthPadding,
@@ -20835,13 +20892,13 @@
             { fetchMoreRange: r, fullRange: s }
           );
         },
-        mn = function(e) {
+        gn = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.endDate;
           return t.isBefore(n) || t.isAfter(a);
         },
-        hn = function(e) {
+        Ln = function(e) {
           var t = e.selectedDate,
             n = e.monthPadding;
           return {
@@ -20855,7 +20912,7 @@
               .endOf('month'),
           };
         },
-        fn = function(e) {
+        Yn = function(e) {
           var t = e.cursorDate,
             n = e.monthPadding,
             r = void 0 === n ? 1 : n,
@@ -20869,20 +20926,20 @@
                 .add(r, 'months')
                 .endOf('month'),
             },
-            u = sn(Object(a.useState)(o), 2),
+            u = cn(Object(a.useState)(o), 2),
             l = u[0],
             _ = u[1];
-          return on({
+          return mn({
             cursorDate: t,
             fullRange: l,
             monthPadding: r,
             setFullRange: _,
           });
         },
-        pn = Ye.month,
-        Mn = Ye.week,
-        yn = Ye.groups,
-        gn = function(e) {
+        vn = Ye.month,
+        Dn = Ye.week,
+        kn = Ye.groups,
+        bn = function(e) {
           var t = e.children,
             n = e.firstDay,
             s = e.fetchEventInitialFullRange,
@@ -20891,38 +20948,50 @@
             u = e.onFetchEvents,
             l = e.onViewChange,
             _ = e.selectedDate,
-            c = e.view,
-            m = fn({ cursorDate: _, monthPadding: i, currentFullRange: s }),
-            h = m.fetchMoreRange,
-            f = m.fullRange,
-            p = m.shouldFetchMore,
-            M = m.isOutsideRange;
+            c = e.events,
+            m = e.view,
+            h = Yn({ cursorDate: _, monthPadding: i, currentFullRange: s }),
+            f = h.fetchMoreRange,
+            p = h.fullRange,
+            M = h.shouldFetchMore,
+            y = h.isOutsideRange;
           Object(a.useEffect)(function() {
-            u({ fetchMoreRange: h, fullRange: f, initialFetch: !0 });
+            u({ fetchMoreRange: f, fullRange: p, initialFetch: !0 });
           }, []),
-            (p || M) &&
-              u({ fetchMoreRange: h, fullRange: f, outsideRange: !!M });
-          var y = function(e) {
+            (M || y) &&
+              u({ fetchMoreRange: f, fullRange: p, outsideRange: !!y });
+          var g = function(e) {
               o(e);
             },
-            g = nn({ date: d()(_), view: c, firstDay: n }),
-            L = function() {
-              var e = new Date(
-                Zt({ view: c, direction: 1, currentDate: d()(_) })
-              );
-              y(e);
-            },
+            L = nn({ date: d()(_), view: m, firstDay: n }),
             Y = function() {
               var e = new Date(
-                Zt({ view: c, direction: -1, currentDate: d()(_) })
+                Zt({ view: m, direction: 1, currentDate: d()(_) })
               );
-              y(e);
+              g(e);
             },
             v = function() {
-              y(new Date());
+              var e = new Date(
+                Zt({ view: m, direction: -1, currentDate: d()(_) })
+              );
+              g(e);
+            },
+            D = function() {
+              g(new Date());
             };
           return t
-            ? t({ onNext: L, onPrev: Y, onToday: v, title: g })
+            ? t({
+                onNext: Y,
+                onPrev: v,
+                onToday: D,
+                title: L,
+                eventsForView: un({
+                  events: c,
+                  view: m,
+                  selectedDate: d()(_),
+                  firstDay: n,
+                }),
+              })
             : r.a.createElement(
                 'div',
                 { className: ve('toolbar') },
@@ -20934,7 +21003,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(pn);
+                        return l(vn);
                       },
                     },
                     'Month'
@@ -20944,7 +21013,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(Mn);
+                        return l(Dn);
                       },
                     },
                     'Week'
@@ -20954,7 +21023,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(yn);
+                        return l(kn);
                       },
                     },
                     'Day'
@@ -20965,25 +21034,26 @@
                   { className: ve('toolbar__navigate') },
                   r.a.createElement(
                     'button',
-                    { type: 'button', onClick: v },
+                    { type: 'button', onClick: D },
                     'Today'
                   ),
                   r.a.createElement(
                     'button',
-                    { type: 'button', onClick: Y },
+                    { type: 'button', onClick: v },
                     'Back'
                   ),
                   r.a.createElement(
                     'button',
-                    { type: 'button', onClick: L },
+                    { type: 'button', onClick: Y },
                     'Next'
                   )
                 ),
-                r.a.createElement('h1', { className: ve('toolbar__title') }, g)
+                r.a.createElement('h1', { className: ve('toolbar__title') }, L)
               );
         };
-      (gn.defaultProps = {
+      (bn.defaultProps = {
         children: null,
+        events: [],
         firstDay: 0,
         fetchEventInitialFullRange: null,
         fetchEventPadding: 1,
@@ -20991,8 +21061,9 @@
           return null;
         },
       }),
-        (gn.propTypes = {
+        (bn.propTypes = {
           children: i.a.func,
+          events: i.a.arrayOf(Oe),
           fetchEventInitialFullRange: ze,
           fetchEventPadding: i.a.number,
           firstDay: je,
@@ -21002,8 +21073,8 @@
           selectedDate: He.isRequired,
           view: Ee.isRequired,
         });
-      var Ln = gn;
-      function Yn(e, t, n) {
+      var wn = bn;
+      function Tn(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -21016,8 +21087,8 @@
           e
         );
       }
-      function vn() {
-        return (vn =
+      function Sn() {
+        return (Sn =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -21028,7 +21099,7 @@
             return e;
           }).apply(this, arguments);
       }
-      var Dn = function(e) {
+      var Hn = function(e) {
         var t,
           n = e.events,
           a = (e.fetchEventPadding, e.fetchEventInitialFullRange),
@@ -21107,20 +21178,21 @@
             renderEvent: E,
             scrollToTime: P,
           },
-          $ = (Yn(
+          $ = (Tn(
             (t = {}),
             J,
-            r.a.createElement(yt, vn({ renderHeader: w }, B, q))
+            r.a.createElement(yt, Sn({ renderHeader: w }, B, q))
           ),
-          Yn(t, G, r.a.createElement($t, vn({ renderHeader: j }, V, q))),
-          Yn(t, U, r.a.createElement(Ut, vn({ renderHeader: b }, V, q))),
+          Tn(t, G, r.a.createElement($t, Sn({ renderHeader: j }, V, q))),
+          Tn(t, U, r.a.createElement(Ut, Sn({ renderHeader: b }, V, q))),
           t);
         return r.a.createElement(
           'div',
           { className: 'acuity-calendar', style: F },
           r.a.createElement(
-            Ln,
+            wn,
             {
+              events: n,
               fetchEventInitialFullRange: a,
               firstDay: s,
               onNavigate: m,
@@ -21134,7 +21206,7 @@
           $[N]
         );
       };
-      (Dn.defaultProps = {
+      (Hn.defaultProps = {
         events: [],
         fetchEventInitialFullRange: null,
         fetchEventPadding: 1,
@@ -21203,7 +21275,7 @@
         scrollToTime: 'firstEvent',
         visibleEventGroups: null,
       }),
-        (Dn.propTypes = {
+        (Hn.propTypes = {
           events: i.a.arrayOf(Oe),
           fetchEventInitialFullRange: ze,
           fetchEventPadding: i.a.number,
@@ -21246,9 +21318,9 @@
           view: Ee.isRequired,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var kn = Dn;
-      function bn(e) {
-        return (bn =
+      var jn = Hn;
+      function xn(e) {
+        return (xn =
           'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
             ? function(e) {
                 return typeof e;
@@ -21262,11 +21334,11 @@
                   : typeof e;
               })(e);
       }
-      var wn = (function() {
+      var En = (function() {
           var e = function(e, t, n) {
               var a,
                 r = e[t];
-              return null == r || 'object' !== bn(r)
+              return null == r || 'object' !== xn(r)
                 ? new TypeError(
                     'Invalid '
                       .concat(t, ' prop: ')
@@ -21295,42 +21367,42 @@
             };
           return (t.isRequired = e), t;
         })(),
-        Tn = '.'.concat('acuity-calendar'),
-        Sn = '.'.concat('acuity-calendar', '__day-grid'),
-        Hn = '\n    '
+        On = '.'.concat('acuity-calendar'),
+        Pn = '.'.concat('acuity-calendar', '__day-grid'),
+        Wn = '\n    '
           .concat(
-            Tn,
+            On,
             '__heatmap-header {\n        font-size: 14px;\n    }\n    '
           )
           .concat(
-            Tn,
+            On,
             '__heatmap__cell {\n        background: #26ada0;\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        top: 0;\n        left: 0;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             ' {\n        height: 250px;\n        width: 250px;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             '__date-wrapper:hover {\n        background: none;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             '__date-wrapper {\n        position: relative;\n        cursor: default;\n        top: auto;\n        right: auto;\n        margin: 0 auto;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             '__column-header {\n        text-transform: none;\n        padding: 5px;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             '__cell {\n        position: relative;\n        display: flex;\n        align-items: center;\n    }\n    '
           )
           .concat(
-            Sn,
+            Pn,
             '__date {\n        text-align: center;\n        position: relative;\n        z-index: 10;\n    }\n'
           );
-      function jn(e) {
+      function Rn(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -21341,12 +21413,12 @@
               })
             )),
             a.forEach(function(t) {
-              xn(e, t, n[t]);
+              An(e, t, n[t]);
             });
         }
         return e;
       }
-      function xn(e, t, n) {
+      function An(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -21359,7 +21431,7 @@
           e
         );
       }
-      var En = function(e) {
+      var Cn = function(e) {
         var t = e.counts,
           n = e.firstDay,
           s = e.forceSixWeeks,
@@ -21380,7 +21452,7 @@
         return r.a.createElement(
           a.Fragment,
           null,
-          r.a.createElement('style', null, Hn),
+          r.a.createElement('style', null, Wn),
           r.a.createElement(yt, {
             forceSixWeeks: s,
             firstDay: n,
@@ -21388,7 +21460,7 @@
               var t = h(e.date),
                 n = t.weight,
                 a = t.count;
-              i(jn({}, e, { weight: n, count: a }));
+              i(Rn({}, e, { weight: n, count: a }));
             },
             renderHeader: u,
             renderCell: function(e) {
@@ -21399,7 +21471,7 @@
                 a.Fragment,
                 null,
                 o
-                  ? o(jn({}, e, { weight: n, count: s }))
+                  ? o(Rn({}, e, { weight: n, count: s }))
                   : r.a.createElement('div', {
                       className: ve('heatmap__cell'),
                       style: { opacity: n },
@@ -21410,7 +21482,7 @@
           })
         );
       };
-      (En.defaultProps = {
+      (Cn.defaultProps = {
         counts: {},
         firstDay: 0,
         forceSixWeeks: !0,
@@ -21428,8 +21500,8 @@
         },
         selectedDate: new Date(),
       }),
-        (En.propTypes = {
-          counts: wn,
+        (Cn.propTypes = {
+          counts: En,
           firstDay: je,
           forceSixWeeks: i.a.bool,
           onSelectCell: i.a.func,
@@ -21437,10 +21509,10 @@
           renderHeader: i.a.func,
           selectedDate: He,
         });
-      var On = En;
+      var zn = Cn;
       n(151);
-      function Pn() {
-        return (Pn =
+      function Fn() {
+        return (Fn =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -21451,7 +21523,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function Wn(e, t) {
+      function Nn(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -21475,12 +21547,12 @@
         }
         return r;
       }
-      var Rn = function(e) {
+      var In = function(e) {
         var t = e.renderCell,
           n = e.renderHeader,
           a = e.firstDay,
           s = e.totalDays,
-          i = Wn(e, ['renderCell', 'renderHeader', 'firstDay', 'totalDays']),
+          i = Nn(e, ['renderCell', 'renderHeader', 'firstDay', 'totalDays']),
           o = {
             firstDate: d()().day(a),
             lastDate: d()()
@@ -21501,7 +21573,7 @@
           { className: ve('day-list') },
           r.a.createElement(
             it,
-            Pn(
+            Fn(
               {
                 grid: o,
                 renderHeader: function(e) {
@@ -21518,7 +21590,7 @@
           )
         );
       };
-      (Rn.defaultProps = {
+      (In.defaultProps = {
         renderCell: function() {
           return null;
         },
@@ -21526,13 +21598,13 @@
         firstDay: 0,
         totalDays: 7,
       }),
-        (Rn.propTypes = {
+        (In.propTypes = {
           firstDay: je,
           renderCell: i.a.func,
           renderHeader: i.a.func,
           totalDays: i.a.number,
         });
-      var An = Rn;
+      var Jn = In;
       n.d(t, 'CalendarGroups', function() {
         return Ut;
       }),
@@ -21540,13 +21612,13 @@
           return yt;
         }),
         n.d(t, 'CalendarMonthHeatmap', function() {
-          return On;
+          return zn;
         }),
         n.d(t, 'CalendarWeek', function() {
           return $t;
         }),
         n.d(t, 'DayList', function() {
-          return An;
+          return Jn;
         }),
         n.d(t, 'DayGrid', function() {
           return it;
@@ -21555,9 +21627,9 @@
           return Yt;
         }),
         n.d(t, 'Toolbar', function() {
-          return Ln;
+          return wn;
         });
-      t.default = kn;
+      t.default = jn;
     },
   ]);
 });

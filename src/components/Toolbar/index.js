@@ -7,10 +7,16 @@ import {
   DATE_TYPE,
   FIRST_DAY_TYPE,
   FETCH_EVENT_INITIAL_FULL_RANGE,
+  EVENT_TYPE,
 } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
 import './index.scss';
-import { getNavigateDate, getRangeTitle, useFetchEvents } from './utils';
+import {
+  getNavigateDate,
+  getRangeTitle,
+  useFetchEvents,
+  getEventsForView,
+} from './utils';
 import {
   FIRST_DAY_DEFAULT,
   FETCH_EVENT_PADDING_DEFAULT,
@@ -27,6 +33,7 @@ const Toolbar = ({
   onFetchEvents,
   onViewChange,
   selectedDate,
+  events,
   view,
 }) => {
   const {
@@ -94,6 +101,12 @@ const Toolbar = ({
       onPrev,
       onToday,
       title,
+      eventsForView: getEventsForView({
+        events,
+        view,
+        selectedDate: moment(selectedDate),
+        firstDay,
+      }),
     })
   ) : (
     <div className={makeClass('toolbar')}>
@@ -126,6 +139,7 @@ const Toolbar = ({
 
 Toolbar.defaultProps = {
   children: null,
+  events: [],
   firstDay: FIRST_DAY_DEFAULT,
   fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
@@ -134,6 +148,7 @@ Toolbar.defaultProps = {
 
 Toolbar.propTypes = {
   children: PropTypes.func,
+  events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,

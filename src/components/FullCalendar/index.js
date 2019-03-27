@@ -14,7 +14,6 @@ import {
   SELECT_MINUTES_DEFAULT,
   SELECTED_DATE_DEFAULT,
   STEP_MINUTES_DEFAULT,
-  VIEW_DEFAULT,
   FETCH_EVENT_PADDING_DEFAULT,
   SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
@@ -139,6 +138,7 @@ const FullCalendar = ({
   return (
     <div className={CLASS_PREFIX} style={style}>
       <Toolbar
+        events={events}
         fetchEventInitialFullRange={fetchEventInitialFullRange}
         firstDay={firstDay}
         onNavigate={onNavigate}

@@ -20027,11 +20027,19 @@
             n = e.totalEventColumns,
             a = (e.totalColumns, e.date),
             s = e.minWidth,
-            i = e.minWidthEmpty;
+            i = e.minWidthEmpty,
+            o = e.type;
           return r.a.createElement(
             'div',
             {
-              className: ''.concat(ve('time-grid__header-column')).concat(N(a)),
+              className: ''
+                .concat(
+                  ve(
+                    'time-grid__header-column',
+                    'time-grid__header-column-'.concat(o)
+                  )
+                )
+                .concat(N(a)),
               style: { minWidth: ''.concat(n * s || i, 'px') },
             },
             r.a.createElement(
@@ -20051,6 +20059,7 @@
           minWidthEmpty: i.a.number,
           totalColumns: i.a.number.isRequired,
           totalEventColumns: i.a.number.isRequired,
+          type: i.a.oneOf([Ye.week, Ye.groups]).isRequired,
         });
       var Nt = Ft;
       function It(e, t, n) {
@@ -20158,6 +20167,7 @@
                       date: t,
                       minWidth: o,
                       minWidthEmpty: d,
+                      type: Ye.groups,
                     },
                     r.a.createElement(
                       'h2',
@@ -20419,6 +20429,7 @@
                   date: e,
                   minWidth: i,
                   minWidthEmpty: o,
+                  type: Ye.week,
                 },
                 w
                   ? w({ date: new Date(e), events: t })

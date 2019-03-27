@@ -29,6 +29,7 @@ import {
   SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
 import { useMungeData } from '../../Calendar/utils';
+import { CALENDAR_VIEWS } from '../../Calendar/constants';
 
 const CalendarWeek = ({
   events,
@@ -111,6 +112,7 @@ const CalendarWeek = ({
               date={date}
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
+              type={CALENDAR_VIEWS.week}
             >
               {renderHeader ? (
                 renderHeader({ date: new Date(date), events })

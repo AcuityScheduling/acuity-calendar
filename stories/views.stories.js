@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';

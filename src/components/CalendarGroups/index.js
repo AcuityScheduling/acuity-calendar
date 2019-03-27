@@ -22,10 +22,10 @@ import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
   STEP_DETAILS_TYPE,
-  DATE_TYPE,
   SCROLL_TO_TIME_TYPE,
 } from '../../Calendar/types';
 import { scrollToEvent } from '../../Calendar/components/TimeGrid/utils';
+import { CALENDAR_VIEWS } from '../../Calendar/constants';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
   return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
@@ -113,6 +113,7 @@ const CalendarGroups = ({
               date={selectedDate}
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
+              type={CALENDAR_VIEWS.groups}
             >
               <h2>
                 {renderHeader &&

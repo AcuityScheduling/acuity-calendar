@@ -20032,20 +20032,18 @@
           return r.a.createElement(
             'div',
             {
-              className: ''
-                .concat(
-                  ve(
-                    'time-grid__header-column',
-                    'time-grid__header-column-'.concat(o)
-                  )
-                )
-                .concat(N(a)),
+              className: ''.concat(ve('time-grid__header-column')).concat(N(a)),
               style: { minWidth: ''.concat(n * s || i, 'px') },
             },
             r.a.createElement(
               'div',
               {
-                className: ''.concat(ve('time-grid__header-column-container')),
+                className: ''.concat(
+                  ve(
+                    'time-grid__header-column-container',
+                    'time-grid__header-column-'.concat(o)
+                  )
+                ),
               },
               t
             )

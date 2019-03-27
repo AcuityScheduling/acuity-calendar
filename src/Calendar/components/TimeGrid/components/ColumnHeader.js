@@ -20,15 +20,19 @@ const ColumnHeader = ({
 }) => {
   return (
     <div
-      className={`${makeClass(
-        'time-grid__header-column',
-        `time-grid__header-column-${type}`
-      )}${getTodayClass(date)}`}
+      className={`${makeClass('time-grid__header-column')}${getTodayClass(
+        date
+      )}`}
       style={{
         minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
       }}
     >
-      <div className={`${makeClass('time-grid__header-column-container')}`}>
+      <div
+        className={`${makeClass(
+          'time-grid__header-column-container',
+          `time-grid__header-column-${type}`
+        )}`}
+      >
         {children}
       </div>
     </div>

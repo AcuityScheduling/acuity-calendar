@@ -17101,29 +17101,46 @@
           var t = e.offsetWidth - e.clientWidth;
           return document.body.removeChild(e), t;
         },
-        C = { 5: 22, 10: 27, 15: 31, 20: 34, 30: 42, 60: 65 },
-        z = function(e) {
+        C = { month: 'month', week: 'week', groups: 'groups' },
+        z = function() {
+          for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++)
+            t[n] = arguments[n];
+          return t.reduce(function(e, t) {
+            return t
+              ? '' !== e
+                ? ''
+                    .concat(e, ' ')
+                    .concat('acuity-calendar', '__')
+                    .concat(t)
+                : ''.concat('acuity-calendar', '__').concat(t)
+              : e;
+          }, '');
+        },
+        F = { 5: 22, 10: 27, 15: 31, 20: 34, 30: 42, 60: 65 },
+        N = z('time-grid__event-handle-center'),
+        I = z('time-grid__event-handle'),
+        J = function(e) {
           return 60 * e.get('hour') + e.get('minute');
         },
-        F = function(e) {
+        G = function(e) {
           var t = e.stepMinutes,
             n = e.date,
-            a = (e.stepHeight || C[t]) / t;
-          return z(n) * a + 1 * n.hour();
+            a = (e.stepHeight || F[t]) / t;
+          return J(n) * a + 1 * n.hour();
         },
-        N = function(e) {
+        U = function(e) {
           return e.isSame(d()(), 'day')
-            ? ' '.concat(ve('time-grid__today'))
+            ? ' '.concat(z('time-grid__today'))
             : '';
         },
-        I = function(e) {
+        q = function(e) {
           var t = e.stepMinutes,
             n = e.selectMinutes,
             a = e.columnDate,
             r = e.stepHeight;
           return function(e) {
             var s = e.currentTarget.getBoundingClientRect(),
-              i = (e.clientY - s.top) / ((r || C[t]) / t),
+              i = (e.clientY - s.top) / ((r || F[t]) / t),
               o = a
                 .clone()
                 .startOf('day')
@@ -17135,7 +17152,7 @@
               .second(0);
           };
         },
-        J = function(e) {
+        B = function(e) {
           var t = e.start,
             n = e.end,
             a = ':'.concat(t.format('mm'));
@@ -17154,7 +17171,7 @@
             .concat(n.format('a'));
           return ''.concat(s, ' - ').concat(o);
         },
-        G = function(e) {
+        V = function(e) {
           var t = e.mungedEvents,
             n = e.selectedDate,
             a = (function(e) {
@@ -17182,7 +17199,7 @@
             ? s
             : a.clone().set({ hour: 0, minutes: 0, seconds: 0 });
         };
-      function U(e, t) {
+      function $(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -17217,16 +17234,16 @@
           })()
         );
       }
-      var q = 0,
-        B = !1,
-        V = function(e) {
+      var K = 0,
+        Z = !1,
+        X = function(e) {
           return function(t) {
-            (q = t.target.scrollLeft), $(e);
+            (K = t.target.scrollLeft), Q(e);
           };
         },
-        $ = function(e) {
+        Q = function(e) {
           var t, n, a, r, s;
-          B ||
+          Z ||
             requestAnimationFrame(
               ((n = (t = e).headerRef),
               (a = t.timeGutterRef),
@@ -17236,26 +17253,26 @@
               t.wrapperRef,
               (s = t.timeIndicatorWidth),
               function() {
-                (B = !1),
-                  (n.current.style.transform = 'translateX(-'.concat(q, 'px)')),
-                  (a.current.style.transform = 'translateX('.concat(q, 'px)')),
-                  (r.current.style.transform = 'translateX('.concat(q, 'px)')),
-                  s && (r.current.style.width = ''.concat(s - q, 'px'));
+                (Z = !1),
+                  (n.current.style.transform = 'translateX(-'.concat(K, 'px)')),
+                  (a.current.style.transform = 'translateX('.concat(K, 'px)')),
+                  (r.current.style.transform = 'translateX('.concat(K, 'px)')),
+                  s && (r.current.style.width = ''.concat(s - K, 'px'));
               })
             ),
-            (B = !0);
+            (Z = !0);
         },
-        K = function(e) {
+        ee = function(e) {
           var t = Object(a.useRef)(null),
             n = Object(a.useRef)(null),
             r = Object(a.useRef)(null),
             s = Object(a.useRef)(null),
             i = Object(a.useRef)(null),
             o = Object(a.useRef)(null),
-            d = U(Object(a.useState)(0), 2),
+            d = $(Object(a.useState)(0), 2),
             u = d[0],
             _ = d[1],
-            m = V({
+            m = X({
               wrapperRef: t,
               headerRef: r,
               timeGutterRef: n,
@@ -17302,9 +17319,9 @@
             }
           );
         },
-        Z = n(136),
-        X = n.n(Z);
-      function Q(e, t) {
+        te = n(136),
+        ne = n.n(te);
+      function ae(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -17339,10 +17356,10 @@
           })()
         );
       }
-      var ee = function(e) {
+      var re = function(e) {
           var t = Object(a.useRef)(new Map()).current,
             n = Object(a.useRef)(null),
-            r = Q(Object(a.useState)([]), 2),
+            r = ae(Object(a.useState)([]), 2),
             s = r[0],
             i = r[1],
             o = function() {
@@ -17355,7 +17372,7 @@
               );
             },
             d = function() {
-              X()(o(), s) || i(o());
+              ne()(o(), s) || i(o());
             },
             u = c()(function() {
               d();
@@ -17379,7 +17396,7 @@
             },
           };
         },
-        te = function(e) {
+        se = function(e) {
           var t = e.pixelsMoved,
             n = e.selectMinutes,
             a = e.selectMinutesHeight;
@@ -17387,7 +17404,7 @@
           var r = (t / a) * n;
           return Math.round(r / n) * n;
         },
-        ne = function(e) {
+        ie = function(e) {
           var t = e.originalStart,
             n = (e.originalEnd, e.minutesMoved);
           return t
@@ -17395,7 +17412,7 @@
             .add(n, 'minutes')
             .isSame(t.clone().subtract(1, 'days'), 'days');
         },
-        ae = function(e) {
+        oe = function(e) {
           var t = e.originalStart,
             n = e.originalEnd,
             a = e.minutesMoved;
@@ -17404,21 +17421,21 @@
             .add(a, 'minutes')
             .isSame(t.clone().add(1, 'days'), 'days');
         },
-        re = function(e) {
+        de = function(e) {
           var t = e.pixelsMoved,
             n = e.originalStart,
             a = e.originalEnd,
             r = e.selectMinutes,
             s = e.selectMinutesHeight,
-            i = te({
+            i = se({
               pixelsMoved: t,
               selectMinutes: r,
               selectMinutesHeight: s,
             });
           return (
-            ne({ originalStart: n, originalEnd: a, minutesMoved: i }) &&
+            ie({ originalStart: n, originalEnd: a, minutesMoved: i }) &&
               (i = -1 * n.clone().diff(n.clone().startOf('day'), 'minutes')),
-            ae({ originalStart: n, originalEnd: a, minutesMoved: i }) &&
+            oe({ originalStart: n, originalEnd: a, minutesMoved: i }) &&
               (i = n
                 .clone()
                 .endOf('day')
@@ -17427,7 +17444,7 @@
             i
           );
         },
-        se = function(e) {
+        ue = function(e) {
           var t = e.pixelsMoved,
             n = e.selectMinutes,
             a = e.originalStart,
@@ -17435,7 +17452,7 @@
             s = e.selectMinutesHeight;
           return t
             ? s *
-                (re({
+                (de({
                   originalStart: a,
                   originalEnd: r,
                   pixelsMoved: t,
@@ -17445,12 +17462,12 @@
                   n)
             : 0;
         },
-        ie = function(e) {
+        le = function(e) {
           var t = e.stepMinutes,
             n = e.selectMinutes;
-          return (e.stepHeight || C[t]) / (t / n) + 1 / (60 / n);
+          return (e.stepHeight || F[t]) / (t / n) + 1 / (60 / n);
         };
-      function oe(e) {
+      function _e(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -17461,12 +17478,12 @@
               })
             )),
             a.forEach(function(t) {
-              de(e, t, n[t]);
+              ce(e, t, n[t]);
             });
         }
         return e;
       }
-      function de(e, t, n) {
+      function ce(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -17479,7 +17496,7 @@
           e
         );
       }
-      var ue = function(e) {
+      var me = function(e) {
         var t = e.event,
           n = e.deltaPosition,
           a = e.selectMinutesHeight,
@@ -17488,7 +17505,7 @@
           i = void 0 !== s && s,
           o = t.start.clone(),
           d = t.end.clone(),
-          u = re({
+          u = de({
             originalStart: t.start,
             originalEnd: t.end,
             pixelsMoved: n.y,
@@ -17500,7 +17517,7 @@
           return (
             t.paddingTopStart && (l.paddingTopStart = t.paddingTopStart),
             t.paddingBottomEnd && (l.paddingBottomEnd = t.paddingBottomEnd),
-            oe({ start: o, end: d }, l)
+            _e({ start: o, end: d }, l)
           );
         }
         i || o.add(u, 'minutes'), d.add(u, 'minutes');
@@ -17513,10 +17530,10 @@
                 .add(u, 'minutes'))),
           t.paddingBottomEnd &&
             (_.paddingBottomEnd = t.paddingBottomEnd.clone().add(u, 'minutes')),
-          oe({ start: o, end: d }, _)
+          _e({ start: o, end: d }, _)
         );
       };
-      function le(e, t) {
+      function he(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -17551,50 +17568,55 @@
           })()
         );
       }
-      var _e = function(e) {
+      var fe = function(e) {
         var t = e.isSelectable,
           n = e.stepMinutes,
           r = e.selectMinutes,
           s = e.columnDate,
           i = e.stepHeight,
-          o = le(Object(a.useState)(!1), 2),
+          o = he(Object(a.useState)(!1), 2),
           d = o[0],
           u = o[1],
-          l = le(Object(a.useState)(0), 2),
+          l = he(Object(a.useState)(0), 2),
           _ = l[0],
           c = l[1],
-          m = le(Object(a.useState)(0), 2),
+          m = he(Object(a.useState)(0), 2),
           h = m[0],
           f = m[1],
-          p = le(Object(a.useState)(0), 2),
+          p = he(Object(a.useState)(0), 2),
           M = p[0],
           y = p[1],
-          g = le(Object(a.useState)(0), 2),
+          g = he(Object(a.useState)(0), 2),
           L = g[0],
           Y = g[1],
-          v = le(Object(a.useState)(0), 2),
+          v = he(Object(a.useState)(0), 2),
           D = v[0],
           k = v[1],
-          b = le(Object(a.useState)(null), 2),
+          b = he(Object(a.useState)(null), 2),
           w = b[0],
           T = b[1],
-          S = le(Object(a.useState)(0), 2),
+          S = he(Object(a.useState)(0), 2),
           H = S[0],
           j = S[1],
-          x = ie({ stepMinutes: n, selectMinutes: r });
+          x = le({ stepMinutes: n, selectMinutes: r });
         return {
           selectRangeHandlers: {
             onMouseUp: function(e) {
               Y(0), u(!1);
             },
             onMouseDown: function(e) {
-              if (!t) return !1;
+              if (
+                e.target.className.split(' ').includes(N) ||
+                e.target.className.split(' ').includes(I) ||
+                !t
+              )
+                return !1;
               u(!0), c(e.clientY);
               var a = e.currentTarget.getBoundingClientRect(),
                 o = (e.clientY - a.top) / x,
                 d = Math.round(o) * x;
               Y(d), j(d);
-              var l = I({
+              var l = q({
                 stepHeight: i,
                 stepMinutes: n,
                 selectMinutes: r,
@@ -17607,7 +17629,7 @@
               if (e.clientY !== _) {
                 var n = e.clientY - _,
                   a = Math.abs(
-                    se({
+                    ue({
                       originalStart: w,
                       originalEnd: w,
                       pixelsMoved: Math.abs(n),
@@ -17615,7 +17637,7 @@
                       selectMinutesHeight: x,
                     })
                   ),
-                  s = re({
+                  s = de({
                     originalStart: w,
                     originalEnd: w,
                     pixelsMoved: n,
@@ -17646,7 +17668,7 @@
           selectRange: D,
         };
       };
-      function ce(e) {
+      function pe(e) {
         return (
           (function(e) {
             if (Array.isArray(e)) {
@@ -17669,7 +17691,7 @@
           })()
         );
       }
-      function me(e, t, n) {
+      function Me(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -17682,7 +17704,7 @@
           e
         );
       }
-      var he = function(e) {
+      var ye = function(e) {
           return e.reduce(function(e, t) {
             var n = {};
             t.paddingTopStart &&
@@ -17706,7 +17728,7 @@
                         })
                       )),
                       a.forEach(function(t) {
-                        me(e, t, n[t]);
+                        Me(e, t, n[t]);
                       });
                   }
                   return e;
@@ -17724,7 +17746,7 @@
                   .startOf('day')
                   .diff(a.end.clone().subtract(1, 'seconds'), 'days')
               );
-            if (((e = [].concat(ce(e), [a])), 0 === r)) return e;
+            if (((e = [].concat(pe(e), [a])), 0 === r)) return e;
             for (var s = 1; s <= r; s += 1) {
               var i = Object.assign({}, a);
               (i.start = a.start
@@ -17734,24 +17756,24 @@
                 a.end.isSame(i.start, 'day')
                   ? (i.end = a.end)
                   : (i.end = i.start.clone().endOf('day')),
-                (e = [].concat(ce(e), [i]));
+                (e = [].concat(pe(e), [i]));
             }
             return e;
           }, []);
         },
-        fe = function(e) {
+        ge = function(e) {
           var t = e.event,
             n = e.stepMinutes,
             a = e.stepHeight,
-            r = (a || C[n]) / n,
+            r = (a || F[n]) / n,
             s = 60 * r * 24,
             i = t.end.clone().diff(t.start, 'minutes'),
             o = (i / 60) * 1,
-            d = F({ stepMinutes: n, date: t.start, stepHeight: a }),
+            d = G({ stepMinutes: n, date: t.start, stepHeight: a }),
             u = s - d + 24,
             l = i * r + o;
           l > u && (l = u);
-          var _ = pe({ event: t, pixelsPerMinute: r }),
+          var _ = Le({ event: t, pixelsPerMinute: r }),
             c = {
               height: l,
               top: d,
@@ -17760,7 +17782,7 @@
             };
           return Object.assign(t, c);
         },
-        pe = function(e) {
+        Le = function(e) {
           var t = e.event,
             n = e.pixelsPerMinute,
             a = 0;
@@ -17777,7 +17799,7 @@
           }
           return { topHeight: a, bottomHeight: i };
         },
-        Me = function(e) {
+        Ye = function(e) {
           var t = e.eventsKeyed,
             n = e.event,
             a = Object.assign({}, t),
@@ -17787,20 +17809,20 @@
           var i = l()(t, ''.concat(n.group_id), {});
           return (i[r] = s), (a[n.group_id] = i), a;
         },
-        ye = function(e) {
+        ve = function(e) {
           var t = e.events,
             n = e.stepMinutes,
             a = void 0 !== n && n,
             r = e.stepHeight,
             s = void 0 !== r && r,
-            i = he(t);
+            i = ye(t);
           return j(i).reduce(function(e, t, n) {
-            if (!a) return Me({ eventsKeyed: e, event: t });
-            var r = fe({ event: t, stepMinutes: a, stepHeight: s });
-            return Me({ eventsKeyed: e, event: r });
+            if (!a) return Ye({ eventsKeyed: e, event: t });
+            var r = ge({ event: t, stepMinutes: a, stepHeight: s });
+            return Ye({ eventsKeyed: e, event: r });
           }, {});
         };
-      function ge(e) {
+      function De(e) {
         return (
           (function(e) {
             if (Array.isArray(e)) {
@@ -17823,41 +17845,26 @@
           })()
         );
       }
-      var Le = function(e) {
-          var t = e.mungedEvents,
-            n = e.visibleEventGroups,
-            a = Object.assign({}, t);
-          return (
-            n &&
-              Object.keys(a).forEach(function(e) {
-                n.includes(Number(e)) || delete a[e];
+      var ke = function(e) {
+        var t = e.mungedEvents,
+          n = e.visibleEventGroups,
+          a = Object.assign({}, t);
+        return (
+          n &&
+            Object.keys(a).forEach(function(e) {
+              n.includes(Number(e)) || delete a[e];
+            }),
+          Object.keys(a).reduce(function(e, t) {
+            return (
+              Object.keys(a[t]).forEach(function(n) {
+                e[n] = j([].concat(De(l()(e, n, [])), De(a[t][n])));
               }),
-            Object.keys(a).reduce(function(e, t) {
-              return (
-                Object.keys(a[t]).forEach(function(n) {
-                  e[n] = j([].concat(ge(l()(e, n, [])), ge(a[t][n])));
-                }),
-                e
-              );
-            }, {})
-          );
-        },
-        Ye = { month: 'month', week: 'week', groups: 'groups' },
-        ve = function() {
-          for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++)
-            t[n] = arguments[n];
-          return t.reduce(function(e, t) {
-            return t
-              ? '' !== e
-                ? ''
-                    .concat(e, ' ')
-                    .concat('acuity-calendar', '__')
-                    .concat(t)
-                : ''.concat('acuity-calendar', '__').concat(t)
-              : e;
-          }, '');
-        };
-      function De(e, t, n) {
+              e
+            );
+          }, {})
+        );
+      };
+      function be(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -17870,7 +17877,7 @@
           e
         );
       }
-      var ke = function(e) {
+      var we = function(e) {
           var t = (function(e) {
             for (var t = 1; t < arguments.length; t++) {
               var n = null != arguments[t] ? arguments[t] : {},
@@ -17882,7 +17889,7 @@
                   })
                 )),
                 a.forEach(function(t) {
-                  De(e, t, n[t]);
+                  be(e, t, n[t]);
                 });
             }
             return e;
@@ -17901,7 +17908,7 @@
             t
           );
         },
-        be = function(e) {
+        Te = function(e) {
           var t = e.events,
             n = e.stepMinutes,
             r = e.stepHeight,
@@ -17909,26 +17916,26 @@
             i = e.stepDetails,
             o = Object(a.useMemo)(
               function() {
-                return ye({ events: t, stepMinutes: n, stepHeight: r });
+                return ve({ events: t, stepMinutes: n, stepHeight: r });
               },
               [t, n]
             ),
             d = Object(a.useMemo)(
               function() {
-                return Le({ mungedEvents: o, visibleEventGroups: s });
+                return ke({ mungedEvents: o, visibleEventGroups: s });
               },
               [o, s]
             );
           if (!i) return { mungedEvents: o, eventsWithSelectedEventGroups: d };
           var u = Object(a.useMemo)(
               function() {
-                return ye({ events: i, stepMinutes: n, stepHeight: r });
+                return ve({ events: i, stepMinutes: n, stepHeight: r });
               },
               [i, n]
             ),
             l = Object(a.useMemo)(
               function() {
-                return Le({ mungedEvents: u, visibleEventGroups: s });
+                return ke({ mungedEvents: u, visibleEventGroups: s });
               },
               [u, s]
             );
@@ -17939,8 +17946,8 @@
             mungedStepDetailsGroups: l,
           };
         },
-        we = n(7);
-      function Te(e, t, n) {
+        Se = n(7);
+      function He(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -17953,39 +17960,39 @@
           e
         );
       }
-      var Se,
-        He = i.a.oneOfType([
+      var je,
+        xe = i.a.oneOfType([
           i.a.instanceOf(Date),
           i.a.instanceOf(d.a),
           i.a.string,
         ]),
-        je = i.a.oneOf([0, 1, 2, 3, 4, 5, 6]),
-        xe = i.a.instanceOf(d.a),
-        Ee = i.a.oneOf(Object.keys(Ye)),
-        Oe = i.a.shape({
+        Ee = i.a.oneOf([0, 1, 2, 3, 4, 5, 6]),
+        Oe = i.a.instanceOf(d.a),
+        Pe = i.a.oneOf(Object.keys(C)),
+        We = i.a.shape({
           id: i.a.oneOfType([i.a.number, i.a.string]).isRequired,
           group_id: i.a.oneOfType([i.a.number, i.a.string]),
           title: i.a.string,
-          start: He.isRequired,
-          end: He.isRequired,
+          start: xe.isRequired,
+          end: xe.isRequired,
         }),
-        Pe = i.a.shape({
+        Re = i.a.shape({
           id: i.a.oneOfType([i.a.number, i.a.string]).isRequired,
           group_id: i.a.oneOfType([i.a.number, i.a.string]),
-          start: He.isRequired,
-          end: He.isRequired,
+          start: xe.isRequired,
+          end: xe.isRequired,
         }),
-        We = i.a.oneOf([5, 10, 15, 20, 30, 60]),
-        Re = (i.a.shape({ id: i.a.number, name: i.a.string }),
+        Ae = i.a.oneOf([5, 10, 15, 20, 30, 60]),
+        Ce = (i.a.shape({ id: i.a.number, name: i.a.string }),
         i.a.shape({
           current: i.a.instanceOf(
             'undefined' == typeof Element ? function() {} : Element
           ),
         })),
-        Ae = i.a.arrayOf(i.a.number),
-        Ce = (i.a.shape(
-          ((Se = i.a.func),
-          Object.keys(Ye).reduce(function(e, t) {
+        ze = i.a.arrayOf(i.a.number),
+        Fe = (i.a.shape(
+          ((je = i.a.func),
+          Object.keys(C).reduce(function(e, t) {
             return (function(e) {
               for (var t = 1; t < arguments.length; t++) {
                 var n = null != arguments[t] ? arguments[t] : {},
@@ -17997,32 +18004,32 @@
                     })
                   )),
                   a.forEach(function(t) {
-                    Te(e, t, n[t]);
+                    He(e, t, n[t]);
                   });
               }
               return e;
-            })({}, e, Te({}, t, Se));
+            })({}, e, He({}, t, je));
           }, {}))
         ),
         i.a.oneOf(Object.values({ day: 'day', time: 'time' })),
         i.a.oneOfType([
           i.a.arrayOf(
             i.a.arrayOf(
-              i.a.shape({ isInRange: i.a.bool.isRequired, date: He.isRequired })
+              i.a.shape({ isInRange: i.a.bool.isRequired, date: xe.isRequired })
             )
           ),
           i.a.shape({
-            firstDate: He.isRequired,
-            lastDate: He.isRequired,
+            firstDate: xe.isRequired,
+            lastDate: xe.isRequired,
             totalColumns: i.a.number,
             allowPartialRows: i.a.bool,
             getExcludedDates: i.a.func,
             getIsInRange: i.a.func,
           }),
         ])),
-        ze = i.a.shape({ start: He.isRequired, end: He.isRequired }),
-        Fe = i.a.oneOfType([He, i.a.oneOf(['firstEvent'])]);
-      function Ne(e, t) {
+        Ne = i.a.shape({ start: xe.isRequired, end: xe.isRequired }),
+        Ie = i.a.oneOfType([xe, i.a.oneOf(['firstEvent'])]);
+      function Je(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -18057,7 +18064,7 @@
           })()
         );
       }
-      function Ie(e) {
+      function Ge(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -18068,12 +18075,12 @@
               })
             )),
             a.forEach(function(t) {
-              Je(e, t, n[t]);
+              Ue(e, t, n[t]);
             });
         }
         return e;
       }
-      function Je(e, t, n) {
+      function Ue(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -18086,37 +18093,37 @@
           e
         );
       }
-      var Ge = function(e, t) {
+      var qe = function(e, t) {
           switch (t.type) {
             case 'moveUp':
-              return Ie({}, e, {
+              return Ge({}, e, {
                 rowMoves: e.rowMoves - 1,
                 vertChange: e.vertChange - t.vertChange,
               });
             case 'moveRight':
-              return Ie({}, e, {
+              return Ge({}, e, {
                 columnMoves: e.columnMoves + 1,
                 horizChange: e.horizChange + t.horizChange,
               });
             case 'moveDown':
-              return Ie({}, e, {
+              return Ge({}, e, {
                 rowMoves: e.rowMoves + 1,
                 vertChange: e.vertChange + t.vertChange,
               });
             case 'moveLeft':
-              return Ie({}, e, {
+              return Ge({}, e, {
                 columnMoves: e.columnMoves - 1,
                 horizChange: e.horizChange - t.horizChange,
               });
             case 'startDragging':
               var n = e.vertChange;
-              return Ie({}, e, {
+              return Ge({}, e, {
                 isDragging: !0,
                 position: t.position,
                 vertChange: 0 === n ? t.initialVertChange : n,
               });
             case 'stopDragging':
-              return Ie({}, e, {
+              return Ge({}, e, {
                 isDragging: !1,
                 wasDragged: !0,
                 position: { x: 0, y: 0 },
@@ -18129,7 +18136,7 @@
               throw new Error('Dispatch action not recognized');
           }
         },
-        Ue = {
+        Be = {
           rowMoves: 0,
           columnMoves: 0,
           isDragging: !1,
@@ -18138,32 +18145,33 @@
           vertChange: 0,
           horizChange: 0,
         },
-        qe = function(e) {
+        Ve = function(e) {
           var t = e.children,
             n = e.cellDimensions,
-            s = e.event,
-            i = e.topEventOffset,
-            o = e.onDrag,
-            d = e.onDragEnd,
-            u = e.columnMovesPerRowChange,
-            l = Ne(Object(a.useReducer)(Ge, Ue), 2),
-            _ = l[0],
-            c = l[1],
-            m = n.width,
-            h = n.height,
-            f = _.position,
-            p = f.x,
-            M = f.y,
-            y = _.columnMoves,
-            g = _.rowMoves,
-            L = _.isDragging,
-            Y = _.vertChange,
-            v = _.horizChange;
-          M < h * g && c({ type: 'moveUp', vertChange: h }),
-            p > m * (y + 1) && c({ type: 'moveRight', horizChange: m + 1 * y }),
-            M > h * (g + 1) && c({ type: 'moveDown', vertChange: h }),
-            p < m * y && c({ type: 'moveLeft', horizChange: m + 1 });
-          var D = (function(e) {
+            s = e.isDraggable,
+            i = e.event,
+            o = e.topEventOffset,
+            d = e.onDrag,
+            u = e.onDragEnd,
+            l = e.columnMovesPerRowChange,
+            _ = Je(Object(a.useReducer)(qe, Be), 2),
+            c = _[0],
+            m = _[1],
+            h = n.width,
+            f = n.height,
+            p = c.position,
+            M = p.x,
+            y = p.y,
+            g = c.columnMoves,
+            L = c.rowMoves,
+            Y = c.isDragging,
+            v = c.vertChange,
+            D = c.horizChange;
+          y < f * L && m({ type: 'moveUp', vertChange: f }),
+            M > h * (g + 1) && m({ type: 'moveRight', horizChange: h + 1 * g }),
+            y > f * (L + 1) && m({ type: 'moveDown', vertChange: f }),
+            M < h * g && m({ type: 'moveLeft', horizChange: h + 1 });
+          var k = (function(e) {
             var t = e.event,
               n = e.columnMoves + e.rowMoves * e.columnMovesPerRowChange,
               a = t.start.clone().add(n, 'days'),
@@ -18176,37 +18184,41 @@
                 (s.paddingBottomEnd = t.paddingBottomEnd
                   .clone()
                   .add(n, 'days')),
-              Ie({}, t, { start: a, end: r }, s)
+              Ge({}, t, { start: a, end: r }, s)
             );
           })({
-            event: s,
-            columnMoves: y,
-            rowMoves: g,
-            columnMovesPerRowChange: u,
+            event: i,
+            columnMoves: g,
+            rowMoves: L,
+            columnMovesPerRowChange: l,
           });
           return r.a.createElement(
-            we.DraggableCore,
+            Se.DraggableCore,
             {
               onDrag: function(e, t) {
-                c({
+                if (!s({ event: i })) return !1;
+                m({
                   type: 'startDragging',
                   position: { x: t.x, y: t.y },
-                  initialVertChange: i,
+                  initialVertChange: o,
                 }),
-                  o(e, t);
+                  d(e, t);
               },
               onStop: function(e, t) {
-                if (!L) return !1;
-                d({ e: e, event: ke(D) }),
+                if (!Y) return !1;
+                u({ e: e, event: we(k) }),
                   setTimeout(function() {
-                    return c({ type: 'stopDragging' });
+                    return m({ type: 'stopDragging' });
                   });
               },
             },
-            t({ draggedEvent: D, vertChange: Y, horizChange: v })
+            t({ draggedEvent: k, vertChange: v, horizChange: D })
           );
         };
-      (qe.defaultProps = {
+      (Ve.defaultProps = {
+        isDraggable: function() {
+          return !0;
+        },
         onDrag: function() {
           return null;
         },
@@ -18214,21 +18226,22 @@
           return null;
         },
       }),
-        (qe.propTypes = {
+        (Ve.propTypes = {
           cellDimensions: i.a.shape({
             width: i.a.number.isRequired,
             height: i.a.number.isRequired,
           }).isRequired,
           children: i.a.func.isRequired,
           columnMovesPerRowChange: i.a.number.isRequired,
-          event: Oe.isRequired,
+          event: We.isRequired,
+          isDraggable: i.a.func,
           onDrag: i.a.func,
           onDragEnd: i.a.func,
           topEventOffset: i.a.number.isRequired,
         });
-      var Be = qe;
-      function Ve() {
-        return (Ve =
+      var $e = Ve;
+      function Ke() {
+        return (Ke =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -18239,7 +18252,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function $e(e, t) {
+      function Ze(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -18263,19 +18276,19 @@
         }
         return r;
       }
-      var Ke = function(e) {
+      var Xe = function(e) {
           var t = e.className,
             n = e.eventClass;
           return t ? ''.concat(n, ' ').concat(t) : n;
         },
-        Ze = r.a.forwardRef(function(e, t) {
+        Qe = r.a.forwardRef(function(e, t) {
           var n = e.className,
             a = e.eventClass,
             s = e.event,
             i = e.isSelectable,
             o = e.onSelect,
             d = e.children,
-            u = $e(e, [
+            u = Ze(e, [
               'className',
               'eventClass',
               'event',
@@ -18285,28 +18298,28 @@
             ]);
           return r.a.createElement(
             'div',
-            Ve({}, u, {
-              className: Ke({ className: n, eventClass: a }),
+            Ke({}, u, {
+              className: Xe({ className: n, eventClass: a }),
               role: 'button',
               ref: t,
               onClick: function(e) {
                 if ((e.stopPropagation(), !i)) return !1;
-                o({ e: e, event: ke(s) });
+                o({ e: e, event: we(s) });
               },
             }),
             d
           );
         });
-      (Ze.displayName = 'EventWrapper'),
-        (Ze.defaultProps = {
+      (Qe.displayName = 'EventWrapper'),
+        (Qe.defaultProps = {
           className: '',
           isSelectable: !0,
           onSelect: function() {
             return null;
           },
-          eventClass: ve('time-grid__event'),
+          eventClass: z('time-grid__event'),
         }),
-        (Ze.propTypes = {
+        (Qe.propTypes = {
           children: i.a.node.isRequired,
           className: i.a.string,
           event: i.a.object.isRequired,
@@ -18314,10 +18327,10 @@
           isSelectable: i.a.bool,
           onSelect: i.a.func,
         });
-      var Xe = Ze;
+      var et = Qe;
       n(140);
-      function Qe() {
-        return (Qe =
+      function tt() {
+        return (tt =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -18328,7 +18341,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function et(e, t) {
+      function nt(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -18352,32 +18365,27 @@
         }
         return r;
       }
-      var tt = r.a.forwardRef(function(e, t) {
+      var at = r.a.forwardRef(function(e, t) {
         var n,
           a,
           s = e.event,
           i = e.onSelect,
           o = e.children,
-          d = et(e, ['event', 'onSelect', 'children']);
+          d = nt(e, ['event', 'onSelect', 'children']);
         return r.a.createElement(
-          Xe,
-          Qe(
-            {
-              event: s,
-              onSelect: i,
-              eventClass: ve('day-grid__event'),
-              ref: t,
-            },
+          et,
+          tt(
+            { event: s, onSelect: i, eventClass: z('day-grid__event'), ref: t },
             d
           ),
           o
             ? o(s)
             : r.a.createElement(
                 'div',
-                { className: ve('day-grid__event-details') },
+                { className: z('day-grid__event-details') },
                 r.a.createElement(
                   'div',
-                  { className: ve('day-grid__event-time') },
+                  { className: z('day-grid__event-time') },
                   ((n = s.start),
                   ':00' === (a = ':'.concat(n.format('mm'))) && (a = ''),
                   ''
@@ -18387,51 +18395,52 @@
                 ),
                 r.a.createElement(
                   'div',
-                  { className: ve('day-grid__event-title') },
+                  { className: z('day-grid__event-title') },
                   s.title
                 )
               )
         );
       });
-      (tt.defaultProps = {
+      (at.defaultProps = {
         onSelect: function() {
           return null;
         },
         children: null,
       }),
-        (tt.propTypes = {
+        (at.propTypes = {
           children: i.a.func,
-          event: Oe.isRequired,
+          event: We.isRequired,
           onSelect: i.a.func,
         });
-      var nt = tt,
-        at = r.a.forwardRef(function(e, t) {
+      var rt = at,
+        st = r.a.forwardRef(function(e, t) {
           var n = e.events,
             s = e.eventHeight,
             i = e.cellDimensions,
             o = e.dayDetails,
-            d = e.onDragEnd,
-            u = e.onSelectSlot,
-            l = e.onSelectMonthDate,
-            _ = e.renderCell,
-            c = e.renderEvent,
-            m = e.eventRef,
-            h = e.eventWrapperRef,
-            f = e.onSelectEvent,
-            p = e.onSelectMoreEvents,
-            M = e.totalEventsToShow,
-            y = e.totalColumns;
+            d = e.isEventDraggable,
+            u = e.onDragEnd,
+            l = e.onSelectSlot,
+            _ = e.onSelectMonthDate,
+            c = e.renderCell,
+            m = e.renderEvent,
+            h = e.eventRef,
+            f = e.eventWrapperRef,
+            p = e.onSelectEvent,
+            M = e.onSelectMoreEvents,
+            y = e.totalEventsToShow,
+            g = e.totalColumns;
           return r.a.createElement(
             'div',
             {
-              className: ve(
+              className: z(
                 'day-grid__cell',
                 !o.isInRange && 'day-grid__cell--not-in-range'
               ),
               role: 'button',
               ref: t,
               onClick: function(e) {
-                return u({
+                return l({
                   e: e,
                   date: new Date(o.date),
                   isInRange: o.isInRange,
@@ -18441,11 +18450,11 @@
             r.a.createElement(
               'div',
               {
-                className: ve('day-grid__date-wrapper'),
+                className: z('day-grid__date-wrapper'),
                 onClick: function(e) {
-                  l &&
+                  _ &&
                     (e.stopPropagation(),
-                    l({
+                    _({
                       e: e,
                       date: new Date(o.date),
                       isInrange: o.isInRange,
@@ -18455,7 +18464,7 @@
               r.a.createElement(
                 'div',
                 {
-                  className: ve(
+                  className: z(
                     'day-grid__date',
                     !o.isInRange && 'day-grid__date--not-in-range'
                   ),
@@ -18463,8 +18472,8 @@
                 o.date.date()
               )
             ),
-            _
-              ? _({
+            c
+              ? c({
                   date: new Date(o.date.startOf('day')),
                   isInRange: o.isInRange,
                   events: n,
@@ -18472,9 +18481,9 @@
               : r.a.createElement(
                   'div',
                   {
-                    className: ve('day-grid__event-wrapper'),
-                    ref: h,
-                    style: { opacity: M ? 1 : 0 },
+                    className: z('day-grid__event-wrapper'),
+                    ref: f,
+                    style: { opacity: y ? 1 : 0 },
                   },
                   n.length > 0 &&
                     o.isInRange &&
@@ -18486,34 +18495,35 @@
                         return e.map(function(e) {
                           return (
                             (t += 1),
-                            !M || M >= t
+                            !y || y >= t
                               ? r.a.createElement(
-                                  Be,
+                                  $e,
                                   {
                                     cellDimensions: i,
                                     event: e,
                                     topEventOffset: (t - 1) * s * -1,
                                     key: e.id,
-                                    columnMovesPerRowChange: y,
-                                    onDragEnd: d,
+                                    columnMovesPerRowChange: g,
+                                    onDragEnd: u,
+                                    isDraggable: d,
                                   },
                                   function(e) {
                                     var t = e.draggedEvent,
                                       n = e.vertChange,
                                       a = e.horizChange;
                                     return r.a.createElement(
-                                      nt,
+                                      rt,
                                       {
                                         event: t,
-                                        onSelect: f,
-                                        ref: m,
+                                        onSelect: p,
+                                        ref: h,
                                         style: {
                                           transform: 'translate('
                                             .concat(a, 'px, ')
                                             .concat(n, 'px)'),
                                         },
                                       },
-                                      c
+                                      m
                                     );
                                   }
                                 )
@@ -18521,40 +18531,43 @@
                           );
                         });
                       })(n),
-                      M < n.length &&
-                        M > 0 &&
+                      y < n.length &&
+                        y > 0 &&
                         r.a.createElement(
                           'div',
                           {
-                            className: ve('day-grid__more-events'),
+                            className: z('day-grid__more-events'),
                             onClick: function(e) {
                               var t;
                               e.stopPropagation(),
-                                p({
+                                M({
                                   e: e,
                                   events: n.map(function(e) {
-                                    return ke(e);
+                                    return we(e);
                                   }),
-                                  eventsMore: ((t = n.length - M),
+                                  eventsMore: ((t = n.length - y),
                                   n.filter(function(e, a) {
                                     return a >= n.length - t;
                                   })).map(function(e) {
-                                    return ke(e);
+                                    return we(e);
                                   }),
                                   date: new Date(o.date),
                                 });
                             },
                           },
-                          n.length - M,
+                          n.length - y,
                           ' more'
                         )
                     )
                 )
           );
         });
-      (at.displayName = 'DayCell'),
-        (at.defaultProps = {
+      (st.displayName = 'DayCell'),
+        (st.defaultProps = {
           events: [],
+          isEventDraggable: function() {
+            return !0;
+          },
           onDragEnd: function() {
             return null;
           },
@@ -18571,19 +18584,20 @@
             return null;
           },
         }),
-        (at.propTypes = {
+        (st.propTypes = {
           cellDimensions: i.a.shape({
             width: i.a.number.isRequired,
             height: i.a.number.isRequired,
           }).isRequired,
           dayDetails: i.a.shape({
-            date: xe.isRequired,
+            date: Oe.isRequired,
             isInRange: i.a.bool.isRequired,
           }).isRequired,
           eventHeight: i.a.number.isRequired,
-          eventRef: Re.isRequired,
-          eventWrapperRef: Re.isRequired,
-          events: i.a.arrayOf(Oe),
+          eventRef: Ce.isRequired,
+          eventWrapperRef: Ce.isRequired,
+          events: i.a.arrayOf(We),
+          isEventDraggable: i.a.func,
           onDragEnd: i.a.func,
           onSelectEvent: i.a.func,
           onSelectMonthDate: i.a.func,
@@ -18594,80 +18608,82 @@
           totalColumns: i.a.number.isRequired,
           totalEventsToShow: i.a.number.isRequired,
         });
-      var rt = at,
-        st = (n(143),
+      var it = st,
+        ot = (n(143),
         function(e) {
           var t = e.events,
-            n = e.grid,
-            a = e.renderCell,
-            s = e.renderHeader,
-            i = e.onDragEnd,
-            o = e.onSelectSlot,
-            d = e.onSelectDate,
-            u = e.onSelectMoreEvents,
-            _ = e.onSelectEvent,
-            c = be({ events: t }).eventsWithSelectedEventGroups,
-            m = T(),
-            h = m.rowRef,
-            f = m.eventRef,
-            p = m.cellRef,
-            M = m.eventWrapperRef,
-            y = m.eventHeight,
-            g = m.totalEventsToShow,
-            L = m.cellDimensions,
-            Y = n;
-          Array.isArray(Y) || (Y = H(n));
-          var v = 0,
-            D = 0;
+            n = e.isEventDraggable,
+            a = e.grid,
+            s = e.renderCell,
+            i = e.renderHeader,
+            o = e.onDragEnd,
+            d = e.onSelectSlot,
+            u = e.onSelectDate,
+            _ = e.onSelectMoreEvents,
+            c = e.onSelectEvent,
+            m = Te({ events: t }).eventsWithSelectedEventGroups,
+            h = T(),
+            f = h.rowRef,
+            p = h.eventRef,
+            M = h.cellRef,
+            y = h.eventWrapperRef,
+            g = h.eventHeight,
+            L = h.totalEventsToShow,
+            Y = h.cellDimensions,
+            v = a;
+          Array.isArray(v) || (v = H(a));
+          var D = 0,
+            k = 0;
           return r.a.createElement(
             'div',
-            { className: ve('day-grid') },
+            { className: z('day-grid') },
             r.a.createElement(
               'div',
-              { className: ve('day-grid__header') },
-              l()(Y, 0, []).map(function(e) {
+              { className: z('day-grid__header') },
+              l()(v, 0, []).map(function(e) {
                 var t = e.date.format('dddd');
                 return r.a.createElement(
                   'div',
-                  { className: ve('day-grid__column-header'), key: t },
-                  s ? s({ date: e.date }) : t
+                  { className: z('day-grid__column-header'), key: t },
+                  i ? i({ date: e.date }) : t
                 );
               })
             ),
             r.a.createElement(
               'div',
-              { className: ve('day-grid__days') },
-              Y
-                ? Y.map(function(e) {
-                    D += 1;
+              { className: z('day-grid__days') },
+              v
+                ? v.map(function(e) {
+                    k += 1;
                     var t = e.length;
                     return r.a.createElement(
                       'div',
                       {
-                        className: ve('day-grid__row'),
-                        ref: h,
-                        key: 'monthColumn'.concat(D),
+                        className: z('day-grid__row'),
+                        ref: f,
+                        key: 'monthColumn'.concat(k),
                       },
                       e.map(function(e) {
-                        v += 1;
-                        var n = l()(c, e.date.format('YYYY-MM-DD'), []);
-                        return r.a.createElement(rt, {
+                        D += 1;
+                        var a = l()(m, e.date.format('YYYY-MM-DD'), []);
+                        return r.a.createElement(it, {
+                          isEventDraggable: n,
                           totalColumns: t,
-                          events: n,
-                          ref: p,
-                          eventHeight: y,
-                          cellDimensions: L,
-                          key: 'dayCells'.concat(v),
+                          events: a,
+                          ref: M,
+                          eventHeight: g,
+                          cellDimensions: Y,
+                          key: 'dayCells'.concat(D),
                           dayDetails: e,
-                          renderCell: a,
-                          onDragEnd: i,
-                          onSelectSlot: o,
-                          onSelectDate: d,
-                          onSelectMoreEvents: u,
-                          totalEventsToShow: g,
-                          eventRef: f,
-                          eventWrapperRef: M,
-                          onSelectEvent: _,
+                          renderCell: s,
+                          onDragEnd: o,
+                          onSelectSlot: d,
+                          onSelectDate: u,
+                          onSelectMoreEvents: _,
+                          totalEventsToShow: L,
+                          eventRef: p,
+                          eventWrapperRef: y,
+                          onSelectEvent: c,
                         });
                       })
                     );
@@ -18676,8 +18692,11 @@
             )
           );
         });
-      (st.defaultProps = {
+      (ot.defaultProps = {
         events: [],
+        isEventDraggable: function() {
+          return !0;
+        },
         renderCell: null,
         renderHeader: null,
         onDragEnd: function() {
@@ -18696,9 +18715,10 @@
           return null;
         },
       }),
-        (st.propTypes = {
-          events: i.a.arrayOf(Oe),
-          grid: Ce.isRequired,
+        (ot.propTypes = {
+          events: i.a.arrayOf(We),
+          grid: Fe.isRequired,
+          isEventDraggable: i.a.func,
           onDragEnd: i.a.func,
           onSelectDate: i.a.func,
           onSelectEvent: i.a.func,
@@ -18707,9 +18727,9 @@
           renderCell: i.a.func,
           renderHeader: i.a.func,
         });
-      var it = st,
-        ot = new Date();
-      function dt(e, t, n) {
+      var dt = ot,
+        ut = new Date();
+      function lt(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -18722,12 +18742,12 @@
           e
         );
       }
-      var ut = function(e) {
+      var _t = function(e) {
           var t = e.totalDates,
             n = e.forceSixWeeks;
           return t > 35 || n ? 42 : 35;
         },
-        lt = function(e) {
+        ct = function(e) {
           var t = e.date,
             n = e.day,
             a = e.isInRange,
@@ -18757,23 +18777,23 @@
                     })
                   )),
                   a.forEach(function(t) {
-                    dt(e, t, n[t]);
+                    lt(e, t, n[t]);
                   });
               }
               return e;
             })({}, s, { date: i })
           );
         },
-        _t = function(e) {
+        mt = function(e) {
           for (
             var t = e.date,
               n = e.firstDay,
               a = e.forceSixWeeks,
-              r = ct({ date: t, firstDay: n }),
-              s = ht(t),
+              r = ht({ date: t, firstDay: n }),
+              s = pt(t),
               i = r.length + s.length,
-              o = ut({ totalDates: i, forceSixWeeks: a }),
-              d = ft({ totalDates: i, forceSixWeeks: a }),
+              o = _t({ totalDates: i, forceSixWeeks: a }),
+              d = Mt({ totalDates: i, forceSixWeeks: a }),
               u = [].concat(r, s, d),
               l = [],
               _ = 0;
@@ -18783,11 +18803,11 @@
             l.push(u.slice(_, _ + 7));
           return l;
         },
-        ct = function(e) {
+        ht = function(e) {
           for (
             var t = e.date,
               n = e.firstDay,
-              a = mt({
+              a = ft({
                 firstDateDay: t
                   .clone()
                   .startOf('month')
@@ -18807,7 +18827,7 @@
             s.push(i);
           return s;
         },
-        mt = function(e) {
+        ft = function(e) {
           for (
             var t = e.firstDateDay, n = e.firstDay, a = 0, r = n;
             r < n + 7;
@@ -18818,16 +18838,16 @@
           }
           return a;
         },
-        ht = function(e) {
+        pt = function(e) {
           for (var t = e.daysInMonth(), n = [], a = 1; a <= t; a += 1)
             n.push(a);
           return n;
         },
-        ft = function(e) {
+        Mt = function(e) {
           for (
             var t = e.totalDates,
               n = e.forceSixWeeks,
-              a = ut({ totalDates: t, forceSixWeeks: n }) - t,
+              a = _t({ totalDates: t, forceSixWeeks: n }) - t,
               r = [],
               s = 1;
             s <= a;
@@ -18836,12 +18856,12 @@
             r.push(s);
           return r;
         },
-        pt = function(e) {
+        yt = function(e) {
           var t = e.date,
             n = e.firstDay,
             a = void 0 === n ? 0 : n,
             r = e.forceSixWeeks,
-            s = _t({ date: t, firstDay: a, forceSixWeeks: void 0 !== r && r }),
+            s = mt({ date: t, firstDay: a, forceSixWeeks: void 0 !== r && r }),
             i = t
               .clone()
               .subtract(1, 'months')
@@ -18858,50 +18878,55 @@
             return e.map(function(e) {
               return d
                 ? (e === i && ((d = !1), (u = !0)),
-                  lt({ date: t, day: e, isInRange: !1, type: 'last' }))
+                  ct({ date: t, day: e, isInRange: !1, type: 'last' }))
                 : u
                 ? (e === o && ((u = !1), (l = !0)),
-                  lt({ date: t, day: e, isInRange: !0, type: 'current' }))
+                  ct({ date: t, day: e, isInRange: !0, type: 'current' }))
                 : l
-                ? lt({ date: t, day: e, isInRange: !1, type: 'next' })
+                ? ct({ date: t, day: e, isInRange: !1, type: 'next' })
                 : null;
             });
           });
         },
-        Mt = function(e) {
+        gt = function(e) {
           var t = e.events,
             n = e.firstDay,
             a = e.forceSixWeeks,
-            s = e.selectedDate,
-            i = e.onDragEnd,
-            o = e.onSelectMore,
-            u = e.onSelectDate,
-            l = e.onSelectSlot,
-            _ = e.onSelectEvent,
-            c = e.visibleEventGroups,
-            m = e.renderHeader,
-            h = e.renderCell,
-            f = e.renderEvent,
-            p = pt({ date: d()(s), firstDay: n, forceSixWeeks: a });
-          return r.a.createElement(it, {
-            grid: p,
+            s = e.isEventDraggable,
+            i = e.selectedDate,
+            o = e.onDragEnd,
+            u = e.onSelectMore,
+            l = e.onSelectDate,
+            _ = e.onSelectSlot,
+            c = e.onSelectEvent,
+            m = e.visibleEventGroups,
+            h = e.renderHeader,
+            f = e.renderCell,
+            p = e.renderEvent,
+            M = yt({ date: d()(i), firstDay: n, forceSixWeeks: a });
+          return r.a.createElement(dt, {
+            isEventDraggable: s,
+            grid: M,
             events: t,
-            onDragEnd: i,
-            onSelectMoreEvents: o,
-            onSelectMonthDate: u,
-            onSelectEvent: _,
-            onSelectSlot: l,
-            visibleEventGroups: c,
-            renderEvent: f,
-            renderHeader: m,
-            renderCell: h,
+            onDragEnd: o,
+            onSelectMoreEvents: u,
+            onSelectMonthDate: l,
+            onSelectEvent: c,
+            onSelectSlot: _,
+            visibleEventGroups: m,
+            renderEvent: p,
+            renderHeader: h,
+            renderCell: f,
           });
         };
-      (Mt.defaultProps = {
+      (gt.defaultProps = {
         events: [],
+        isEventDraggable: function() {
+          return !0;
+        },
         forceSixWeeks: !1,
         firstDay: 0,
-        selectedDate: ot,
+        selectedDate: ut,
         onDragEnd: function() {
           return null;
         },
@@ -18922,10 +18947,11 @@
         renderEvent: null,
         renderHeader: null,
       }),
-        (Mt.propTypes = {
-          events: i.a.arrayOf(Oe),
-          firstDay: je,
+        (gt.propTypes = {
+          events: i.a.arrayOf(We),
+          firstDay: Ee,
           forceSixWeeks: i.a.bool,
+          isEventDraggable: i.a.func,
           onDragEnd: i.a.func,
           onSelectDate: i.a.func,
           onSelectEvent: i.a.func,
@@ -18934,12 +18960,12 @@
           renderCell: i.a.func,
           renderEvent: i.a.func,
           renderHeader: i.a.func,
-          selectedDate: He,
+          selectedDate: xe,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var yt = Mt;
+      var Lt = gt;
       n(145);
-      function gt(e, t) {
+      function Yt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -18974,7 +19000,7 @@
           })()
         );
       }
-      var Lt = r.a.forwardRef(function(e, t) {
+      var vt = r.a.forwardRef(function(e, t) {
         var n = e.selectedDate,
           s = (e.firstDay, e.stepMinutes),
           i = e.stepHeight,
@@ -18984,10 +19010,10 @@
           _ = e.renderCorner,
           c = e.totalWidth,
           m = e.scrollToTime,
-          h = gt(Object(a.useState)(d()()), 2),
+          h = Yt(Object(a.useState)(d()()), 2),
           f = h[0],
           p = h[1],
-          M = gt(Object(a.useState)(15), 2),
+          M = Yt(Object(a.useState)(15), 2),
           y = M[0],
           g = M[1];
         Object(a.useEffect)(function() {
@@ -18999,7 +19025,7 @@
             clearTimeout(e);
           };
         });
-        var L = K(c),
+        var L = ee(c),
           Y = L.wrapperRef,
           v = L.timeGutterRef,
           D = L.headerRef,
@@ -19009,14 +19035,14 @@
           T = 60 / s,
           S = Object(a.useMemo)(
             function() {
-              return (i || C[s]) * T * 24 + (1 * T * 24 - 25);
+              return (i || F[s]) * T * 24 + (1 * T * 24 - 25);
             },
             [s]
           );
         Object(a.useEffect)(
           function() {
             if (m) {
-              var e = F({ stepMinutes: s, date: d()(m), stepHeight: i });
+              var e = G({ stepMinutes: s, date: d()(m), stepHeight: i });
               Y.current.scrollTop = e;
             }
           },
@@ -19030,17 +19056,17 @@
             },
             [y]
           );
-        var j = ve('time-grid__current-time-indicator');
+        var j = z('time-grid__current-time-indicator');
         return r.a.createElement(
           'div',
-          { className: ve('time-grid'), ref: t },
+          { className: z('time-grid'), ref: t },
           r.a.createElement(
             'div',
-            { className: ve('time-grid__header-wrapper') },
+            { className: z('time-grid__header-wrapper') },
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__corner'),
+                className: z('time-grid__corner'),
                 style: { flex: '1 0 '.concat(H, 'px') },
                 ref: k,
               },
@@ -19049,7 +19075,7 @@
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__header'),
+                className: z('time-grid__header'),
                 style: { marginRight: y - 1 },
                 ref: D,
               },
@@ -19058,30 +19084,30 @@
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__scroll-gutter'),
+                className: z('time-grid__scroll-gutter'),
                 style: { width: y - 1 },
               },
               r.a.createElement('div', {
-                className: ve('time-grid__scroll-gutter-connector'),
+                className: z('time-grid__scroll-gutter-connector'),
               })
             )
           ),
           r.a.createElement(
             'div',
-            { className: ve('time-grid__grid-wrapper'), ref: Y },
+            { className: z('time-grid__grid-wrapper'), ref: Y },
             r.a.createElement(
               'div',
-              { className: ve('time-grid__step-lines'), ref: w },
+              { className: z('time-grid__step-lines'), ref: w },
               (function() {
                 for (
-                  var e = ''.concat((i || C[s]) + 1 / T, 'px'), t = [], n = 0;
+                  var e = ''.concat((i || F[s]) + 1 / T, 'px'), t = [], n = 0;
                   n < 24 * T;
                   n += 1
                 ) {
                   var a = n % T;
                   t.push(
                     r.a.createElement('div', {
-                      className: ve(
+                      className: z(
                         'time-grid__step-line',
                         a && 'time-grid__step-line-minor'
                       ),
@@ -19097,24 +19123,24 @@
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__time-gutter'),
+                className: z('time-grid__time-gutter'),
                 ref: v,
                 style: { height: S },
               },
               (function() {
-                for (var e = T * (i || C[s]), t = [], n = 0; n < 24; n += 1)
+                for (var e = T * (i || F[s]), t = [], n = 0; n < 24; n += 1)
                   t.push(
                     r.a.createElement(
                       'div',
                       {
-                        className: ve('time-grid__time-label-wrapper'),
+                        className: z('time-grid__time-label-wrapper'),
                         key: 'dayTime'.concat(n),
                         style: { height: ''.concat(e + 1, 'px') },
                       },
                       r.a.createElement(
                         'span',
                         {
-                          className: ve(
+                          className: z(
                             'time-grid__time-label',
                             'time-grid__time-label-'.concat(n)
                           ),
@@ -19130,14 +19156,14 @@
             ),
             r.a.createElement(
               'div',
-              { className: ve('time-grid__grid') },
+              { className: z('time-grid__grid') },
               r.a.createElement(
                 'div',
                 {
                   className: j,
                   style: {
                     top: ''.concat(
-                      F({ stepMinutes: s, date: f, stepHeight: i }),
+                      G({ stepMinutes: s, date: f, stepHeight: i }),
                       'px'
                     ),
                   },
@@ -19155,12 +19181,12 @@
           )
         );
       });
-      (Lt.displayName = 'TimeGrid'),
-        (Lt.defaultProps = {
+      (vt.displayName = 'TimeGrid'),
+        (vt.defaultProps = {
           renderCorner: function() {
             return null;
           },
-          selectedDate: ot,
+          selectedDate: ut,
           firstDay: 0,
           scrollToTime: null,
           selectMinutes: 15,
@@ -19170,23 +19196,23 @@
             return null;
           },
         }),
-        (Lt.propTypes = {
-          firstDay: je,
+        (vt.propTypes = {
+          firstDay: Ee,
           onCurrentTimeChange: i.a.func,
           renderColumns: i.a.func.isRequired,
           renderCorner: i.a.func,
           renderHeader: i.a.func.isRequired,
-          scrollToTime: He,
-          selectMinutes: We,
-          selectedDate: He,
+          scrollToTime: xe,
+          selectMinutes: Ae,
+          selectedDate: xe,
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
           totalWidth: i.a.number.isRequired,
         });
-      var Yt = Lt;
+      var Dt = vt;
       n(147);
-      function vt() {
-        return (vt =
+      function kt() {
+        return (kt =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -19197,7 +19223,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function Dt(e, t) {
+      function bt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19232,7 +19258,7 @@
           })()
         );
       }
-      function kt(e, t) {
+      function wt(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -19256,68 +19282,76 @@
         }
         return r;
       }
-      var bt = ve('time-grid__event-handle-center'),
-        wt = ve('time-grid__event-handle'),
-        Tt = function(e) {
-          var t = e.children,
-            n = (e.className, e.event),
-            s = e.isSelectable,
-            i = e.onSelect,
-            o = kt(e, [
-              'children',
-              'className',
-              'event',
-              'isSelectable',
-              'onSelect',
-            ]),
-            d = Object(a.useRef)(null),
-            u = Object(a.useRef)(null),
-            l = Dt(Object(a.useState)(0), 2),
-            _ = l[0],
-            c = l[1];
-          return (
-            Object(a.useEffect)(function() {
-              if (null !== d.current && null !== u.current) {
-                var e = d.current.clientHeight,
-                  t = u.current.clientHeight,
-                  n = ''.concat(e - t, 'px');
-                _ !== n && c(n);
-              }
-            }),
-            r.a.createElement(
-              Xe,
-              vt({ ref: d, event: n, onSelect: i, isSelectable: s }, o),
-              r.a.createElement('div', { className: bt, style: { height: _ } }),
-              t
-                ? t(n)
-                : r.a.createElement(
-                    'div',
-                    { className: ve('time-grid__event-details-wrapper') },
-                    r.a.createElement(
-                      'span',
-                      { className: ve('time-grid__event-title') },
-                      n.title
-                    ),
-                    r.a.createElement(
-                      'span',
-                      { className: ve('time-grid__event-time') },
-                      J(n)
-                    )
+      var Tt = function(e) {
+        var t = e.children,
+          n = (e.className, e.event),
+          s = e.isSelectable,
+          i = e.onSelect,
+          o = e.isExtendable,
+          d = wt(e, [
+            'children',
+            'className',
+            'event',
+            'isSelectable',
+            'onSelect',
+            'isExtendable',
+          ]),
+          u = Object(a.useRef)(null),
+          l = Object(a.useRef)(null),
+          _ = bt(Object(a.useState)(0), 2),
+          c = _[0],
+          m = _[1];
+        return (
+          Object(a.useEffect)(function() {
+            if (null !== u.current && null !== l.current) {
+              var e = u.current.clientHeight,
+                t = l.current.clientHeight,
+                n = ''.concat(e - t, 'px');
+              c !== n && m(n);
+            }
+          }),
+          r.a.createElement(
+            et,
+            kt({ ref: u, event: n, onSelect: i, isSelectable: s }, d),
+            r.a.createElement('div', { className: N, style: { height: c } }),
+            t
+              ? t(n)
+              : r.a.createElement(
+                  'div',
+                  { className: z('time-grid__event-details-wrapper') },
+                  r.a.createElement(
+                    'span',
+                    { className: z('time-grid__event-title') },
+                    n.title
                   ),
-              r.a.createElement('div', {
-                className: ''
-                  .concat(wt, ' ')
-                  .concat(ve('time-grid__event-handle-bottom')),
-                ref: u,
-              })
-            )
-          );
-        };
-      (Tt.defaultProps = { children: null, className: null, isSelectable: !0 }),
+                  r.a.createElement(
+                    'span',
+                    { className: z('time-grid__event-time') },
+                    B(n)
+                  )
+                ),
+            r.a.createElement('div', {
+              className: ''
+                .concat(I, ' ')
+                .concat(o({ event: n }) && z('time-grid__event-handle-bottom')),
+              ref: l,
+            })
+          )
+        );
+      };
+      (Tt.defaultProps = {
+        children: null,
+        className: null,
+        isSelectable: !0,
+        isExtendable: function() {
+          return !0;
+        },
+      }),
         (Tt.propTypes = {
           children: i.a.func,
           className: i.a.string,
-          event: Oe.isRequired,
+          event: We.isRequired,
+          isExtendable: i.a.func,
           isSelectable: i.a.bool,
           onSelect: i.a.func.isRequired,
         });
@@ -19360,7 +19394,7 @@
       var jt = function(e) {
           var t = e.isDragging,
             n = e.wasDragged;
-          return ve(
+          return z(
             'time-grid__draggable-event',
             t && 'time-grid__dragging-event',
             n && 'time-grid__dragged-event'
@@ -19372,68 +19406,69 @@
             s = e.selectMinutes,
             i = e.columnWidths,
             o = e.columnIndex,
-            d = e.onDrag,
-            u = e.onDragEnd,
-            l = e.children,
-            _ = e.stepHeight,
-            c = e.getUpdatedDraggedEvent,
-            m = Ht(Object(a.useState)({ x: 0, y: 0 }), 2),
-            h = m[0],
-            f = m[1],
-            p = Ht(Object(a.useState)(0), 2),
-            M = p[0],
-            y = p[1],
-            g = Ht(Object(a.useState)(0), 2),
-            L = g[0],
-            Y = g[1],
-            v = Ht(Object(a.useState)(i[o]), 2),
-            D = v[0],
-            k = v[1],
-            b = Ht(Object(a.useState)(!1), 2),
-            w = b[0],
-            T = b[1],
-            S = Ht(Object(a.useState)(!1), 2),
-            H = S[0],
-            j = S[1],
-            x = Ht(Object(a.useState)(o), 2),
-            E = x[0],
-            O = x[1],
-            P = ie({ stepHeight: _, stepMinutes: n, selectMinutes: s }),
-            W = se({
+            d = e.isDraggable,
+            u = e.onDrag,
+            l = e.onDragEnd,
+            _ = e.children,
+            c = e.stepHeight,
+            m = e.getUpdatedDraggedEvent,
+            h = Ht(Object(a.useState)({ x: 0, y: 0 }), 2),
+            f = h[0],
+            p = h[1],
+            M = Ht(Object(a.useState)(0), 2),
+            y = M[0],
+            g = M[1],
+            L = Ht(Object(a.useState)(0), 2),
+            Y = L[0],
+            v = L[1],
+            D = Ht(Object(a.useState)(i[o]), 2),
+            k = D[0],
+            b = D[1],
+            w = Ht(Object(a.useState)(!1), 2),
+            T = w[0],
+            S = w[1],
+            H = Ht(Object(a.useState)(!1), 2),
+            j = H[0],
+            x = H[1],
+            E = Ht(Object(a.useState)(o), 2),
+            O = E[0],
+            P = E[1],
+            W = le({ stepHeight: c, stepMinutes: n, selectMinutes: s }),
+            R = ue({
               originalStart: t.start,
               originalEnd: t.end,
-              pixelsMoved: h.y,
+              pixelsMoved: f.y,
               selectMinutes: s,
-              selectMinutesHeight: P,
+              selectMinutesHeight: W,
             }),
-            R = E - o,
-            A = function(e) {
+            A = O - o,
+            C = function(e) {
               var t = e.direction,
                 n = e.left;
-              Y(n), k(i[E + t]), O(E + t);
+              v(n), b(i[O + t]), P(O + t);
             },
-            C = Object.assign({}, t),
-            z = ue({
+            F = Object.assign({}, t),
+            I = me({
               event: t,
-              deltaPosition: h,
-              selectMinutesHeight: P,
+              deltaPosition: f,
+              selectMinutesHeight: W,
               selectMinutes: s,
             });
           return (
-            (C.start = z.start),
-            (C.end = z.end),
+            (F.start = I.start),
+            (F.end = I.end),
             void 0 !== t.paddingTopStart &&
-              (C.paddingTopStart = z.paddingTopStart),
+              (F.paddingTopStart = I.paddingTopStart),
             void 0 !== t.paddingBottomEnd &&
-              (C.paddingBottomEnd = z.paddingBottomEnd),
-            ((C = c({
-              event: C,
-              start: z.start,
-              end: z.end,
-              columnMoves: R,
-            })).top = t.top + W),
+              (F.paddingBottomEnd = I.paddingBottomEnd),
+            ((F = m({
+              event: F,
+              start: I.start,
+              end: I.end,
+              columnMoves: A,
+            })).top = t.top + R),
             (function() {
-              D !== i[E] && k(i[E]);
+              k !== i[O] && b(i[O]);
               var e = (function(e) {
                 for (
                   var t = e.columnMoves,
@@ -19446,54 +19481,55 @@
                 )
                   t < 0 && (r += -1 * n[a - s]), t > 0 && (r += n[a + s - 1]);
                 return r;
-              })({ columnMoves: R, columnWidths: i, columnIndex: o });
-              e !== L && Y(e);
-              var t = e + D;
-              M < e && 0 !== E && A({ direction: -1, left: e }),
-                M > t && E !== i.length - 1 && A({ direction: 1, left: e });
+              })({ columnMoves: A, columnWidths: i, columnIndex: o });
+              e !== Y && v(e);
+              var t = e + k;
+              y < e && 0 !== O && C({ direction: -1, left: e }),
+                y > t && O !== i.length - 1 && C({ direction: 1, left: e });
             })(),
             r.a.createElement(
               a.Fragment,
               null,
               r.a.createElement(
-                we.DraggableCore,
+                Se.DraggableCore,
                 {
-                  onDrag: function(e, t) {
-                    var n = h.x,
-                      a = h.y;
-                    f({ x: n + t.deltaX, y: a + t.deltaY }),
-                      y(t.x),
-                      T(!0),
-                      d(e, t);
+                  onDrag: function(e, n) {
+                    if (!d({ event: t })) return !1;
+                    var a = f.x,
+                      r = f.y;
+                    p({ x: a + n.deltaX, y: r + n.deltaY }),
+                      g(n.x),
+                      S(!0),
+                      u(e, n);
                   },
-                  handle: '.'.concat(bt),
+                  handle: '.'.concat(N),
                   onStop: function(e, t) {
-                    if (!w) return !1;
-                    f({ x: 0, y: 0 }),
+                    if (!T) return !1;
+                    p({ x: 0, y: 0 }),
                       setTimeout(function() {
-                        return T(!1);
+                        return S(!1);
                       }),
-                      j(!0),
-                      u({ e: e, event: ke(C) });
+                      x(!0),
+                      l({ e: e, event: we(F) });
                   },
                 },
-                l({
-                  draggedEvent: C,
-                  leftChange: L,
-                  currentColumnWidth: D,
-                  isDragging: w,
-                  wasDragged: H,
+                _({
+                  draggedEvent: F,
+                  leftChange: Y,
+                  currentColumnWidth: k,
+                  isDragging: T,
+                  wasDragged: j,
                   isDndPlaceholder: !1,
-                  dndClassName: jt({ isDragging: w, wasDragged: H }),
+                  dndClassName: jt({ isDragging: T, wasDragged: j }),
                 })
               ),
-              w &&
+              T &&
                 r.a.createElement(
                   'div',
-                  { className: ve('time-grid__dragging-placeholder-event') },
-                  l({
+                  { className: z('time-grid__dragging-placeholder-event') },
+                  _({
                     draggedEvent: t,
-                    isDragging: w,
+                    isDragging: T,
                     topChange: 0,
                     isDndPlaceholder: !0,
                   })
@@ -19502,7 +19538,9 @@
           );
         };
       (xt.defaultProps = {
-        isDraggable: !0,
+        isDraggable: function() {
+          return !0;
+        },
         getUpdatedDraggedEvent: function() {
           return null;
         },
@@ -19516,15 +19554,15 @@
         (xt.propTypes = {
           children: i.a.func.isRequired,
           columnIndex: i.a.number.isRequired,
-          columnWidths: Ae.isRequired,
-          event: Oe.isRequired,
+          columnWidths: ze.isRequired,
+          event: We.isRequired,
           getUpdatedDraggedEvent: i.a.func,
-          isDraggable: i.a.bool,
+          isDraggable: i.a.func,
           onDrag: i.a.func,
           onDragEnd: i.a.func.isRequired,
-          selectMinutes: We,
+          selectMinutes: Ae,
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
         });
       var Et = xt;
       function Ot(e, t) {
@@ -19565,68 +19603,70 @@
       var Pt = function(e) {
         var t = e.children,
           n = e.event,
-          s = e.onExtend,
-          i = e.onExtendEnd,
-          o = e.selectMinutes,
-          d = e.stepMinutes,
-          u = e.stepHeight,
-          l = Ot(Object(a.useState)(!1), 2),
-          _ = l[0],
-          c = l[1],
-          m = Ot(Object(a.useState)({ x: 0, y: 0 }), 2),
-          h = m[0],
-          f = m[1],
-          p = Object(a.useMemo)(
+          s = e.isExtendable,
+          i = e.onExtend,
+          o = e.onExtendEnd,
+          d = e.selectMinutes,
+          u = e.stepMinutes,
+          l = e.stepHeight,
+          _ = Ot(Object(a.useState)(!1), 2),
+          c = _[0],
+          m = _[1],
+          h = Ot(Object(a.useState)({ x: 0, y: 0 }), 2),
+          f = h[0],
+          p = h[1],
+          M = Object(a.useMemo)(
             function() {
-              return ie({ stepMinutes: d, selectMinutes: o, stepHeight: u });
+              return le({ stepMinutes: u, selectMinutes: d, stepHeight: l });
             },
-            [d, o]
+            [u, d]
           ),
-          M = ue({
+          y = me({
             event: n,
-            deltaPosition: h,
-            selectMinutesHeight: p,
-            selectMinutes: o,
+            deltaPosition: f,
+            selectMinutesHeight: M,
+            selectMinutes: d,
             isDurationOnly: !0,
           }),
-          y = se({
-            pixelsMoved: h.y,
-            selectMinutes: o,
+          g = ue({
+            pixelsMoved: f.y,
+            selectMinutes: d,
             originalStart: n.start,
             originalEnd: n.end,
-            selectMinutesHeight: p,
+            selectMinutesHeight: M,
           }),
-          g = Object.assign({}, n);
+          L = Object.assign({}, n);
         return (
-          (g.start = M.start),
-          (g.end = M.end),
-          (g.height = n.height + y),
-          void 0 !== M.paddingTopStart &&
-            (g.paddingTopStart = M.paddingTopStart),
-          void 0 !== M.paddingBottomEnd &&
-            (g.paddingBottomEnd = M.paddingBottomEnd),
+          (L.start = y.start),
+          (L.end = y.end),
+          (L.height = n.height + g),
+          void 0 !== y.paddingTopStart &&
+            (L.paddingTopStart = y.paddingTopStart),
+          void 0 !== y.paddingBottomEnd &&
+            (L.paddingBottomEnd = y.paddingBottomEnd),
           r.a.createElement(
-            we.DraggableCore,
+            Se.DraggableCore,
             {
-              handle: '.'.concat(wt),
+              handle: '.'.concat(I),
               onDrag: function(e, t) {
-                var n = h.x,
-                  a = h.y;
-                f({ x: n + t.deltaX, y: a + t.deltaY }), s(ke(g)), c(!0);
+                if (!s({ event: n })) return !1;
+                var a = f.x,
+                  r = f.y;
+                p({ x: a + t.deltaX, y: r + t.deltaY }), i(we(L)), m(!0);
               },
               onStop: function(e, t) {
-                if (!_) return !1;
-                f({ x: 0, y: 0 }),
+                if (!c) return !1;
+                p({ x: 0, y: 0 }),
                   setTimeout(function() {
-                    return c(!1);
+                    return m(!1);
                   }),
-                  i({ e: e, ui: t, event: g });
+                  o({ e: e, ui: t, event: L });
               },
             },
             r.a.createElement(
               'span',
               null,
-              t({ isExtending: _, extendedEvent: g })
+              t({ isExtending: c, extendedEvent: L })
             )
           )
         );
@@ -19635,18 +19675,22 @@
         onExtend: function() {
           return null;
         },
+        isExtendable: function() {
+          return !0;
+        },
         selectMinutes: 15,
         stepMinutes: 30,
         stepHeight: null,
       }),
         (Pt.propTypes = {
           children: i.a.func.isRequired,
-          event: Oe.isRequired,
+          event: We.isRequired,
+          isExtendable: i.a.func,
           onExtend: i.a.func,
           onExtendEnd: i.a.func.isRequired,
-          selectMinutes: We,
+          selectMinutes: Ae,
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
         });
       var Wt = Pt;
       function Rt() {
@@ -19703,82 +19747,84 @@
           o = e.currentTime,
           u = e.date,
           _ = e.events,
-          c = e.gridHeight,
-          m = e.stepMinutes,
-          h = e.onDragEnd,
-          f = e.onExtendEnd,
-          p = e.onSelectEvent,
-          M = e.onSelectSlot,
-          y = e.onSelectRangeEnd,
-          g = e.selectMinutes,
-          L = e.stepDetails,
-          Y = e.renderEvent,
-          v = e.getUpdatedDraggedEvent,
-          D = e.minWidth,
-          k = e.minWidthEmpty,
-          b = e.renderStepDetail,
-          w = e.renderSelectSlotIndicator,
-          T = e.renderSelectRange,
-          S = e.renderEventPaddingTop,
-          H = e.renderEventPaddingBottom,
-          j = e.stepHeight,
-          x = At(Object(a.useState)(!0), 2),
-          E = x[0],
-          O = x[1],
-          P = At(Object(a.useState)(null), 2),
-          W = P[0],
-          R = P[1],
-          A = _e({
-            isSelectable: E,
-            stepMinutes: m,
-            selectMinutes: g,
+          c = e.isEventDraggable,
+          m = e.isEventExtendable,
+          h = e.gridHeight,
+          f = e.stepMinutes,
+          p = e.onDragEnd,
+          M = e.onExtendEnd,
+          y = e.onSelectEvent,
+          g = e.onSelectSlot,
+          L = e.onSelectRangeEnd,
+          Y = e.selectMinutes,
+          v = e.stepDetails,
+          D = e.renderEvent,
+          k = e.getUpdatedDraggedEvent,
+          b = e.minWidth,
+          w = e.minWidthEmpty,
+          T = e.renderStepDetail,
+          S = e.renderSelectSlotIndicator,
+          H = e.renderSelectRange,
+          j = e.renderEventPaddingTop,
+          x = e.renderEventPaddingBottom,
+          E = e.stepHeight,
+          O = At(Object(a.useState)(!0), 2),
+          P = O[0],
+          W = O[1],
+          R = At(Object(a.useState)(null), 2),
+          A = R[0],
+          C = R[1],
+          F = fe({
+            isSelectable: P,
+            stepMinutes: f,
+            selectMinutes: Y,
             columnDate: u,
-            stepHeight: j,
+            stepHeight: E,
           }),
-          C = A.selectRangeHandlers,
-          z = A.isSelectRangeFinished,
-          G = A.resetSelectRangeDrag,
-          U = A.selectRangeHeight,
-          q = A.selectRangeTop,
-          B = A.selectRange,
-          V = Object.keys(_).length,
-          $ = 100 / V - 1,
-          K = ve('time-grid__current-time-indicator');
+          N = F.selectRangeHandlers,
+          I = F.isSelectRangeFinished,
+          J = F.resetSelectRangeDrag,
+          V = F.selectRangeHeight,
+          $ = F.selectRangeTop,
+          K = F.selectRange,
+          Z = Object.keys(_).length,
+          X = 100 / Z - 1,
+          Q = z('time-grid__current-time-indicator');
         return r.a.createElement(
           'div',
           Rt(
             {
-              className: ''.concat(ve('time-grid__grid-column')).concat(N(u)),
+              className: ''.concat(z('time-grid__grid-column')).concat(U(u)),
               key: 'weekView'.concat(u.day()),
-              style: { height: c, minWidth: V * D || k },
+              style: { height: h, minWidth: Z * b || w },
               onClick: function(e) {
-                if (z)
+                if (I)
                   return (
-                    G(),
-                    y({
+                    J(),
+                    L({
                       e: e,
-                      start: new Date(B.start),
-                      end: new Date(B.end),
+                      start: new Date(K.start),
+                      end: new Date(K.end),
                       column: n,
                     }),
                     !1
                   );
-                if (!E) return !1;
-                var t = I({
-                  stepHeight: j,
-                  stepMinutes: m,
-                  selectMinutes: g,
+                if (!P) return !1;
+                var t = q({
+                  stepHeight: E,
+                  stepMinutes: f,
+                  selectMinutes: Y,
                   columnDate: u,
                 })(e);
-                R(t),
-                  M({ e: e, date: new Date(t), column: n }),
+                C(t),
+                  g({ e: e, date: new Date(t), column: n }),
                   setTimeout(function() {
-                    return R(null);
+                    return C(null);
                   }, 300),
-                  G();
+                  J();
               },
             },
-            C,
+            N,
             { ref: t }
           ),
           u.isSame(d()(), 'day') &&
@@ -19786,45 +19832,45 @@
             r.a.createElement(
               'div',
               {
-                className: K,
+                className: Q,
                 style: {
                   top: ''.concat(
-                    F({ stepMinutes: m, date: o, stepHeight: j }),
+                    G({ stepMinutes: f, date: o, stepHeight: E }),
                     'px'
                   ),
                 },
               },
               r.a.createElement('div', {
-                className: ''.concat(K, '__line-today'),
+                className: ''.concat(Q, '__line-today'),
               })
             ),
-          W &&
+          A &&
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__select-slot-indicator'),
-                style: { top: ''.concat(F({ stepMinutes: m, date: W }), 'px') },
+                className: z('time-grid__select-slot-indicator'),
+                style: { top: ''.concat(G({ stepMinutes: f, date: A }), 'px') },
               },
-              w
-                ? w({
-                    time: new Date(W.format('YYYY-MM-DD HH:mm:ss')),
+              S
+                ? S({
+                    time: new Date(A.format('YYYY-MM-DD HH:mm:ss')),
                     column: n,
                   })
                 : r.a.createElement(
                     'div',
-                    { className: ve('time-grid__select-slot-indicator-time') },
-                    W.format('h:mma')
+                    { className: z('time-grid__select-slot-indicator-time') },
+                    A.format('h:mma')
                   )
             ),
-          0 !== U &&
-            E &&
+          0 !== V &&
+            P &&
             r.a.createElement(
               'div',
               {
-                className: ve('time-grid__select-range'),
-                style: { height: U, top: q },
+                className: z('time-grid__select-range'),
+                style: { height: V, top: $ },
               },
-              T ? T({ start: new Date(B.start), end: new Date(B.end) }) : J(B)
+              H ? H({ start: new Date(K.start), end: new Date(K.end) }) : B(K)
             ),
           Object.keys(_).map(function(e) {
             return l()(_, e, []).map(function(t) {
@@ -19833,17 +19879,18 @@
                 {
                   key: t.id,
                   event: t,
-                  stepHeight: j,
-                  stepMinutes: m,
-                  selectMinutes: g,
+                  stepHeight: E,
+                  stepMinutes: f,
+                  selectMinutes: Y,
+                  isExtendable: m,
                   onExtend: function() {
-                    G(), O(!1);
+                    J(), W(!1);
                   },
                   onExtendEnd: function(e) {
                     setTimeout(function() {
-                      return O(!0);
+                      return W(!0);
                     }),
-                      f(e);
+                      M(e);
                   },
                 },
                 function(n) {
@@ -19854,21 +19901,22 @@
                     Et,
                     {
                       event: o,
+                      isDraggable: c,
                       columnIndex: s,
                       columnWidths: i,
-                      stepHeight: j,
-                      stepMinutes: m,
-                      selectMinutes: g,
+                      stepHeight: E,
+                      stepMinutes: f,
+                      selectMinutes: Y,
                       onDrag: function() {
-                        G(), O(!1);
+                        J(), W(!1);
                       },
                       onDragEnd: function(e) {
-                        h(e),
+                        p(e),
                           setTimeout(function() {
-                            return O(!0);
+                            return W(!0);
                           });
                       },
-                      getUpdatedDraggedEvent: v,
+                      getUpdatedDraggedEvent: k,
                     },
                     function(n) {
                       var s = n.draggedEvent,
@@ -19883,13 +19931,13 @@
                         {
                           className: ''
                             .concat(l, ' ')
-                            .concat(ve('time-grid__event-wrapper')),
+                            .concat(z('time-grid__event-wrapper')),
                           style: {
                             top: s.top - t.paddingTopHeight,
-                            width: _ ? ''.concat(d, 'px') : ''.concat($, '%'),
+                            width: _ ? ''.concat(d, 'px') : ''.concat(X, '%'),
                             left: _
                               ? ''.concat(o, 'px')
-                              : ''.concat($ * (e - 1), '%'),
+                              : ''.concat(X * (e - 1), '%'),
                           },
                         },
                         t.paddingTopStart &&
@@ -19897,36 +19945,37 @@
                           r.a.createElement(
                             'div',
                             {
-                              className: ve(
+                              className: z(
                                 'time-grid__event-padding',
                                 'time-grid__event-padding-top'
                               ),
                               style: { height: t.paddingTopHeight },
                             },
-                            S(t)
+                            j(t)
                           ),
                         r.a.createElement(
                           St,
                           {
+                            isExtendable: m,
                             event: s,
                             style: { height: ''.concat(s.height, 'px') },
-                            onSelect: p,
+                            onSelect: y,
                             isSelectable: !i && !a,
                           },
-                          Y
+                          D
                         ),
                         t.paddingBottomEnd &&
                           !u &&
                           r.a.createElement(
                             'div',
                             {
-                              className: ve(
+                              className: z(
                                 'time-grid__event-padding',
                                 'time-grid__event-padding-bottom'
                               ),
                               style: { height: t.paddingBottomHeight },
                             },
-                            H(t)
+                            x(t)
                           )
                       );
                     }
@@ -19935,24 +19984,30 @@
               );
             });
           }),
-          L.map(function(e) {
+          v.map(function(e) {
             return r.a.createElement(
               'div',
               {
                 key: e.id,
-                className: ve('time-grid__step-detail-wrapper'),
+                className: z('time-grid__step-detail-wrapper'),
                 style: {
                   top: ''.concat(e.top, 'px'),
                   height: ''.concat(e.height, 'px'),
                 },
               },
-              b(e)
+              T(e)
             );
           })
         );
       });
       (Ct.displayName = 'Column'),
         (Ct.defaultProps = {
+          isEventDraggable: function() {
+            return !0;
+          },
+          isEventExtendable: function() {
+            return !0;
+          },
           renderEvent: null,
           onExtendEnd: function() {
             return null;
@@ -19997,12 +20052,14 @@
           columnId: i.a.oneOfType([i.a.instanceOf(Date), i.a.number])
             .isRequired,
           columnIndex: i.a.number.isRequired,
-          columnWidths: Ae.isRequired,
-          currentTime: xe,
-          date: xe,
+          columnWidths: ze.isRequired,
+          currentTime: Oe,
+          date: Oe,
           events: i.a.object,
           getUpdatedDraggedEvent: i.a.func,
           gridHeight: i.a.number.isRequired,
+          isEventDraggable: i.a.func,
+          isEventExtendable: i.a.func,
           minWidth: i.a.number,
           minWidthEmpty: i.a.number,
           onDragEnd: i.a.func,
@@ -20016,10 +20073,10 @@
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,
           renderStepDetail: i.a.func,
-          selectMinutes: We,
+          selectMinutes: Ae,
           stepDetails: i.a.array,
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
         });
       var zt = Ct,
         Ft = function(e) {
@@ -20032,14 +20089,14 @@
           return r.a.createElement(
             'div',
             {
-              className: ''.concat(ve('time-grid__header-column')).concat(N(a)),
+              className: ''.concat(z('time-grid__header-column')).concat(U(a)),
               style: { minWidth: ''.concat(n * s || i, 'px') },
             },
             r.a.createElement(
               'div',
               {
                 className: ''.concat(
-                  ve(
+                  z(
                     'time-grid__header-column-container',
                     'time-grid__header-column-'.concat(o)
                   )
@@ -20052,12 +20109,12 @@
       (Ft.defaultProps = { minWidth: 190, minWidthEmpty: 100 }),
         (Ft.propTypes = {
           children: i.a.node.isRequired,
-          date: xe.isRequired,
+          date: Oe.isRequired,
           minWidth: i.a.number,
           minWidthEmpty: i.a.number,
           totalColumns: i.a.number.isRequired,
           totalEventColumns: i.a.number.isRequired,
-          type: i.a.oneOf([Ye.week, Ye.groups]).isRequired,
+          type: i.a.oneOf([C.week, C.groups]).isRequired,
         });
       var Nt = Ft;
       function It(e, t, n) {
@@ -20095,30 +20152,32 @@
             h = e.onSelectRangeEnd,
             f = e.selectMinutes,
             p = e.stepDetails,
-            M = e.events,
-            y = e.renderEvent,
-            g = e.renderCorner,
-            L = e.renderStepDetail,
-            Y = e.renderSelectSlotIndicator,
-            v = e.renderSelectRange,
-            D = e.renderEventPaddingTop,
-            k = e.renderEventPaddingBottom,
-            b = e.stepHeight,
-            w = e.scrollToTime,
-            T = ee(),
-            S = T.TimeGridRef,
-            H = T.assignRef,
-            j = T.elementWidths,
-            x = be({
-              events: M,
+            M = e.isEventDraggable,
+            y = e.isEventExtendable,
+            g = e.events,
+            L = e.renderEvent,
+            Y = e.renderCorner,
+            v = e.renderStepDetail,
+            D = e.renderSelectSlotIndicator,
+            k = e.renderSelectRange,
+            b = e.renderEventPaddingTop,
+            w = e.renderEventPaddingBottom,
+            T = e.stepHeight,
+            S = e.scrollToTime,
+            H = re(),
+            j = H.TimeGridRef,
+            x = H.assignRef,
+            W = H.elementWidths,
+            R = Te({
+              events: g,
               stepMinutes: i,
-              stepHeight: b,
+              stepHeight: T,
               stepDetails: p,
               visibleEventGroups: n,
             }),
-            W = x.mungedEvents,
-            R = x.mungedStepDetails,
-            A = (function(e) {
+            A = R.mungedEvents,
+            z = R.mungedStepDetails,
+            F = (function(e) {
               var t = Object.assign({}, e);
               return Object.keys(t).reduce(function(e, n) {
                 return (
@@ -20128,33 +20187,33 @@
                   e
                 );
               }, {});
-            })(W),
-            C = n;
+            })(A),
+            N = n;
           return (
             n ||
-              (C = Object.keys(A).map(function(e) {
+              (N = Object.keys(F).map(function(e) {
                 return Number(e);
               })),
-            r.a.createElement(Yt, {
-              ref: S,
+            r.a.createElement(Dt, {
+              ref: j,
               selectedDate: t,
               firstDay: s,
-              totalWidth: j.reduce(function(e, t) {
+              totalWidth: W.reduce(function(e, t) {
                 return e + t;
               }, 0),
               onCurrentTimeChange: _,
               stepMinutes: i,
               selectMinutes: f,
-              stepHeight: b,
-              renderCorner: g,
+              stepHeight: T,
+              renderCorner: Y,
               scrollToTime:
-                'firstEvent' === w
-                  ? G({ mungedEvents: W, selectedDate: t, hasGroups: !0 })
-                  : w,
+                'firstEvent' === S
+                  ? V({ mungedEvents: A, selectedDate: t, hasGroups: !0 })
+                  : S,
               renderHeader: function() {
-                var e = C.length;
-                return C.map(function(n) {
-                  var s = Jt({ events: A, groupId: n, selectedDate: t }),
+                var e = N.length;
+                return N.map(function(n) {
+                  var s = Jt({ events: F, groupId: n, selectedDate: t }),
                     i = Object.keys(s).length;
                   return r.a.createElement(
                     Nt,
@@ -20165,7 +20224,7 @@
                       date: t,
                       minWidth: o,
                       minWidthEmpty: d,
-                      type: Ye.groups,
+                      type: C.groups,
                     },
                     r.a.createElement(
                       'h2',
@@ -20181,22 +20240,24 @@
                   s = function(e) {
                     var t = e.columnMoves,
                       n = e.columnIndex;
-                    return C[n + t];
+                    return N[n + t];
                   };
-                return C.map(function(e, o) {
-                  var d = Jt({ events: A, groupId: e, selectedDate: t }) || {},
-                    _ = Jt({ events: R, groupId: e, selectedDate: t }) || [];
+                return N.map(function(e, o) {
+                  var d = Jt({ events: F, groupId: e, selectedDate: t }) || {},
+                    _ = Jt({ events: z, groupId: e, selectedDate: t }) || [];
                   return r.a.createElement(zt, {
-                    ref: H(e),
+                    ref: x(e),
                     key: 'groupColumn'.concat(e),
                     events: d,
                     stepDetails: _,
                     gridHeight: a,
-                    stepHeight: b,
+                    stepHeight: T,
                     date: t,
                     columnId: e,
-                    columnWidths: j,
+                    columnWidths: W,
                     columnIndex: o,
+                    isEventDraggable: M,
+                    isEventExtendable: y,
                     onDragEnd: u,
                     onExtendEnd: l,
                     onSelectEvent: c,
@@ -20205,12 +20266,12 @@
                     stepMinutes: i,
                     selectMinutes: f,
                     currentTime: n,
-                    renderEvent: y,
-                    renderStepDetail: L,
-                    renderSelectSlotIndicator: Y,
-                    renderSelectRange: v,
-                    renderEventPaddingTop: D,
-                    renderEventPaddingBottom: k,
+                    renderEvent: L,
+                    renderStepDetail: v,
+                    renderSelectSlotIndicator: D,
+                    renderSelectRange: k,
+                    renderEventPaddingTop: b,
+                    renderEventPaddingBottom: w,
                     getUpdatedDraggedEvent: function(e) {
                       var t = e.event,
                         n = e.columnMoves;
@@ -20244,6 +20305,12 @@
         };
       (Gt.defaultProps = {
         events: [],
+        isEventDraggable: function() {
+          return !0;
+        },
+        isEventExtendable: function() {
+          return !0;
+        },
         renderCorner: function() {
           return null;
         },
@@ -20289,8 +20356,10 @@
         visibleEventGroups: null,
       }),
         (Gt.propTypes = {
-          events: i.a.arrayOf(Oe),
-          firstDay: je,
+          events: i.a.arrayOf(We),
+          firstDay: Ee,
+          isEventDraggable: i.a.func,
+          isEventExtendable: i.a.func,
           minWidthColumn: i.a.number,
           minWidthColumnEmpty: i.a.number,
           onCurrentTimeChange: i.a.func,
@@ -20307,12 +20376,12 @@
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,
           renderStepDetail: i.a.func,
-          scrollToTime: Fe,
-          selectMinutes: We,
-          selectedDate: xe,
-          stepDetails: i.a.arrayOf(Pe),
+          scrollToTime: Ie,
+          selectMinutes: Ae,
+          selectedDate: Oe,
+          stepDetails: i.a.arrayOf(Re),
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
       var Ut = Gt,
@@ -20355,82 +20424,84 @@
         var t = e.events,
           n = e.selectedDate,
           s = e.firstDay,
-          i = e.minWidthColumn,
-          o = e.minWidthColumnEmpty,
-          u = e.stepMinutes,
-          _ = e.onDragEnd,
-          c = e.onExtendEnd,
-          m = e.onSelectEvent,
-          h = e.onSelectSlot,
-          f = e.onCurrentTimeChange,
-          p = e.onSelectRangeEnd,
-          M = e.selectMinutes,
-          y = e.renderEvent,
-          g = e.stepDetails,
-          L = e.renderCorner,
-          Y = e.renderStepDetail,
-          v = e.renderSelectSlotIndicator,
-          D = e.renderSelectRange,
-          k = e.renderEventPaddingTop,
-          b = e.renderEventPaddingBottom,
-          w = e.renderHeader,
-          T = e.stepHeight,
-          S = e.scrollToTime,
-          H = e.visibleEventGroups,
-          j = qt({ date: d()(n), firstDay: s }),
-          x = ee(),
-          E = x.TimeGridRef,
-          O = x.assignRef,
-          P = x.elementWidths,
-          W = be({
+          i = e.isEventDraggable,
+          o = e.isEventExtendable,
+          u = e.minWidthColumn,
+          _ = e.minWidthColumnEmpty,
+          c = e.stepMinutes,
+          m = e.onDragEnd,
+          h = e.onExtendEnd,
+          f = e.onSelectEvent,
+          p = e.onSelectSlot,
+          M = e.onCurrentTimeChange,
+          y = e.onSelectRangeEnd,
+          g = e.selectMinutes,
+          L = e.renderEvent,
+          Y = e.stepDetails,
+          v = e.renderCorner,
+          D = e.renderStepDetail,
+          k = e.renderSelectSlotIndicator,
+          b = e.renderSelectRange,
+          w = e.renderEventPaddingTop,
+          T = e.renderEventPaddingBottom,
+          S = e.renderHeader,
+          H = e.stepHeight,
+          j = e.scrollToTime,
+          x = e.visibleEventGroups,
+          E = qt({ date: d()(n), firstDay: s }),
+          O = re(),
+          P = O.TimeGridRef,
+          W = O.assignRef,
+          A = O.elementWidths,
+          z = Te({
             events: t,
-            stepMinutes: u,
-            stepHeight: T,
-            stepDetails: g,
-            visibleEventGroups: H,
+            stepMinutes: c,
+            stepHeight: H,
+            stepDetails: Y,
+            visibleEventGroups: x,
           }),
-          A = W.eventsWithSelectedEventGroups,
-          C = W.mungedStepDetailsGroups,
-          z = Object(a.useMemo)(
+          F = z.eventsWithSelectedEventGroups,
+          N = z.mungedStepDetailsGroups,
+          I = Object(a.useMemo)(
             function() {
-              return R(A);
+              return R(F);
             },
-            [A]
+            [F]
           );
-        return r.a.createElement(Yt, {
-          ref: E,
+        return r.a.createElement(Dt, {
+          ref: P,
           selectedDate: n,
-          totalWidth: P.reduce(function(e, t) {
+          totalWidth: A.reduce(function(e, t) {
             return e + t;
           }, 0),
           firstDay: s,
-          stepMinutes: u,
-          onSelectEvent: m,
-          onSelectSlot: h,
-          onCurrentTimeChange: f,
-          selectMinutes: M,
-          stepHeight: T,
+          stepMinutes: c,
+          onSelectEvent: f,
+          onSelectSlot: p,
+          onCurrentTimeChange: M,
+          selectMinutes: g,
+          stepHeight: H,
           scrollToTime:
-            'firstEvent' === S
-              ? G({ mungedEvents: A, selectedDate: d()(n), hasGroups: !1 })
-              : S,
-          renderCorner: L,
+            'firstEvent' === j
+              ? V({ mungedEvents: F, selectedDate: d()(n), hasGroups: !1 })
+              : j,
+          renderCorner: v,
           renderHeader: function() {
-            return j.map(function(e) {
-              var n = Object.keys(l()(z, e.format('YYYY-MM-DD'), {})).length;
+            return E.map(function(e) {
+              var n = Object.keys(l()(I, e.format('YYYY-MM-DD'), {})).length;
               return r.a.createElement(
                 Nt,
                 {
                   key: 'dayHeader'.concat(e.date()),
                   totalEventColumns: n,
-                  totalColumns: j.length,
+                  totalColumns: E.length,
                   date: e,
-                  minWidth: i,
-                  minWidthEmpty: o,
-                  type: Ye.week,
+                  minWidth: u,
+                  minWidthEmpty: _,
+                  type: C.week,
                 },
-                w
-                  ? w({ date: new Date(e), events: t })
+                S
+                  ? S({ date: new Date(e), events: t })
                   : r.a.createElement(
                       'h2',
                       null,
@@ -20444,35 +20515,37 @@
           renderColumns: function(e) {
             var t = e.currentTime,
               n = e.totalGridHeight;
-            return j.map(function(e, a) {
-              var s = l()(C, e.format('YYYY-MM-DD'), []),
-                d = l()(z, e.format('YYYY-MM-DD'), {}),
-                f = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
+            return E.map(function(e, a) {
+              var s = l()(N, e.format('YYYY-MM-DD'), []),
+                d = l()(I, e.format('YYYY-MM-DD'), {}),
+                M = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
               return r.a.createElement(zt, {
-                ref: O(e.day()),
+                ref: W(e.day()),
                 key: 'weekColumn'.concat(e.day()),
                 events: d,
                 stepDetails: s,
                 date: e,
-                columnId: f,
-                columnWidths: P,
+                columnId: M,
+                columnWidths: A,
                 columnIndex: a,
-                minWidth: i,
-                minWidthEmpty: o,
-                onDragEnd: _,
-                onExtendEnd: c,
-                onSelectEvent: m,
-                onSelectSlot: h,
-                onSelectRangeEnd: p,
-                renderSelectRange: D,
-                stepMinutes: u,
-                selectMinutes: M,
-                stepHeight: T,
+                isEventDraggable: i,
+                isEventExtendable: o,
+                minWidth: u,
+                minWidthEmpty: _,
+                onDragEnd: m,
+                onExtendEnd: h,
+                onSelectEvent: f,
+                onSelectSlot: p,
+                onSelectRangeEnd: y,
+                renderSelectRange: b,
+                stepMinutes: c,
+                selectMinutes: g,
+                stepHeight: H,
                 gridHeight: n,
                 currentTime: t,
-                renderEvent: y,
-                renderEventPaddingTop: k,
-                renderEventPaddingBottom: b,
+                renderEvent: L,
+                renderEventPaddingTop: w,
+                renderEventPaddingBottom: T,
                 getUpdatedDraggedEvent: function(e) {
                   var t = e.event,
                     n = e.columnMoves,
@@ -20517,8 +20590,8 @@
                     )
                   );
                 },
-                renderStepDetail: Y,
-                renderSelectSlotIndicator: v,
+                renderStepDetail: D,
+                renderSelectSlotIndicator: k,
               });
             });
           },
@@ -20526,6 +20599,12 @@
       };
       (Vt.defaultProps = {
         events: [],
+        isEventDraggable: function() {
+          return !0;
+        },
+        isEventExtendable: function() {
+          return !0;
+        },
         renderEvent: null,
         renderCorner: function() {
           return null;
@@ -20565,15 +20644,17 @@
         renderHeader: null,
         stepHeight: null,
         stepMinutes: 30,
-        selectedDate: ot,
+        selectedDate: ut,
         selectMinutes: 15,
         scrollToTime: 'firstEvent',
         firstDay: 0,
         visibleEventGroups: null,
       }),
         (Vt.propTypes = {
-          events: i.a.arrayOf(Oe),
-          firstDay: je,
+          events: i.a.arrayOf(We),
+          firstDay: Ee,
+          isEventDraggable: i.a.func,
+          isEventExtendable: i.a.func,
           minWidthColumn: i.a.number,
           minWidthColumnEmpty: i.a.number,
           onCurrentTimeChange: i.a.func,
@@ -20590,12 +20671,12 @@
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,
           renderStepDetail: i.a.func,
-          scrollToTime: Fe,
-          selectMinutes: We,
-          selectedDate: He,
-          stepDetails: i.a.arrayOf(Pe),
+          scrollToTime: Ie,
+          selectMinutes: Ae,
+          selectedDate: xe,
+          stepDetails: i.a.arrayOf(Re),
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
       var $t = Vt;
@@ -20618,12 +20699,12 @@
           n = e.view,
           a = e.direction,
           r = e.currentDate,
-          s = Ye.week,
-          i = Ye.groups,
+          s = C.week,
+          i = C.groups,
           o = function(e) {
             return r.clone().add(a, e);
           };
-        return (Kt((t = {}), Ye.month, o('months')),
+        return (Kt((t = {}), C.month, o('months')),
         Kt(t, s, o('weeks')),
         Kt(t, i, o('days')),
         t)[n];
@@ -20641,9 +20722,9 @@
           e
         );
       }
-      var Qt = Ye.month,
-        en = Ye.week,
-        tn = Ye.groups,
+      var Qt = C.month,
+        en = C.week,
+        tn = C.groups,
         nn = function(e) {
           var t,
             n = e.date,
@@ -20668,9 +20749,9 @@
           e
         );
       }
-      var rn = Ye.groups,
-        sn = Ye.week,
-        on = Ye.month,
+      var rn = C.groups,
+        sn = C.week,
+        on = C.month,
         dn = function(e) {
           var t,
             n = e.view,
@@ -20936,9 +21017,9 @@
             setFullRange: _,
           });
         },
-        vn = Ye.month,
-        Dn = Ye.week,
-        kn = Ye.groups,
+        vn = C.month,
+        Dn = C.week,
+        kn = C.groups,
         bn = function(e) {
           var t = e.children,
             n = e.firstDay,
@@ -20994,10 +21075,10 @@
               })
             : r.a.createElement(
                 'div',
-                { className: ve('toolbar') },
+                { className: z('toolbar') },
                 r.a.createElement(
                   'div',
-                  { className: ve('toolbar__views') },
+                  { className: z('toolbar__views') },
                   r.a.createElement(
                     'button',
                     {
@@ -21031,7 +21112,7 @@
                 ),
                 r.a.createElement(
                   'div',
-                  { className: ve('toolbar__navigate') },
+                  { className: z('toolbar__navigate') },
                   r.a.createElement(
                     'button',
                     { type: 'button', onClick: D },
@@ -21048,7 +21129,7 @@
                     'Next'
                   )
                 ),
-                r.a.createElement('h1', { className: ve('toolbar__title') }, L)
+                r.a.createElement('h1', { className: z('toolbar__title') }, L)
               );
         };
       (bn.defaultProps = {
@@ -21063,15 +21144,15 @@
       }),
         (bn.propTypes = {
           children: i.a.func,
-          events: i.a.arrayOf(Oe),
-          fetchEventInitialFullRange: ze,
+          events: i.a.arrayOf(We),
+          fetchEventInitialFullRange: Ne,
           fetchEventPadding: i.a.number,
-          firstDay: je,
+          firstDay: Ee,
           onFetchEvents: i.a.func,
           onNavigate: i.a.func.isRequired,
           onViewChange: i.a.func.isRequired,
-          selectedDate: He.isRequired,
-          view: Ee.isRequired,
+          selectedDate: xe.isRequired,
+          view: Pe.isRequired,
         });
       var wn = bn;
       function Tn(e, t, n) {
@@ -21105,105 +21186,109 @@
           a = (e.fetchEventPadding, e.fetchEventInitialFullRange),
           s = e.firstDay,
           i = e.forceSixWeeks,
-          o = e.minWidthColumn,
-          u = e.minWidthColumnEmpty,
-          l = e.onDragEnd,
-          _ = e.onExtendEnd,
-          c = e.onFetchEvents,
-          m = e.onNavigate,
-          h = e.onSelectMore,
-          f = e.onSelectDate,
-          p = e.onSelectEvent,
-          M = e.onSelectRangeEnd,
-          y = e.onCurrentTimeChange,
-          g = e.onSelectSlot,
-          L = e.onViewChange,
-          Y = e.renderCell,
-          v = (e.renderEvent, e.renderCorner),
-          D = e.renderEventPaddingBottom,
-          k = e.renderEventPaddingTop,
-          b = e.renderGroupsHeader,
-          w = e.renderMonthHeader,
-          T = e.renderSelectRange,
-          S = e.renderSelectSlotIndicator,
-          H = e.renderStepDetail,
-          j = e.renderWeekHeader,
-          x = e.renderDayGridEvent,
-          E = e.renderTimeGridEvent,
-          O = e.renderToolbar,
-          P = e.scrollToTime,
-          W = e.selectedDate,
-          R = e.selectMinutes,
-          A = e.stepDetails,
-          C = e.stepHeight,
-          z = e.stepMinutes,
-          F = e.style,
-          N = e.view,
-          I = e.visibleEventGroups,
-          J = Ye.month,
-          G = Ye.week,
-          U = Ye.groups,
-          q = {
-            onDragEnd: l,
-            onSelectEvent: p,
-            onSelectSlot: g,
+          o = e.isEventDraggable,
+          u = e.isEventExtendable,
+          l = e.minWidthColumn,
+          _ = e.minWidthColumnEmpty,
+          c = e.onDragEnd,
+          m = e.onExtendEnd,
+          h = e.onFetchEvents,
+          f = e.onNavigate,
+          p = e.onSelectMore,
+          M = e.onSelectDate,
+          y = e.onSelectEvent,
+          g = e.onSelectRangeEnd,
+          L = e.onCurrentTimeChange,
+          Y = e.onSelectSlot,
+          v = e.onViewChange,
+          D = e.renderCell,
+          k = (e.renderEvent, e.renderCorner),
+          b = e.renderEventPaddingBottom,
+          w = e.renderEventPaddingTop,
+          T = e.renderGroupsHeader,
+          S = e.renderMonthHeader,
+          H = e.renderSelectRange,
+          j = e.renderSelectSlotIndicator,
+          x = e.renderStepDetail,
+          E = e.renderWeekHeader,
+          O = e.renderDayGridEvent,
+          P = e.renderTimeGridEvent,
+          W = e.renderToolbar,
+          R = e.scrollToTime,
+          A = e.selectedDate,
+          z = e.selectMinutes,
+          F = e.stepDetails,
+          N = e.stepHeight,
+          I = e.stepMinutes,
+          J = e.style,
+          G = e.view,
+          U = e.visibleEventGroups,
+          q = C.month,
+          B = C.week,
+          V = C.groups,
+          $ = {
+            isEventDraggable: o,
+            onDragEnd: c,
+            onSelectEvent: y,
+            onSelectSlot: Y,
             events: n,
-            selectedDate: d()(W),
+            selectedDate: d()(A),
             firstDay: s,
-            visibleEventGroups: I,
+            visibleEventGroups: U,
           },
-          B = {
-            onSelectMore: h,
-            onSelectDate: f,
+          K = {
+            onSelectMore: p,
+            onSelectDate: M,
             forceSixWeeks: i,
-            renderCell: Y,
-            renderEvent: x,
+            renderCell: D,
+            renderEvent: O,
           },
-          V = {
-            onExtendEnd: _,
-            onCurrentTimeChange: y,
-            onSelectRangeEnd: M,
-            stepDetails: A,
-            minWidthColumn: o,
-            minWidthColumnEmpty: u,
-            renderCorner: v,
-            renderEventPaddingBottom: D,
-            renderEventPaddingTop: k,
-            renderSelectRange: T,
-            renderStepDetail: H,
-            selectMinutes: R,
-            stepHeight: C,
-            stepMinutes: z,
-            renderSelectSlotIndicator: S,
-            renderEvent: E,
-            scrollToTime: P,
+          Z = {
+            isEventExtendable: u,
+            onExtendEnd: m,
+            onCurrentTimeChange: L,
+            onSelectRangeEnd: g,
+            stepDetails: F,
+            minWidthColumn: l,
+            minWidthColumnEmpty: _,
+            renderCorner: k,
+            renderEventPaddingBottom: b,
+            renderEventPaddingTop: w,
+            renderSelectRange: H,
+            renderStepDetail: x,
+            selectMinutes: z,
+            stepHeight: N,
+            stepMinutes: I,
+            renderSelectSlotIndicator: j,
+            renderEvent: P,
+            scrollToTime: R,
           },
-          $ = (Tn(
+          X = (Tn(
             (t = {}),
-            J,
-            r.a.createElement(yt, Sn({ renderHeader: w }, B, q))
+            q,
+            r.a.createElement(Lt, Sn({ renderHeader: S }, K, $))
           ),
-          Tn(t, G, r.a.createElement($t, Sn({ renderHeader: j }, V, q))),
-          Tn(t, U, r.a.createElement(Ut, Sn({ renderHeader: b }, V, q))),
+          Tn(t, B, r.a.createElement($t, Sn({ renderHeader: E }, Z, $))),
+          Tn(t, V, r.a.createElement(Ut, Sn({ renderHeader: T }, Z, $))),
           t);
         return r.a.createElement(
           'div',
-          { className: 'acuity-calendar', style: F },
+          { className: 'acuity-calendar', style: J },
           r.a.createElement(
             wn,
             {
               events: n,
               fetchEventInitialFullRange: a,
               firstDay: s,
-              onNavigate: m,
-              onViewChange: L,
-              onFetchEvents: c,
-              selectedDate: W,
-              view: N,
+              onNavigate: f,
+              onViewChange: v,
+              onFetchEvents: h,
+              selectedDate: A,
+              view: G,
             },
-            O
+            W
           ),
-          $[N]
+          X[G]
         );
       };
       (Hn.defaultProps = {
@@ -21267,20 +21352,28 @@
         renderToolbar: null,
         renderWeekHeader: null,
         selectMinutes: 15,
-        selectedDate: ot,
+        selectedDate: ut,
         stepDetails: null,
         stepHeight: null,
         stepMinutes: 30,
         style: {},
         scrollToTime: 'firstEvent',
         visibleEventGroups: null,
+        isEventDraggable: function() {
+          return !0;
+        },
+        isEventExtendable: function() {
+          return !0;
+        },
       }),
         (Hn.propTypes = {
-          events: i.a.arrayOf(Oe),
-          fetchEventInitialFullRange: ze,
+          events: i.a.arrayOf(We),
+          fetchEventInitialFullRange: Ne,
           fetchEventPadding: i.a.number,
-          firstDay: je,
+          firstDay: Ee,
           forceSixWeeks: i.a.bool,
+          isEventDraggable: i.a.func,
+          isEventExtendable: i.a.func,
           minWidthColumn: i.a.number,
           minWidthColumnEmpty: i.a.number,
           onCurrentTimeChange: i.a.func,
@@ -21308,14 +21401,14 @@
           renderTimeGridEvent: i.a.func,
           renderToolbar: i.a.func,
           renderWeekHeader: i.a.func,
-          scrollToTime: Fe,
-          selectMinutes: We,
-          selectedDate: He,
-          stepDetails: i.a.arrayOf(Pe),
+          scrollToTime: Ie,
+          selectMinutes: Ae,
+          selectedDate: xe,
+          stepDetails: i.a.arrayOf(Re),
           stepHeight: i.a.number,
-          stepMinutes: We,
+          stepMinutes: Ae,
           style: i.a.object,
-          view: Ee.isRequired,
+          view: Pe.isRequired,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
       var jn = Hn;
@@ -21453,7 +21546,7 @@
           a.Fragment,
           null,
           r.a.createElement('style', null, Wn),
-          r.a.createElement(yt, {
+          r.a.createElement(Lt, {
             forceSixWeeks: s,
             firstDay: n,
             onSelectSlot: function(e) {
@@ -21473,7 +21566,7 @@
                 o
                   ? o(Rn({}, e, { weight: n, count: s }))
                   : r.a.createElement('div', {
-                      className: ve('heatmap__cell'),
+                      className: z('heatmap__cell'),
                       style: { opacity: n },
                     })
               );
@@ -21494,7 +21587,7 @@
           var t = e.date;
           return r.a.createElement(
             'span',
-            { className: ve('heatmap-header') },
+            { className: z('heatmap-header') },
             t.format('dd')
           );
         },
@@ -21502,12 +21595,12 @@
       }),
         (Cn.propTypes = {
           counts: En,
-          firstDay: je,
+          firstDay: Ee,
           forceSixWeeks: i.a.bool,
           onSelectCell: i.a.func,
           renderCell: i.a.func,
           renderHeader: i.a.func,
-          selectedDate: He,
+          selectedDate: xe,
         });
       var zn = Cn;
       n(151);
@@ -21570,9 +21663,9 @@
           };
         return r.a.createElement(
           'div',
-          { className: ve('day-list') },
+          { className: z('day-list') },
           r.a.createElement(
-            it,
+            dt,
             Fn(
               {
                 grid: o,
@@ -21599,7 +21692,7 @@
         totalDays: 7,
       }),
         (In.propTypes = {
-          firstDay: je,
+          firstDay: Ee,
           renderCell: i.a.func,
           renderHeader: i.a.func,
           totalDays: i.a.number,
@@ -21609,7 +21702,7 @@
         return Ut;
       }),
         n.d(t, 'CalendarMonth', function() {
-          return yt;
+          return Lt;
         }),
         n.d(t, 'CalendarMonthHeatmap', function() {
           return zn;
@@ -21621,10 +21714,10 @@
           return Jn;
         }),
         n.d(t, 'DayGrid', function() {
-          return it;
+          return dt;
         }),
         n.d(t, 'TimeGrid', function() {
-          return Yt;
+          return Dt;
         }),
         n.d(t, 'Toolbar', function() {
           return wn;

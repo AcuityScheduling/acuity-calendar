@@ -34,6 +34,8 @@ const FullCalendar = ({
   fetchEventInitialFullRange,
   firstDay,
   forceSixWeeks,
+  isEventDraggable,
+  isEventExtendable,
   minWidthColumn,
   minWidthColumnEmpty,
   onDragEnd,
@@ -74,6 +76,7 @@ const FullCalendar = ({
   const { month, week, groups } = CALENDAR_VIEWS;
 
   const allViewProps = {
+    isEventDraggable,
     onDragEnd,
     onSelectEvent,
     onSelectSlot,
@@ -92,6 +95,7 @@ const FullCalendar = ({
   };
 
   const timeGridProps = {
+    isEventExtendable,
     onExtendEnd,
     onCurrentTimeChange,
     onSelectRangeEnd,
@@ -194,6 +198,8 @@ FullCalendar.defaultProps = {
   style: {},
   scrollToTime: SCROLL_TO_TIME_DEFAULT,
   visibleEventGroups: null,
+  isEventDraggable: () => true,
+  isEventExtendable: () => true,
 };
 
 FullCalendar.propTypes = {
@@ -202,6 +208,8 @@ FullCalendar.propTypes = {
   fetchEventPadding: PropTypes.number,
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
+  isEventDraggable: PropTypes.func,
+  isEventExtendable: PropTypes.func,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

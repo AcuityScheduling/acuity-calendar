@@ -12,6 +12,7 @@ const DayCell = React.forwardRef(
       eventHeight,
       cellDimensions,
       dayDetails,
+      isEventDraggable,
       onDragEnd,
       onSelectSlot,
       onSelectMonthDate,
@@ -52,6 +53,7 @@ const DayCell = React.forwardRef(
               key={event.id}
               columnMovesPerRowChange={totalColumns}
               onDragEnd={onDragEnd}
+              isDraggable={isEventDraggable}
             >
               {({ draggedEvent, vertChange, horizChange }) => {
                 return (
@@ -158,6 +160,7 @@ DayCell.displayName = 'DayCell';
 
 DayCell.defaultProps = {
   events: [],
+  isEventDraggable: () => true,
   onDragEnd: () => null,
   onSelectSlot: () => null,
   onSelectMonthDate: null,
@@ -180,6 +183,7 @@ DayCell.propTypes = {
   eventRef: REF_TYPE.isRequired,
   eventWrapperRef: REF_TYPE.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE),
+  isEventDraggable: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSelectEvent: PropTypes.func,
   onSelectMonthDate: PropTypes.func,

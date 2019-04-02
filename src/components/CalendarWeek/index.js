@@ -35,6 +35,8 @@ const CalendarWeek = ({
   events,
   selectedDate,
   firstDay,
+  isEventDraggable,
+  isEventExtendable,
   minWidthColumn,
   minWidthColumnEmpty,
   stepMinutes,
@@ -153,6 +155,8 @@ const CalendarWeek = ({
               columnId={columnId}
               columnWidths={elementWidths}
               columnIndex={index}
+              isEventDraggable={isEventDraggable}
+              isEventExtendable={isEventExtendable}
               minWidth={minWidthColumn}
               minWidthEmpty={minWidthColumnEmpty}
               onDragEnd={onDragEnd}
@@ -201,6 +205,8 @@ const CalendarWeek = ({
 
 CalendarWeek.defaultProps = {
   events: [],
+  isEventDraggable: () => true,
+  isEventExtendable: () => true,
   renderEvent: null,
   renderCorner: () => null,
   stepDetails: null,
@@ -230,6 +236,8 @@ CalendarWeek.defaultProps = {
 CalendarWeek.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
+  isEventDraggable: PropTypes.func,
+  isEventExtendable: PropTypes.func,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

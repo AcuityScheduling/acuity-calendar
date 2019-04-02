@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DraggableCore } from 'react-draggable';
-import { extendHandleClass } from '..';
 import {
   getSelectMinutesHeight,
   getDragVerticalChange,
@@ -13,10 +12,12 @@ import {
   STEP_MINUTES_DEFAULT,
 } from '../../../../../defaultProps';
 import { EVENT_TYPE, STEP_MINUTES_TYPE } from '../../../../../types';
+import { extendHandleClass } from '../../../constants';
 
 const EventExtend = ({
   children,
   event,
+  isExtendable,
   onExtend,
   onExtendEnd,
   selectMinutes,
@@ -67,6 +68,7 @@ const EventExtend = ({
     <DraggableCore
       handle={`.${extendHandleClass}`}
       onDrag={(e, ui) => {
+        if (!isExtendable({ event })) return false;
         const { x, y } = deltaPosition;
         setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
         onExtend(resetEventFormat(newEvent));
@@ -86,6 +88,7 @@ const EventExtend = ({
 
 EventExtend.defaultProps = {
   onExtend: () => null,
+  isExtendable: () => true,
   selectMinutes: SELECT_MINUTES_DEFAULT,
   stepMinutes: STEP_MINUTES_DEFAULT,
   stepHeight: null,
@@ -94,6 +97,7 @@ EventExtend.defaultProps = {
 EventExtend.propTypes = {
   children: PropTypes.func.isRequired,
   event: EVENT_TYPE.isRequired,
+  isExtendable: PropTypes.func,
   onExtend: PropTypes.func,
   onExtendEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,

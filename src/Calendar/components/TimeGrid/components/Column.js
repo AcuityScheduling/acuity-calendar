@@ -34,6 +34,8 @@ const Column = React.forwardRef(
       currentTime,
       date,
       events,
+      isEventDraggable,
+      isEventExtendable,
       gridHeight,
       stepMinutes,
       onDragEnd,
@@ -177,6 +179,7 @@ const Column = React.forwardRef(
                 stepHeight={stepHeight}
                 stepMinutes={stepMinutes}
                 selectMinutes={selectMinutes}
+                isExtendable={isEventExtendable}
                 onExtend={() => {
                   // On drag triggers mousedown in the select range
                   // so we need to change state to tell that we're not actually
@@ -192,6 +195,7 @@ const Column = React.forwardRef(
                 {({ isExtending, extendedEvent, heightChange }) => (
                   <EventDragDrop
                     event={extendedEvent}
+                    isDraggable={isEventDraggable}
                     columnIndex={columnIndex}
                     columnWidths={columnWidths}
                     stepHeight={stepHeight}
@@ -250,6 +254,7 @@ const Column = React.forwardRef(
                             </div>
                           )}
                           <Event
+                            isExtendable={isEventExtendable}
                             event={draggedEvent}
                             style={{
                               height: `${draggedEvent.height}px`,
@@ -303,6 +308,8 @@ const Column = React.forwardRef(
 Column.displayName = 'Column';
 
 Column.defaultProps = {
+  isEventDraggable: () => true,
+  isEventExtendable: () => true,
   renderEvent: null,
   onExtendEnd: () => null,
   onDragEnd: () => null,
@@ -336,6 +343,8 @@ Column.propTypes = {
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
   gridHeight: PropTypes.number.isRequired,
+  isEventDraggable: PropTypes.func,
+  isEventExtendable: PropTypes.func,
   minWidth: PropTypes.number,
   minWidthEmpty: PropTypes.number,
   onDragEnd: PropTypes.func,

@@ -14,6 +14,7 @@ const CalendarMonth = ({
   events,
   firstDay,
   forceSixWeeks,
+  isEventDraggable,
   selectedDate,
   onDragEnd,
   onSelectMore,
@@ -33,6 +34,7 @@ const CalendarMonth = ({
 
   return (
     <DayGrid
+      isEventDraggable={isEventDraggable}
       grid={monthGrid}
       events={events}
       onDragEnd={onDragEnd}
@@ -50,6 +52,7 @@ const CalendarMonth = ({
 
 CalendarMonth.defaultProps = {
   events: [],
+  isEventDraggable: () => true,
   forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
@@ -68,6 +71,7 @@ CalendarMonth.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   forceSixWeeks: PropTypes.bool,
+  isEventDraggable: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,

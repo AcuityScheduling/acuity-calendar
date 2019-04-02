@@ -5,9 +5,7 @@ import EventWrapper from '../../../EventWrapper';
 import { getDisplayTime } from '../../utils';
 import { makeClass } from '../../../../utils';
 import { EVENT_TYPE } from '../../../../types';
-
-export const handleCenterClass = makeClass('time-grid__event-handle-center');
-export const extendHandleClass = makeClass('time-grid__event-handle');
+import { extendHandleClass, handleCenterClass } from '../../constants';
 
 const Event = ({
   children,
@@ -15,6 +13,7 @@ const Event = ({
   event,
   isSelectable,
   onSelect,
+  isExtendable,
   ...restProps
 }) => {
   const wrapperRef = useRef(null);
@@ -60,9 +59,8 @@ const Event = ({
         </div>
       )}
       <div
-        className={`${extendHandleClass} ${makeClass(
-          'time-grid__event-handle-bottom'
-        )}`}
+        className={`${extendHandleClass} ${isExtendable({ event }) &&
+          makeClass('time-grid__event-handle-bottom')}`}
         ref={extenderRef}
       />
     </EventWrapper>
@@ -73,12 +71,14 @@ Event.defaultProps = {
   children: null,
   className: null,
   isSelectable: true,
+  isExtendable: () => true,
 };
 
 Event.propTypes = {
   children: PropTypes.func,
   className: PropTypes.string,
   event: EVENT_TYPE.isRequired,
+  isExtendable: PropTypes.func,
   isSelectable: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
 };

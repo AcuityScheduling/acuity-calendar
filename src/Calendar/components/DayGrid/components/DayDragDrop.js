@@ -93,6 +93,7 @@ const updateEvent = ({
 const DayDragDrop = ({
   children,
   cellDimensions,
+  isDraggable,
   event,
   topEventOffset,
   onDrag,
@@ -134,6 +135,7 @@ const DayDragDrop = ({
   return (
     <DraggableCore
       onDrag={(e, ui) => {
+        if (!isDraggable({ event })) return false;
         dispatch({
           type: 'startDragging',
           position: { x: ui.x, y: ui.y },
@@ -154,6 +156,7 @@ const DayDragDrop = ({
 };
 
 DayDragDrop.defaultProps = {
+  isDraggable: () => true,
   onDrag: () => null,
   onDragEnd: () => null,
 };
@@ -165,10 +168,11 @@ DayDragDrop.propTypes = {
   }).isRequired,
   children: PropTypes.func.isRequired,
   columnMovesPerRowChange: PropTypes.number.isRequired,
+  event: EVENT_TYPE.isRequired,
   // When we start dragging and dropping we want to move the month
   // event up to the first position if it's not there already this top offset
   // is the pixels from the top position we have to move
-  event: EVENT_TYPE.isRequired,
+  isDraggable: PropTypes.func,
   onDrag: PropTypes.func,
   onDragEnd: PropTypes.func,
   topEventOffset: PropTypes.number.isRequired,

@@ -47,6 +47,8 @@ const CalendarGroups = ({
   onSelectRangeEnd,
   selectMinutes,
   stepDetails,
+  isEventDraggable,
+  isEventExtendable,
   events,
   renderEvent,
   renderCorner,
@@ -158,6 +160,8 @@ const CalendarGroups = ({
               columnId={groupId}
               columnWidths={elementWidths}
               columnIndex={index}
+              isEventDraggable={isEventDraggable}
+              isEventExtendable={isEventExtendable}
               onDragEnd={onDragEnd}
               onExtendEnd={onExtendEnd}
               onSelectEvent={onSelectEvent}
@@ -191,6 +195,8 @@ const CalendarGroups = ({
 
 CalendarGroups.defaultProps = {
   events: [],
+  isEventDraggable: () => true,
+  isEventExtendable: () => true,
   renderCorner: () => null,
   renderEvent: null,
   selectedDate: moment(),
@@ -219,6 +225,8 @@ CalendarGroups.defaultProps = {
 CalendarGroups.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
+  isEventDraggable: PropTypes.func,
+  isEventExtendable: PropTypes.func,
   minWidthColumn: PropTypes.number,
   minWidthColumnEmpty: PropTypes.number,
   onCurrentTimeChange: PropTypes.func,

@@ -10,6 +10,7 @@ import useMungeData from '../../utils/useMungeData';
 
 const DayGrid = ({
   events,
+  isEventDraggable,
   grid,
   renderCell,
   renderHeader,
@@ -79,6 +80,7 @@ const DayGrid = ({
 
                     return (
                       <DayCell
+                        isEventDraggable={isEventDraggable}
                         totalColumns={totalColumns}
                         events={eventsForCell}
                         ref={cellRef}
@@ -109,6 +111,7 @@ const DayGrid = ({
 
 DayGrid.defaultProps = {
   events: [],
+  isEventDraggable: () => true,
   renderCell: null,
   renderHeader: null,
   onDragEnd: () => null,
@@ -121,6 +124,7 @@ DayGrid.defaultProps = {
 DayGrid.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   grid: DAY_GRID_TYPE.isRequired,
+  isEventDraggable: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,

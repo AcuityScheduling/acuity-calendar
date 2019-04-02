@@ -11,12 +11,12 @@ import {
   getDragVerticalChange,
   getDraggedEventStartEnd,
 } from '../utils';
-import { handleCenterClass } from '..';
 import { makeClass, resetEventFormat } from '../../../../../utils';
 import {
   SELECT_MINUTES_DEFAULT,
   STEP_MINUTES_DEFAULT,
 } from '../../../../../defaultProps';
+import { handleCenterClass } from '../../../constants';
 
 /**
  * Get classes that we're going to attach to an event while we're
@@ -63,6 +63,7 @@ const EventDragDrop = ({
   selectMinutes,
   columnWidths,
   columnIndex,
+  isDraggable,
   onDrag,
   onDragEnd,
   children,
@@ -170,6 +171,7 @@ const EventDragDrop = ({
     <Fragment>
       <DraggableCore
         onDrag={(e, ui) => {
+          if (!isDraggable({ event })) return false;
           const { x, y } = deltaPosition;
           setDeltaPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
           setXPosition(ui.x);
@@ -211,7 +213,7 @@ const EventDragDrop = ({
 };
 
 EventDragDrop.defaultProps = {
-  isDraggable: true,
+  isDraggable: () => true,
   getUpdatedDraggedEvent: () => null,
   onDrag: () => null,
   stepHeight: null,
@@ -225,7 +227,7 @@ EventDragDrop.propTypes = {
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   event: EVENT_TYPE.isRequired,
   getUpdatedDraggedEvent: PropTypes.func,
-  isDraggable: PropTypes.bool,
+  isDraggable: PropTypes.func,
   onDrag: PropTypes.func,
   onDragEnd: PropTypes.func.isRequired,
   selectMinutes: STEP_MINUTES_TYPE,

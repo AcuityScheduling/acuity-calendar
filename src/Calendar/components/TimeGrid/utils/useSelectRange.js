@@ -5,6 +5,7 @@ import {
   getMinutesMoved,
 } from '../components/Event/utils';
 import { getClickedTime } from '.';
+import { handleCenterClass, extendHandleClass } from '../constants';
 
 const useSelectRange = ({
   isSelectable,
@@ -37,7 +38,12 @@ const useSelectRange = ({
   };
 
   const onMouseDown = e => {
-    if (!isSelectable) return false;
+    if (
+      e.target.className.split(' ').includes(handleCenterClass) ||
+      e.target.className.split(' ').includes(extendHandleClass) ||
+      !isSelectable
+    )
+      return false;
     setIsMouseDown(true);
     setStartMousePosition(e.clientY);
     const rect = e.currentTarget.getBoundingClientRect();

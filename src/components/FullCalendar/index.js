@@ -176,6 +176,7 @@ FullCalendar.defaultProps = {
   onSelectMore: () => null,
   onSelectRangeEnd: () => null,
   onSelectSlot: () => null,
+  onViewChange: () => null,
   renderCell: null,
   renderCorner: () => null,
   renderDayGridEvent: null,
@@ -222,7 +223,8 @@ FullCalendar.propTypes = {
   onSelectMore: PropTypes.func,
   onSelectRangeEnd: PropTypes.func,
   onSelectSlot: PropTypes.func,
-  onViewChange: PropTypes.func.isRequired,
+  // Shouldn't be required because you can render your own toolbar
+  onViewChange: PropTypes.func,
   renderCell: PropTypes.func,
   renderCorner: PropTypes.func,
   renderDayGridEvent: PropTypes.func,

@@ -1,2 +1,4 @@
 node_modules
 storybook-static
+*.sublime-workspace
+*.sublime-project

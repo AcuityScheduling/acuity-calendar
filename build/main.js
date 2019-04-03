@@ -21329,6 +21329,9 @@
         onSelectSlot: function() {
           return null;
         },
+        onViewChange: function() {
+          return null;
+        },
         renderCell: null,
         renderCorner: function() {
           return null;
@@ -21386,7 +21389,7 @@
           onSelectMore: i.a.func,
           onSelectRangeEnd: i.a.func,
           onSelectSlot: i.a.func,
-          onViewChange: i.a.func.isRequired,
+          onViewChange: i.a.func,
           renderCell: i.a.func,
           renderCorner: i.a.func,
           renderDayGridEvent: i.a.func,

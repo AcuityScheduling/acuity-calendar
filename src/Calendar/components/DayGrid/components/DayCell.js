@@ -15,7 +15,7 @@ const DayCell = React.forwardRef(
       isEventDraggable,
       onDragEnd,
       onSelectSlot,
-      onSelectMonthDate,
+      onSelectDate,
       renderCell,
       renderEvent,
       eventRef,
@@ -97,9 +97,9 @@ const DayCell = React.forwardRef(
         <div
           className={makeClass('day-grid__date-wrapper')}
           onClick={e => {
-            if (!onSelectMonthDate) return;
+            if (!onSelectDate) return;
             e.stopPropagation();
-            onSelectMonthDate({
+            onSelectDate({
               e,
               date: new Date(dayDetails.date),
               isInrange: dayDetails.isInRange,
@@ -164,7 +164,7 @@ DayCell.defaultProps = {
   isEventDraggable: () => true,
   onDragEnd: () => null,
   onSelectSlot: () => null,
-  onSelectMonthDate: null,
+  onSelectDate: null,
   onSelectEvent: () => null,
   renderCell: null,
   renderEvent: null,
@@ -186,8 +186,8 @@ DayCell.propTypes = {
   events: PropTypes.arrayOf(EVENT_TYPE),
   isEventDraggable: PropTypes.func,
   onDragEnd: PropTypes.func,
+  onSelectDate: PropTypes.func,
   onSelectEvent: PropTypes.func,
-  onSelectMonthDate: PropTypes.func,
   onSelectMoreEvents: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderCell: PropTypes.func,

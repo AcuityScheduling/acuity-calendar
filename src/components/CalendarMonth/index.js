@@ -57,7 +57,7 @@ CalendarMonth.defaultProps = {
   firstDay: FIRST_DAY_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   onDragEnd: () => null,
-  onSelectDate: () => null,
+  onSelectDate: null,
   onSelectMore: () => null,
   onSelectEvent: () => null,
   onSelectSlot: () => null,

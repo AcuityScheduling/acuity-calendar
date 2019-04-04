@@ -175,7 +175,7 @@ FullCalendar.defaultProps = {
   onExtendEnd: () => null,
   onFetchEvents: () => null,
   onNavigate: () => null,
-  onSelectDate: () => null,
+  onSelectDate: null,
   onSelectEvent: () => null,
   onSelectMore: () => null,
   onSelectRangeEnd: () => null,

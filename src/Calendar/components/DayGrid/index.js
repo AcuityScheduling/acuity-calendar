@@ -115,7 +115,7 @@ DayGrid.defaultProps = {
   renderCell: null,
   renderHeader: null,
   onDragEnd: () => null,
-  onSelectDate: () => null,
+  onSelectDate: null,
   onSelectEvent: () => null,
   onSelectMoreEvents: () => null,
   onSelectSlot: () => null,

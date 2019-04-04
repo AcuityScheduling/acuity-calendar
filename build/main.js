@@ -20353,7 +20353,7 @@
         visibleEventGroups: null,
       }),
         (Ut.propTypes = {
-          eventGroups: i.a.arrayOf(Je),
+          eventGroups: i.a.arrayOf(Je).isRequired,
           events: i.a.arrayOf(We),
           firstDay: Ee,
           isEventDraggable: i.a.func,
@@ -21401,7 +21401,7 @@
           renderEvent: i.a.func,
           renderEventPaddingBottom: i.a.func,
           renderEventPaddingTop: i.a.func,
-          renderGroupsHeader: i.a.func.isRequired,
+          renderGroupsHeader: i.a.func,
           renderMonthHeader: i.a.func,
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,

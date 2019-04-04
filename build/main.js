@@ -20210,13 +20210,14 @@
             renderHeader: function() {
               var e = t.length;
               return t.map(function(t) {
-                var a = Gt({ events: N, groupId: t.id, selectedDate: n }),
-                  i = Object.keys(a).length;
+                if (a && !a.includes(t.id)) return !1;
+                var i = Gt({ events: N, groupId: t.id, selectedDate: n }),
+                  o = Object.keys(i).length;
                 return r.a.createElement(
                   It,
                   {
                     key: 'calendarHeader'.concat(t.id),
-                    totalEventColumns: i,
+                    totalEventColumns: o,
                     totalColumns: e,
                     date: n,
                     minWidth: d,
@@ -20226,28 +20227,29 @@
                   r.a.createElement(
                     'h2',
                     null,
-                    s ? s({ group: t, events: a }) : t.title
+                    s ? s({ group: t, events: i }) : t.title
                   )
                 );
               });
             },
             renderColumns: function(e) {
-              var a = e.currentTime,
-                s = e.totalGridHeight,
-                i = function(e) {
+              var s = e.currentTime,
+                i = e.totalGridHeight,
+                d = function(e) {
                   var n = e.columnMoves,
                     a = e.columnIndex;
                   return t[a + n];
                 };
               return t.map(function(e, t) {
-                var d = Gt({ events: N, groupId: e.id, selectedDate: n }) || {},
-                  u = Gt({ events: F, groupId: e.id, selectedDate: n }) || [];
+                if (a && !a.includes(e.id)) return null;
+                var u = Gt({ events: N, groupId: e.id, selectedDate: n }) || {},
+                  c = Gt({ events: F, groupId: e.id, selectedDate: n }) || [];
                 return r.a.createElement(Ft, {
                   ref: W(e.id),
                   key: 'groupColumn'.concat(e.id),
-                  events: d,
-                  stepDetails: u,
-                  gridHeight: s,
+                  events: u,
+                  stepDetails: c,
+                  gridHeight: i,
                   stepHeight: S,
                   date: n,
                   columnId: e.id,
@@ -20262,7 +20264,7 @@
                   onSelectSlot: h,
                   stepMinutes: o,
                   selectMinutes: p,
-                  currentTime: a,
+                  currentTime: s,
                   renderEvent: Y,
                   renderStepDetail: D,
                   renderSelectSlotIndicator: k,
@@ -20291,7 +20293,7 @@
                       }
                       return e;
                     })({}, n, {
-                      group_id: i({ columnMoves: a, columnIndex: t }),
+                      group_id: d({ columnMoves: a, columnIndex: t }),
                     });
                   },
                 });

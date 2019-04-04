@@ -18912,7 +18912,7 @@
             events: t,
             onDragEnd: o,
             onSelectMoreEvents: u,
-            onSelectMonthDate: l,
+            onSelectDate: l,
             onSelectEvent: c,
             onSelectSlot: _,
             visibleEventGroups: m,

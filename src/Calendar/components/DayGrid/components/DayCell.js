@@ -81,7 +81,8 @@ const DayCell = React.forwardRef(
       <div
         className={makeClass(
           'day-grid__cell',
-          !dayDetails.isInRange && 'day-grid__cell--not-in-range'
+          !dayDetails.isInRange && 'day-grid__cell--not-in-range',
+          events.length > 0 && 'day-grid__cell--has-events'
         )}
         role="button"
         ref={ref}

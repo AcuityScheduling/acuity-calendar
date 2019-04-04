@@ -18422,7 +18422,7 @@
             d = e.isEventDraggable,
             u = e.onDragEnd,
             l = e.onSelectSlot,
-            _ = e.onSelectMonthDate,
+            _ = e.onSelectDate,
             c = e.renderCell,
             m = e.renderEvent,
             h = e.eventRef,
@@ -18576,7 +18576,7 @@
           onSelectSlot: function() {
             return null;
           },
-          onSelectMonthDate: null,
+          onSelectDate: null,
           onSelectEvent: function() {
             return null;
           },
@@ -18601,8 +18601,8 @@
           events: i.a.arrayOf(We),
           isEventDraggable: i.a.func,
           onDragEnd: i.a.func,
+          onSelectDate: i.a.func,
           onSelectEvent: i.a.func,
-          onSelectMonthDate: i.a.func,
           onSelectMoreEvents: i.a.func,
           onSelectSlot: i.a.func,
           renderCell: i.a.func,
@@ -18704,9 +18704,7 @@
         onDragEnd: function() {
           return null;
         },
-        onSelectDate: function() {
-          return null;
-        },
+        onSelectDate: null,
         onSelectEvent: function() {
           return null;
         },
@@ -18932,9 +18930,7 @@
         onDragEnd: function() {
           return null;
         },
-        onSelectDate: function() {
-          return null;
-        },
+        onSelectDate: null,
         onSelectMore: function() {
           return null;
         },
@@ -20238,7 +20234,7 @@
                 d = function(e) {
                   var n = e.columnMoves,
                     a = e.columnIndex;
-                  return t[a + n];
+                  return t[a + n].id;
                 };
               return t.map(function(e, t) {
                 if (a && !a.includes(e.id)) return null;
@@ -21320,9 +21316,7 @@
         onNavigate: function() {
           return null;
         },
-        onSelectDate: function() {
-          return null;
-        },
+        onSelectDate: null,
         onSelectEvent: function() {
           return null;
         },

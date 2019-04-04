@@ -129,30 +129,30 @@ const CalendarGroups = ({
           return eventGroups[newIndex];
         };
 
-        return eventGroups.map((groupId, index) => {
+        return eventGroups.map((eventGroup, index) => {
           const eventsForDay =
             getEventsForDay({
               events: eventsWithColumns,
-              groupId,
+              groupId: eventGroup.id,
               selectedDate,
             }) || {};
 
           const stepDetailsForDay =
             getEventsForDay({
               events: stepDetailsWithEventGroups,
-              groupId,
+              groupId: eventGroup.id,
               selectedDate,
             }) || [];
           return (
             <Column
-              ref={assignRef(groupId)}
-              key={`groupColumn${groupId}`}
+              ref={assignRef(eventGroup.id)}
+              key={`groupColumn${eventGroup.id}`}
               events={eventsForDay}
               stepDetails={stepDetailsForDay}
               gridHeight={totalGridHeight}
               stepHeight={stepHeight}
               date={selectedDate}
-              columnId={groupId}
+              columnId={eventGroup.id}
               columnWidths={elementWidths}
               columnIndex={index}
               isEventDraggable={isEventDraggable}

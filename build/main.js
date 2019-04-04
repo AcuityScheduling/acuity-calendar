@@ -20240,17 +20240,17 @@
                   return t[a + n];
                 };
               return t.map(function(e, t) {
-                var d = Gt({ events: N, groupId: e, selectedDate: n }) || {},
-                  u = Gt({ events: F, groupId: e, selectedDate: n }) || [];
+                var d = Gt({ events: N, groupId: e.id, selectedDate: n }) || {},
+                  u = Gt({ events: F, groupId: e.id, selectedDate: n }) || [];
                 return r.a.createElement(Ft, {
-                  ref: W(e),
-                  key: 'groupColumn'.concat(e),
+                  ref: W(e.id),
+                  key: 'groupColumn'.concat(e.id),
                   events: d,
                   stepDetails: u,
                   gridHeight: s,
                   stepHeight: S,
                   date: n,
-                  columnId: e,
+                  columnId: e.id,
                   columnWidths: R,
                   columnIndex: t,
                   isEventDraggable: y,

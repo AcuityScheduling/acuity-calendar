@@ -236,7 +236,7 @@ FullCalendar.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
-  renderGroupsHeader: PropTypes.func.isRequired,
+  renderGroupsHeader: PropTypes.func,
   renderMonthHeader: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,

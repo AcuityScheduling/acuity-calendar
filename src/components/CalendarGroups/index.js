@@ -95,6 +95,8 @@ const CalendarGroups = ({
       renderHeader={() => {
         const totalColumns = eventGroups.length;
         return eventGroups.map(eventGroup => {
+          if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
+            return false;
           const eventsForDay = getEventsForDay({
             events: eventsWithColumns,
             groupId: eventGroup.id,
@@ -130,6 +132,8 @@ const CalendarGroups = ({
         };
 
         return eventGroups.map((eventGroup, index) => {
+          if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
+            return null;
           const eventsForDay =
             getEventsForDay({
               events: eventsWithColumns,

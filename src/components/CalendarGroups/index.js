@@ -128,7 +128,7 @@ const CalendarGroups = ({
       renderColumns={({ currentTime, totalGridHeight }) => {
         const getNewGroupId = ({ columnMoves, columnIndex }) => {
           const newIndex = columnIndex + columnMoves;
-          return eventGroups[newIndex];
+          return eventGroups[newIndex].id;
         };
 
         return eventGroups.map((eventGroup, index) => {

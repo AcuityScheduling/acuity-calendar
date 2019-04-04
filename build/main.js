@@ -18435,7 +18435,8 @@
             {
               className: z(
                 'day-grid__cell',
-                !o.isInRange && 'day-grid__cell--not-in-range'
+                !o.isInRange && 'day-grid__cell--not-in-range',
+                n.length > 0 && 'day-grid__cell--has-events'
               ),
               role: 'button',
               ref: t,

@@ -12,14 +12,18 @@ const useTotalEventsToShow = () => {
   const [cellWidth, setCellWidth] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
   const [eventWrapperMargin, setEventWrapperMargin] = useState(0);
+  // We need to start with showing at least one event so we can get the event height
+  // even if there are no events show right away
   const [totalEventsToShow, setTotalEventsToShow] = useState(0);
 
-  if (eventRef.current) {
-    const currentEventHeight = eventRef.current.offsetHeight;
-    if (currentEventHeight !== eventHeight) {
-      setEventHeight(currentEventHeight);
+  useEffect(() => {
+    if (eventRef.current) {
+      const currentEventHeight = eventRef.current.offsetHeight;
+      if (currentEventHeight !== eventHeight) {
+        setEventHeight(currentEventHeight);
+      }
     }
-  }
+  });
 
   const rowHeightThrottled = throttle(() => {
     setRowHeight(get(rowRef, 'current.offsetHeight', 0));
@@ -45,7 +49,7 @@ const useTotalEventsToShow = () => {
         Math.floor((rowHeight - eventWrapperMargin) / eventHeight) - 1
       );
     }
-  }, [rowHeight]);
+  }, [rowHeight, eventHeight]);
 
   // Get the margin above all of the events
   useEffect(() => {

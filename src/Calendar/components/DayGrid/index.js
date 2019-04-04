@@ -19,8 +19,12 @@ const DayGrid = ({
   onSelectDate,
   onSelectMoreEvents,
   onSelectEvent,
+  visibleEventGroups,
 }) => {
-  const { eventsWithSelectedEventGroups } = useMungeData({ events });
+  const { eventsWithSelectedEventGroups } = useMungeData({
+    events,
+    visibleEventGroups,
+  });
   const {
     rowRef,
     eventRef,
@@ -119,6 +123,7 @@ DayGrid.defaultProps = {
   onSelectEvent: () => null,
   onSelectMoreEvents: () => null,
   onSelectSlot: () => null,
+  visibleEventGroups: null,
 };
 
 DayGrid.propTypes = {
@@ -132,6 +137,7 @@ DayGrid.propTypes = {
   onSelectSlot: PropTypes.func,
   renderCell: PropTypes.func,
   renderHeader: PropTypes.func,
+  visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default DayGrid;

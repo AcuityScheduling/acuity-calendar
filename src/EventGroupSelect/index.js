@@ -29,7 +29,7 @@ const EventGroupSelect = ({
               checked={isSelected}
               onChange={() => toggleSelectedGroup({ isSelected, group })}
             />
-            {group.name}
+            {group.title}
           </label>
         );
       })}

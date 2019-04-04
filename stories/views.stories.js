@@ -11,6 +11,7 @@ import styles from './styles';
 import { useEvents } from './utils';
 import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
+import EventGroupSelect from '../src/EventGroupSelect';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -81,10 +82,16 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
+  const [selectedEventGroups, setSelectedEventGroups] = useState([]);
 
   return (
     <Fragment>
       <style>{styles}</style>
+      <EventGroupSelect
+        eventGroups={MOCKED_CALENDARS}
+        selectedEventGroups={selectedEventGroups}
+        setSelectedEventGroups={setSelectedEventGroups}
+      />
       <FullCalendar
         {...handlers}
         events={events}
@@ -94,6 +101,7 @@ const Full = props => {
           console.log('FETCH EVENTS', results);
         }}
         // scrollToTime={new Date()}
+        visibleEventGroups={selectedEventGroups}
         onViewChange={setView}
         onCurrentTimeChange={currentTime => {
           // We need to update some of the step details to stay _under_ the current time

@@ -113,9 +113,9 @@ export const MOCKED_EVENTS = [
 ];
 
 export const MOCKED_CALENDARS = [
-  { id: 5, name: 'Shannah Miriam', color: '#63b5f7' },
-  { id: 6, name: 'Mari Barker', color: '#536e79' },
-  { id: 7, name: 'Happiness Brigade', color: '#81c884' },
+  { id: 5, title: 'Shannah Miriam', color: '#63b5f7' },
+  { id: 6, title: 'Mari Barker', color: '#536e79' },
+  { id: 7, title: 'Happiness Brigade', color: '#81c884' },
 ];
 
 export const MOCKED_STEP_DETAILS = [

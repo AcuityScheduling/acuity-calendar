@@ -76,3 +76,8 @@ export const SCROLL_TO_TIME_TYPE = PropTypes.oneOfType([
   DATE_TYPE,
   PropTypes.oneOf(['firstEvent']),
 ]);
+
+export const EVENT_GROUP = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string,
+});

@@ -26,10 +26,12 @@ import {
   STEP_DETAILS_TYPE,
   FETCH_EVENT_INITIAL_FULL_RANGE,
   SCROLL_TO_TIME_TYPE,
+  EVENT_GROUP,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
   events,
+  eventGroups,
   fetchEventPadding,
   fetchEventInitialFullRange,
   firstDay,
@@ -133,6 +135,7 @@ const FullCalendar = ({
     [groups]: (
       <CalendarGroups
         renderHeader={renderGroupsHeader}
+        eventGroups={eventGroups}
         {...timeGridProps}
         {...allViewProps}
       />
@@ -160,6 +163,7 @@ const FullCalendar = ({
 
 FullCalendar.defaultProps = {
   events: [],
+  eventGroups: [],
   fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
@@ -204,6 +208,7 @@ FullCalendar.defaultProps = {
 };
 
 FullCalendar.propTypes = {
+  eventGroups: PropTypes.arrayOf(EVENT_GROUP),
   events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,

@@ -67,12 +67,9 @@ const Groups = props => {
       <style>{styles}</style>
       <CalendarGroups
         events={events}
+        eventGroups={MOCKED_CALENDARS}
         visibleEventGroups={[5, 6, 7]}
         renderEvent={renderColorEvent}
-        renderHeader={({ groupId }) => {
-          return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
-            .name;
-        }}
         {...handlers}
       />
     </Fragment>
@@ -91,6 +88,7 @@ const Full = props => {
       <FullCalendar
         {...handlers}
         events={events}
+        eventGroups={MOCKED_CALENDARS}
         onNavigate={setSelectedDate}
         onFetchEvents={results => {
           console.log('FETCH EVENTS', results);
@@ -120,10 +118,6 @@ const Full = props => {
         onSelectDate={({ date }) => {
           setSelectedDate(date);
           setView(CALENDAR_VIEWS.groups);
-        }}
-        renderGroupsHeader={({ groupId }) => {
-          return MOCKED_CALENDARS.find(calendar => calendar.id === groupId)
-            .name;
         }}
         renderTimeGridEvent={renderColorEvent}
         renderStepDetail={stepDetail => {

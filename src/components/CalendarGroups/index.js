@@ -23,6 +23,7 @@ import {
   STEP_MINUTES_TYPE,
   STEP_DETAILS_TYPE,
   SCROLL_TO_TIME_TYPE,
+  EVENT_GROUP,
 } from '../../Calendar/types';
 import { scrollToEvent } from '../../Calendar/components/TimeGrid/utils';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
@@ -32,6 +33,7 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
 };
 
 const CalendarGroups = ({
+  eventGroups,
   selectedDate,
   visibleEventGroups,
   renderHeader,
@@ -74,14 +76,6 @@ const CalendarGroups = ({
 
   const eventsWithColumns = getEventColumnsByGroup(mungedEvents);
 
-  // If visibleEventGroups isn't passed in let's just show all the event groups
-  let eventGroups = visibleEventGroups;
-  if (!visibleEventGroups) {
-    eventGroups = Object.keys(eventsWithColumns).map(groupId =>
-      Number(groupId)
-    );
-  }
-
   return (
     <TimeGrid
       ref={TimeGridRef}
@@ -100,16 +94,16 @@ const CalendarGroups = ({
       }
       renderHeader={() => {
         const totalColumns = eventGroups.length;
-        return eventGroups.map(groupId => {
+        return eventGroups.map(eventGroup => {
           const eventsForDay = getEventsForDay({
             events: eventsWithColumns,
-            groupId,
+            groupId: eventGroup.id,
             selectedDate,
           });
           const totalEventColumns = Object.keys(eventsForDay).length;
           return (
             <ColumnHeader
-              key={`calendarHeader${groupId}`}
+              key={`calendarHeader${eventGroup.id}`}
               totalEventColumns={totalEventColumns}
               totalColumns={totalColumns}
               date={selectedDate}
@@ -118,11 +112,12 @@ const CalendarGroups = ({
               type={CALENDAR_VIEWS.groups}
             >
               <h2>
-                {renderHeader &&
-                  renderHeader({
-                    groupId,
-                    events: eventsForDay,
-                  })}
+                {renderHeader
+                  ? renderHeader({
+                      group: eventGroup,
+                      events: eventsForDay,
+                    })
+                  : eventGroup.title}
               </h2>
             </ColumnHeader>
           );
@@ -213,6 +208,7 @@ CalendarGroups.defaultProps = {
   renderSelectRange: null,
   renderEventPaddingTop: () => null,
   renderEventPaddingBottom: () => null,
+  renderHeader: null,
   stepHeight: null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
@@ -223,6 +219,7 @@ CalendarGroups.defaultProps = {
 };
 
 CalendarGroups.propTypes = {
+  eventGroups: PropTypes.arrayOf(EVENT_GROUP).isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   isEventDraggable: PropTypes.func,
@@ -239,7 +236,7 @@ CalendarGroups.propTypes = {
   renderEvent: PropTypes.func,
   renderEventPaddingBottom: PropTypes.func,
   renderEventPaddingTop: PropTypes.func,
-  renderHeader: PropTypes.func.isRequired,
+  renderHeader: PropTypes.func,
   renderSelectRange: PropTypes.func,
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,

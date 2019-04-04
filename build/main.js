@@ -18028,8 +18028,9 @@
           }),
         ])),
         Ne = i.a.shape({ start: xe.isRequired, end: xe.isRequired }),
-        Ie = i.a.oneOfType([xe, i.a.oneOf(['firstEvent'])]);
-      function Je(e, t) {
+        Ie = i.a.oneOfType([xe, i.a.oneOf(['firstEvent'])]),
+        Je = i.a.shape({ id: i.a.number.isRequired, title: i.a.string });
+      function Ge(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -18064,7 +18065,7 @@
           })()
         );
       }
-      function Ge(e) {
+      function Ue(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -18075,12 +18076,12 @@
               })
             )),
             a.forEach(function(t) {
-              Ue(e, t, n[t]);
+              qe(e, t, n[t]);
             });
         }
         return e;
       }
-      function Ue(e, t, n) {
+      function qe(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -18093,37 +18094,37 @@
           e
         );
       }
-      var qe = function(e, t) {
+      var Be = function(e, t) {
           switch (t.type) {
             case 'moveUp':
-              return Ge({}, e, {
+              return Ue({}, e, {
                 rowMoves: e.rowMoves - 1,
                 vertChange: e.vertChange - t.vertChange,
               });
             case 'moveRight':
-              return Ge({}, e, {
+              return Ue({}, e, {
                 columnMoves: e.columnMoves + 1,
                 horizChange: e.horizChange + t.horizChange,
               });
             case 'moveDown':
-              return Ge({}, e, {
+              return Ue({}, e, {
                 rowMoves: e.rowMoves + 1,
                 vertChange: e.vertChange + t.vertChange,
               });
             case 'moveLeft':
-              return Ge({}, e, {
+              return Ue({}, e, {
                 columnMoves: e.columnMoves - 1,
                 horizChange: e.horizChange - t.horizChange,
               });
             case 'startDragging':
               var n = e.vertChange;
-              return Ge({}, e, {
+              return Ue({}, e, {
                 isDragging: !0,
                 position: t.position,
                 vertChange: 0 === n ? t.initialVertChange : n,
               });
             case 'stopDragging':
-              return Ge({}, e, {
+              return Ue({}, e, {
                 isDragging: !1,
                 wasDragged: !0,
                 position: { x: 0, y: 0 },
@@ -18136,7 +18137,7 @@
               throw new Error('Dispatch action not recognized');
           }
         },
-        Be = {
+        Ve = {
           rowMoves: 0,
           columnMoves: 0,
           isDragging: !1,
@@ -18145,7 +18146,7 @@
           vertChange: 0,
           horizChange: 0,
         },
-        Ve = function(e) {
+        $e = function(e) {
           var t = e.children,
             n = e.cellDimensions,
             s = e.isDraggable,
@@ -18154,7 +18155,7 @@
             d = e.onDrag,
             u = e.onDragEnd,
             l = e.columnMovesPerRowChange,
-            _ = Je(Object(a.useReducer)(qe, Be), 2),
+            _ = Ge(Object(a.useReducer)(Be, Ve), 2),
             c = _[0],
             m = _[1],
             h = n.width,
@@ -18184,7 +18185,7 @@
                 (s.paddingBottomEnd = t.paddingBottomEnd
                   .clone()
                   .add(n, 'days')),
-              Ge({}, t, { start: a, end: r }, s)
+              Ue({}, t, { start: a, end: r }, s)
             );
           })({
             event: i,
@@ -18215,7 +18216,7 @@
             t({ draggedEvent: k, vertChange: v, horizChange: D })
           );
         };
-      (Ve.defaultProps = {
+      ($e.defaultProps = {
         isDraggable: function() {
           return !0;
         },
@@ -18226,7 +18227,7 @@
           return null;
         },
       }),
-        (Ve.propTypes = {
+        ($e.propTypes = {
           cellDimensions: i.a.shape({
             width: i.a.number.isRequired,
             height: i.a.number.isRequired,
@@ -18239,9 +18240,9 @@
           onDragEnd: i.a.func,
           topEventOffset: i.a.number.isRequired,
         });
-      var $e = Ve;
-      function Ke() {
-        return (Ke =
+      var Ke = $e;
+      function Ze() {
+        return (Ze =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -18252,7 +18253,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function Ze(e, t) {
+      function Xe(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -18276,19 +18277,19 @@
         }
         return r;
       }
-      var Xe = function(e) {
+      var Qe = function(e) {
           var t = e.className,
             n = e.eventClass;
           return t ? ''.concat(n, ' ').concat(t) : n;
         },
-        Qe = r.a.forwardRef(function(e, t) {
+        et = r.a.forwardRef(function(e, t) {
           var n = e.className,
             a = e.eventClass,
             s = e.event,
             i = e.isSelectable,
             o = e.onSelect,
             d = e.children,
-            u = Ze(e, [
+            u = Xe(e, [
               'className',
               'eventClass',
               'event',
@@ -18298,8 +18299,8 @@
             ]);
           return r.a.createElement(
             'div',
-            Ke({}, u, {
-              className: Xe({ className: n, eventClass: a }),
+            Ze({}, u, {
+              className: Qe({ className: n, eventClass: a }),
               role: 'button',
               ref: t,
               onClick: function(e) {
@@ -18310,8 +18311,8 @@
             d
           );
         });
-      (Qe.displayName = 'EventWrapper'),
-        (Qe.defaultProps = {
+      (et.displayName = 'EventWrapper'),
+        (et.defaultProps = {
           className: '',
           isSelectable: !0,
           onSelect: function() {
@@ -18319,7 +18320,7 @@
           },
           eventClass: z('time-grid__event'),
         }),
-        (Qe.propTypes = {
+        (et.propTypes = {
           children: i.a.node.isRequired,
           className: i.a.string,
           event: i.a.object.isRequired,
@@ -18327,10 +18328,10 @@
           isSelectable: i.a.bool,
           onSelect: i.a.func,
         });
-      var et = Qe;
+      var tt = et;
       n(140);
-      function tt() {
-        return (tt =
+      function nt() {
+        return (nt =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -18341,7 +18342,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function nt(e, t) {
+      function at(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -18365,16 +18366,16 @@
         }
         return r;
       }
-      var at = r.a.forwardRef(function(e, t) {
+      var rt = r.a.forwardRef(function(e, t) {
         var n,
           a,
           s = e.event,
           i = e.onSelect,
           o = e.children,
-          d = nt(e, ['event', 'onSelect', 'children']);
+          d = at(e, ['event', 'onSelect', 'children']);
         return r.a.createElement(
-          et,
-          tt(
+          tt,
+          nt(
             { event: s, onSelect: i, eventClass: z('day-grid__event'), ref: t },
             d
           ),
@@ -18401,19 +18402,19 @@
               )
         );
       });
-      (at.defaultProps = {
+      (rt.defaultProps = {
         onSelect: function() {
           return null;
         },
         children: null,
       }),
-        (at.propTypes = {
+        (rt.propTypes = {
           children: i.a.func,
           event: We.isRequired,
           onSelect: i.a.func,
         });
-      var rt = at,
-        st = r.a.forwardRef(function(e, t) {
+      var st = rt,
+        it = r.a.forwardRef(function(e, t) {
           var n = e.events,
             s = e.eventHeight,
             i = e.cellDimensions,
@@ -18498,7 +18499,7 @@
                             (t += 1),
                             !y || y >= t
                               ? r.a.createElement(
-                                  $e,
+                                  Ke,
                                   {
                                     cellDimensions: i,
                                     event: e,
@@ -18513,7 +18514,7 @@
                                       n = e.vertChange,
                                       a = e.horizChange;
                                     return r.a.createElement(
-                                      rt,
+                                      st,
                                       {
                                         event: t,
                                         onSelect: p,
@@ -18563,8 +18564,8 @@
                 )
           );
         });
-      (st.displayName = 'DayCell'),
-        (st.defaultProps = {
+      (it.displayName = 'DayCell'),
+        (it.defaultProps = {
           events: [],
           isEventDraggable: function() {
             return !0;
@@ -18585,7 +18586,7 @@
             return null;
           },
         }),
-        (st.propTypes = {
+        (it.propTypes = {
           cellDimensions: i.a.shape({
             width: i.a.number.isRequired,
             height: i.a.number.isRequired,
@@ -18609,8 +18610,8 @@
           totalColumns: i.a.number.isRequired,
           totalEventsToShow: i.a.number.isRequired,
         });
-      var it = st,
-        ot = (n(143),
+      var ot = it,
+        dt = (n(143),
         function(e) {
           var t = e.events,
             n = e.isEventDraggable,
@@ -18667,7 +18668,7 @@
                       e.map(function(e) {
                         D += 1;
                         var a = l()(m, e.date.format('YYYY-MM-DD'), []);
-                        return r.a.createElement(it, {
+                        return r.a.createElement(ot, {
                           isEventDraggable: n,
                           totalColumns: t,
                           events: a,
@@ -18693,7 +18694,7 @@
             )
           );
         });
-      (ot.defaultProps = {
+      (dt.defaultProps = {
         events: [],
         isEventDraggable: function() {
           return !0;
@@ -18716,7 +18717,7 @@
           return null;
         },
       }),
-        (ot.propTypes = {
+        (dt.propTypes = {
           events: i.a.arrayOf(We),
           grid: Fe.isRequired,
           isEventDraggable: i.a.func,
@@ -18728,9 +18729,9 @@
           renderCell: i.a.func,
           renderHeader: i.a.func,
         });
-      var dt = ot,
-        ut = new Date();
-      function lt(e, t, n) {
+      var ut = dt,
+        lt = new Date();
+      function _t(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -18743,12 +18744,12 @@
           e
         );
       }
-      var _t = function(e) {
+      var ct = function(e) {
           var t = e.totalDates,
             n = e.forceSixWeeks;
           return t > 35 || n ? 42 : 35;
         },
-        ct = function(e) {
+        mt = function(e) {
           var t = e.date,
             n = e.day,
             a = e.isInRange,
@@ -18778,23 +18779,23 @@
                     })
                   )),
                   a.forEach(function(t) {
-                    lt(e, t, n[t]);
+                    _t(e, t, n[t]);
                   });
               }
               return e;
             })({}, s, { date: i })
           );
         },
-        mt = function(e) {
+        ht = function(e) {
           for (
             var t = e.date,
               n = e.firstDay,
               a = e.forceSixWeeks,
-              r = ht({ date: t, firstDay: n }),
-              s = pt(t),
+              r = ft({ date: t, firstDay: n }),
+              s = Mt(t),
               i = r.length + s.length,
-              o = _t({ totalDates: i, forceSixWeeks: a }),
-              d = Mt({ totalDates: i, forceSixWeeks: a }),
+              o = ct({ totalDates: i, forceSixWeeks: a }),
+              d = yt({ totalDates: i, forceSixWeeks: a }),
               u = [].concat(r, s, d),
               l = [],
               _ = 0;
@@ -18804,11 +18805,11 @@
             l.push(u.slice(_, _ + 7));
           return l;
         },
-        ht = function(e) {
+        ft = function(e) {
           for (
             var t = e.date,
               n = e.firstDay,
-              a = ft({
+              a = pt({
                 firstDateDay: t
                   .clone()
                   .startOf('month')
@@ -18828,7 +18829,7 @@
             s.push(i);
           return s;
         },
-        ft = function(e) {
+        pt = function(e) {
           for (
             var t = e.firstDateDay, n = e.firstDay, a = 0, r = n;
             r < n + 7;
@@ -18839,16 +18840,16 @@
           }
           return a;
         },
-        pt = function(e) {
+        Mt = function(e) {
           for (var t = e.daysInMonth(), n = [], a = 1; a <= t; a += 1)
             n.push(a);
           return n;
         },
-        Mt = function(e) {
+        yt = function(e) {
           for (
             var t = e.totalDates,
               n = e.forceSixWeeks,
-              a = _t({ totalDates: t, forceSixWeeks: n }) - t,
+              a = ct({ totalDates: t, forceSixWeeks: n }) - t,
               r = [],
               s = 1;
             s <= a;
@@ -18857,12 +18858,12 @@
             r.push(s);
           return r;
         },
-        yt = function(e) {
+        gt = function(e) {
           var t = e.date,
             n = e.firstDay,
             a = void 0 === n ? 0 : n,
             r = e.forceSixWeeks,
-            s = mt({ date: t, firstDay: a, forceSixWeeks: void 0 !== r && r }),
+            s = ht({ date: t, firstDay: a, forceSixWeeks: void 0 !== r && r }),
             i = t
               .clone()
               .subtract(1, 'months')
@@ -18879,17 +18880,17 @@
             return e.map(function(e) {
               return d
                 ? (e === i && ((d = !1), (u = !0)),
-                  ct({ date: t, day: e, isInRange: !1, type: 'last' }))
+                  mt({ date: t, day: e, isInRange: !1, type: 'last' }))
                 : u
                 ? (e === o && ((u = !1), (l = !0)),
-                  ct({ date: t, day: e, isInRange: !0, type: 'current' }))
+                  mt({ date: t, day: e, isInRange: !0, type: 'current' }))
                 : l
-                ? ct({ date: t, day: e, isInRange: !1, type: 'next' })
+                ? mt({ date: t, day: e, isInRange: !1, type: 'next' })
                 : null;
             });
           });
         },
-        gt = function(e) {
+        Lt = function(e) {
           var t = e.events,
             n = e.firstDay,
             a = e.forceSixWeeks,
@@ -18904,8 +18905,8 @@
             h = e.renderHeader,
             f = e.renderCell,
             p = e.renderEvent,
-            M = yt({ date: d()(i), firstDay: n, forceSixWeeks: a });
-          return r.a.createElement(dt, {
+            M = gt({ date: d()(i), firstDay: n, forceSixWeeks: a });
+          return r.a.createElement(ut, {
             isEventDraggable: s,
             grid: M,
             events: t,
@@ -18920,14 +18921,14 @@
             renderCell: f,
           });
         };
-      (gt.defaultProps = {
+      (Lt.defaultProps = {
         events: [],
         isEventDraggable: function() {
           return !0;
         },
         forceSixWeeks: !1,
         firstDay: 0,
-        selectedDate: ut,
+        selectedDate: lt,
         onDragEnd: function() {
           return null;
         },
@@ -18948,7 +18949,7 @@
         renderEvent: null,
         renderHeader: null,
       }),
-        (gt.propTypes = {
+        (Lt.propTypes = {
           events: i.a.arrayOf(We),
           firstDay: Ee,
           forceSixWeeks: i.a.bool,
@@ -18964,9 +18965,9 @@
           selectedDate: xe,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var Lt = gt;
+      var Yt = Lt;
       n(145);
-      function Yt(e, t) {
+      function vt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19001,7 +19002,7 @@
           })()
         );
       }
-      var vt = r.a.forwardRef(function(e, t) {
+      var Dt = r.a.forwardRef(function(e, t) {
         var n = e.selectedDate,
           s = (e.firstDay, e.stepMinutes),
           i = e.stepHeight,
@@ -19011,10 +19012,10 @@
           _ = e.renderCorner,
           c = e.totalWidth,
           m = e.scrollToTime,
-          h = Yt(Object(a.useState)(d()()), 2),
+          h = vt(Object(a.useState)(d()()), 2),
           f = h[0],
           p = h[1],
-          M = Yt(Object(a.useState)(15), 2),
+          M = vt(Object(a.useState)(15), 2),
           y = M[0],
           g = M[1];
         Object(a.useEffect)(function() {
@@ -19182,12 +19183,12 @@
           )
         );
       });
-      (vt.displayName = 'TimeGrid'),
-        (vt.defaultProps = {
+      (Dt.displayName = 'TimeGrid'),
+        (Dt.defaultProps = {
           renderCorner: function() {
             return null;
           },
-          selectedDate: ut,
+          selectedDate: lt,
           firstDay: 0,
           scrollToTime: null,
           selectMinutes: 15,
@@ -19197,7 +19198,7 @@
             return null;
           },
         }),
-        (vt.propTypes = {
+        (Dt.propTypes = {
           firstDay: Ee,
           onCurrentTimeChange: i.a.func,
           renderColumns: i.a.func.isRequired,
@@ -19210,10 +19211,10 @@
           stepMinutes: Ae,
           totalWidth: i.a.number.isRequired,
         });
-      var Dt = vt;
+      var kt = Dt;
       n(147);
-      function kt() {
-        return (kt =
+      function bt() {
+        return (bt =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -19224,7 +19225,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function bt(e, t) {
+      function wt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19259,7 +19260,7 @@
           })()
         );
       }
-      function wt(e, t) {
+      function Tt(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -19283,13 +19284,13 @@
         }
         return r;
       }
-      var Tt = function(e) {
+      var St = function(e) {
         var t = e.children,
           n = (e.className, e.event),
           s = e.isSelectable,
           i = e.onSelect,
           o = e.isExtendable,
-          d = wt(e, [
+          d = Tt(e, [
             'children',
             'className',
             'event',
@@ -19299,7 +19300,7 @@
           ]),
           u = Object(a.useRef)(null),
           l = Object(a.useRef)(null),
-          _ = bt(Object(a.useState)(0), 2),
+          _ = wt(Object(a.useState)(0), 2),
           c = _[0],
           m = _[1];
         return (
@@ -19312,8 +19313,8 @@
             }
           }),
           r.a.createElement(
-            et,
-            kt({ ref: u, event: n, onSelect: i, isSelectable: s }, d),
+            tt,
+            bt({ ref: u, event: n, onSelect: i, isSelectable: s }, d),
             r.a.createElement('div', { className: N, style: { height: c } }),
             t
               ? t(n)
@@ -19340,7 +19341,7 @@
           )
         );
       };
-      (Tt.defaultProps = {
+      (St.defaultProps = {
         children: null,
         className: null,
         isSelectable: !0,
@@ -19348,7 +19349,7 @@
           return !0;
         },
       }),
-        (Tt.propTypes = {
+        (St.propTypes = {
           children: i.a.func,
           className: i.a.string,
           event: We.isRequired,
@@ -19356,8 +19357,8 @@
           isSelectable: i.a.bool,
           onSelect: i.a.func.isRequired,
         });
-      var St = Tt;
-      function Ht(e, t) {
+      var Ht = St;
+      function jt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19392,7 +19393,7 @@
           })()
         );
       }
-      var jt = function(e) {
+      var xt = function(e) {
           var t = e.isDragging,
             n = e.wasDragged;
           return z(
@@ -19401,7 +19402,7 @@
             n && 'time-grid__dragged-event'
           );
         },
-        xt = function(e) {
+        Et = function(e) {
           var t = e.event,
             n = e.stepMinutes,
             s = e.selectMinutes,
@@ -19413,25 +19414,25 @@
             _ = e.children,
             c = e.stepHeight,
             m = e.getUpdatedDraggedEvent,
-            h = Ht(Object(a.useState)({ x: 0, y: 0 }), 2),
+            h = jt(Object(a.useState)({ x: 0, y: 0 }), 2),
             f = h[0],
             p = h[1],
-            M = Ht(Object(a.useState)(0), 2),
+            M = jt(Object(a.useState)(0), 2),
             y = M[0],
             g = M[1],
-            L = Ht(Object(a.useState)(0), 2),
+            L = jt(Object(a.useState)(0), 2),
             Y = L[0],
             v = L[1],
-            D = Ht(Object(a.useState)(i[o]), 2),
+            D = jt(Object(a.useState)(i[o]), 2),
             k = D[0],
             b = D[1],
-            w = Ht(Object(a.useState)(!1), 2),
+            w = jt(Object(a.useState)(!1), 2),
             T = w[0],
             S = w[1],
-            H = Ht(Object(a.useState)(!1), 2),
+            H = jt(Object(a.useState)(!1), 2),
             j = H[0],
             x = H[1],
-            E = Ht(Object(a.useState)(o), 2),
+            E = jt(Object(a.useState)(o), 2),
             O = E[0],
             P = E[1],
             W = le({ stepHeight: c, stepMinutes: n, selectMinutes: s }),
@@ -19521,7 +19522,7 @@
                   isDragging: T,
                   wasDragged: j,
                   isDndPlaceholder: !1,
-                  dndClassName: jt({ isDragging: T, wasDragged: j }),
+                  dndClassName: xt({ isDragging: T, wasDragged: j }),
                 })
               ),
               T &&
@@ -19538,7 +19539,7 @@
             )
           );
         };
-      (xt.defaultProps = {
+      (Et.defaultProps = {
         isDraggable: function() {
           return !0;
         },
@@ -19552,7 +19553,7 @@
         selectMinutes: 15,
         stepMinutes: 30,
       }),
-        (xt.propTypes = {
+        (Et.propTypes = {
           children: i.a.func.isRequired,
           columnIndex: i.a.number.isRequired,
           columnWidths: ze.isRequired,
@@ -19565,8 +19566,8 @@
           stepHeight: i.a.number,
           stepMinutes: Ae,
         });
-      var Et = xt;
-      function Ot(e, t) {
+      var Ot = Et;
+      function Pt(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19601,7 +19602,7 @@
           })()
         );
       }
-      var Pt = function(e) {
+      var Wt = function(e) {
         var t = e.children,
           n = e.event,
           s = e.isExtendable,
@@ -19610,10 +19611,10 @@
           d = e.selectMinutes,
           u = e.stepMinutes,
           l = e.stepHeight,
-          _ = Ot(Object(a.useState)(!1), 2),
+          _ = Pt(Object(a.useState)(!1), 2),
           c = _[0],
           m = _[1],
-          h = Ot(Object(a.useState)({ x: 0, y: 0 }), 2),
+          h = Pt(Object(a.useState)({ x: 0, y: 0 }), 2),
           f = h[0],
           p = h[1],
           M = Object(a.useMemo)(
@@ -19672,7 +19673,7 @@
           )
         );
       };
-      (Pt.defaultProps = {
+      (Wt.defaultProps = {
         onExtend: function() {
           return null;
         },
@@ -19683,7 +19684,7 @@
         stepMinutes: 30,
         stepHeight: null,
       }),
-        (Pt.propTypes = {
+        (Wt.propTypes = {
           children: i.a.func.isRequired,
           event: We.isRequired,
           isExtendable: i.a.func,
@@ -19693,9 +19694,9 @@
           stepHeight: i.a.number,
           stepMinutes: Ae,
         });
-      var Wt = Pt;
-      function Rt() {
-        return (Rt =
+      var Rt = Wt;
+      function At() {
+        return (At =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -19706,7 +19707,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function At(e, t) {
+      function Ct(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -19741,7 +19742,7 @@
           })()
         );
       }
-      var Ct = r.a.forwardRef(function(e, t) {
+      var zt = r.a.forwardRef(function(e, t) {
         var n = e.columnId,
           s = e.columnIndex,
           i = e.columnWidths,
@@ -19769,10 +19770,10 @@
           j = e.renderEventPaddingTop,
           x = e.renderEventPaddingBottom,
           E = e.stepHeight,
-          O = At(Object(a.useState)(!0), 2),
+          O = Ct(Object(a.useState)(!0), 2),
           P = O[0],
           W = O[1],
-          R = At(Object(a.useState)(null), 2),
+          R = Ct(Object(a.useState)(null), 2),
           A = R[0],
           C = R[1],
           F = fe({
@@ -19793,7 +19794,7 @@
           Q = z('time-grid__current-time-indicator');
         return r.a.createElement(
           'div',
-          Rt(
+          At(
             {
               className: ''.concat(z('time-grid__grid-column')).concat(U(u)),
               key: 'weekView'.concat(u.day()),
@@ -19876,7 +19877,7 @@
           Object.keys(_).map(function(e) {
             return l()(_, e, []).map(function(t) {
               return r.a.createElement(
-                Wt,
+                Rt,
                 {
                   key: t.id,
                   event: t,
@@ -19899,7 +19900,7 @@
                     o = n.extendedEvent;
                   n.heightChange;
                   return r.a.createElement(
-                    Et,
+                    Ot,
                     {
                       event: o,
                       isDraggable: c,
@@ -19955,7 +19956,7 @@
                             j(t)
                           ),
                         r.a.createElement(
-                          St,
+                          Ht,
                           {
                             isExtendable: m,
                             event: s,
@@ -20001,8 +20002,8 @@
           })
         );
       });
-      (Ct.displayName = 'Column'),
-        (Ct.defaultProps = {
+      (zt.displayName = 'Column'),
+        (zt.defaultProps = {
           isEventDraggable: function() {
             return !0;
           },
@@ -20049,7 +20050,7 @@
           },
           stepHeight: null,
         }),
-        (Ct.propTypes = {
+        (zt.propTypes = {
           columnId: i.a.oneOfType([i.a.instanceOf(Date), i.a.number])
             .isRequired,
           columnIndex: i.a.number.isRequired,
@@ -20079,8 +20080,8 @@
           stepHeight: i.a.number,
           stepMinutes: Ae,
         });
-      var zt = Ct,
-        Ft = function(e) {
+      var Ft = zt,
+        Nt = function(e) {
           var t = e.children,
             n = e.totalEventColumns,
             a = (e.totalColumns, e.date),
@@ -20107,8 +20108,8 @@
             )
           );
         };
-      (Ft.defaultProps = { minWidth: 190, minWidthEmpty: 100 }),
-        (Ft.propTypes = {
+      (Nt.defaultProps = { minWidth: 190, minWidthEmpty: 100 }),
+        (Nt.propTypes = {
           children: i.a.node.isRequired,
           date: Oe.isRequired,
           minWidth: i.a.number,
@@ -20117,8 +20118,8 @@
           totalEventColumns: i.a.number.isRequired,
           type: i.a.oneOf([C.week, C.groups]).isRequired,
         });
-      var Nt = Ft;
-      function It(e, t, n) {
+      var It = Nt;
+      function Jt(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20131,54 +20132,55 @@
           e
         );
       }
-      var Jt = function(e) {
+      var Gt = function(e) {
           var t = e.events,
             n = e.groupId,
             a = e.selectedDate;
           return l()(t, ''.concat(n, '.').concat(a.format('YYYY-MM-DD')), !1);
         },
-        Gt = function(e) {
-          var t = e.selectedDate,
-            n = e.visibleEventGroups,
-            a = e.renderHeader,
-            s = e.firstDay,
-            i = e.stepMinutes,
-            o = e.minWidthColumn,
-            d = e.minWidthColumnEmpty,
-            u = e.onDragEnd,
-            l = e.onExtendEnd,
-            _ = e.onCurrentTimeChange,
-            c = e.onSelectEvent,
-            m = e.onSelectSlot,
-            h = e.onSelectRangeEnd,
-            f = e.selectMinutes,
-            p = e.stepDetails,
-            M = e.isEventDraggable,
-            y = e.isEventExtendable,
-            g = e.events,
-            L = e.renderEvent,
-            Y = e.renderCorner,
-            v = e.renderStepDetail,
-            D = e.renderSelectSlotIndicator,
-            k = e.renderSelectRange,
-            b = e.renderEventPaddingTop,
-            w = e.renderEventPaddingBottom,
-            T = e.stepHeight,
-            S = e.scrollToTime,
-            H = re(),
-            j = H.TimeGridRef,
-            x = H.assignRef,
-            W = H.elementWidths,
-            R = Te({
-              events: g,
-              stepMinutes: i,
-              stepHeight: T,
-              stepDetails: p,
-              visibleEventGroups: n,
+        Ut = function(e) {
+          var t = e.eventGroups,
+            n = e.selectedDate,
+            a = e.visibleEventGroups,
+            s = e.renderHeader,
+            i = e.firstDay,
+            o = e.stepMinutes,
+            d = e.minWidthColumn,
+            u = e.minWidthColumnEmpty,
+            l = e.onDragEnd,
+            _ = e.onExtendEnd,
+            c = e.onCurrentTimeChange,
+            m = e.onSelectEvent,
+            h = e.onSelectSlot,
+            f = e.onSelectRangeEnd,
+            p = e.selectMinutes,
+            M = e.stepDetails,
+            y = e.isEventDraggable,
+            g = e.isEventExtendable,
+            L = e.events,
+            Y = e.renderEvent,
+            v = e.renderCorner,
+            D = e.renderStepDetail,
+            k = e.renderSelectSlotIndicator,
+            b = e.renderSelectRange,
+            w = e.renderEventPaddingTop,
+            T = e.renderEventPaddingBottom,
+            S = e.stepHeight,
+            H = e.scrollToTime,
+            j = re(),
+            x = j.TimeGridRef,
+            W = j.assignRef,
+            R = j.elementWidths,
+            A = Te({
+              events: L,
+              stepMinutes: o,
+              stepHeight: S,
+              stepDetails: M,
+              visibleEventGroups: a,
             }),
-            A = R.mungedEvents,
-            z = R.mungedStepDetails,
-            F = (function(e) {
+            z = A.mungedEvents,
+            F = A.mungedStepDetails,
+            N = (function(e) {
               var t = Object.assign({}, e);
               return Object.keys(t).reduce(function(e, n) {
                 return (
@@ -20188,123 +20190,116 @@
                   e
                 );
               }, {});
-            })(A),
-            N = n;
-          return (
-            n ||
-              (N = Object.keys(F).map(function(e) {
-                return Number(e);
-              })),
-            r.a.createElement(Dt, {
-              ref: j,
-              selectedDate: t,
-              firstDay: s,
-              totalWidth: W.reduce(function(e, t) {
-                return e + t;
-              }, 0),
-              onCurrentTimeChange: _,
-              stepMinutes: i,
-              selectMinutes: f,
-              stepHeight: T,
-              renderCorner: Y,
-              scrollToTime:
-                'firstEvent' === S
-                  ? V({ mungedEvents: A, selectedDate: t, hasGroups: !0 })
-                  : S,
-              renderHeader: function() {
-                var e = N.length;
-                return N.map(function(n) {
-                  var s = Jt({ events: F, groupId: n, selectedDate: t }),
-                    i = Object.keys(s).length;
-                  return r.a.createElement(
-                    Nt,
-                    {
-                      key: 'calendarHeader'.concat(n),
-                      totalEventColumns: i,
-                      totalColumns: e,
-                      date: t,
-                      minWidth: o,
-                      minWidthEmpty: d,
-                      type: C.groups,
-                    },
-                    r.a.createElement(
-                      'h2',
-                      null,
-                      a && a({ groupId: n, events: s })
-                    )
-                  );
-                });
-              },
-              renderColumns: function(e) {
-                var n = e.currentTime,
-                  a = e.totalGridHeight,
-                  s = function(e) {
-                    var t = e.columnMoves,
-                      n = e.columnIndex;
-                    return N[n + t];
-                  };
-                return N.map(function(e, o) {
-                  var d = Jt({ events: F, groupId: e, selectedDate: t }) || {},
-                    _ = Jt({ events: z, groupId: e, selectedDate: t }) || [];
-                  return r.a.createElement(zt, {
-                    ref: x(e),
-                    key: 'groupColumn'.concat(e),
-                    events: d,
-                    stepDetails: _,
-                    gridHeight: a,
-                    stepHeight: T,
-                    date: t,
-                    columnId: e,
-                    columnWidths: W,
-                    columnIndex: o,
-                    isEventDraggable: M,
-                    isEventExtendable: y,
-                    onDragEnd: u,
-                    onExtendEnd: l,
-                    onSelectEvent: c,
-                    onSelectRangeEnd: h,
-                    onSelectSlot: m,
-                    stepMinutes: i,
-                    selectMinutes: f,
-                    currentTime: n,
-                    renderEvent: L,
-                    renderStepDetail: v,
-                    renderSelectSlotIndicator: D,
-                    renderSelectRange: k,
-                    renderEventPaddingTop: b,
-                    renderEventPaddingBottom: w,
-                    getUpdatedDraggedEvent: function(e) {
-                      var t = e.event,
-                        n = e.columnMoves;
-                      return (function(e) {
-                        for (var t = 1; t < arguments.length; t++) {
-                          var n = null != arguments[t] ? arguments[t] : {},
-                            a = Object.keys(n);
-                          'function' == typeof Object.getOwnPropertySymbols &&
-                            (a = a.concat(
-                              Object.getOwnPropertySymbols(n).filter(function(
+            })(z);
+          return r.a.createElement(kt, {
+            ref: x,
+            selectedDate: n,
+            firstDay: i,
+            totalWidth: R.reduce(function(e, t) {
+              return e + t;
+            }, 0),
+            onCurrentTimeChange: c,
+            stepMinutes: o,
+            selectMinutes: p,
+            stepHeight: S,
+            renderCorner: v,
+            scrollToTime:
+              'firstEvent' === H
+                ? V({ mungedEvents: z, selectedDate: n, hasGroups: !0 })
+                : H,
+            renderHeader: function() {
+              var e = t.length;
+              return t.map(function(t) {
+                var a = Gt({ events: N, groupId: t.id, selectedDate: n }),
+                  i = Object.keys(a).length;
+                return r.a.createElement(
+                  It,
+                  {
+                    key: 'calendarHeader'.concat(t.id),
+                    totalEventColumns: i,
+                    totalColumns: e,
+                    date: n,
+                    minWidth: d,
+                    minWidthEmpty: u,
+                    type: C.groups,
+                  },
+                  r.a.createElement(
+                    'h2',
+                    null,
+                    s ? s({ group: t, events: a }) : t.title
+                  )
+                );
+              });
+            },
+            renderColumns: function(e) {
+              var a = e.currentTime,
+                s = e.totalGridHeight,
+                i = function(e) {
+                  var n = e.columnMoves,
+                    a = e.columnIndex;
+                  return t[a + n];
+                };
+              return t.map(function(e, t) {
+                var d = Gt({ events: N, groupId: e, selectedDate: n }) || {},
+                  u = Gt({ events: F, groupId: e, selectedDate: n }) || [];
+                return r.a.createElement(Ft, {
+                  ref: W(e),
+                  key: 'groupColumn'.concat(e),
+                  events: d,
+                  stepDetails: u,
+                  gridHeight: s,
+                  stepHeight: S,
+                  date: n,
+                  columnId: e,
+                  columnWidths: R,
+                  columnIndex: t,
+                  isEventDraggable: y,
+                  isEventExtendable: g,
+                  onDragEnd: l,
+                  onExtendEnd: _,
+                  onSelectEvent: m,
+                  onSelectRangeEnd: f,
+                  onSelectSlot: h,
+                  stepMinutes: o,
+                  selectMinutes: p,
+                  currentTime: a,
+                  renderEvent: Y,
+                  renderStepDetail: D,
+                  renderSelectSlotIndicator: k,
+                  renderSelectRange: b,
+                  renderEventPaddingTop: w,
+                  renderEventPaddingBottom: T,
+                  getUpdatedDraggedEvent: function(e) {
+                    var n = e.event,
+                      a = e.columnMoves;
+                    return (function(e) {
+                      for (var t = 1; t < arguments.length; t++) {
+                        var n = null != arguments[t] ? arguments[t] : {},
+                          a = Object.keys(n);
+                        'function' == typeof Object.getOwnPropertySymbols &&
+                          (a = a.concat(
+                            Object.getOwnPropertySymbols(n).filter(function(e) {
+                              return Object.getOwnPropertyDescriptor(
+                                n,
                                 e
-                              ) {
-                                return Object.getOwnPropertyDescriptor(n, e)
-                                  .enumerable;
-                              })
-                            )),
-                            a.forEach(function(t) {
-                              It(e, t, n[t]);
-                            });
-                        }
-                        return e;
-                      })({}, t, {
-                        group_id: s({ columnMoves: n, columnIndex: o }),
-                      });
-                    },
-                  });
+                              ).enumerable;
+                            })
+                          )),
+                          a.forEach(function(t) {
+                            Jt(e, t, n[t]);
+                          });
+                      }
+                      return e;
+                    })({}, n, {
+                      group_id: i({ columnMoves: a, columnIndex: t }),
+                    });
+                  },
                 });
-              },
-            })
-          );
+              });
+            },
+          });
         };
-      (Gt.defaultProps = {
+      (Ut.defaultProps = {
         events: [],
         isEventDraggable: function() {
           return !0;
@@ -20348,6 +20343,7 @@
         renderEventPaddingBottom: function() {
           return null;
         },
+        renderHeader: null,
         stepHeight: null,
         stepMinutes: 30,
         selectMinutes: 15,
@@ -20356,7 +20352,8 @@
         firstDay: 0,
         visibleEventGroups: null,
       }),
-        (Gt.propTypes = {
+        (Ut.propTypes = {
+          eventGroups: i.a.arrayOf(Je),
           events: i.a.arrayOf(We),
           firstDay: Ee,
           isEventDraggable: i.a.func,
@@ -20373,7 +20370,7 @@
           renderEvent: i.a.func,
           renderEventPaddingBottom: i.a.func,
           renderEventPaddingTop: i.a.func,
-          renderHeader: i.a.func.isRequired,
+          renderHeader: i.a.func,
           renderSelectRange: i.a.func,
           renderSelectSlotIndicator: i.a.func,
           renderStepDetail: i.a.func,
@@ -20385,8 +20382,8 @@
           stepMinutes: Ae,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var Ut = Gt,
-        qt = function(e) {
+      var qt = Ut,
+        Bt = function(e) {
           var t = e.firstDay,
             n = e.date,
             a = (function(e) {
@@ -20408,7 +20405,7 @@
             })({ firstDay: t, dateDay: n.day(), possibleDays: a });
           return a.slice(r, r + 7);
         };
-      function Bt(e, t, n) {
+      function Vt(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20421,7 +20418,7 @@
           e
         );
       }
-      var Vt = function(e) {
+      var $t = function(e) {
         var t = e.events,
           n = e.selectedDate,
           s = e.firstDay,
@@ -20449,7 +20446,7 @@
           H = e.stepHeight,
           j = e.scrollToTime,
           x = e.visibleEventGroups,
-          E = qt({ date: d()(n), firstDay: s }),
+          E = Bt({ date: d()(n), firstDay: s }),
           O = re(),
           P = O.TimeGridRef,
           W = O.assignRef,
@@ -20469,7 +20466,7 @@
             },
             [F]
           );
-        return r.a.createElement(Dt, {
+        return r.a.createElement(kt, {
           ref: P,
           selectedDate: n,
           totalWidth: A.reduce(function(e, t) {
@@ -20491,7 +20488,7 @@
             return E.map(function(e) {
               var n = Object.keys(l()(I, e.format('YYYY-MM-DD'), {})).length;
               return r.a.createElement(
-                Nt,
+                It,
                 {
                   key: 'dayHeader'.concat(e.date()),
                   totalEventColumns: n,
@@ -20520,7 +20517,7 @@
               var s = l()(N, e.format('YYYY-MM-DD'), []),
                 d = l()(I, e.format('YYYY-MM-DD'), {}),
                 M = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
-              return r.a.createElement(zt, {
+              return r.a.createElement(Ft, {
                 ref: W(e.day()),
                 key: 'weekColumn'.concat(e.day()),
                 events: d,
@@ -20576,7 +20573,7 @@
                             })
                           )),
                           a.forEach(function(t) {
-                            Bt(e, t, n[t]);
+                            Vt(e, t, n[t]);
                           });
                       }
                       return e;
@@ -20598,7 +20595,7 @@
           },
         });
       };
-      (Vt.defaultProps = {
+      ($t.defaultProps = {
         events: [],
         isEventDraggable: function() {
           return !0;
@@ -20645,13 +20642,13 @@
         renderHeader: null,
         stepHeight: null,
         stepMinutes: 30,
-        selectedDate: ut,
+        selectedDate: lt,
         selectMinutes: 15,
         scrollToTime: 'firstEvent',
         firstDay: 0,
         visibleEventGroups: null,
       }),
-        (Vt.propTypes = {
+        ($t.propTypes = {
           events: i.a.arrayOf(We),
           firstDay: Ee,
           isEventDraggable: i.a.func,
@@ -20680,9 +20677,9 @@
           stepMinutes: Ae,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var $t = Vt;
+      var Kt = $t;
       n(149);
-      function Kt(e, t, n) {
+      function Zt(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20695,7 +20692,7 @@
           e
         );
       }
-      var Zt = function(e) {
+      var Xt = function(e) {
         var t,
           n = e.view,
           a = e.direction,
@@ -20705,12 +20702,12 @@
           o = function(e) {
             return r.clone().add(a, e);
           };
-        return (Kt((t = {}), C.month, o('months')),
-        Kt(t, s, o('weeks')),
-        Kt(t, i, o('days')),
+        return (Zt((t = {}), C.month, o('months')),
+        Zt(t, s, o('weeks')),
+        Zt(t, i, o('days')),
         t)[n];
       };
-      function Xt(e, t, n) {
+      function Qt(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20723,21 +20720,21 @@
           e
         );
       }
-      var Qt = C.month,
-        en = C.week,
-        tn = C.groups,
-        nn = function(e) {
+      var en = C.month,
+        tn = C.week,
+        nn = C.groups,
+        an = function(e) {
           var t,
             n = e.date,
             a = e.view,
             r = e.firstDay,
-            s = qt({ firstDay: r, date: n });
-          return (Xt((t = {}), Qt, n.format('MMMM YYYY')),
-          Xt(t, en, 'Week of '.concat(s[0].format('MMMM D, YYYY'))),
-          Xt(t, tn, n.format('dddd, MMMM D, YYYY')),
+            s = Bt({ firstDay: r, date: n });
+          return (Qt((t = {}), en, n.format('MMMM YYYY')),
+          Qt(t, tn, 'Week of '.concat(s[0].format('MMMM D, YYYY'))),
+          Qt(t, nn, n.format('dddd, MMMM D, YYYY')),
           t)[a];
         };
-      function an(e, t, n) {
+      function rn(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20750,22 +20747,22 @@
           e
         );
       }
-      var rn = C.groups,
-        sn = C.week,
-        on = C.month,
-        dn = function(e) {
+      var sn = C.groups,
+        on = C.week,
+        dn = C.month,
+        un = function(e) {
           var t,
             n = e.view,
             a = e.selectedDate,
             r = e.firstDay;
-          return (an((t = {}), on, function() {
+          return (rn((t = {}), dn, function() {
             return {
               start: a.clone().startOf('month'),
               end: a.clone().endOf('month'),
             };
           }),
-          an(t, sn, function() {
-            var e = qt({ firstDay: r, date: a });
+          rn(t, on, function() {
+            var e = Bt({ firstDay: r, date: a });
             return {
               start: e[0].clone().startOf('day'),
               end: e[0]
@@ -20774,7 +20771,7 @@
                 .endOf('day'),
             };
           }),
-          an(t, rn, function() {
+          rn(t, sn, function() {
             return {
               start: a.clone().startOf('day'),
               end: a.clone().endOf('day'),
@@ -20782,19 +20779,19 @@
           }),
           t)[n]();
         },
-        un = function(e) {
+        ln = function(e) {
           var t = e.events,
             n = e.view,
             a = e.selectedDate,
             r = e.firstDay,
-            s = dn({ view: n, selectedDate: a, firstDay: r }),
+            s = un({ view: n, selectedDate: a, firstDay: r }),
             i = s.start,
             o = s.end;
           return t.filter(function(e) {
             return d()(e.start).isBetween(i, o, 'minutes', '[]');
           });
         };
-      function ln(e) {
+      function _n(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -20805,12 +20802,12 @@
               })
             )),
             a.forEach(function(t) {
-              _n(e, t, n[t]);
+              cn(e, t, n[t]);
             });
         }
         return e;
       }
-      function _n(e, t, n) {
+      function cn(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -20823,7 +20820,7 @@
           e
         );
       }
-      function cn(e, t) {
+      function mn(e, t) {
         return (
           (function(e) {
             if (Array.isArray(e)) return e;
@@ -20858,7 +20855,7 @@
           })()
         );
       }
-      var mn = function(e) {
+      var hn = function(e) {
           var t = e.cursorDate,
             n = e.fullRange,
             a = e.monthPadding,
@@ -20866,7 +20863,7 @@
             s = d()(new Date(t)),
             i = n.start,
             o = n.end,
-            u = hn({
+            u = fn({
               selectedDate: s,
               startDate: d()(new Date(i)),
               endDate: d()(new Date(o)),
@@ -20878,7 +20875,7 @@
                 start: new Date(u.fullRange.start),
                 end: new Date(u.fullRange.end),
               }),
-              ln(
+              _n(
                 { shouldFetchMore: !0 },
                 {
                   fetchMoreRange: {
@@ -20892,11 +20889,11 @@
                 }
               )
             );
-          if (gn({ selectedDate: s, startDate: i, endDate: o })) {
-            var l = Ln({ selectedDate: s, monthPadding: a });
+          if (Ln({ selectedDate: s, startDate: i, endDate: o })) {
+            var l = Yn({ selectedDate: s, monthPadding: a });
             return (
               r({ start: new Date(l.start), end: new Date(l.end) }),
-              ln(
+              _n(
                 { isOutsideRange: !0 },
                 {
                   fetchMoreRange: { start: null, end: null },
@@ -20912,27 +20909,27 @@
             fetchMoreRange: { start: null, end: null },
           };
         },
-        hn = function(e) {
+        fn = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.endDate,
             r = e.monthPadding,
             s = { fetchMoreRange: !1, fullRange: !1 };
           return (
-            fn({ selectedDate: t, startDate: n, monthPadding: r }) &&
-              (s = pn({ startDate: n, endDate: a, monthPadding: r })),
-            Mn({ selectedDate: t, endDate: a, monthPadding: r }) &&
-              (s = yn({ startDate: n, endDate: a, monthPadding: r })),
+            pn({ selectedDate: t, startDate: n, monthPadding: r }) &&
+              (s = Mn({ startDate: n, endDate: a, monthPadding: r })),
+            yn({ selectedDate: t, endDate: a, monthPadding: r }) &&
+              (s = gn({ startDate: n, endDate: a, monthPadding: r })),
             s
           );
         },
-        fn = function(e) {
+        pn = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.monthPadding;
           return t.isBefore(n.clone().add(a, 'months')) && t.isAfter(n);
         },
-        pn = function(e) {
+        Mn = function(e) {
           var t = e.startDate,
             n = e.endDate,
             a = e.monthPadding,
@@ -20949,13 +20946,13 @@
             { fetchMoreRange: r, fullRange: s }
           );
         },
-        Mn = function(e) {
+        yn = function(e) {
           var t = e.selectedDate,
             n = e.endDate,
             a = e.monthPadding;
           return t.isAfter(n.clone().subtract(a, 'months')) && t.isBefore(n);
         },
-        yn = function(e) {
+        gn = function(e) {
           var t = e.startDate,
             n = e.endDate,
             a = e.monthPadding,
@@ -20974,13 +20971,13 @@
             { fetchMoreRange: r, fullRange: s }
           );
         },
-        gn = function(e) {
+        Ln = function(e) {
           var t = e.selectedDate,
             n = e.startDate,
             a = e.endDate;
           return t.isBefore(n) || t.isAfter(a);
         },
-        Ln = function(e) {
+        Yn = function(e) {
           var t = e.selectedDate,
             n = e.monthPadding;
           return {
@@ -20994,7 +20991,7 @@
               .endOf('month'),
           };
         },
-        Yn = function(e) {
+        vn = function(e) {
           var t = e.cursorDate,
             n = e.monthPadding,
             r = void 0 === n ? 1 : n,
@@ -21008,20 +21005,20 @@
                 .add(r, 'months')
                 .endOf('month'),
             },
-            u = cn(Object(a.useState)(o), 2),
+            u = mn(Object(a.useState)(o), 2),
             l = u[0],
             _ = u[1];
-          return mn({
+          return hn({
             cursorDate: t,
             fullRange: l,
             monthPadding: r,
             setFullRange: _,
           });
         },
-        vn = C.month,
-        Dn = C.week,
-        kn = C.groups,
-        bn = function(e) {
+        Dn = C.month,
+        kn = C.week,
+        bn = C.groups,
+        wn = function(e) {
           var t = e.children,
             n = e.firstDay,
             s = e.fetchEventInitialFullRange,
@@ -21032,7 +21029,7 @@
             _ = e.selectedDate,
             c = e.events,
             m = e.view,
-            h = Yn({ cursorDate: _, monthPadding: i, currentFullRange: s }),
+            h = vn({ cursorDate: _, monthPadding: i, currentFullRange: s }),
             f = h.fetchMoreRange,
             p = h.fullRange,
             M = h.shouldFetchMore,
@@ -21045,16 +21042,16 @@
           var g = function(e) {
               o(e);
             },
-            L = nn({ date: d()(_), view: m, firstDay: n }),
+            L = an({ date: d()(_), view: m, firstDay: n }),
             Y = function() {
               var e = new Date(
-                Zt({ view: m, direction: 1, currentDate: d()(_) })
+                Xt({ view: m, direction: 1, currentDate: d()(_) })
               );
               g(e);
             },
             v = function() {
               var e = new Date(
-                Zt({ view: m, direction: -1, currentDate: d()(_) })
+                Xt({ view: m, direction: -1, currentDate: d()(_) })
               );
               g(e);
             },
@@ -21067,7 +21064,7 @@
                 onPrev: v,
                 onToday: D,
                 title: L,
-                eventsForView: un({
+                eventsForView: ln({
                   events: c,
                   view: m,
                   selectedDate: d()(_),
@@ -21085,7 +21082,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(vn);
+                        return l(Dn);
                       },
                     },
                     'Month'
@@ -21095,7 +21092,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(Dn);
+                        return l(kn);
                       },
                     },
                     'Week'
@@ -21105,7 +21102,7 @@
                     {
                       type: 'button',
                       onClick: function() {
-                        return l(kn);
+                        return l(bn);
                       },
                     },
                     'Day'
@@ -21133,7 +21130,7 @@
                 r.a.createElement('h1', { className: z('toolbar__title') }, L)
               );
         };
-      (bn.defaultProps = {
+      (wn.defaultProps = {
         children: null,
         events: [],
         firstDay: 0,
@@ -21143,7 +21140,7 @@
           return null;
         },
       }),
-        (bn.propTypes = {
+        (wn.propTypes = {
           children: i.a.func,
           events: i.a.arrayOf(We),
           fetchEventInitialFullRange: Ne,
@@ -21155,8 +21152,8 @@
           selectedDate: xe.isRequired,
           view: Pe.isRequired,
         });
-      var wn = bn;
-      function Tn(e, t, n) {
+      var Tn = wn;
+      function Sn(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -21169,8 +21166,8 @@
           e
         );
       }
-      function Sn() {
-        return (Sn =
+      function Hn() {
+        return (Hn =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -21181,119 +21178,125 @@
             return e;
           }).apply(this, arguments);
       }
-      var Hn = function(e) {
+      var jn = function(e) {
         var t,
           n = e.events,
-          a = (e.fetchEventPadding, e.fetchEventInitialFullRange),
-          s = e.firstDay,
-          i = e.forceSixWeeks,
-          o = e.isEventDraggable,
-          u = e.isEventExtendable,
-          l = e.minWidthColumn,
-          _ = e.minWidthColumnEmpty,
-          c = e.onDragEnd,
-          m = e.onExtendEnd,
-          h = e.onFetchEvents,
-          f = e.onNavigate,
-          p = e.onSelectMore,
-          M = e.onSelectDate,
-          y = e.onSelectEvent,
-          g = e.onSelectRangeEnd,
-          L = e.onCurrentTimeChange,
-          Y = e.onSelectSlot,
-          v = e.onViewChange,
-          D = e.renderCell,
-          k = (e.renderEvent, e.renderCorner),
-          b = e.renderEventPaddingBottom,
-          w = e.renderEventPaddingTop,
-          T = e.renderGroupsHeader,
-          S = e.renderMonthHeader,
-          H = e.renderSelectRange,
-          j = e.renderSelectSlotIndicator,
-          x = e.renderStepDetail,
-          E = e.renderWeekHeader,
-          O = e.renderDayGridEvent,
-          P = e.renderTimeGridEvent,
-          W = e.renderToolbar,
-          R = e.scrollToTime,
-          A = e.selectedDate,
-          z = e.selectMinutes,
-          F = e.stepDetails,
-          N = e.stepHeight,
-          I = e.stepMinutes,
-          J = e.style,
-          G = e.view,
-          U = e.visibleEventGroups,
-          q = C.month,
-          B = C.week,
-          V = C.groups,
-          $ = {
-            isEventDraggable: o,
-            onDragEnd: c,
-            onSelectEvent: y,
-            onSelectSlot: Y,
-            events: n,
-            selectedDate: d()(A),
-            firstDay: s,
-            visibleEventGroups: U,
-          },
+          a = e.eventGroups,
+          s = (e.fetchEventPadding, e.fetchEventInitialFullRange),
+          i = e.firstDay,
+          o = e.forceSixWeeks,
+          u = e.isEventDraggable,
+          l = e.isEventExtendable,
+          _ = e.minWidthColumn,
+          c = e.minWidthColumnEmpty,
+          m = e.onDragEnd,
+          h = e.onExtendEnd,
+          f = e.onFetchEvents,
+          p = e.onNavigate,
+          M = e.onSelectMore,
+          y = e.onSelectDate,
+          g = e.onSelectEvent,
+          L = e.onSelectRangeEnd,
+          Y = e.onCurrentTimeChange,
+          v = e.onSelectSlot,
+          D = e.onViewChange,
+          k = e.renderCell,
+          b = (e.renderEvent, e.renderCorner),
+          w = e.renderEventPaddingBottom,
+          T = e.renderEventPaddingTop,
+          S = e.renderGroupsHeader,
+          H = e.renderMonthHeader,
+          j = e.renderSelectRange,
+          x = e.renderSelectSlotIndicator,
+          E = e.renderStepDetail,
+          O = e.renderWeekHeader,
+          P = e.renderDayGridEvent,
+          W = e.renderTimeGridEvent,
+          R = e.renderToolbar,
+          A = e.scrollToTime,
+          z = e.selectedDate,
+          F = e.selectMinutes,
+          N = e.stepDetails,
+          I = e.stepHeight,
+          J = e.stepMinutes,
+          G = e.style,
+          U = e.view,
+          q = e.visibleEventGroups,
+          B = C.month,
+          V = C.week,
+          $ = C.groups,
           K = {
-            onSelectMore: p,
-            onSelectDate: M,
-            forceSixWeeks: i,
-            renderCell: D,
-            renderEvent: O,
+            isEventDraggable: u,
+            onDragEnd: m,
+            onSelectEvent: g,
+            onSelectSlot: v,
+            events: n,
+            selectedDate: d()(z),
+            firstDay: i,
+            visibleEventGroups: q,
           },
           Z = {
-            isEventExtendable: u,
-            onExtendEnd: m,
-            onCurrentTimeChange: L,
-            onSelectRangeEnd: g,
-            stepDetails: F,
-            minWidthColumn: l,
-            minWidthColumnEmpty: _,
-            renderCorner: k,
-            renderEventPaddingBottom: b,
-            renderEventPaddingTop: w,
-            renderSelectRange: H,
-            renderStepDetail: x,
-            selectMinutes: z,
-            stepHeight: N,
-            stepMinutes: I,
-            renderSelectSlotIndicator: j,
+            onSelectMore: M,
+            onSelectDate: y,
+            forceSixWeeks: o,
+            renderCell: k,
             renderEvent: P,
-            scrollToTime: R,
           },
-          X = (Tn(
+          X = {
+            isEventExtendable: l,
+            onExtendEnd: h,
+            onCurrentTimeChange: Y,
+            onSelectRangeEnd: L,
+            stepDetails: N,
+            minWidthColumn: _,
+            minWidthColumnEmpty: c,
+            renderCorner: b,
+            renderEventPaddingBottom: w,
+            renderEventPaddingTop: T,
+            renderSelectRange: j,
+            renderStepDetail: E,
+            selectMinutes: F,
+            stepHeight: I,
+            stepMinutes: J,
+            renderSelectSlotIndicator: x,
+            renderEvent: W,
+            scrollToTime: A,
+          },
+          Q = (Sn(
             (t = {}),
-            q,
-            r.a.createElement(Lt, Sn({ renderHeader: S }, K, $))
+            B,
+            r.a.createElement(Yt, Hn({ renderHeader: H }, Z, K))
           ),
-          Tn(t, B, r.a.createElement($t, Sn({ renderHeader: E }, Z, $))),
-          Tn(t, V, r.a.createElement(Ut, Sn({ renderHeader: T }, Z, $))),
+          Sn(t, V, r.a.createElement(Kt, Hn({ renderHeader: O }, X, K))),
+          Sn(
+            t,
+            $,
+            r.a.createElement(qt, Hn({ renderHeader: S, eventGroups: a }, X, K))
+          ),
           t);
         return r.a.createElement(
           'div',
-          { className: 'acuity-calendar', style: J },
+          { className: 'acuity-calendar', style: G },
           r.a.createElement(
-            wn,
+            Tn,
             {
               events: n,
-              fetchEventInitialFullRange: a,
-              firstDay: s,
-              onNavigate: f,
-              onViewChange: v,
-              onFetchEvents: h,
-              selectedDate: A,
-              view: G,
+              fetchEventInitialFullRange: s,
+              firstDay: i,
+              onNavigate: p,
+              onViewChange: D,
+              onFetchEvents: f,
+              selectedDate: z,
+              view: U,
             },
-            W
+            R
           ),
-          X[G]
+          Q[U]
         );
       };
-      (Hn.defaultProps = {
+      (jn.defaultProps = {
         events: [],
+        eventGroups: [],
         fetchEventInitialFullRange: null,
         fetchEventPadding: 1,
         firstDay: 0,
@@ -21356,7 +21359,7 @@
         renderToolbar: null,
         renderWeekHeader: null,
         selectMinutes: 15,
-        selectedDate: ut,
+        selectedDate: lt,
         stepDetails: null,
         stepHeight: null,
         stepMinutes: 30,
@@ -21370,7 +21373,8 @@
           return !0;
         },
       }),
-        (Hn.propTypes = {
+        (jn.propTypes = {
+          eventGroups: i.a.arrayOf(Je),
           events: i.a.arrayOf(We),
           fetchEventInitialFullRange: Ne,
           fetchEventPadding: i.a.number,
@@ -21415,9 +21419,9 @@
           view: Pe.isRequired,
           visibleEventGroups: i.a.arrayOf(i.a.number),
         });
-      var jn = Hn;
-      function xn(e) {
-        return (xn =
+      var xn = jn;
+      function En(e) {
+        return (En =
           'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
             ? function(e) {
                 return typeof e;
@@ -21431,11 +21435,11 @@
                   : typeof e;
               })(e);
       }
-      var En = (function() {
+      var On = (function() {
           var e = function(e, t, n) {
               var a,
                 r = e[t];
-              return null == r || 'object' !== xn(r)
+              return null == r || 'object' !== En(r)
                 ? new TypeError(
                     'Invalid '
                       .concat(t, ' prop: ')
@@ -21464,42 +21468,42 @@
             };
           return (t.isRequired = e), t;
         })(),
-        On = '.'.concat('acuity-calendar'),
-        Pn = '.'.concat('acuity-calendar', '__day-grid'),
-        Wn = '\n    '
+        Pn = '.'.concat('acuity-calendar'),
+        Wn = '.'.concat('acuity-calendar', '__day-grid'),
+        Rn = '\n    '
           .concat(
-            On,
+            Pn,
             '__heatmap-header {\n        font-size: 14px;\n    }\n    '
           )
           .concat(
-            On,
+            Pn,
             '__heatmap__cell {\n        background: #26ada0;\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        top: 0;\n        left: 0;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             ' {\n        height: 250px;\n        width: 250px;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             '__date-wrapper:hover {\n        background: none;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             '__date-wrapper {\n        position: relative;\n        cursor: default;\n        top: auto;\n        right: auto;\n        margin: 0 auto;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             '__column-header {\n        text-transform: none;\n        padding: 5px;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             '__cell {\n        position: relative;\n        display: flex;\n        align-items: center;\n    }\n    '
           )
           .concat(
-            Pn,
+            Wn,
             '__date {\n        text-align: center;\n        position: relative;\n        z-index: 10;\n    }\n'
           );
-      function Rn(e) {
+      function An(e) {
         for (var t = 1; t < arguments.length; t++) {
           var n = null != arguments[t] ? arguments[t] : {},
             a = Object.keys(n);
@@ -21510,12 +21514,12 @@
               })
             )),
             a.forEach(function(t) {
-              An(e, t, n[t]);
+              Cn(e, t, n[t]);
             });
         }
         return e;
       }
-      function An(e, t, n) {
+      function Cn(e, t, n) {
         return (
           t in e
             ? Object.defineProperty(e, t, {
@@ -21528,7 +21532,7 @@
           e
         );
       }
-      var Cn = function(e) {
+      var zn = function(e) {
         var t = e.counts,
           n = e.firstDay,
           s = e.forceSixWeeks,
@@ -21549,15 +21553,15 @@
         return r.a.createElement(
           a.Fragment,
           null,
-          r.a.createElement('style', null, Wn),
-          r.a.createElement(Lt, {
+          r.a.createElement('style', null, Rn),
+          r.a.createElement(Yt, {
             forceSixWeeks: s,
             firstDay: n,
             onSelectSlot: function(e) {
               var t = h(e.date),
                 n = t.weight,
                 a = t.count;
-              i(Rn({}, e, { weight: n, count: a }));
+              i(An({}, e, { weight: n, count: a }));
             },
             renderHeader: u,
             renderCell: function(e) {
@@ -21568,7 +21572,7 @@
                 a.Fragment,
                 null,
                 o
-                  ? o(Rn({}, e, { weight: n, count: s }))
+                  ? o(An({}, e, { weight: n, count: s }))
                   : r.a.createElement('div', {
                       className: z('heatmap__cell'),
                       style: { opacity: n },
@@ -21579,7 +21583,7 @@
           })
         );
       };
-      (Cn.defaultProps = {
+      (zn.defaultProps = {
         counts: {},
         firstDay: 0,
         forceSixWeeks: !0,
@@ -21597,8 +21601,8 @@
         },
         selectedDate: new Date(),
       }),
-        (Cn.propTypes = {
-          counts: En,
+        (zn.propTypes = {
+          counts: On,
           firstDay: Ee,
           forceSixWeeks: i.a.bool,
           onSelectCell: i.a.func,
@@ -21606,10 +21610,10 @@
           renderHeader: i.a.func,
           selectedDate: xe,
         });
-      var zn = Cn;
+      var Fn = zn;
       n(151);
-      function Fn() {
-        return (Fn =
+      function Nn() {
+        return (Nn =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -21620,7 +21624,7 @@
             return e;
           }).apply(this, arguments);
       }
-      function Nn(e, t) {
+      function In(e, t) {
         if (null == e) return {};
         var n,
           a,
@@ -21644,12 +21648,12 @@
         }
         return r;
       }
-      var In = function(e) {
+      var Jn = function(e) {
         var t = e.renderCell,
           n = e.renderHeader,
           a = e.firstDay,
           s = e.totalDays,
-          i = Nn(e, ['renderCell', 'renderHeader', 'firstDay', 'totalDays']),
+          i = In(e, ['renderCell', 'renderHeader', 'firstDay', 'totalDays']),
           o = {
             firstDate: d()().day(a),
             lastDate: d()()
@@ -21669,8 +21673,8 @@
           'div',
           { className: z('day-list') },
           r.a.createElement(
-            dt,
-            Fn(
+            ut,
+            Nn(
               {
                 grid: o,
                 renderHeader: function(e) {
@@ -21687,7 +21691,7 @@
           )
         );
       };
-      (In.defaultProps = {
+      (Jn.defaultProps = {
         renderCell: function() {
           return null;
         },
@@ -21695,38 +21699,38 @@
         firstDay: 0,
         totalDays: 7,
       }),
-        (In.propTypes = {
+        (Jn.propTypes = {
           firstDay: Ee,
           renderCell: i.a.func,
           renderHeader: i.a.func,
           totalDays: i.a.number,
         });
-      var Jn = In;
+      var Gn = Jn;
       n.d(t, 'CalendarGroups', function() {
-        return Ut;
+        return qt;
       }),
         n.d(t, 'CalendarMonth', function() {
-          return Lt;
+          return Yt;
         }),
         n.d(t, 'CalendarMonthHeatmap', function() {
-          return zn;
+          return Fn;
         }),
         n.d(t, 'CalendarWeek', function() {
-          return $t;
+          return Kt;
         }),
         n.d(t, 'DayList', function() {
-          return Jn;
+          return Gn;
         }),
         n.d(t, 'DayGrid', function() {
-          return dt;
+          return ut;
         }),
         n.d(t, 'TimeGrid', function() {
-          return Dt;
+          return kt;
         }),
         n.d(t, 'Toolbar', function() {
-          return wn;
+          return Tn;
         });
-      t.default = jn;
+      t.default = xn;
     },
   ]);
 });

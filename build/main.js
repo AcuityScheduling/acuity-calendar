@@ -16895,11 +16895,13 @@
           g = w(Object(a.useState)(0), 2),
           L = g[0],
           D = g[1];
-        if (t.current) {
-          var k = t.current.offsetHeight;
-          k !== h && f(k);
-        }
-        var b = c()(function() {
+        Object(a.useEffect)(function() {
+          if (t.current) {
+            var e = t.current.offsetHeight;
+            e !== h && f(e);
+          }
+        });
+        var k = c()(function() {
           o(l()(e, 'current.offsetHeight', 0)),
             _(l()(e, 'current.offsetWidth', 0));
         }, 300);
@@ -16909,9 +16911,9 @@
               e.current &&
                 (o(e.current.offsetHeight),
                 _(r.current.offsetWidth),
-                Y(e.current, b)),
+                Y(e.current, k)),
               function() {
-                if (e.current) return v(e.current, b);
+                if (e.current) return v(e.current, k);
               }
             );
           }),
@@ -16919,7 +16921,7 @@
             function() {
               h > 0 && D(Math.floor((i - M) / h) - 1);
             },
-            [i]
+            [i, h]
           ),
           Object(a.useEffect)(
             function() {
@@ -18623,26 +18625,28 @@
             u = e.onSelectDate,
             _ = e.onSelectMoreEvents,
             c = e.onSelectEvent,
-            m = Te({ events: t }).eventsWithSelectedEventGroups,
-            h = T(),
-            f = h.rowRef,
-            p = h.eventRef,
-            M = h.cellRef,
-            y = h.eventWrapperRef,
-            g = h.eventHeight,
-            L = h.totalEventsToShow,
-            Y = h.cellDimensions,
-            v = a;
-          Array.isArray(v) || (v = H(a));
-          var D = 0,
-            k = 0;
+            m = e.visibleEventGroups,
+            h = Te({ events: t, visibleEventGroups: m })
+              .eventsWithSelectedEventGroups,
+            f = T(),
+            p = f.rowRef,
+            M = f.eventRef,
+            y = f.cellRef,
+            g = f.eventWrapperRef,
+            L = f.eventHeight,
+            Y = f.totalEventsToShow,
+            v = f.cellDimensions,
+            D = a;
+          Array.isArray(D) || (D = H(a));
+          var k = 0,
+            b = 0;
           return r.a.createElement(
             'div',
             { className: z('day-grid') },
             r.a.createElement(
               'div',
               { className: z('day-grid__header') },
-              l()(v, 0, []).map(function(e) {
+              l()(D, 0, []).map(function(e) {
                 var t = e.date.format('dddd');
                 return r.a.createElement(
                   'div',
@@ -18654,37 +18658,37 @@
             r.a.createElement(
               'div',
               { className: z('day-grid__days') },
-              v
-                ? v.map(function(e) {
-                    k += 1;
+              D
+                ? D.map(function(e) {
+                    b += 1;
                     var t = e.length;
                     return r.a.createElement(
                       'div',
                       {
                         className: z('day-grid__row'),
-                        ref: f,
-                        key: 'monthColumn'.concat(k),
+                        ref: p,
+                        key: 'monthColumn'.concat(b),
                       },
                       e.map(function(e) {
-                        D += 1;
-                        var a = l()(m, e.date.format('YYYY-MM-DD'), []);
+                        k += 1;
+                        var a = l()(h, e.date.format('YYYY-MM-DD'), []);
                         return r.a.createElement(ot, {
                           isEventDraggable: n,
                           totalColumns: t,
                           events: a,
-                          ref: M,
-                          eventHeight: g,
-                          cellDimensions: Y,
-                          key: 'dayCells'.concat(D),
+                          ref: y,
+                          eventHeight: L,
+                          cellDimensions: v,
+                          key: 'dayCells'.concat(k),
                           dayDetails: e,
                           renderCell: s,
                           onDragEnd: o,
                           onSelectSlot: d,
                           onSelectDate: u,
                           onSelectMoreEvents: _,
-                          totalEventsToShow: L,
-                          eventRef: p,
-                          eventWrapperRef: y,
+                          totalEventsToShow: Y,
+                          eventRef: M,
+                          eventWrapperRef: g,
                           onSelectEvent: c,
                         });
                       })
@@ -18714,6 +18718,7 @@
         onSelectSlot: function() {
           return null;
         },
+        visibleEventGroups: null,
       }),
         (dt.propTypes = {
           events: i.a.arrayOf(We),
@@ -18726,6 +18731,7 @@
           onSelectSlot: i.a.func,
           renderCell: i.a.func,
           renderHeader: i.a.func,
+          visibleEventGroups: i.a.arrayOf(i.a.number),
         });
       var ut = dt,
         lt = new Date();

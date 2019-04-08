@@ -12,7 +12,6 @@ import { CALENDAR_VIEWS } from '../../../constants';
 const ColumnHeader = ({
   children,
   totalEventColumns,
-  totalColumns,
   date,
   minWidth,
   minWidthEmpty,
@@ -49,7 +48,9 @@ ColumnHeader.propTypes = {
   date: MOMENT_TYPE.isRequired,
   minWidth: PropTypes.number,
   minWidthEmpty: PropTypes.number,
-  totalColumns: PropTypes.number.isRequired,
+  // How many columns of events are there on one calendar column?
+  // Basically events are side by side if their times overlap, that's the number of
+  // we want here. What's the widest column?
   totalEventColumns: PropTypes.number.isRequired,
   type: PropTypes.oneOf([CALENDAR_VIEWS.week, CALENDAR_VIEWS.groups])
     .isRequired,

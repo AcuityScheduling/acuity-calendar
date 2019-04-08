@@ -1,15 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
-import moment from 'moment';
-import {
-  getEventColumns,
-  scrollToEvent,
-} from '../../Calendar/components/TimeGrid/utils';
-import TimeGrid from '../../Calendar/components/TimeGrid';
-import Column from '../../Calendar/components/TimeGrid/components/Column';
-import { getWeekList } from './utils';
-import { useElementWidths } from '../../Calendar/components/TimeGrid/utils';
+import TimeGrid from '../../Calendar/components/TimeGrid/TimeGridWrapper';
 import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
@@ -18,7 +10,6 @@ import {
   STEP_DETAILS_TYPE,
   SCROLL_TO_TIME_TYPE,
 } from '../../Calendar/types';
-import ColumnHeader from '../../Calendar/components/TimeGrid/components/ColumnHeader';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
@@ -28,7 +19,6 @@ import {
   SELECTED_DATE_DEFAULT,
   SCROLL_TO_TIME_DEFAULT,
 } from '../../Calendar/defaultProps';
-import { useMungeData } from '../../Calendar/utils';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
 
 const CalendarWeek = ({
@@ -60,29 +50,10 @@ const CalendarWeek = ({
   scrollToTime,
   visibleEventGroups,
 }) => {
-  const dateList = getWeekList({ date: moment(selectedDate), firstDay });
-  const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
-
-  const {
-    eventsWithSelectedEventGroups,
-    mungedStepDetailsGroups,
-  } = useMungeData({
-    events,
-    stepMinutes,
-    stepHeight,
-    stepDetails,
-    visibleEventGroups,
-  });
-  const eventsWithColumns = useMemo(
-    () => getEventColumns(eventsWithSelectedEventGroups),
-    [eventsWithSelectedEventGroups]
-  );
-
   return (
     <TimeGrid
-      ref={TimeGridRef}
+      events={events}
       selectedDate={selectedDate}
-      totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
@@ -90,30 +61,14 @@ const CalendarWeek = ({
       onCurrentTimeChange={onCurrentTimeChange}
       selectMinutes={selectMinutes}
       stepHeight={stepHeight}
-      scrollToTime={
-        scrollToTime === 'firstEvent'
-          ? scrollToEvent({
-              mungedEvents: eventsWithSelectedEventGroups,
-              selectedDate: moment(selectedDate),
-              hasGroups: false,
-            })
-          : scrollToTime
-      }
+      scrollToTime={scrollToTime}
       renderCorner={renderCorner}
-      renderHeader={() =>
-        dateList.map(date => {
-          const totalEventColumns = Object.keys(
-            get(eventsWithColumns, date.format('YYYY-MM-DD'), {})
-          ).length;
-
+      renderHeaders={({ week, ColumnComponent, events }) => {
+        return week.map(date => {
           return (
-            <ColumnHeader
+            <ColumnComponent
               key={`dayHeader${date.date()}`}
-              totalEventColumns={totalEventColumns}
-              totalColumns={dateList.length}
               date={date}
-              minWidth={minWidthColumn}
-              minWidthEmpty={minWidthColumnEmpty}
               type={CALENDAR_VIEWS.week}
             >
               {renderHeader ? (
@@ -123,20 +78,25 @@ const CalendarWeek = ({
                   {date.format('dddd')}, {date.format('MMM D')}
                 </h2>
               )}
-            </ColumnHeader>
+            </ColumnComponent>
           );
-        })
-      }
-      renderColumns={({ currentTime, totalGridHeight }) => {
-        return dateList.map((date, index) => {
+        });
+      }}
+      renderColumns={({
+        ColumnComponent,
+        week,
+        eventsForColumn,
+        stepDetailsForColumn,
+      }) => {
+        return week.map((date, index) => {
           const stepDetailsForDay = get(
-            mungedStepDetailsGroups,
+            stepDetailsForColumn,
             date.format('YYYY-MM-DD'),
             []
           );
 
           const eventsForDay = get(
-            eventsWithColumns,
+            eventsForColumn,
             date.format('YYYY-MM-DD'),
             {}
           );
@@ -146,55 +106,15 @@ const CalendarWeek = ({
           );
 
           return (
-            <Column
-              ref={assignRef(date.day())}
+            <ColumnComponent
               key={`weekColumn${date.day()}`}
-              events={eventsForDay}
-              stepDetails={stepDetailsForDay}
               date={date}
-              columnId={columnId}
-              columnWidths={elementWidths}
+              columnKey={`weekColumn${date.day()}`}
+              events={eventsForDay}
               columnIndex={index}
-              isEventDraggable={isEventDraggable}
-              isEventExtendable={isEventExtendable}
-              minWidth={minWidthColumn}
-              minWidthEmpty={minWidthColumnEmpty}
-              onDragEnd={onDragEnd}
-              onExtendEnd={onExtendEnd}
-              onSelectEvent={onSelectEvent}
-              onSelectSlot={onSelectSlot}
-              onSelectRangeEnd={onSelectRangeEnd}
-              renderSelectRange={renderSelectRange}
-              stepMinutes={stepMinutes}
-              selectMinutes={selectMinutes}
-              stepHeight={stepHeight}
-              gridHeight={totalGridHeight}
-              currentTime={currentTime}
-              renderEvent={renderEvent}
-              renderEventPaddingTop={renderEventPaddingTop}
-              renderEventPaddingBottom={renderEventPaddingBottom}
-              getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
-                const padding = {};
-                if (typeof event.paddingTopStart !== 'undefined') {
-                  padding.paddingTopStart = event.paddingTopStart
-                    .clone()
-                    .add(columnMoves, 'days');
-                }
-                if (typeof event.paddingBottomEnd !== 'undefined') {
-                  padding.paddingBottomEnd = event.paddingBottomEnd
-                    .clone()
-                    .add(columnMoves, 'days');
-                }
-
-                return {
-                  ...event,
-                  start: start.clone().add(columnMoves, 'days'),
-                  end: end.clone().add(columnMoves, 'days'),
-                  ...padding,
-                };
-              }}
-              renderStepDetail={renderStepDetail}
-              renderSelectSlotIndicator={renderSelectSlotIndicator}
+              columnId={columnId}
+              eventsForColumn={eventsForDay}
+              stepDetailsForColumn={stepDetailsForDay}
             />
           );
         });

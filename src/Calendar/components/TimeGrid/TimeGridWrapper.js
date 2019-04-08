@@ -26,6 +26,7 @@ import {
   SELECTED_DATE_DEFAULT,
   SCROLL_TO_TIME_DEFAULT,
 } from '../../defaultProps';
+import { getEventColumnsByGroup } from './utils/getEventColumns';
 
 const TimeGridWrapper = ({
   events,
@@ -63,6 +64,8 @@ const TimeGridWrapper = ({
   const {
     eventsWithSelectedEventGroups,
     mungedStepDetailsGroups,
+    mungedEvents,
+    mungedStepDetails,
   } = useMungeData({
     events,
     stepMinutes,
@@ -74,6 +77,8 @@ const TimeGridWrapper = ({
     () => getEventColumns(eventsWithSelectedEventGroups),
     [eventsWithSelectedEventGroups]
   );
+
+  const eventsWithColumnsGroups = getEventColumnsByGroup(mungedEvents);
 
   return (
     <TimeGrid
@@ -125,7 +130,9 @@ const TimeGridWrapper = ({
           ColumnComponent,
           week: dateList,
           events: eventsWithColumns,
-          steps: mungedStepDetailsGroups,
+          eventsWithGroups: eventsWithColumnsGroups,
+          stepDetails: mungedStepDetailsGroups,
+          stepDetailsWithGroups: mungedStepDetails,
         });
       }}
       renderColumns={({ currentTime, totalGridHeight }) => {
@@ -193,8 +200,10 @@ const TimeGridWrapper = ({
         return renderColumns({
           ColumnComponent,
           week: dateList,
-          eventsForColumn: eventsWithColumns,
-          stepDetailsForColumn: mungedStepDetailsGroups,
+          events: eventsWithColumns,
+          eventsWithGroups: eventsWithColumnsGroups,
+          stepDetails: mungedStepDetailsGroups,
+          stepDetailsWithGroups: mungedStepDetails,
         });
       }}
     />

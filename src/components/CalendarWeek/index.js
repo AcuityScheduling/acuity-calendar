@@ -27,24 +27,15 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
           );
         });
       }}
-      renderColumns={({
-        ColumnComponent,
-        week,
-        eventsForColumn,
-        stepDetailsForColumn,
-      }) => {
+      renderColumns={({ ColumnComponent, week, events, stepDetails }) => {
         return week.map((date, index) => {
           const stepDetailsForDay = get(
-            stepDetailsForColumn,
+            stepDetails,
             date.format('YYYY-MM-DD'),
             []
           );
 
-          const eventsForDay = get(
-            eventsForColumn,
-            date.format('YYYY-MM-DD'),
-            {}
-          );
+          const eventsForDay = get(events, date.format('YYYY-MM-DD'), {});
 
           const columnId = new Date(
             date.startOf('day').format('YYYY-MM-DD HH:mm:ss')

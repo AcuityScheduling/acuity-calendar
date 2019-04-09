@@ -32,7 +32,6 @@ const CalendarGroups = ({
             selectedDate,
           });
           const totalEventColumns = Object.keys(eventsForDay).length;
-          console.log('totalEventColumns: ', totalEventColumns);
           return (
             <ColumnComponent
               totalEventColumns={totalEventColumns}

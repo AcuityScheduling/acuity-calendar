@@ -4,9 +4,7 @@ import moment from 'moment';
 import TimeGrid from './';
 import Column from './components/Column';
 import { getWeekList } from '../../../components/CalendarWeek/utils';
-
 import { useElementWidths, getEventColumns, scrollToEvent } from './utils';
-
 import {
   FIRST_DAY_TYPE,
   STEP_MINUTES_TYPE,
@@ -105,19 +103,22 @@ const TimeGridWrapper = ({
       renderHeader={() => {
         const ColumnComponent = ({
           /* eslint-disable react/prop-types */
-          totalColumns,
+          totalEventColumns,
           date,
           columnClass,
           ...restProps
           /* eslint-enable react/prop-types */
         }) => {
           const dayDate = moment(new Date(date)).format('YYYY-MM-DD');
-          const totalEventColumns = eventsWithColumns[dayDate]
-            ? Object.keys(eventsWithColumns[dayDate]).length
-            : 0;
+          let actualEventColumns = totalEventColumns;
+          if (!totalEventColumns) {
+            actualEventColumns = eventsWithColumns[dayDate]
+              ? Object.keys(eventsWithColumns[dayDate]).length
+              : 0;
+          }
           return (
             <ColumnHeader
-              totalEventColumns={totalEventColumns}
+              totalEventColumns={actualEventColumns}
               date={date}
               type={columnClass}
               minWidth={minWidthColumn}
@@ -143,6 +144,7 @@ const TimeGridWrapper = ({
           columnIndex,
           columnId,
           eventsForColumn,
+          getUpdatedDraggedEvent,
           stepDetailsForColumn,
           /* eslint-enable react/prop-types */
         }) => (
@@ -173,26 +175,7 @@ const TimeGridWrapper = ({
             renderEvent={renderEvent}
             renderEventPaddingTop={renderEventPaddingTop}
             renderEventPaddingBottom={renderEventPaddingBottom}
-            getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
-              const padding = {};
-              if (typeof event.paddingTopStart !== 'undefined') {
-                padding.paddingTopStart = event.paddingTopStart
-                  .clone()
-                  .add(columnMoves, 'days');
-              }
-              if (typeof event.paddingBottomEnd !== 'undefined') {
-                padding.paddingBottomEnd = event.paddingBottomEnd
-                  .clone()
-                  .add(columnMoves, 'days');
-              }
-
-              return {
-                ...event,
-                start: start.clone().add(columnMoves, 'days'),
-                end: end.clone().add(columnMoves, 'days'),
-                ...padding,
-              };
-            }}
+            getUpdatedDraggedEvent={getUpdatedDraggedEvent}
             renderStepDetail={renderStepDetail}
             renderSelectSlotIndicator={renderSelectSlotIndicator}
           />

@@ -16,6 +16,7 @@ export const useEvents = props => {
 
     const newAlteredEvents = [...events];
     newAlteredEvents[alteredEventKey] = event;
+    console.log('newAlteredEvents: ', newAlteredEvents);
 
     setEvents([...newAlteredEvents]);
   };

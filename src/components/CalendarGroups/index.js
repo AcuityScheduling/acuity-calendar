@@ -2,30 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash.get';
-import TimeGrid from '../../Calendar/components/TimeGrid';
-import Column from '../../Calendar/components/TimeGrid/components/Column';
-import { useElementWidths } from '../../Calendar/components/TimeGrid/utils';
-import { getEventColumnsByGroup } from '../../Calendar/components/TimeGrid/utils/getEventColumns';
-import ColumnHeader from '../../Calendar/components/TimeGrid/components/ColumnHeader';
-import {
-  MIN_WIDTH_COLUMN_DEFAULT,
-  MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
-  STEP_MINUTES_DEFAULT,
-  SELECT_MINUTES_DEFAULT,
-  FIRST_DAY_DEFAULT,
-  SCROLL_TO_TIME_DEFAULT,
-} from '../../Calendar/defaultProps';
-import { useMungeData } from '../../Calendar/utils';
-import {
-  EVENT_TYPE,
-  MOMENT_TYPE,
-  FIRST_DAY_TYPE,
-  STEP_MINUTES_TYPE,
-  STEP_DETAILS_TYPE,
-  SCROLL_TO_TIME_TYPE,
-  EVENT_GROUP,
-} from '../../Calendar/types';
-import { scrollToEvent } from '../../Calendar/components/TimeGrid/utils';
+import TimeGrid from '../../Calendar/components/TimeGrid/TimeGridWrapper';
+import { MOMENT_TYPE, EVENT_GROUP } from '../../Calendar/types';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
@@ -34,84 +12,32 @@ const getEventsForDay = ({ events, groupId, selectedDate }) => {
 
 const CalendarGroups = ({
   eventGroups,
-  selectedDate,
   visibleEventGroups,
   renderHeader,
-  firstDay,
-  stepMinutes,
-  minWidthColumn,
-  minWidthColumnEmpty,
-  onDragEnd,
-  onExtendEnd,
-  onCurrentTimeChange,
-  onSelectEvent,
-  onSelectSlot,
-  onSelectRangeEnd,
-  selectMinutes,
-  stepDetails,
-  isEventDraggable,
-  isEventExtendable,
-  events,
-  renderEvent,
-  renderCorner,
-  renderStepDetail,
-  renderSelectSlotIndicator,
-  renderSelectRange,
-  renderEventPaddingTop,
-  renderEventPaddingBottom,
-  stepHeight,
-  scrollToTime,
+  selectedDate,
+  ...restProps
 }) => {
-  const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
-  const {
-    mungedEvents,
-    mungedStepDetails: stepDetailsWithEventGroups,
-  } = useMungeData({
-    events,
-    stepMinutes,
-    stepHeight,
-    stepDetails,
-    visibleEventGroups,
-  });
-
-  const eventsWithColumns = getEventColumnsByGroup(mungedEvents);
-
   return (
     <TimeGrid
-      ref={TimeGridRef}
       selectedDate={selectedDate}
-      firstDay={firstDay}
-      totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
-      onCurrentTimeChange={onCurrentTimeChange}
-      stepMinutes={stepMinutes}
-      selectMinutes={selectMinutes}
-      stepHeight={stepHeight}
-      renderCorner={renderCorner}
-      scrollToTime={
-        scrollToTime === 'firstEvent'
-          ? scrollToEvent({ mungedEvents, selectedDate, hasGroups: true })
-          : scrollToTime
-      }
-      renderHeader={() => {
-        const totalColumns = eventGroups.length;
+      visibleEventGroups={visibleEventGroups}
+      {...restProps}
+      renderHeaders={({ ColumnComponent, events }) => {
         return eventGroups.map(eventGroup => {
           if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
             return false;
           const eventsForDay = getEventsForDay({
-            events: eventsWithColumns,
+            events,
             groupId: eventGroup.id,
             selectedDate,
           });
           const totalEventColumns = Object.keys(eventsForDay).length;
           return (
-            <ColumnHeader
-              key={`calendarHeader${eventGroup.id}`}
+            <ColumnComponent
               totalEventColumns={totalEventColumns}
-              totalColumns={totalColumns}
+              key={`dayHeader${eventGroup.id}`}
               date={selectedDate}
-              minWidth={minWidthColumn}
-              minWidthEmpty={minWidthColumnEmpty}
-              type={CALENDAR_VIEWS.groups}
+              columnClass={CALENDAR_VIEWS.groups}
             >
               <h2>
                 {renderHeader
@@ -121,67 +47,45 @@ const CalendarGroups = ({
                     })
                   : eventGroup.title}
               </h2>
-            </ColumnHeader>
+            </ColumnComponent>
           );
         });
       }}
-      renderColumns={({ currentTime, totalGridHeight }) => {
-        const getNewGroupId = ({ columnMoves, columnIndex }) => {
-          const newIndex = columnIndex + columnMoves;
-          return eventGroups[newIndex].id;
-        };
-
+      renderColumns={({
+        ColumnComponent,
+        eventsWithGroups,
+        stepDetailsWithGroups,
+      }) => {
         return eventGroups.map((eventGroup, index) => {
           if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
             return null;
           const eventsForDay =
             getEventsForDay({
-              events: eventsWithColumns,
+              events: eventsWithGroups,
               groupId: eventGroup.id,
               selectedDate,
             }) || {};
 
           const stepDetailsForDay =
             getEventsForDay({
-              events: stepDetailsWithEventGroups,
+              events: stepDetailsWithGroups,
               groupId: eventGroup.id,
               selectedDate,
             }) || [];
           return (
-            <Column
-              ref={assignRef(eventGroup.id)}
-              key={`groupColumn${eventGroup.id}`}
-              events={eventsForDay}
-              stepDetails={stepDetailsForDay}
-              gridHeight={totalGridHeight}
-              stepHeight={stepHeight}
+            <ColumnComponent
               date={selectedDate}
-              columnId={eventGroup.id}
-              columnWidths={elementWidths}
+              key={`groupColumn${index}`}
+              columnKey={`groupColumn${index}`}
               columnIndex={index}
-              isEventDraggable={isEventDraggable}
-              isEventExtendable={isEventExtendable}
-              onDragEnd={onDragEnd}
-              onExtendEnd={onExtendEnd}
-              onSelectEvent={onSelectEvent}
-              onSelectRangeEnd={onSelectRangeEnd}
-              onSelectSlot={onSelectSlot}
-              stepMinutes={stepMinutes}
-              selectMinutes={selectMinutes}
-              currentTime={currentTime}
-              renderEvent={renderEvent}
-              renderStepDetail={renderStepDetail}
-              renderSelectSlotIndicator={renderSelectSlotIndicator}
-              renderSelectRange={renderSelectRange}
-              renderEventPaddingTop={renderEventPaddingTop}
-              renderEventPaddingBottom={renderEventPaddingBottom}
+              columnId={eventGroup.id}
+              eventsForColumn={eventsForDay}
+              stepDetailsForColumn={stepDetailsForDay}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
+                const newIndex = index + columnMoves;
                 return {
                   ...event,
-                  group_id: getNewGroupId({
-                    columnMoves,
-                    columnIndex: index,
-                  }),
+                  group_id: eventGroups[newIndex].id,
                 };
               }}
             />
@@ -193,63 +97,15 @@ const CalendarGroups = ({
 };
 
 CalendarGroups.defaultProps = {
-  events: [],
-  isEventDraggable: () => true,
-  isEventExtendable: () => true,
-  renderCorner: () => null,
-  renderEvent: null,
   selectedDate: moment(),
-  onExtendEnd: () => null,
-  onCurrentTimeChange: () => null,
-  onDragEnd: () => null,
-  onSelectRangeEnd: () => null,
-  onSelectEvent: () => null,
-  onSelectSlot: () => null,
-  minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
-  minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
-  renderStepDetail: () => null,
-  renderSelectSlotIndicator: null,
-  renderSelectRange: null,
-  renderEventPaddingTop: () => null,
-  renderEventPaddingBottom: () => null,
   renderHeader: null,
-  stepHeight: null,
-  stepMinutes: STEP_MINUTES_DEFAULT,
-  selectMinutes: SELECT_MINUTES_DEFAULT,
-  stepDetails: null,
-  scrollToTime: SCROLL_TO_TIME_DEFAULT,
-  firstDay: FIRST_DAY_DEFAULT,
   visibleEventGroups: null,
 };
 
 CalendarGroups.propTypes = {
   eventGroups: PropTypes.arrayOf(EVENT_GROUP).isRequired,
-  events: PropTypes.arrayOf(EVENT_TYPE),
-  firstDay: FIRST_DAY_TYPE,
-  isEventDraggable: PropTypes.func,
-  isEventExtendable: PropTypes.func,
-  minWidthColumn: PropTypes.number,
-  minWidthColumnEmpty: PropTypes.number,
-  onCurrentTimeChange: PropTypes.func,
-  onDragEnd: PropTypes.func,
-  onExtendEnd: PropTypes.func,
-  onSelectEvent: PropTypes.func,
-  onSelectRangeEnd: PropTypes.func,
-  onSelectSlot: PropTypes.func,
-  renderCorner: PropTypes.func,
-  renderEvent: PropTypes.func,
-  renderEventPaddingBottom: PropTypes.func,
-  renderEventPaddingTop: PropTypes.func,
   renderHeader: PropTypes.func,
-  renderSelectRange: PropTypes.func,
-  renderSelectSlotIndicator: PropTypes.func,
-  renderStepDetail: PropTypes.func,
-  scrollToTime: SCROLL_TO_TIME_TYPE,
-  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: MOMENT_TYPE,
-  stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
-  stepHeight: PropTypes.number,
-  stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 

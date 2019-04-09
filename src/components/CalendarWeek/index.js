@@ -51,6 +51,26 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
               columnId={columnId}
               eventsForColumn={eventsForDay}
               stepDetailsForColumn={stepDetailsForDay}
+              getUpdatedDraggedEvent={({ event, columnMoves, start, end }) => {
+                const padding = {};
+                if (typeof event.paddingTopStart !== 'undefined') {
+                  padding.paddingTopStart = event.paddingTopStart
+                    .clone()
+                    .add(columnMoves, 'days');
+                }
+                if (typeof event.paddingBottomEnd !== 'undefined') {
+                  padding.paddingBottomEnd = event.paddingBottomEnd
+                    .clone()
+                    .add(columnMoves, 'days');
+                }
+
+                return {
+                  ...event,
+                  start: start.clone().add(columnMoves, 'days'),
+                  end: end.clone().add(columnMoves, 'days'),
+                  ...padding,
+                };
+              }}
             />
           );
         });

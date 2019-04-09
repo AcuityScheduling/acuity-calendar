@@ -21356,7 +21356,8 @@
             var e = q.find(function(e) {
               return e.view === U;
             });
-            if (Object.values(C).includes(e)) return ee[U];
+            if (Object.values(C).includes(e) && void 0 === e.render)
+              return ee[U];
             var t = e.render;
             return 'time' === e.grid
               ? r.a.createElement(t, Wn({}, Q, Z))

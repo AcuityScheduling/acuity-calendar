@@ -151,7 +151,10 @@ const FullCalendar = ({
     const view = views.find(view => view.view === currentView);
     // The default views can also just have some changes to it if it was an object
     // like display name.
-    if (Object.values(CALENDAR_VIEWS).includes(view)) {
+    if (
+      Object.values(CALENDAR_VIEWS).includes(view) &&
+      typeof view.render === 'undefined'
+    ) {
       return viewRenderMap[currentView];
     }
     const Component = view.render;

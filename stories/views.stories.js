@@ -152,6 +152,7 @@ const Full = props => {
         selectedDate={selectedDate}
         stepDetails={stepDetails}
         currentView={view}
+        views={['month', 'week', { view: 'groups', displayName: 'Day' }]}
       />
     </Fragment>
   );

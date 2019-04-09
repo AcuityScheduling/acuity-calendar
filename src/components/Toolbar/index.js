@@ -133,6 +133,7 @@ const Toolbar = ({
       <div className={makeClass('toolbar__views')}>
         {views.map(view => (
           <button
+            key={view}
             type="button"
             onClick={() =>
               onViewChange(typeof view === 'string' ? view : view.view)

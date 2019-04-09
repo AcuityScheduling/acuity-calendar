@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import get from 'lodash.get';
 import moment from 'moment';
 import CalendarMonth from '../CalendarMonth';
 import CalendarGroups from '../CalendarGroups';
@@ -144,16 +145,30 @@ const FullCalendar = ({
     ),
   };
 
+  /**
+   * Views can be a string or an object. If it's a string it's a defined view within
+   * this repo. If it's an object it will have some more properties. Deciding which
+   * view to show can be a bit of logic. Sometimes we want to render it sometimes we don't
+   */
   const getView = () => {
-    if (Object.values(CALENDAR_VIEWS).includes(currentView)) {
-      return viewRenderMap[currentView];
+    const isString = s => typeof s === 'string' || s instanceof String;
+
+    let view = views.find(view => {
+      if (isString(view) && view === currentView) return true;
+      if (view.view === currentView) return true;
+      return false;
+    });
+    if (typeof view === 'undefined') {
+      console.error(
+        'You have supplied a view that is not in the "views" prop.'
+      );
+      return null;
     }
-    const view = views.find(view => view.view === currentView);
-    // The default views can also just have some changes to it if it was an object
-    // like display name.
     if (
-      Object.values(CALENDAR_VIEWS).includes(view) &&
-      typeof view.render === 'undefined'
+      Object.values(CALENDAR_VIEWS).includes(
+        isString(view) ? view : view.view
+      ) &&
+      !get(view, 'render', false)
     ) {
       return viewRenderMap[currentView];
     }
@@ -165,7 +180,6 @@ const FullCalendar = ({
     if (view.grid === 'day') {
       return <Component {...dayGridProps} {...allViewProps} />;
     }
-    console.error('You supplied a view that has not been defined.');
     return null;
   };
 

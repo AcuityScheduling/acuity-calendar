@@ -22,16 +22,17 @@ const CalendarGroups = ({
       selectedDate={selectedDate}
       visibleEventGroups={visibleEventGroups}
       {...restProps}
-      renderHeaders={({ ColumnComponent, events }) => {
+      renderHeaders={({ ColumnComponent, eventsWithGroups }) => {
         return eventGroups.map(eventGroup => {
           if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
             return false;
           const eventsForDay = getEventsForDay({
-            events,
+            events: eventsWithGroups,
             groupId: eventGroup.id,
             selectedDate,
           });
           const totalEventColumns = Object.keys(eventsForDay).length;
+          console.log('totalEventColumns: ', totalEventColumns);
           return (
             <ColumnComponent
               totalEventColumns={totalEventColumns}

@@ -103,7 +103,7 @@ const TimeGridWrapper = ({
       renderHeader={() => {
         const ColumnComponent = ({
           /* eslint-disable react/prop-types */
-          totalEventColumns,
+          totalEventColumns = null,
           date,
           columnClass,
           ...restProps
@@ -111,7 +111,7 @@ const TimeGridWrapper = ({
         }) => {
           const dayDate = moment(new Date(date)).format('YYYY-MM-DD');
           let actualEventColumns = totalEventColumns;
-          if (!totalEventColumns) {
+          if (totalEventColumns === null) {
             actualEventColumns = eventsWithColumns[dayDate]
               ? Object.keys(eventsWithColumns[dayDate]).length
               : 0;

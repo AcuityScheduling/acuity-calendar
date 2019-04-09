@@ -35,15 +35,17 @@ export const REF_TYPE = PropTypes.shape({
 });
 export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
 
-export const VIEWS_TYPE = PropTypes.oneOfType([
-  PropTypes.shape({
-    view: PropTypes.string.isRequired,
-    grid: PropTypes.oneOf(['time', 'day']),
-    render: PropTypes.func,
-    displayName: PropTypes.string,
-  }),
-  PropTypes.oneOf(Object.values(CALENDAR_VIEWS)),
-]);
+export const VIEWS_TYPE = PropTypes.arrayOf(
+  PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      view: PropTypes.string.isRequired,
+      grid: PropTypes.oneOf(['time', 'day']),
+      render: PropTypes.func,
+      displayName: PropTypes.string,
+    }),
+  ])
+);
 
 const getViewShape = type => {
   return Object.keys(CALENDAR_VIEWS).reduce((accumulator, view) => {

@@ -17992,15 +17992,17 @@
           ),
         })),
         Fe = i.a.arrayOf(i.a.number),
-        ze = i.a.oneOfType([
-          i.a.shape({
-            view: i.a.string.isRequired,
-            grid: i.a.oneOf(['time', 'day']),
-            render: i.a.func,
-            displayName: i.a.string,
-          }),
-          i.a.arrayOf(Object.values(C)),
-        ]),
+        ze = i.a.arrayOf(
+          i.a.oneOfType([
+            i.a.string,
+            i.a.shape({
+              view: i.a.string.isRequired,
+              grid: i.a.oneOf(['time', 'day']),
+              render: i.a.func,
+              displayName: i.a.string,
+            }),
+          ])
+        ),
         Ne = (i.a.shape(
           ((je = i.a.func),
           Object.keys(C).reduce(function(e, t) {

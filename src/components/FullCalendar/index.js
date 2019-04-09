@@ -172,13 +172,12 @@ const FullCalendar = ({
     ) {
       return viewRenderMap[currentView];
     }
-    const Component = view.render;
     if (view.grid === 'time') {
-      return <Component {...timeGridProps} {...allViewProps} />;
+      return view.render({ ...timeGridProps, ...allViewProps });
     }
 
     if (view.grid === 'day') {
-      return <Component {...dayGridProps} {...allViewProps} />;
+      return view.render({ ...dayGridProps, ...allViewProps });
     }
     return null;
   };

@@ -151,7 +151,7 @@ const Full = props => {
         }}
         selectedDate={selectedDate}
         stepDetails={stepDetails}
-        view={view}
+        currentView={view}
       />
     </Fragment>
   );

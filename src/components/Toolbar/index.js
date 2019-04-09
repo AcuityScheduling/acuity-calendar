@@ -8,6 +8,7 @@ import {
   FIRST_DAY_TYPE,
   FETCH_EVENT_INITIAL_FULL_RANGE,
   EVENT_TYPE,
+  VIEWS_TYPE,
 } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
 import './index.scss';
@@ -22,8 +23,6 @@ import {
   FETCH_EVENT_PADDING_DEFAULT,
 } from '../../Calendar/defaultProps';
 
-const { month, week, groups } = CALENDAR_VIEWS;
-
 const Toolbar = ({
   children,
   firstDay,
@@ -34,7 +33,8 @@ const Toolbar = ({
   onViewChange,
   selectedDate,
   events,
-  view,
+  currentView,
+  views,
 }) => {
   const {
     fetchMoreRange,
@@ -67,12 +67,16 @@ const Toolbar = ({
     onNavigate(date);
   };
 
-  const title = getRangeTitle({ date: moment(selectedDate), view, firstDay });
+  const title = getRangeTitle({
+    date: moment(selectedDate),
+    view: currentView,
+    firstDay,
+  });
 
   const onNext = () => {
     const date = new Date(
       getNavigateDate({
-        view: view,
+        view: currentView,
         direction: 1,
         currentDate: moment(selectedDate),
       })
@@ -83,7 +87,7 @@ const Toolbar = ({
   const onPrev = () => {
     const date = new Date(
       getNavigateDate({
-        view: view,
+        view: currentView,
         direction: -1,
         currentDate: moment(selectedDate),
       })
@@ -95,6 +99,22 @@ const Toolbar = ({
     changeDate(new Date());
   };
 
+  const getViewName = view => {
+    const capitalize = s => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
+    if (typeof view.displayName !== 'undefined') {
+      return view.displayName;
+    }
+    if (typeof view === 'string') {
+      return capitalize(view);
+    }
+    if (
+      typeof view.displayName === 'undefined' &&
+      typeof view.view !== 'undefined'
+    ) {
+      return capitalize(view.view);
+    }
+  };
+
   return children ? (
     children({
       onNext,
@@ -103,7 +123,7 @@ const Toolbar = ({
       title,
       eventsForView: getEventsForView({
         events,
-        view,
+        view: currentView,
         selectedDate: moment(selectedDate),
         firstDay,
       }),
@@ -111,15 +131,16 @@ const Toolbar = ({
   ) : (
     <div className={makeClass('toolbar')}>
       <div className={makeClass('toolbar__views')}>
-        <button type="button" onClick={() => onViewChange(month)}>
-          Month
-        </button>
-        <button type="button" onClick={() => onViewChange(week)}>
-          Week
-        </button>
-        <button type="button" onClick={() => onViewChange(groups)}>
-          Day
-        </button>
+        {views.map(view => (
+          <button
+            type="button"
+            onClick={() =>
+              onViewChange(typeof view === 'string' ? view : view.view)
+            }
+          >
+            {getViewName(view)}
+          </button>
+        ))}
       </div>
       <div className={makeClass('toolbar__navigate')}>
         <button type="button" onClick={onToday}>
@@ -144,10 +165,12 @@ Toolbar.defaultProps = {
   fetchEventInitialFullRange: null,
   fetchEventPadding: FETCH_EVENT_PADDING_DEFAULT,
   onFetchEvents: () => null,
+  views: Object.values(CALENDAR_VIEWS),
 };
 
 Toolbar.propTypes = {
   children: PropTypes.func,
+  currentView: CALENDAR_VIEW_TYPE.isRequired,
   events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
   fetchEventPadding: PropTypes.number,
@@ -156,7 +179,7 @@ Toolbar.propTypes = {
   onNavigate: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
   selectedDate: DATE_TYPE.isRequired,
-  view: CALENDAR_VIEW_TYPE.isRequired,
+  views: VIEWS_TYPE,
 };
 
 export default Toolbar;

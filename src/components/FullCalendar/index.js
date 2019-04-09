@@ -27,6 +27,7 @@ import {
   FETCH_EVENT_INITIAL_FULL_RANGE,
   SCROLL_TO_TIME_TYPE,
   EVENT_GROUP,
+  VIEWS_TYPE,
 } from '../../Calendar/types';
 
 const FullCalendar = ({
@@ -72,7 +73,8 @@ const FullCalendar = ({
   stepHeight,
   stepMinutes,
   style,
-  view,
+  currentView,
+  views,
   visibleEventGroups,
 }) => {
   const { month, week, groups } = CALENDAR_VIEWS;
@@ -142,6 +144,28 @@ const FullCalendar = ({
     ),
   };
 
+  const getView = () => {
+    if (Object.values(CALENDAR_VIEWS).includes(currentView)) {
+      return viewRenderMap[currentView];
+    }
+    const view = views.find(view => view.view === currentView);
+    // The default views can also just have some changes to it if it was an object
+    // like display name.
+    if (Object.values(CALENDAR_VIEWS).includes(view)) {
+      return viewRenderMap[currentView];
+    }
+    const Component = view.component;
+    if (view.grid === 'time') {
+      return <Component {...timeGridProps} {...allViewProps} />;
+    }
+
+    if (view.grid === 'day') {
+      return <Component {...dayGridProps} {...allViewProps} />;
+    }
+    console.error('You supplied a view that has not been defined.');
+    return null;
+  };
+
   return (
     <div className={CLASS_PREFIX} style={style}>
       <Toolbar
@@ -152,11 +176,12 @@ const FullCalendar = ({
         onViewChange={onViewChange}
         onFetchEvents={onFetchEvents}
         selectedDate={selectedDate}
-        view={view}
+        currentView={currentView}
+        views={views}
       >
         {renderToolbar}
       </Toolbar>
-      {viewRenderMap[view]}
+      {getView()}
     </div>
   );
 };
@@ -202,12 +227,14 @@ FullCalendar.defaultProps = {
   stepMinutes: STEP_MINUTES_DEFAULT,
   style: {},
   scrollToTime: SCROLL_TO_TIME_DEFAULT,
+  views: Object.values(CALENDAR_VIEWS),
   visibleEventGroups: null,
   isEventDraggable: () => true,
   isEventExtendable: () => true,
 };
 
 FullCalendar.propTypes = {
+  currentView: CALENDAR_VIEW_TYPE.isRequired,
   eventGroups: PropTypes.arrayOf(EVENT_GROUP),
   events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
@@ -251,7 +278,7 @@ FullCalendar.propTypes = {
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   style: PropTypes.object,
-  view: CALENDAR_VIEW_TYPE.isRequired,
+  views: VIEWS_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 

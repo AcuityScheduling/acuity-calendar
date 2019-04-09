@@ -9,7 +9,7 @@ export const DATE_TYPE = PropTypes.oneOfType([
 ]);
 export const FIRST_DAY_TYPE = PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]);
 export const MOMENT_TYPE = PropTypes.instanceOf(moment);
-export const CALENDAR_VIEW_TYPE = PropTypes.oneOf(Object.keys(CALENDAR_VIEWS));
+export const CALENDAR_VIEW_TYPE = PropTypes.string;
 export const EVENT_TYPE = PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -34,6 +34,16 @@ export const REF_TYPE = PropTypes.shape({
   ),
 });
 export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
+
+export const VIEWS_TYPE = PropTypes.oneOfType([
+  PropTypes.shape({
+    view: PropTypes.string.isRequired,
+    grid: PropTypes.oneOf(['time', 'day']).isRequired,
+    render: PropTypes.func.isRequired,
+    displayName: PropTypes.string,
+  }),
+  PropTypes.arrayOf(Object.values(CALENDAR_VIEWS)),
+]);
 
 const getViewShape = type => {
   return Object.keys(CALENDAR_VIEWS).reduce((accumulator, view) => {

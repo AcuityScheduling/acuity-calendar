@@ -38,8 +38,8 @@ export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
 export const VIEWS_TYPE = PropTypes.oneOfType([
   PropTypes.shape({
     view: PropTypes.string.isRequired,
-    grid: PropTypes.oneOf(['time', 'day']).isRequired,
-    render: PropTypes.func.isRequired,
+    grid: PropTypes.oneOf(['time', 'day']),
+    render: PropTypes.func,
     displayName: PropTypes.string,
   }),
   PropTypes.arrayOf(Object.values(CALENDAR_VIEWS)),

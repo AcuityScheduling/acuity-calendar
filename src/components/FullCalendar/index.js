@@ -154,7 +154,7 @@ const FullCalendar = ({
     if (Object.values(CALENDAR_VIEWS).includes(view)) {
       return viewRenderMap[currentView];
     }
-    const Component = view.component;
+    const Component = view.render;
     if (view.grid === 'time') {
       return <Component {...timeGridProps} {...allViewProps} />;
     }

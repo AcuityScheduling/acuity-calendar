@@ -3499,7 +3499,7 @@
           var a = null == e ? void 0 : A(e, t);
           return void 0 === a ? n : a;
         };
-      }.call(this, n(135)));
+      }.call(this, n(8)));
     },
     function(e, t, n) {
       'use strict';
@@ -3904,7 +3904,7 @@
             y(e, t, { leading: r, maxWait: t, trailing: s })
           );
         };
-      }.call(this, n(135)));
+      }.call(this, n(8)));
     },
     function(e, t, n) {
       e.exports = (function(e, t) {
@@ -5349,6 +5349,18 @@
           re
         );
       })(n(139), n(1));
+    },
+    function(e, t) {
+      var n;
+      n = (function() {
+        return this;
+      })();
+      try {
+        n = n || new Function('return this')();
+      } catch (e) {
+        'object' == typeof window && (n = window);
+      }
+      e.exports = n;
     },
     function(e, t, n) {
       !(function(e) {
@@ -16140,18 +16152,6 @@
         });
       })(n(2));
     },
-    function(e, t) {
-      var n;
-      n = (function() {
-        return this;
-      })();
-      try {
-        n = n || new Function('return this')();
-      } catch (e) {
-        'object' == typeof window && (n = window);
-      }
-      e.exports = n;
-    },
     function(e, t, n) {
       'use strict';
       var a = Array.isArray,
@@ -16237,260 +16237,260 @@
     },
     function(e, t, n) {
       var a = {
-        './af': 8,
-        './af.js': 8,
-        './ar': 9,
-        './ar-dz': 10,
-        './ar-dz.js': 10,
-        './ar-kw': 11,
-        './ar-kw.js': 11,
-        './ar-ly': 12,
-        './ar-ly.js': 12,
-        './ar-ma': 13,
-        './ar-ma.js': 13,
-        './ar-sa': 14,
-        './ar-sa.js': 14,
-        './ar-tn': 15,
-        './ar-tn.js': 15,
-        './ar.js': 9,
-        './az': 16,
-        './az.js': 16,
-        './be': 17,
-        './be.js': 17,
-        './bg': 18,
-        './bg.js': 18,
-        './bm': 19,
-        './bm.js': 19,
-        './bn': 20,
-        './bn.js': 20,
-        './bo': 21,
-        './bo.js': 21,
-        './br': 22,
-        './br.js': 22,
-        './bs': 23,
-        './bs.js': 23,
-        './ca': 24,
-        './ca.js': 24,
-        './cs': 25,
-        './cs.js': 25,
-        './cv': 26,
-        './cv.js': 26,
-        './cy': 27,
-        './cy.js': 27,
-        './da': 28,
-        './da.js': 28,
-        './de': 29,
-        './de-at': 30,
-        './de-at.js': 30,
-        './de-ch': 31,
-        './de-ch.js': 31,
-        './de.js': 29,
-        './dv': 32,
-        './dv.js': 32,
-        './el': 33,
-        './el.js': 33,
-        './en-SG': 34,
-        './en-SG.js': 34,
-        './en-au': 35,
-        './en-au.js': 35,
-        './en-ca': 36,
-        './en-ca.js': 36,
-        './en-gb': 37,
-        './en-gb.js': 37,
-        './en-ie': 38,
-        './en-ie.js': 38,
-        './en-il': 39,
-        './en-il.js': 39,
-        './en-nz': 40,
-        './en-nz.js': 40,
-        './eo': 41,
-        './eo.js': 41,
-        './es': 42,
-        './es-do': 43,
-        './es-do.js': 43,
-        './es-us': 44,
-        './es-us.js': 44,
-        './es.js': 42,
-        './et': 45,
-        './et.js': 45,
-        './eu': 46,
-        './eu.js': 46,
-        './fa': 47,
-        './fa.js': 47,
-        './fi': 48,
-        './fi.js': 48,
-        './fo': 49,
-        './fo.js': 49,
-        './fr': 50,
-        './fr-ca': 51,
-        './fr-ca.js': 51,
-        './fr-ch': 52,
-        './fr-ch.js': 52,
-        './fr.js': 50,
-        './fy': 53,
-        './fy.js': 53,
-        './ga': 54,
-        './ga.js': 54,
-        './gd': 55,
-        './gd.js': 55,
-        './gl': 56,
-        './gl.js': 56,
-        './gom-latn': 57,
-        './gom-latn.js': 57,
-        './gu': 58,
-        './gu.js': 58,
-        './he': 59,
-        './he.js': 59,
-        './hi': 60,
-        './hi.js': 60,
-        './hr': 61,
-        './hr.js': 61,
-        './hu': 62,
-        './hu.js': 62,
-        './hy-am': 63,
-        './hy-am.js': 63,
-        './id': 64,
-        './id.js': 64,
-        './is': 65,
-        './is.js': 65,
-        './it': 66,
-        './it-ch': 67,
-        './it-ch.js': 67,
-        './it.js': 66,
-        './ja': 68,
-        './ja.js': 68,
-        './jv': 69,
-        './jv.js': 69,
-        './ka': 70,
-        './ka.js': 70,
-        './kk': 71,
-        './kk.js': 71,
-        './km': 72,
-        './km.js': 72,
-        './kn': 73,
-        './kn.js': 73,
-        './ko': 74,
-        './ko.js': 74,
-        './ku': 75,
-        './ku.js': 75,
-        './ky': 76,
-        './ky.js': 76,
-        './lb': 77,
-        './lb.js': 77,
-        './lo': 78,
-        './lo.js': 78,
-        './lt': 79,
-        './lt.js': 79,
-        './lv': 80,
-        './lv.js': 80,
-        './me': 81,
-        './me.js': 81,
-        './mi': 82,
-        './mi.js': 82,
-        './mk': 83,
-        './mk.js': 83,
-        './ml': 84,
-        './ml.js': 84,
-        './mn': 85,
-        './mn.js': 85,
-        './mr': 86,
-        './mr.js': 86,
-        './ms': 87,
-        './ms-my': 88,
-        './ms-my.js': 88,
-        './ms.js': 87,
-        './mt': 89,
-        './mt.js': 89,
-        './my': 90,
-        './my.js': 90,
-        './nb': 91,
-        './nb.js': 91,
-        './ne': 92,
-        './ne.js': 92,
-        './nl': 93,
-        './nl-be': 94,
-        './nl-be.js': 94,
-        './nl.js': 93,
-        './nn': 95,
-        './nn.js': 95,
-        './pa-in': 96,
-        './pa-in.js': 96,
-        './pl': 97,
-        './pl.js': 97,
-        './pt': 98,
-        './pt-br': 99,
-        './pt-br.js': 99,
-        './pt.js': 98,
-        './ro': 100,
-        './ro.js': 100,
-        './ru': 101,
-        './ru.js': 101,
-        './sd': 102,
-        './sd.js': 102,
-        './se': 103,
-        './se.js': 103,
-        './si': 104,
-        './si.js': 104,
-        './sk': 105,
-        './sk.js': 105,
-        './sl': 106,
-        './sl.js': 106,
-        './sq': 107,
-        './sq.js': 107,
-        './sr': 108,
-        './sr-cyrl': 109,
-        './sr-cyrl.js': 109,
-        './sr.js': 108,
-        './ss': 110,
-        './ss.js': 110,
-        './sv': 111,
-        './sv.js': 111,
-        './sw': 112,
-        './sw.js': 112,
-        './ta': 113,
-        './ta.js': 113,
-        './te': 114,
-        './te.js': 114,
-        './tet': 115,
-        './tet.js': 115,
-        './tg': 116,
-        './tg.js': 116,
-        './th': 117,
-        './th.js': 117,
-        './tl-ph': 118,
-        './tl-ph.js': 118,
-        './tlh': 119,
-        './tlh.js': 119,
-        './tr': 120,
-        './tr.js': 120,
-        './tzl': 121,
-        './tzl.js': 121,
-        './tzm': 122,
-        './tzm-latn': 123,
-        './tzm-latn.js': 123,
-        './tzm.js': 122,
-        './ug-cn': 124,
-        './ug-cn.js': 124,
-        './uk': 125,
-        './uk.js': 125,
-        './ur': 126,
-        './ur.js': 126,
-        './uz': 127,
-        './uz-latn': 128,
-        './uz-latn.js': 128,
-        './uz.js': 127,
-        './vi': 129,
-        './vi.js': 129,
-        './x-pseudo': 130,
-        './x-pseudo.js': 130,
-        './yo': 131,
-        './yo.js': 131,
-        './zh-cn': 132,
-        './zh-cn.js': 132,
-        './zh-hk': 133,
-        './zh-hk.js': 133,
-        './zh-tw': 134,
-        './zh-tw.js': 134,
+        './af': 9,
+        './af.js': 9,
+        './ar': 10,
+        './ar-dz': 11,
+        './ar-dz.js': 11,
+        './ar-kw': 12,
+        './ar-kw.js': 12,
+        './ar-ly': 13,
+        './ar-ly.js': 13,
+        './ar-ma': 14,
+        './ar-ma.js': 14,
+        './ar-sa': 15,
+        './ar-sa.js': 15,
+        './ar-tn': 16,
+        './ar-tn.js': 16,
+        './ar.js': 10,
+        './az': 17,
+        './az.js': 17,
+        './be': 18,
+        './be.js': 18,
+        './bg': 19,
+        './bg.js': 19,
+        './bm': 20,
+        './bm.js': 20,
+        './bn': 21,
+        './bn.js': 21,
+        './bo': 22,
+        './bo.js': 22,
+        './br': 23,
+        './br.js': 23,
+        './bs': 24,
+        './bs.js': 24,
+        './ca': 25,
+        './ca.js': 25,
+        './cs': 26,
+        './cs.js': 26,
+        './cv': 27,
+        './cv.js': 27,
+        './cy': 28,
+        './cy.js': 28,
+        './da': 29,
+        './da.js': 29,
+        './de': 30,
+        './de-at': 31,
+        './de-at.js': 31,
+        './de-ch': 32,
+        './de-ch.js': 32,
+        './de.js': 30,
+        './dv': 33,
+        './dv.js': 33,
+        './el': 34,
+        './el.js': 34,
+        './en-SG': 35,
+        './en-SG.js': 35,
+        './en-au': 36,
+        './en-au.js': 36,
+        './en-ca': 37,
+        './en-ca.js': 37,
+        './en-gb': 38,
+        './en-gb.js': 38,
+        './en-ie': 39,
+        './en-ie.js': 39,
+        './en-il': 40,
+        './en-il.js': 40,
+        './en-nz': 41,
+        './en-nz.js': 41,
+        './eo': 42,
+        './eo.js': 42,
+        './es': 43,
+        './es-do': 44,
+        './es-do.js': 44,
+        './es-us': 45,
+        './es-us.js': 45,
+        './es.js': 43,
+        './et': 46,
+        './et.js': 46,
+        './eu': 47,
+        './eu.js': 47,
+        './fa': 48,
+        './fa.js': 48,
+        './fi': 49,
+        './fi.js': 49,
+        './fo': 50,
+        './fo.js': 50,
+        './fr': 51,
+        './fr-ca': 52,
+        './fr-ca.js': 52,
+        './fr-ch': 53,
+        './fr-ch.js': 53,
+        './fr.js': 51,
+        './fy': 54,
+        './fy.js': 54,
+        './ga': 55,
+        './ga.js': 55,
+        './gd': 56,
+        './gd.js': 56,
+        './gl': 57,
+        './gl.js': 57,
+        './gom-latn': 58,
+        './gom-latn.js': 58,
+        './gu': 59,
+        './gu.js': 59,
+        './he': 60,
+        './he.js': 60,
+        './hi': 61,
+        './hi.js': 61,
+        './hr': 62,
+        './hr.js': 62,
+        './hu': 63,
+        './hu.js': 63,
+        './hy-am': 64,
+        './hy-am.js': 64,
+        './id': 65,
+        './id.js': 65,
+        './is': 66,
+        './is.js': 66,
+        './it': 67,
+        './it-ch': 68,
+        './it-ch.js': 68,
+        './it.js': 67,
+        './ja': 69,
+        './ja.js': 69,
+        './jv': 70,
+        './jv.js': 70,
+        './ka': 71,
+        './ka.js': 71,
+        './kk': 72,
+        './kk.js': 72,
+        './km': 73,
+        './km.js': 73,
+        './kn': 74,
+        './kn.js': 74,
+        './ko': 75,
+        './ko.js': 75,
+        './ku': 76,
+        './ku.js': 76,
+        './ky': 77,
+        './ky.js': 77,
+        './lb': 78,
+        './lb.js': 78,
+        './lo': 79,
+        './lo.js': 79,
+        './lt': 80,
+        './lt.js': 80,
+        './lv': 81,
+        './lv.js': 81,
+        './me': 82,
+        './me.js': 82,
+        './mi': 83,
+        './mi.js': 83,
+        './mk': 84,
+        './mk.js': 84,
+        './ml': 85,
+        './ml.js': 85,
+        './mn': 86,
+        './mn.js': 86,
+        './mr': 87,
+        './mr.js': 87,
+        './ms': 88,
+        './ms-my': 89,
+        './ms-my.js': 89,
+        './ms.js': 88,
+        './mt': 90,
+        './mt.js': 90,
+        './my': 91,
+        './my.js': 91,
+        './nb': 92,
+        './nb.js': 92,
+        './ne': 93,
+        './ne.js': 93,
+        './nl': 94,
+        './nl-be': 95,
+        './nl-be.js': 95,
+        './nl.js': 94,
+        './nn': 96,
+        './nn.js': 96,
+        './pa-in': 97,
+        './pa-in.js': 97,
+        './pl': 98,
+        './pl.js': 98,
+        './pt': 99,
+        './pt-br': 100,
+        './pt-br.js': 100,
+        './pt.js': 99,
+        './ro': 101,
+        './ro.js': 101,
+        './ru': 102,
+        './ru.js': 102,
+        './sd': 103,
+        './sd.js': 103,
+        './se': 104,
+        './se.js': 104,
+        './si': 105,
+        './si.js': 105,
+        './sk': 106,
+        './sk.js': 106,
+        './sl': 107,
+        './sl.js': 107,
+        './sq': 108,
+        './sq.js': 108,
+        './sr': 109,
+        './sr-cyrl': 110,
+        './sr-cyrl.js': 110,
+        './sr.js': 109,
+        './ss': 111,
+        './ss.js': 111,
+        './sv': 112,
+        './sv.js': 112,
+        './sw': 113,
+        './sw.js': 113,
+        './ta': 114,
+        './ta.js': 114,
+        './te': 115,
+        './te.js': 115,
+        './tet': 116,
+        './tet.js': 116,
+        './tg': 117,
+        './tg.js': 117,
+        './th': 118,
+        './th.js': 118,
+        './tl-ph': 119,
+        './tl-ph.js': 119,
+        './tlh': 120,
+        './tlh.js': 120,
+        './tr': 121,
+        './tr.js': 121,
+        './tzl': 122,
+        './tzl.js': 122,
+        './tzm': 123,
+        './tzm-latn': 124,
+        './tzm-latn.js': 124,
+        './tzm.js': 123,
+        './ug-cn': 125,
+        './ug-cn.js': 125,
+        './uk': 126,
+        './uk.js': 126,
+        './ur': 127,
+        './ur.js': 127,
+        './uz': 128,
+        './uz-latn': 129,
+        './uz-latn.js': 129,
+        './uz.js': 128,
+        './vi': 130,
+        './vi.js': 130,
+        './x-pseudo': 131,
+        './x-pseudo.js': 131,
+        './yo': 132,
+        './yo.js': 132,
+        './zh-cn': 133,
+        './zh-cn.js': 133,
+        './zh-hk': 134,
+        './zh-hk.js': 134,
+        './zh-tw': 135,
+        './zh-tw.js': 135,
       };
       function r(e) {
         var t = s(e);
@@ -16636,9 +16636,9 @@
         r = n.n(a),
         s = n(0),
         i = n.n(s),
-        o = n(2),
+        o = n(3),
         d = n.n(o),
-        u = n(3),
+        u = n(2),
         l = n.n(u),
         _ = n(6),
         c = n.n(_);
@@ -16883,9 +16883,9 @@
           s = w(Object(a.useState)(0), 2),
           i = s[0],
           o = s[1],
-          d = w(Object(a.useState)(0), 2),
-          u = d[0],
-          _ = d[1],
+          u = w(Object(a.useState)(0), 2),
+          l = u[0],
+          _ = u[1],
           m = w(Object(a.useState)(0), 2),
           h = m[0],
           f = m[1],
@@ -16902,8 +16902,8 @@
           }
         });
         var k = c()(function() {
-          o(l()(e, 'current.offsetHeight', 0)),
-            _(l()(e, 'current.offsetWidth', 0));
+          o(d()(e, 'current.offsetHeight', 0)),
+            _(d()(e, 'current.offsetWidth', 0));
         }, 300);
         return (
           Object(a.useEffect)(function() {
@@ -16925,10 +16925,10 @@
           ),
           Object(a.useEffect)(
             function() {
-              var e = l()(n, 'current.offsetTop', 0);
+              var e = d()(n, 'current.offsetTop', 0);
               M(e);
             },
-            [l()(n, 'current.offsetTop', 0)]
+            [d()(n, 'current.offsetTop', 0)]
           ),
           {
             rowRef: e,
@@ -16937,7 +16937,7 @@
             eventWrapperRef: n,
             eventWrapperMargin: y,
             cellRef: r,
-            cellDimensions: { width: u, height: i },
+            cellDimensions: { width: l, height: i },
             totalEventsToShow: L,
           }
         );
@@ -17074,7 +17074,7 @@
                 lastEvent: 0 !== r ? e[r - 1] : null,
                 currentColumn: t,
               }),
-              i = l()(n, s, []);
+              i = d()(n, s, []);
             return (
               (n = E({}, n, O({}, s, [].concat(x(i), [a])))),
               s !== t && (t = s),
@@ -17131,7 +17131,7 @@
           return J(n) * a + 1 * n.hour();
         },
         U = function(e) {
-          return e.isSame(d()(), 'day')
+          return e.isSame(l()(), 'day')
             ? ' '.concat(F('time-grid__today'))
             : '';
         },
@@ -17192,7 +17192,7 @@
                   }
                   return e;
                 }, null);
-              return l()(r, 'start', null);
+              return d()(r, 'start', null);
             })({ mungedEvents: t, selectedDate: n, hasGroups: e.hasGroups }),
             r = n.clone().set({ hour: 8, minute: 30 });
           if (!a) return r;
@@ -17271,9 +17271,9 @@
             s = Object(a.useRef)(null),
             i = Object(a.useRef)(null),
             o = Object(a.useRef)(null),
-            d = $(Object(a.useState)(0), 2),
-            u = d[0],
-            _ = d[1],
+            u = $(Object(a.useState)(0), 2),
+            l = u[0],
+            _ = u[1],
             m = X({
               wrapperRef: t,
               headerRef: r,
@@ -17291,12 +17291,12 @@
             (o.current.style.left = ''.concat(n.current.offsetWidth, 'px')),
             (o.current.style.width = ''.concat(e, 'px')));
           var h = c()(function() {
-            _(l()(t, 'current.clientWidth'));
+            _(d()(t, 'current.clientWidth'));
           }, 300);
           return (
             Object(a.useEffect)(function() {
               return (
-                u || _(l()(t, 'current.clientWidth')),
+                l || _(d()(t, 'current.clientWidth')),
                 t.current && Y(t.current, h),
                 function() {
                   return v(t.current, h);
@@ -17710,9 +17710,9 @@
           return e.reduce(function(e, t) {
             var n = {};
             t.paddingTopStart &&
-              (n.paddingTopStart = d()(t.paddingTopStart).seconds(0)),
+              (n.paddingTopStart = l()(t.paddingTopStart).seconds(0)),
               t.paddingBottomEnd &&
-                (n.paddingBottomEnd = d()(t.paddingBottomEnd).seconds(0));
+                (n.paddingBottomEnd = l()(t.paddingBottomEnd).seconds(0));
             var a = Object.assign(
                 {},
                 t,
@@ -17736,8 +17736,8 @@
                   return e;
                 })(
                   {
-                    start: d()(t.start).seconds(0),
-                    end: d()(t.end).seconds(0),
+                    start: l()(t.start).seconds(0),
+                    end: l()(t.end).seconds(0),
                   },
                   n
                 )
@@ -17806,9 +17806,9 @@
             n = e.event,
             a = Object.assign({}, t),
             r = n.start.format('YYYY-MM-DD'),
-            s = l()(t, ''.concat(n.group_id, '.').concat(r), []);
+            s = d()(t, ''.concat(n.group_id, '.').concat(r), []);
           s.push(n);
-          var i = l()(t, ''.concat(n.group_id), {});
+          var i = d()(t, ''.concat(n.group_id), {});
           return (i[r] = s), (a[n.group_id] = i), a;
         },
         ve = function(e) {
@@ -17859,7 +17859,7 @@
           Object.keys(a).reduce(function(e, t) {
             return (
               Object.keys(a[t]).forEach(function(n) {
-                e[n] = j([].concat(De(l()(e, n, [])), De(a[t][n])));
+                e[n] = j([].concat(De(d()(e, n, [])), De(a[t][n])));
               }),
               e
             );
@@ -17965,11 +17965,11 @@
       var je,
         xe = i.a.oneOfType([
           i.a.instanceOf(Date),
-          i.a.instanceOf(d.a),
+          i.a.instanceOf(l.a),
           i.a.string,
         ]),
         Ee = i.a.oneOf([0, 1, 2, 3, 4, 5, 6]),
-        Oe = i.a.instanceOf(d.a),
+        Oe = i.a.instanceOf(l.a),
         Pe = i.a.string,
         We = i.a.shape({
           id: i.a.oneOfType([i.a.number, i.a.string]).isRequired,
@@ -18632,8 +18632,8 @@
             s = e.renderCell,
             i = e.renderHeader,
             o = e.onDragEnd,
-            d = e.onSelectSlot,
-            u = e.onSelectDate,
+            u = e.onSelectSlot,
+            l = e.onSelectDate,
             _ = e.onSelectMoreEvents,
             c = e.onSelectEvent,
             m = e.visibleEventGroups,
@@ -18657,7 +18657,7 @@
             r.a.createElement(
               'div',
               { className: F('day-grid__header') },
-              l()(D, 0, []).map(function(e) {
+              d()(D, 0, []).map(function(e) {
                 var t = e.date.format('dddd');
                 return r.a.createElement(
                   'div',
@@ -18682,7 +18682,7 @@
                       },
                       e.map(function(e) {
                         k += 1;
-                        var a = l()(h, e.date.format('YYYY-MM-DD'), []);
+                        var a = d()(h, e.date.format('YYYY-MM-DD'), []);
                         return r.a.createElement(dt, {
                           isEventDraggable: n,
                           totalColumns: t,
@@ -18694,8 +18694,8 @@
                           dayDetails: e,
                           renderCell: s,
                           onDragEnd: o,
-                          onSelectSlot: d,
-                          onSelectDate: u,
+                          onSelectSlot: u,
+                          onSelectDate: l,
                           onSelectMoreEvents: _,
                           totalEventsToShow: Y,
                           eventRef: y,
@@ -18912,22 +18912,22 @@
             s = e.isEventDraggable,
             i = e.selectedDate,
             o = e.onDragEnd,
-            u = e.onSelectMore,
-            l = e.onSelectDate,
+            d = e.onSelectMore,
+            u = e.onSelectDate,
             _ = e.onSelectSlot,
             c = e.onSelectEvent,
             m = e.visibleEventGroups,
             h = e.renderHeader,
             f = e.renderCell,
             p = e.renderEvent,
-            y = Lt({ date: d()(i), firstDay: n, forceSixWeeks: a });
+            y = Lt({ date: l()(i), firstDay: n, forceSixWeeks: a });
           return r.a.createElement(lt, {
             isEventDraggable: s,
             grid: y,
             events: t,
             onDragEnd: o,
-            onSelectMoreEvents: u,
-            onSelectDate: l,
+            onSelectMoreEvents: d,
+            onSelectDate: u,
             onSelectEvent: c,
             onSelectSlot: _,
             visibleEventGroups: m,
@@ -19020,12 +19020,12 @@
           s = (e.firstDay, e.stepMinutes),
           i = e.stepHeight,
           o = (e.selectMinutes, e.onCurrentTimeChange),
-          u = e.renderHeader,
-          l = e.renderColumns,
+          d = e.renderHeader,
+          u = e.renderColumns,
           _ = e.renderCorner,
           c = e.totalWidth,
           m = e.scrollToTime,
-          h = Dt(Object(a.useState)(d()()), 2),
+          h = Dt(Object(a.useState)(l()()), 2),
           f = h[0],
           p = h[1],
           y = Dt(Object(a.useState)(15), 2),
@@ -19033,7 +19033,7 @@
           g = y[1];
         Object(a.useEffect)(function() {
           var e = setTimeout(function() {
-            var e = d()();
+            var e = l()();
             p(e), o(new Date(e.format('YYYY-MM-DD HH:mm:ss')));
           }, 6e4);
           return function() {
@@ -19057,11 +19057,11 @@
         Object(a.useEffect)(
           function() {
             if (m) {
-              var e = G({ stepMinutes: s, date: d()(m), stepHeight: i });
+              var e = G({ stepMinutes: s, date: l()(m), stepHeight: i });
               Y.current.scrollTop = e;
             }
           },
-          [d()(n).format(), s, i]
+          [l()(n).format(), s, i]
         );
         var H = 50;
         v.current && (H = v.current.offsetWidth - 1),
@@ -19094,7 +19094,7 @@
                 style: { marginRight: M - 1 },
                 ref: D,
               },
-              u()
+              d()
             ),
             r.a.createElement(
               'div',
@@ -19160,7 +19160,7 @@
                             'time-grid__time-label-'.concat(n)
                           ),
                         },
-                        d()()
+                        l()()
                           .hour(n)
                           .format('ha')
                       )
@@ -19187,11 +19187,11 @@
                 r.a.createElement(
                   'span',
                   { className: ''.concat(j, '__time') },
-                  d()().format('h:mma')
+                  l()().format('h:mma')
                 ),
                 r.a.createElement('div', { className: ''.concat(j, '__line') })
               ),
-              l({ currentTime: f, totalGridHeight: S })
+              u({ currentTime: f, totalGridHeight: S })
             )
           )
         );
@@ -19842,7 +19842,7 @@
             N,
             { ref: t }
           ),
-          u.isSame(d()(), 'day') &&
+          u.isSame(l()(), 'day') &&
             o &&
             r.a.createElement(
               'div',
@@ -19888,7 +19888,7 @@
               H ? H({ start: new Date(K.start), end: new Date(K.end) }) : B(K)
             ),
           Object.keys(_).map(function(e) {
-            return l()(_, e, []).map(function(t) {
+            return d()(_, e, []).map(function(t) {
               return r.a.createElement(
                 At,
                 {
@@ -20032,7 +20032,7 @@
           },
           stepMinutes: 30,
           events: {},
-          date: d()(),
+          date: l()(),
           onSelectEvent: function() {
             return null;
           },
@@ -20195,8 +20195,8 @@
           s = e.firstDay,
           i = e.isEventDraggable,
           o = e.isEventExtendable,
-          u = e.minWidthColumn,
-          l = e.minWidthColumnEmpty,
+          d = e.minWidthColumn,
+          u = e.minWidthColumnEmpty,
           _ = e.stepMinutes,
           c = e.onDragEnd,
           m = e.onExtendEnd,
@@ -20218,7 +20218,7 @@
           H = e.stepHeight,
           j = e.scrollToTime,
           x = e.visibleEventGroups,
-          W = It({ date: d()(n), firstDay: s }),
+          W = It({ date: l()(n), firstDay: s }),
           A = re(),
           C = A.TimeGridRef,
           F = A.assignRef,
@@ -20266,31 +20266,32 @@
           stepHeight: H,
           scrollToTime:
             'firstEvent' === j
-              ? V({ mungedEvents: I, selectedDate: d()(n), hasGroups: !1 })
+              ? V({ mungedEvents: I, selectedDate: l()(n), hasGroups: !1 })
               : j,
           renderCorner: Y,
           renderHeader: function() {
             return T({
               ColumnComponent: function(e) {
                 var t = e.totalEventColumns,
-                  n = e.date,
-                  a = e.columnClass,
-                  s = qt(e, ['totalEventColumns', 'date', 'columnClass']),
-                  i = d()(new Date(n)).format('YYYY-MM-DD'),
-                  o = t;
+                  n = void 0 === t ? null : t,
+                  a = e.date,
+                  s = e.columnClass,
+                  i = qt(e, ['totalEventColumns', 'date', 'columnClass']),
+                  o = l()(new Date(a)).format('YYYY-MM-DD'),
+                  _ = n;
                 return (
-                  t || (o = q[i] ? Object.keys(q[i]).length : 0),
+                  null === n && (_ = q[o] ? Object.keys(q[o]).length : 0),
                   r.a.createElement(
                     Gt,
                     Ut(
                       {
-                        totalEventColumns: o,
-                        date: n,
-                        type: a,
-                        minWidth: u,
-                        minWidthEmpty: l,
+                        totalEventColumns: _,
+                        date: a,
+                        type: s,
+                        minWidth: d,
+                        minWidthEmpty: u,
                       },
-                      s
+                      i
                     )
                   )
                 );
@@ -20309,7 +20310,7 @@
               ColumnComponent: function(e) {
                 var a = e.date,
                   s = e.columnKey,
-                  d = e.columnIndex,
+                  l = e.columnIndex,
                   p = e.columnId,
                   L = e.eventsForColumn,
                   Y = e.getUpdatedDraggedEvent,
@@ -20322,11 +20323,11 @@
                   date: a,
                   columnId: p,
                   columnWidths: z,
-                  columnIndex: d,
+                  columnIndex: l,
                   isEventDraggable: i,
                   isEventExtendable: o,
-                  minWidth: u,
-                  minWidthEmpty: l,
+                  minWidth: d,
+                  minWidthEmpty: u,
                   onDragEnd: c,
                   onExtendEnd: m,
                   onSelectEvent: h,
@@ -20494,7 +20495,7 @@
           var t = e.events,
             n = e.groupId,
             a = e.selectedDate;
-          return l()(t, ''.concat(n, '.').concat(a.format('YYYY-MM-DD')), !1);
+          return d()(t, ''.concat(n, '.').concat(a.format('YYYY-MM-DD')), !1);
         },
         Qt = function(e) {
           var t = e.eventGroups,
@@ -20512,23 +20513,26 @@
             $t({ selectedDate: s, visibleEventGroups: n }, i, {
               renderHeaders: function(e) {
                 var i = e.ColumnComponent,
-                  o = e.events;
+                  o = e.eventsWithGroups;
                 return t.map(function(e) {
                   if (n && !n.includes(e.id)) return !1;
                   var t = Xt({ events: o, groupId: e.id, selectedDate: s }),
                     d = Object.keys(t).length;
-                  return r.a.createElement(
-                    i,
-                    {
-                      totalEventColumns: d,
-                      key: 'dayHeader'.concat(e.id),
-                      date: s,
-                      columnClass: C.groups,
-                    },
+                  return (
+                    console.log('totalEventColumns: ', d),
                     r.a.createElement(
-                      'h2',
-                      null,
-                      a ? a({ group: e, events: t }) : e.title
+                      i,
+                      {
+                        totalEventColumns: d,
+                        key: 'dayHeader'.concat(e.id),
+                        date: s,
+                        columnClass: C.groups,
+                      },
+                      r.a.createElement(
+                        'h2',
+                        null,
+                        a ? a({ group: e, events: t }) : e.title
+                      )
                     )
                   );
                 });
@@ -20580,7 +20584,7 @@
           );
         };
       (Qt.defaultProps = {
-        selectedDate: d()(),
+        selectedDate: l()(),
         renderHeader: null,
         visibleEventGroups: null,
       }),
@@ -20676,16 +20680,16 @@
                 a = e.events,
                 s = e.stepDetails;
               return n.map(function(e, n) {
-                var i = l()(s, e.format('YYYY-MM-DD'), []),
-                  o = l()(a, e.format('YYYY-MM-DD'), {}),
-                  d = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
+                var i = d()(s, e.format('YYYY-MM-DD'), []),
+                  o = d()(a, e.format('YYYY-MM-DD'), {}),
+                  u = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
                 return r.a.createElement(t, {
                   key: 'weekColumn'.concat(e.day()),
                   date: e,
                   columnKey: 'weekColumn'.concat(e.day()),
                   events: o,
                   columnIndex: n,
-                  columnId: d,
+                  columnId: u,
                   eventsForColumn: o,
                   stepDetailsForColumn: i,
                   getUpdatedDraggedEvent: function(e) {
@@ -20851,7 +20855,7 @@
             i = s.start,
             o = s.end;
           return t.filter(function(e) {
-            return d()(e.start).isBetween(i, o, 'minutes', '[]');
+            return l()(e.start).isBetween(i, o, 'minutes', '[]');
           });
         };
       function Ln(e) {
@@ -20923,44 +20927,44 @@
             n = e.fullRange,
             a = e.monthPadding,
             r = e.setFullRange,
-            s = d()(new Date(t)),
+            s = l()(new Date(t)),
             i = n.start,
             o = n.end,
-            u = kn({
+            d = kn({
               selectedDate: s,
-              startDate: d()(new Date(i)),
-              endDate: d()(new Date(o)),
+              startDate: l()(new Date(i)),
+              endDate: l()(new Date(o)),
               monthPadding: a,
             });
-          if (!!u.fullRange)
+          if (!!d.fullRange)
             return (
               r({
-                start: new Date(u.fullRange.start),
-                end: new Date(u.fullRange.end),
+                start: new Date(d.fullRange.start),
+                end: new Date(d.fullRange.end),
               }),
               Ln(
                 { shouldFetchMore: !0 },
                 {
                   fetchMoreRange: {
-                    start: new Date(u.fetchMoreRange.start),
-                    end: new Date(u.fetchMoreRange.end),
+                    start: new Date(d.fetchMoreRange.start),
+                    end: new Date(d.fetchMoreRange.end),
                   },
                   fullRange: {
-                    start: new Date(u.fullRange.start),
-                    end: new Date(u.fullRange.end),
+                    start: new Date(d.fullRange.start),
+                    end: new Date(d.fullRange.end),
                   },
                 }
               )
             );
           if (Hn({ selectedDate: s, startDate: i, endDate: o })) {
-            var l = jn({ selectedDate: s, monthPadding: a });
+            var u = jn({ selectedDate: s, monthPadding: a });
             return (
-              r({ start: new Date(l.start), end: new Date(l.end) }),
+              r({ start: new Date(u.start), end: new Date(u.end) }),
               Ln(
                 { isOutsideRange: !0 },
                 {
                   fetchMoreRange: { start: null, end: null },
-                  fullRange: { start: new Date(l.start), end: new Date(l.end) },
+                  fullRange: { start: new Date(u.start), end: new Date(u.end) },
                 }
               )
             );
@@ -21061,19 +21065,19 @@
             s = e.currentFullRange,
             i = void 0 === s ? null : s,
             o = i || {
-              start: d()()
+              start: l()()
                 .subtract(r, 'months')
                 .startOf('month'),
-              end: d()()
+              end: l()()
                 .add(r, 'months')
                 .endOf('month'),
             },
-            u = vn(Object(a.useState)(o), 2),
-            l = u[0],
-            _ = u[1];
+            d = vn(Object(a.useState)(o), 2),
+            u = d[0],
+            _ = d[1];
           return Dn({
             cursorDate: t,
-            fullRange: l,
+            fullRange: u,
             monthPadding: r,
             setFullRange: _,
           });
@@ -21084,8 +21088,8 @@
             s = e.fetchEventInitialFullRange,
             i = e.fetchEventPadding,
             o = e.onNavigate,
-            u = e.onFetchEvents,
-            l = e.onViewChange,
+            d = e.onFetchEvents,
+            u = e.onViewChange,
             _ = e.selectedDate,
             c = e.events,
             m = e.currentView,
@@ -21096,23 +21100,23 @@
             M = f.shouldFetchMore,
             g = f.isOutsideRange;
           Object(a.useEffect)(function() {
-            u({ fetchMoreRange: p, fullRange: y, initialFetch: !0 });
+            d({ fetchMoreRange: p, fullRange: y, initialFetch: !0 });
           }, []),
             (M || g) &&
-              u({ fetchMoreRange: p, fullRange: y, outsideRange: !!g });
+              d({ fetchMoreRange: p, fullRange: y, outsideRange: !!g });
           var L = function(e) {
               o(e);
             },
-            Y = mn({ date: d()(_), view: m, firstDay: n }),
+            Y = mn({ date: l()(_), view: m, firstDay: n }),
             v = function() {
               var e = new Date(
-                dn({ view: m, direction: 1, currentDate: d()(_) })
+                dn({ view: m, direction: 1, currentDate: l()(_) })
               );
               L(e);
             },
             D = function() {
               var e = new Date(
-                dn({ view: m, direction: -1, currentDate: d()(_) })
+                dn({ view: m, direction: -1, currentDate: l()(_) })
               );
               L(e);
             },
@@ -21128,7 +21132,7 @@
                 eventsForView: gn({
                   events: c,
                   view: m,
-                  selectedDate: d()(_),
+                  selectedDate: l()(_),
                   firstDay: n,
                 }),
               })
@@ -21142,9 +21146,10 @@
                     return r.a.createElement(
                       'button',
                       {
+                        key: e,
                         type: 'button',
                         onClick: function() {
-                          return l('string' == typeof e ? e : e.view);
+                          return u('string' == typeof e ? e : e.view);
                         },
                       },
                       (function(e) {
@@ -21244,129 +21249,141 @@
           i = e.firstDay,
           o = e.forceSixWeeks,
           u = e.isEventDraggable,
-          l = e.isEventExtendable,
-          _ = e.minWidthColumn,
-          c = e.minWidthColumnEmpty,
-          m = e.onDragEnd,
-          h = e.onExtendEnd,
-          f = e.onFetchEvents,
-          p = e.onNavigate,
-          y = e.onSelectMore,
-          M = e.onSelectDate,
-          g = e.onSelectEvent,
-          L = e.onSelectRangeEnd,
-          Y = e.onCurrentTimeChange,
-          v = e.onSelectSlot,
-          D = e.onViewChange,
-          k = e.renderCell,
-          b = (e.renderEvent, e.renderCorner),
-          w = e.renderEventPaddingBottom,
-          T = e.renderEventPaddingTop,
-          S = e.renderGroupsHeader,
-          H = e.renderMonthHeader,
-          j = e.renderSelectRange,
-          x = e.renderSelectSlotIndicator,
-          E = e.renderStepDetail,
-          O = e.renderWeekHeader,
-          P = e.renderDayGridEvent,
-          W = e.renderTimeGridEvent,
-          R = e.renderToolbar,
-          A = e.scrollToTime,
-          F = e.selectedDate,
-          z = e.selectMinutes,
-          N = e.stepDetails,
-          I = e.stepHeight,
-          J = e.stepMinutes,
-          G = e.style,
-          U = e.currentView,
-          q = e.views,
-          B = e.visibleEventGroups,
-          V = C.month,
-          $ = C.week,
-          K = C.groups,
-          Z = {
-            isEventDraggable: u,
-            onDragEnd: m,
-            onSelectEvent: g,
-            onSelectSlot: v,
-            events: n,
-            selectedDate: d()(F),
-            firstDay: i,
-            visibleEventGroups: B,
-          },
+          _ = e.isEventExtendable,
+          c = e.minWidthColumn,
+          m = e.minWidthColumnEmpty,
+          h = e.onDragEnd,
+          f = e.onExtendEnd,
+          p = e.onFetchEvents,
+          y = e.onNavigate,
+          M = e.onSelectMore,
+          g = e.onSelectDate,
+          L = e.onSelectEvent,
+          Y = e.onSelectRangeEnd,
+          v = e.onCurrentTimeChange,
+          D = e.onSelectSlot,
+          k = e.onViewChange,
+          b = e.renderCell,
+          w = (e.renderEvent, e.renderCorner),
+          T = e.renderEventPaddingBottom,
+          S = e.renderEventPaddingTop,
+          H = e.renderGroupsHeader,
+          j = e.renderMonthHeader,
+          x = e.renderSelectRange,
+          E = e.renderSelectSlotIndicator,
+          O = e.renderStepDetail,
+          P = e.renderWeekHeader,
+          W = e.renderDayGridEvent,
+          R = e.renderTimeGridEvent,
+          A = e.renderToolbar,
+          F = e.scrollToTime,
+          z = e.selectedDate,
+          N = e.selectMinutes,
+          I = e.stepDetails,
+          J = e.stepHeight,
+          G = e.stepMinutes,
+          U = e.style,
+          q = e.currentView,
+          B = e.views,
+          V = e.visibleEventGroups,
+          $ = C.month,
+          K = C.week,
+          Z = C.groups,
           X = {
-            onSelectMore: y,
-            onSelectDate: M,
-            forceSixWeeks: o,
-            renderCell: k,
-            renderEvent: P,
+            isEventDraggable: u,
+            onDragEnd: h,
+            onSelectEvent: L,
+            onSelectSlot: D,
+            events: n,
+            selectedDate: l()(z),
+            firstDay: i,
+            visibleEventGroups: V,
           },
           Q = {
-            isEventExtendable: l,
-            onExtendEnd: h,
-            onCurrentTimeChange: Y,
-            onSelectRangeEnd: L,
-            stepDetails: N,
-            minWidthColumn: _,
-            minWidthColumnEmpty: c,
-            renderCorner: b,
-            renderEventPaddingBottom: w,
-            renderEventPaddingTop: T,
-            renderSelectRange: j,
-            renderStepDetail: E,
-            selectMinutes: z,
-            stepHeight: I,
-            stepMinutes: J,
-            renderSelectSlotIndicator: x,
+            onSelectMore: M,
+            onSelectDate: g,
+            forceSixWeeks: o,
+            renderCell: b,
             renderEvent: W,
-            scrollToTime: A,
           },
-          ee = (Pn(
+          ee = {
+            isEventExtendable: _,
+            onExtendEnd: f,
+            onCurrentTimeChange: v,
+            onSelectRangeEnd: Y,
+            stepDetails: I,
+            minWidthColumn: c,
+            minWidthColumnEmpty: m,
+            renderCorner: w,
+            renderEventPaddingBottom: T,
+            renderEventPaddingTop: S,
+            renderSelectRange: x,
+            renderStepDetail: O,
+            selectMinutes: N,
+            stepHeight: J,
+            stepMinutes: G,
+            renderSelectSlotIndicator: E,
+            renderEvent: R,
+            scrollToTime: F,
+          },
+          te = (Pn(
             (t = {}),
-            V,
-            r.a.createElement(vt, Wn({ renderHeader: H }, X, Z))
+            $,
+            r.a.createElement(vt, Wn({ renderHeader: j }, Q, X))
           ),
-          Pn(t, $, r.a.createElement(sn, Wn({ renderHeader: O }, Q, Z))),
+          Pn(t, K, r.a.createElement(sn, Wn({ renderHeader: P }, ee, X))),
           Pn(
             t,
-            K,
-            r.a.createElement(en, Wn({ renderHeader: S, eventGroups: a }, Q, Z))
+            Z,
+            r.a.createElement(
+              en,
+              Wn({ renderHeader: H, eventGroups: a }, ee, X)
+            )
           ),
           t);
         return r.a.createElement(
           'div',
-          { className: 'acuity-calendar', style: G },
+          { className: 'acuity-calendar', style: U },
           r.a.createElement(
             On,
             {
               events: n,
               fetchEventInitialFullRange: s,
               firstDay: i,
-              onNavigate: p,
-              onViewChange: D,
-              onFetchEvents: f,
-              selectedDate: F,
-              currentView: U,
-              views: q,
+              onNavigate: y,
+              onViewChange: k,
+              onFetchEvents: p,
+              selectedDate: z,
+              currentView: q,
+              views: B,
             },
-            R
+            A
           ),
           (function() {
-            if (Object.values(C).includes(U)) return ee[U];
-            var e = q.find(function(e) {
-              return e.view === U;
-            });
-            if (Object.values(C).includes(e) && void 0 === e.render)
-              return ee[U];
-            var t = e.render;
-            return 'time' === e.grid
-              ? r.a.createElement(t, Wn({}, Q, Z))
-              : 'day' === e.grid
-              ? r.a.createElement(t, Wn({}, X, Z))
-              : (console.error(
-                  'You supplied a view that has not been defined.'
+            var e = function(e) {
+                return 'string' == typeof e || e instanceof String;
+              },
+              t = B.find(function(t) {
+                return !(!e(t) || t !== q) || t.view === q;
+              });
+            if (void 0 === t)
+              return (
+                console.error(
+                  'You have supplied a view that is not in the "views" prop.'
                 ),
-                null);
+                null
+              );
+            if (
+              Object.values(C).includes(e(t) ? t : t.view) &&
+              !d()(t, 'render', !1)
+            )
+              return te[q];
+            var n = t.render;
+            return 'time' === t.grid
+              ? r.a.createElement(n, Wn({}, ee, X))
+              : 'day' === t.grid
+              ? r.a.createElement(n, Wn({}, Q, X))
+              : null;
           })()
         );
       };
@@ -21526,7 +21543,7 @@
                 : ((a = r),
                   Object.keys(a).some(function(e) {
                     return (
-                      !d()(new Date(e)).isValid() || 'number' != typeof a[e]
+                      !l()(new Date(e)).isValid() || 'number' != typeof a[e]
                     );
                   })
                     ? new TypeError(
@@ -21619,8 +21636,8 @@
           c = Math.max.apply(Math, Object.values(t)),
           m = Object.keys(t).length,
           h = function(e) {
-            var n = d()(e).format('YYYY-MM-DD'),
-              a = l()(t, n, 0);
+            var n = l()(e).format('YYYY-MM-DD'),
+              a = d()(t, n, 0);
             return {
               count: a,
               weight: m > 0 ? Math.round((a / c) * 100) / 100 : 0,
@@ -21731,13 +21748,13 @@
           s = e.totalDays,
           i = Vn(e, ['renderCell', 'renderHeader', 'firstDay', 'totalDays']),
           o = {
-            firstDate: d()().day(a),
-            lastDate: d()()
+            firstDate: l()().day(a),
+            lastDate: l()()
               .day(a)
               .add(7, 'days'),
             totalColumns: s,
           },
-          u = function(e) {
+          d = function(e) {
             return {
               full: e.format('dddd'),
               small: e.format('ddd'),
@@ -21755,11 +21772,11 @@
                 grid: o,
                 renderHeader: function(e) {
                   var t = e.date;
-                  return n ? n(u(d()(t))) : t.format('dddd');
+                  return n ? n(d(l()(t))) : t.format('dddd');
                 },
                 renderCell: function(e) {
                   var n = e.date;
-                  return t ? t(u(d()(n))) : null;
+                  return t ? t(d(l()(n))) : null;
                 },
               },
               i

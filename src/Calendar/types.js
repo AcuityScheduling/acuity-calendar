@@ -42,7 +42,7 @@ export const VIEWS_TYPE = PropTypes.oneOfType([
     render: PropTypes.func,
     displayName: PropTypes.string,
   }),
-  PropTypes.arrayOf(Object.values(CALENDAR_VIEWS)),
+  PropTypes.oneOf(Object.values(CALENDAR_VIEWS)),
 ]);
 
 const getViewShape = type => {

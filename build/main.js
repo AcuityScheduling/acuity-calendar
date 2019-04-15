@@ -20222,7 +20222,7 @@
           x = e.visibleEventGroups,
           W = It({ date: l()(n), firstDay: s });
         W = W.map(function(e) {
-          return e.format('YYYY-MM-DD');
+          return new Date(e);
         });
         var A = re(),
           C = A.TimeGridRef,

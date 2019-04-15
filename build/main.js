@@ -19804,13 +19804,14 @@
           K = z.selectRange,
           Z = Object.keys(_).length,
           X = 100 / Z - 1,
-          Q = F('time-grid__current-time-indicator');
+          Q = F('time-grid__current-time-indicator'),
+          ee = l()(u);
         return r.a.createElement(
           'div',
           Ct(
             {
-              className: ''.concat(F('time-grid__grid-column')).concat(U(u)),
-              key: 'weekView'.concat(u.day()),
+              className: ''.concat(F('time-grid__grid-column')).concat(U(ee)),
+              key: 'weekView'.concat(ee.day()),
               style: { height: h, minWidth: Z * b || w },
               onClick: function(e) {
                 if (I)
@@ -19829,7 +19830,7 @@
                   stepHeight: E,
                   stepMinutes: f,
                   selectMinutes: Y,
-                  columnDate: u,
+                  columnDate: ee,
                 })(e);
                 C(t),
                   g({ e: e, date: new Date(t), column: n }),
@@ -19842,7 +19843,7 @@
             N,
             { ref: t }
           ),
-          u.isSame(l()(), 'day') &&
+          ee.isSame(l()(), 'day') &&
             o &&
             r.a.createElement(
               'div',
@@ -20122,11 +20123,12 @@
             a = e.date,
             s = e.minWidth,
             i = e.minWidthEmpty,
-            o = e.type;
+            o = e.type,
+            d = l()(a);
           return r.a.createElement(
             'div',
             {
-              className: ''.concat(F('time-grid__header-column')).concat(U(a)),
+              className: ''.concat(F('time-grid__header-column')).concat(U(d)),
               style: { minWidth: ''.concat(n * s || i, 'px') },
             },
             r.a.createElement(
@@ -20146,7 +20148,7 @@
       (Jt.defaultProps = { minWidth: 190, minWidthEmpty: 100 }),
         (Jt.propTypes = {
           children: i.a.node.isRequired,
-          date: Oe.isRequired,
+          date: i.a.oneOfType([i.a.string, i.a.instanceOf(Date)]).isRequired,
           minWidth: i.a.number,
           minWidthEmpty: i.a.number,
           totalEventColumns: i.a.number.isRequired,
@@ -20218,8 +20220,11 @@
           H = e.stepHeight,
           j = e.scrollToTime,
           x = e.visibleEventGroups,
-          W = It({ date: l()(n), firstDay: s }),
-          A = re(),
+          W = It({ date: l()(n), firstDay: s });
+        W = W.map(function(e) {
+          return e.format('YYYY-MM-DD');
+        });
+        var A = re(),
           C = A.TimeGridRef,
           F = A.assignRef,
           z = A.elementWidths,
@@ -20652,21 +20657,22 @@
                 a = e.ColumnComponent,
                 s = e.events;
               return n.map(function(e) {
+                var n = l()(e);
                 return r.a.createElement(
                   a,
                   {
-                    key: 'dayHeader'.concat(e.date()),
-                    date: e,
+                    key: 'dayHeader'.concat(n.date()),
+                    date: n,
                     columnClass: C.week,
                   },
                   t
-                    ? t({ date: new Date(e), events: s })
+                    ? t({ date: e, events: s })
                     : r.a.createElement(
                         'h2',
                         null,
-                        e.format('dddd'),
+                        n.format('dddd'),
                         ', ',
-                        e.format('MMM D')
+                        n.format('MMM D')
                       )
                 );
               });
@@ -20677,18 +20683,19 @@
                 a = e.events,
                 s = e.stepDetails;
               return n.map(function(e, n) {
-                var i = d()(s, e.format('YYYY-MM-DD'), []),
-                  o = d()(a, e.format('YYYY-MM-DD'), {}),
-                  u = new Date(e.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
+                var i = l()(e),
+                  o = d()(s, i.format('YYYY-MM-DD'), []),
+                  u = d()(a, i.format('YYYY-MM-DD'), {}),
+                  _ = new Date(i.startOf('day').format('YYYY-MM-DD HH:mm:ss'));
                 return r.a.createElement(t, {
-                  key: 'weekColumn'.concat(e.day()),
-                  date: e,
-                  columnKey: 'weekColumn'.concat(e.day()),
-                  events: o,
+                  key: 'weekColumn'.concat(i.day()),
+                  date: i,
+                  columnKey: 'weekColumn'.concat(i.day()),
+                  events: u,
                   columnIndex: n,
-                  columnId: u,
-                  eventsForColumn: o,
-                  stepDetailsForColumn: i,
+                  columnId: _,
+                  eventsForColumn: u,
+                  stepDetailsForColumn: o,
                   getUpdatedDraggedEvent: function(e) {
                     var t = e.event,
                       n = e.columnMoves,

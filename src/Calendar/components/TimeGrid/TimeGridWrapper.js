@@ -57,7 +57,7 @@ const TimeGridWrapper = ({
   visibleEventGroups,
 }) => {
   let dateList = getWeekList({ date: moment(selectedDate), firstDay });
-  dateList = dateList.map(date => date.format('YYYY-MM-DD'));
+  dateList = dateList.map(date => new Date(date));
 
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
 

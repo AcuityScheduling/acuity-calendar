@@ -15,7 +15,7 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
           return (
             <ColumnComponent
               key={`dayHeader${dateMoment.date()}`}
-              date={date}
+              date={dateMoment}
               columnClass={CALENDAR_VIEWS.week}
             >
               {renderHeader ? (

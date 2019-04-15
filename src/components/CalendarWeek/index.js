@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import get from 'lodash.get';
 import TimeGrid from '../../Calendar/components/TimeGrid/TimeGridWrapper';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
@@ -10,17 +11,18 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
       {...restProps}
       renderHeaders={({ week, ColumnComponent, events }) => {
         return week.map(date => {
+          const dateMoment = moment(date);
           return (
             <ColumnComponent
-              key={`dayHeader${date.date()}`}
+              key={`dayHeader${dateMoment.date()}`}
               date={date}
               columnClass={CALENDAR_VIEWS.week}
             >
               {renderHeader ? (
-                renderHeader({ date: new Date(date), events })
+                renderHeader({ date, events })
               ) : (
                 <h2>
-                  {date.format('dddd')}, {date.format('MMM D')}
+                  {dateMoment.format('dddd')}, {dateMoment.format('MMM D')}
                 </h2>
               )}
             </ColumnComponent>
@@ -29,23 +31,24 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
       }}
       renderColumns={({ ColumnComponent, week, events, stepDetails }) => {
         return week.map((date, index) => {
+          const dateMoment = moment(date);
           const stepDetailsForDay = get(
             stepDetails,
-            date.format('YYYY-MM-DD'),
+            dateMoment.format('YYYY-MM-DD'),
             []
           );
 
-          const eventsForDay = get(events, date.format('YYYY-MM-DD'), {});
+          const eventsForDay = get(events, dateMoment.format('YYYY-MM-DD'), {});
 
           const columnId = new Date(
-            date.startOf('day').format('YYYY-MM-DD HH:mm:ss')
+            dateMoment.startOf('day').format('YYYY-MM-DD HH:mm:ss')
           );
 
           return (
             <ColumnComponent
-              key={`weekColumn${date.day()}`}
-              date={date}
-              columnKey={`weekColumn${date.day()}`}
+              key={`weekColumn${dateMoment.day()}`}
+              date={dateMoment}
+              columnKey={`weekColumn${dateMoment.day()}`}
               events={eventsForDay}
               columnIndex={index}
               columnId={columnId}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { makeClass } from '../../../utils';
 import { getTodayClass } from '../utils';
 import { MOMENT_TYPE } from '../../../types';
@@ -17,10 +18,11 @@ const ColumnHeader = ({
   minWidthEmpty,
   type,
 }) => {
+  const dateMoment = moment(date);
   return (
     <div
       className={`${makeClass('time-grid__header-column')}${getTodayClass(
-        date
+        dateMoment
       )}`}
       style={{
         minWidth: `${totalEventColumns * minWidth || minWidthEmpty}px`,
@@ -45,7 +47,8 @@ ColumnHeader.defaultProps = {
 
 ColumnHeader.propTypes = {
   children: PropTypes.node.isRequired,
-  date: MOMENT_TYPE.isRequired,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
+    .isRequired,
   minWidth: PropTypes.number,
   minWidthEmpty: PropTypes.number,
   // How many columns of events are there on one calendar column?

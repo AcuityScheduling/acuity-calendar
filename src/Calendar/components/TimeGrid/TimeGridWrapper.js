@@ -56,7 +56,9 @@ const TimeGridWrapper = ({
   scrollToTime,
   visibleEventGroups,
 }) => {
-  const dateList = getWeekList({ date: moment(selectedDate), firstDay });
+  let dateList = getWeekList({ date: moment(selectedDate), firstDay });
+  dateList = dateList.map(date => date.format('YYYY-MM-DD'));
+
   const { TimeGridRef, assignRef, elementWidths } = useElementWidths();
 
   const {

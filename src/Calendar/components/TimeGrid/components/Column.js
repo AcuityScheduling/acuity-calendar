@@ -81,13 +81,14 @@ const Column = React.forwardRef(
     const currentTimeIndicatorClass = makeClass(
       'time-grid__current-time-indicator'
     );
+    const dateMoment = moment(date);
 
     return (
       <div
         className={`${makeClass('time-grid__grid-column')}${getTodayClass(
-          date
+          dateMoment
         )}`}
-        key={`weekView${date.day()}`}
+        key={`weekView${dateMoment.day()}`}
         style={{
           height: gridHeight,
           minWidth: totalEventColumns * minWidth || minWidthEmpty,
@@ -108,7 +109,7 @@ const Column = React.forwardRef(
             stepHeight,
             stepMinutes,
             selectMinutes,
-            columnDate: date,
+            columnDate: dateMoment,
           })(e);
           setClickedTime(clickedTime);
           onSelectSlot({ e, date: new Date(clickedTime), column: columnId });
@@ -118,7 +119,7 @@ const Column = React.forwardRef(
         {...selectRangeHandlers}
         ref={ref}
       >
-        {date.isSame(moment(), 'day') && currentTime && (
+        {dateMoment.isSame(moment(), 'day') && currentTime && (
           <div
             className={currentTimeIndicatorClass}
             style={{

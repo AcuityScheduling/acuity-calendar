@@ -20065,8 +20065,11 @@
           stepHeight: null,
         }),
         (zt.propTypes = {
-          columnId: i.a.oneOfType([i.a.instanceOf(Date), i.a.number])
-            .isRequired,
+          columnId: i.a.oneOfType([
+            i.a.instanceOf(Date),
+            i.a.number,
+            i.a.string,
+          ]).isRequired,
           columnIndex: i.a.number.isRequired,
           columnWidths: Fe.isRequired,
           currentTime: Oe,

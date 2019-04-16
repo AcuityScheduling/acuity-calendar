@@ -335,8 +335,11 @@ Column.defaultProps = {
 };
 
 Column.propTypes = {
-  columnId: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number])
-    .isRequired,
+  columnId: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,

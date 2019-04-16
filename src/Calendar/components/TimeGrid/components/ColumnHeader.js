@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { makeClass } from '../../../utils';
 import { getTodayClass } from '../utils';
-import { MOMENT_TYPE } from '../../../types';
 import {
   MIN_WIDTH_COLUMN_DEFAULT,
   MIN_WIDTH_COLUMN_EMPTY_DEFAULT,

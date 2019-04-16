@@ -3,7 +3,12 @@ import moment from 'moment';
 
 import { storiesOf } from '@storybook/react';
 
-import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from '../src/Calendar/mocks';
+import {
+  MOCKED_CALENDARS,
+  MOCKED_STEP_DETAILS,
+  MOCKED_EVENTS,
+  MOCK_TIMEZONE_COLUMNS,
+} from '../src/Calendar/mocks';
 import CalendarMonth from '../src/components/CalendarMonth';
 import CalendarWeek from '../src/components/CalendarWeek';
 import CalendarGroups from '../src/components/CalendarGroups';
@@ -12,6 +17,7 @@ import { useEvents } from './utils';
 import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import EventGroupSelect from '../src/EventGroupSelect';
+import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -158,8 +164,99 @@ const Full = props => {
   );
 };
 
+const CustomView = () => {
+  const [view, setView] = useState(CALENDAR_VIEWS.week);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  return (
+    <Fragment>
+      <style>{`.acuity-calendar__time-grid { height: 500px }`}</style>
+      <FullCalendar
+        onViewChange={setView}
+        currentView={view}
+        onNavigate={setSelectedDate}
+        views={[
+          'groups',
+          {
+            view: 'week',
+            grid: 'time',
+            eventFilter: ({ event, column }) =>
+              event.timezone !== column.timezone,
+            render: props => (
+              <TimeGrid
+                {...props}
+                renderHeaders={({ week, ColumnComponent }) => {
+                  return MOCK_TIMEZONE_COLUMNS.map(column => {
+                    return (
+                      <div
+                        className="time-grid__week-header"
+                        key={`${column.date.format()}${column.timezone}`}
+                        style={{
+                          display: 'flex',
+                          flex: 1,
+                          borderRight: '1px solid black',
+                        }}
+                      >
+                        <ColumnComponent
+                          totalEventColumns={0}
+                          date={column.date.format()}
+                          columnClass="week"
+                        >
+                          <div className="time-grid__week-header__container">
+                            <div className={`time-grid__week-header__date`}>
+                              {moment(column.date).format('M/D')}
+                            </div>
+                            <div className={`time-grid__week-header__day`}>
+                              {moment(column.date).format('dddd')}
+                            </div>
+                            <div style={{ fontSize: '10px' }}>
+                              {column.timezone}
+                            </div>
+                          </div>
+                        </ColumnComponent>
+                      </div>
+                    );
+                  });
+                }}
+                renderColumns={({
+                  ColumnComponent,
+                  week,
+                  events: mungedEvents,
+                  stepDetails,
+                }) => {
+                  return MOCK_TIMEZONE_COLUMNS.map((column, index) => {
+                    const dateKey = column.date.format('YYYY-MM-DD');
+                    const columnId = `${dateKey}-${column.timezone}`;
+
+                    return (
+                      <ColumnComponent
+                        key={`${column.date.format('YYYY-MM-DD')}${
+                          column.timezone
+                        }`}
+                        date={column.date}
+                        columnKey={columnId}
+                        columnIndex={index}
+                        columnId={columnId}
+                        getUpdatedDraggedEvent={() => {}}
+                      />
+                    );
+                  });
+                }}
+              />
+            ),
+          },
+        ]}
+        events={MOCKED_EVENTS}
+        selectedDate={selectedDate}
+        stepDetails={MOCKED_STEP_DETAILS}
+      />
+    </Fragment>
+  );
+};
+
 storiesOf('Calendar Views', module)
   .add('Full Calendar', () => <Full />)
   .add('Month', () => <Month />)
   .add('Week', () => <Week />)
-  .add('Groups', () => <Groups />);
+  .add('Groups', () => <Groups />)
+  .add('Custom View', () => <CustomView />);

@@ -143,3 +143,27 @@ export const MOCKED_STEP_DETAILS = [
     schedulingLimits: true,
   },
 ];
+
+export const MOCK_TIMEZONE_COLUMNS = [
+  { date: moment(now), timezone: 'America/Los_Angeles' },
+  { date: moment(now), timezone: 'America/New_York' },
+  { date: moment(now), timezone: 'America/Phoenix' },
+  { date: moment(now).add(1, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(1, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(1, 'days'), timezone: 'America/Phoenix' },
+  { date: moment(now).add(2, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(2, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(2, 'days'), timezone: 'America/Phoenix' },
+  { date: moment(now).add(3, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(3, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(3, 'days'), timezone: 'America/Phoenix' },
+  { date: moment(now).add(4, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(4, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(4, 'days'), timezone: 'America/Phoenix' },
+  { date: moment(now).add(5, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(5, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(5, 'days'), timezone: 'America/Phoenix' },
+  { date: moment(now).add(6, 'days'), timezone: 'America/Los_Angeles' },
+  { date: moment(now).add(6, 'days'), timezone: 'America/New_York' },
+  { date: moment(now).add(6, 'days'), timezone: 'America/Phoenix' },
+];

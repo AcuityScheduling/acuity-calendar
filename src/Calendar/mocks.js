@@ -18,6 +18,7 @@ export const MOCKED_EVENTS = [
     start: today.set({ hour: 12, minute: 15 }).format(dateFormat),
     end: today.set({ hour: 13, minute: 15 }).format(dateFormat),
     title: 'Group Meeting',
+    timezone: 'America/Los_Angeles',
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ export const MOCKED_EVENTS = [
     start: today.set({ hour: 19, minute: 15 }).format(dateFormat),
     end: today.set({ hour: 20, minute: 0 }).format(dateFormat),
     title: '1:1 with Mari',
+    timezone: 'America/New_York',
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ export const MOCKED_EVENTS = [
     start: today.set({ hour: 15, minute: 30 }).format(dateFormat),
     end: today.set({ hour: 16, minute: 0 }).format(dateFormat),
     title: 'Analytics/Conversion Tracking Specialty Meeting',
+    timezone: 'America/Los_Angeles',
   },
   {
     id: 4,
@@ -39,6 +42,7 @@ export const MOCKED_EVENTS = [
     start: tomorrow.set({ hour: 15, minute: 30 }).format(dateFormat),
     end: tomorrow.set({ hour: 16, minute: 0 }).format(dateFormat),
     title: 'Analytics/Conversion Tracking Specialty Meeting',
+    timezone: 'America/New_York',
   },
   {
     id: 5,
@@ -46,6 +50,7 @@ export const MOCKED_EVENTS = [
     start: yesterday.set({ hour: 15, minute: 30 }).format(dateFormat),
     end: yesterday.set({ hour: 16, minute: 0 }).format(dateFormat),
     title: 'Analytics/Conversion Tracking Specialty Meeting',
+    timezone: 'America/New_York',
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ export const MOCKED_EVENTS = [
     start: fifteenDaysAgo.set({ hour: 4, minute: 23 }).format(dateFormat),
     end: fifteenDaysAgo.set({ hour: 5, minute: 12 }).format(dateFormat),
     title: 'Flight to Development Conference',
+    timezone: 'America/New_York',
   },
   {
     id: 7,
@@ -60,6 +66,7 @@ export const MOCKED_EVENTS = [
     start: eightDays.set({ hour: 22, minute: 30 }).format(dateFormat),
     end: eightDays.set({ hour: 24, minute: 0 }).format(dateFormat),
     title: 'Server Maintenance',
+    timezone: 'America/New_York',
   },
   {
     id: 8,
@@ -67,6 +74,7 @@ export const MOCKED_EVENTS = [
     start: today.set({ hour: 19, minute: 15 }).format(dateFormat),
     end: today.set({ hour: 20, minute: 0 }).format(dateFormat),
     title: '1:1 with Shannah',
+    timezone: 'America/New_York',
   },
   {
     id: 9,
@@ -74,6 +82,7 @@ export const MOCKED_EVENTS = [
     start: twoDaysAgo.set({ hour: 7, minute: 0 }).format(dateFormat),
     end: twoDaysAgo.set({ hour: 7, minute: 45 }).format(dateFormat),
     title: 'Morning Scrum Meeting',
+    timezone: 'America/New_York',
   },
   {
     id: 10,
@@ -81,6 +90,7 @@ export const MOCKED_EVENTS = [
     start: twoDays.set({ hour: 12, minute: 0 }).format(dateFormat),
     end: twoDays.set({ hour: 13, minute: 0 }).format(dateFormat),
     title: 'Lunch with Shannah',
+    timezone: 'America/New_York',
   },
   {
     id: 11,
@@ -88,6 +98,7 @@ export const MOCKED_EVENTS = [
     start: threeDays.set({ hour: 14, minute: 0 }).format(dateFormat),
     end: threeDays.set({ hour: 15, minute: 0 }).format(dateFormat),
     title: 'Sales Call with Acuity',
+    timezone: 'America/New_York',
   },
   {
     id: 12,
@@ -95,6 +106,7 @@ export const MOCKED_EVENTS = [
     start: today.set({ hour: 5, minute: 0 }).format(dateFormat),
     end: today.set({ hour: 8, minute: 0 }).format(dateFormat),
     title: 'Arrisa Farmer: 1/2 day support coverage',
+    timezone: 'America/New_York',
   },
   {
     id: 13,
@@ -102,6 +114,7 @@ export const MOCKED_EVENTS = [
     start: tomorrow.set({ hour: 5, minute: 0 }).format(dateFormat),
     end: tomorrow.set({ hour: 11, minute: 0 }).format(dateFormat),
     title: 'Mari Barker: Full day support coverage',
+    timezone: 'America/New_York',
   },
   {
     id: 14,
@@ -109,6 +122,7 @@ export const MOCKED_EVENTS = [
     start: threeDays.set({ hour: 9, minute: 0 }).format(dateFormat),
     end: threeDays.set({ hour: 17, minute: 0 }).format(dateFormat),
     title: 'Shannah Miriam Time Off',
+    timezone: 'America/New_York',
   },
 ];
 

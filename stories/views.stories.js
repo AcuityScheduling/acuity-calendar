@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import moment from 'moment';
+import get from 'lodash.get';
 
 import { storiesOf } from '@storybook/react';
 
@@ -188,33 +189,24 @@ const CustomView = () => {
                 renderHeaders={({ week, ColumnComponent }) => {
                   return MOCK_TIMEZONE_COLUMNS.map(column => {
                     return (
-                      <div
-                        className="time-grid__week-header"
-                        key={`${column.date.format()}${column.timezone}`}
-                        style={{
-                          display: 'flex',
-                          flex: 1,
-                          borderRight: '1px solid black',
-                        }}
+                      <ColumnComponent
+                        key={`${column.date.format()}${column.column_id}`}
+                        totalEventColumns={0}
+                        date={column.date.format()}
+                        columnClass="week"
                       >
-                        <ColumnComponent
-                          totalEventColumns={0}
-                          date={column.date.format()}
-                          columnClass="week"
-                        >
-                          <div className="time-grid__week-header__container">
-                            <div className={`time-grid__week-header__date`}>
-                              {moment(column.date).format('M/D')}
-                            </div>
-                            <div className={`time-grid__week-header__day`}>
-                              {moment(column.date).format('dddd')}
-                            </div>
-                            <div style={{ fontSize: '10px' }}>
-                              {column.timezone}
-                            </div>
+                        <div className="time-grid__week-header__container">
+                          <div className={`time-grid__week-header__date`}>
+                            {moment(column.date).format('M/D')}
                           </div>
-                        </ColumnComponent>
-                      </div>
+                          <div className={`time-grid__week-header__day`}>
+                            {moment(column.date).format('dddd')}
+                          </div>
+                          <div style={{ fontSize: '10px' }}>
+                            {column.timezone}
+                          </div>
+                        </div>
+                      </ColumnComponent>
                     );
                   });
                 }}
@@ -222,22 +214,35 @@ const CustomView = () => {
                   ColumnComponent,
                   week,
                   events: mungedEvents,
-                  stepDetails,
+                  stepDetails: mungedStepDetails,
                 }) => {
                   return MOCK_TIMEZONE_COLUMNS.map((column, index) => {
                     const dateKey = column.date.format('YYYY-MM-DD');
-                    const columnId = `${dateKey}-${column.timezone}`;
+                    const columnId = `${dateKey}-${column.column_id}`;
+
+                    const eventsForColumn = get(
+                      mungedEvents,
+                      `${column.column_id}.${dateKey}`,
+                      []
+                    );
+                    const stepDetailsForColumn = get(
+                      mungedStepDetails,
+                      `${column.column_id}.${dateKey}`,
+                      []
+                    );
 
                     return (
                       <ColumnComponent
                         key={`${column.date.format('YYYY-MM-DD')}${
-                          column.timezone
+                          column.column_id
                         }`}
+                        eventsForColumn={eventsForColumn}
+                        stepDetailsForColumn={stepDetailsForColumn}
                         date={column.date}
                         columnKey={columnId}
                         columnIndex={index}
                         columnId={columnId}
-                        getUpdatedDraggedEvent={() => {}}
+                        getUpdatedDraggedEvent={event => event}
                       />
                     );
                   });

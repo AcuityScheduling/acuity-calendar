@@ -8,12 +8,38 @@ import get from 'lodash.get';
  */
 const getEventColumns = events => {
   const newEvents = Object.assign({}, events);
-  return Object.keys(events).reduce((accumulator, date) => {
-    return {
-      ...accumulator,
-      [date]: getEventColumnsPerDay(newEvents[date]),
-    };
-  }, {});
+  const hasColumn = getHasColumn(events);
+  if (!hasColumn) {
+    return Object.keys(events).reduce((accumulator, date) => {
+      return {
+        ...accumulator,
+        [date]: getEventColumnsPerDay(newEvents[date]),
+      };
+    }, {});
+  } else {
+    return Object.keys(events).reduce((accumulator, columnId) => {
+      const dateKeyEvents = Object.keys(events[columnId]).reduce(
+        (dateEvents, date) => {
+          return {
+            ...dateEvents,
+            [date]: getEventColumnsPerDay(newEvents[columnId][date]),
+          };
+        },
+        {}
+      );
+      return {
+        ...accumulator,
+        [columnId]: dateKeyEvents,
+      };
+    }, {});
+  }
+};
+
+const getHasColumn = events => {
+  if (Array.isArray(Object.keys(events)[0])) {
+    return false;
+  }
+  return true;
 };
 
 /**
@@ -24,18 +50,42 @@ const getEventColumns = events => {
  */
 export const getEventColumnsByGroup = events => {
   const newEvents = Object.assign({}, events);
-  return Object.keys(newEvents).reduce((accumulator, groupId) => {
-    Object.keys(newEvents[groupId]).forEach(date => {
-      accumulator = {
-        ...accumulator,
-        [groupId]: {
-          ...accumulator[groupId],
-          [date]: getEventColumnsPerDay(newEvents[groupId][date]),
-        },
-      };
-    });
-    return accumulator;
-  }, {});
+  const hasColumn = getHasColumn(events);
+
+  if (!hasColumn) {
+    return Object.keys(newEvents).reduce((accumulator, groupId) => {
+      Object.keys(newEvents[groupId]).forEach(date => {
+        accumulator = {
+          ...accumulator,
+          [groupId]: {
+            ...accumulator[groupId],
+            [date]: getEventColumnsPerDay(newEvents[groupId][date]),
+          },
+        };
+      });
+      return accumulator;
+    }, {});
+  } else {
+    return Object.keys(newEvents).reduce((accumulator, groupId) => {
+      Object.keys(newEvents[groupId]).forEach(columnId => {
+        Object.keys(newEvents[groupId][columnId]).forEach(date => {
+          accumulator = {
+            ...accumulator,
+            [groupId]: {
+              ...get(accumulator, groupId, {}),
+              [columnId]: {
+                ...get(accumulator, `${groupId}.${columnId}`, {}),
+                [date]: getEventColumnsPerDay(
+                  newEvents[groupId][columnId][date]
+                ),
+              },
+            },
+          };
+        });
+      });
+      return accumulator;
+    }, {});
+  }
 };
 
 /**

@@ -163,6 +163,7 @@ const EventDragDrop = ({
     columnMoves,
   });
 
+  console.log('updatedEvent: ', updatedEvent);
   updatedEvent.top = event.top + topChange;
 
   changeColumn();

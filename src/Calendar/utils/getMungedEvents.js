@@ -204,11 +204,26 @@ const setNestedObject = ({ eventsKeyed, event }) => {
   const newEventsKeyed = Object.assign({}, eventsKeyed);
 
   const thisDate = event.start.format('YYYY-MM-DD');
-  const eventsForDate = get(eventsKeyed, `${event.group_id}.${thisDate}`, []);
+  const columnId = get(event, 'column_id', false);
+  let eventsForDate = get(eventsKeyed, `${event.group_id}.${thisDate}`, []);
+  if (columnId) {
+    eventsForDate = get(
+      eventsKeyed,
+      `${event.group_id}.${columnId}.${thisDate}`,
+      []
+    );
+  }
   eventsForDate.push(event);
 
   const dates = get(eventsKeyed, `${event.group_id}`, {});
-  dates[thisDate] = eventsForDate;
+  if (columnId) {
+    if (!get(dates, columnId, false)) {
+      dates[columnId] = {};
+    }
+    dates[columnId][thisDate] = eventsForDate;
+  } else {
+    dates[thisDate] = eventsForDate;
+  }
 
   newEventsKeyed[event.group_id] = dates;
 

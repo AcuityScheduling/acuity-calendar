@@ -18,20 +18,53 @@ const getEventsWithEventGroups = ({ mungedEvents, visibleEventGroups }) => {
     });
   }
 
+  // Do the events coming have a column_id field? The munged events are going to look
+  // different depending on whether they do or not
+  const hasColumn = getHasColumn(mungedEvents);
+
   const selectedCalendarEvents = Object.keys(newEvents).reduce(
     (accumulator, groupId) => {
-      const datesWithEvents = Object.keys(newEvents[groupId]);
-      datesWithEvents.forEach(date => {
-        accumulator[date] = getSortedEvents([
-          ...get(accumulator, date, []),
-          ...newEvents[groupId][date],
-        ]);
-      });
+      if (!hasColumn) {
+        const datesWithEvents = Object.keys(newEvents[groupId]);
+        datesWithEvents.forEach(date => {
+          accumulator[date] = getSortedEvents([
+            ...get(accumulator, date, []),
+            ...newEvents[groupId][date],
+          ]);
+        });
+      } else {
+        const columnsWithDates = Object.keys(newEvents[groupId]);
+        columnsWithDates.forEach(columnId => {
+          const datesWithEvents = Object.keys(newEvents[groupId][columnId]);
+          datesWithEvents.forEach(date => {
+            const columnKeyExists = get(accumulator, columnId, false);
+            if (!columnKeyExists) {
+              accumulator[columnId] = {};
+            }
+            accumulator[columnId][date] = getSortedEvents([
+              ...get(accumulator, `${columnId}.${date}`, []),
+              ...newEvents[groupId][columnId][date],
+            ]);
+          });
+        });
+      }
+
       return accumulator;
     },
     {}
   );
   return selectedCalendarEvents;
+};
+
+const getHasColumn = mungedEvents => {
+  const groupId = Object.keys(mungedEvents)[0];
+  const columnIdOrDate = Object.keys(mungedEvents[groupId])[0];
+  // If it is an array that means we got to event columns - which means it does NOT
+  // have a column_id
+  if (Array.isArray(mungedEvents[groupId][columnIdOrDate])) {
+    return false;
+  }
+  return true;
 };
 
 export default getEventsWithEventGroups;

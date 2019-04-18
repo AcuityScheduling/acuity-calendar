@@ -186,12 +186,20 @@ const CustomView = () => {
             render: props => (
               <TimeGrid
                 {...props}
-                renderHeaders={({ week, ColumnComponent }) => {
+                renderHeaders={({
+                  week,
+                  ColumnComponent,
+                  events: mungedEvents,
+                }) => {
                   return MOCK_TIMEZONE_COLUMNS.map(column => {
+                    const dateKey = column.date.format('YYYY-MM-DD');
+                    const totalEventColumns = Object.keys(
+                      get(mungedEvents, `${column.column_id}.${dateKey}`, {})
+                    ).length;
                     return (
                       <ColumnComponent
-                        key={`${column.date.format()}${column.column_id}`}
-                        totalEventColumns={0}
+                        key={`${dateKey}${column.column_id}`}
+                        totalEventColumns={totalEventColumns}
                         date={column.date.format()}
                         columnClass="week"
                       >
@@ -203,7 +211,7 @@ const CustomView = () => {
                             {moment(column.date).format('dddd')}
                           </div>
                           <div style={{ fontSize: '10px' }}>
-                            {column.timezone}
+                            {column.column_id}
                           </div>
                         </div>
                       </ColumnComponent>

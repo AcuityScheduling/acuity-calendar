@@ -322,7 +322,7 @@ Column.defaultProps = {
   selectMinutes: SELECT_MINUTES_DEFAULT,
   currentTime: null,
   stepDetails: [],
-  getUpdatedDraggedEvent: () => null,
+  getUpdatedDraggedEvent: ({ event }) => event,
   minWidth: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
   renderStepDetail: () => null,

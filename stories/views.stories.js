@@ -231,7 +231,7 @@ const CustomView = () => {
                     const eventsForColumn = get(
                       mungedEvents,
                       `${column.column_id}.${dateKey}`,
-                      []
+                      {}
                     );
                     const stepDetailsForColumn = get(
                       mungedStepDetails,
@@ -250,7 +250,6 @@ const CustomView = () => {
                         columnKey={columnId}
                         columnIndex={index}
                         columnId={columnId}
-                        getUpdatedDraggedEvent={event => event}
                       />
                     );
                   });

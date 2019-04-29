@@ -170,9 +170,13 @@ const CustomView = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const columns = [];
+  let currentDay = 0;
   for (let i = 0; i < MOCK_TIMEZONE_COLUMNS.length * 7; i += 1) {
+    if (i !== 0 && i % 3 === 0) {
+      currentDay += 1;
+    }
     columns.push({
-      date: moment(selectedDate).add(i, 'days'),
+      date: moment(selectedDate).add(currentDay, 'days'),
       column_id: MOCK_TIMEZONE_COLUMNS[i % MOCK_TIMEZONE_COLUMNS.length],
     });
   }

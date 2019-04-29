@@ -62,11 +62,8 @@ module.exports = {
         amd: 'prop-types',
       },
     },
-  ],
-  optimization: {
-    splitChunks: {
-      name: 'vendor',
-      minChunks: 2,
+    {
+      moment: 'moment',
     },
-  },
+  ],
 };

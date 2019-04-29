@@ -244,7 +244,7 @@ const CustomView = () => {
                         }`}
                         eventsForColumn={eventsForColumn}
                         stepDetailsForColumn={stepDetailsForColumn}
-                        date={column.date}
+                        date={column.date.format()}
                         columnKey={columnId}
                         columnIndex={index}
                         columnId={columnId}

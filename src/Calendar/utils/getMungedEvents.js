@@ -41,7 +41,7 @@ const getMungedEvents = ({
 
     // We're turning the event array into a nested object with the group id
     // and the date as separate keys so we can access the events quickly by key
-    return setNestedObject({ eventsKeyed, event: newEvent });
+    return setNestedObject({ eventsKeyed, event: newEvent, withColumns });
   }, {});
 };
 

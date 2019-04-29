@@ -17,8 +17,6 @@
   "lint-staged": {
     "*.js": [
       "npm run lint:fix --",
-      "git add",
-      "prettier --write",
       "git add"
     ]
   },

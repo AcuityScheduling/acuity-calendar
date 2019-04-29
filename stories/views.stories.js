@@ -19,6 +19,7 @@ import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import EventGroupSelect from '../src/EventGroupSelect';
 import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
+import { getWeekList } from '../src/components/CalendarWeek/utils';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -89,7 +90,7 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
-  const [selectedEventGroups, setSelectedEventGroups] = useState([]);
+  const [selectedEventGroups, setSelectedEventGroups] = useState([5]);
 
   return (
     <Fragment>
@@ -169,6 +170,19 @@ const CustomView = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const getColumns = week => {
+    const columns = [];
+    week.forEach(day => {
+      MOCK_TIMEZONE_COLUMNS.forEach(timezone => {
+        columns.push({
+          date: moment(day),
+          column_id: timezone,
+        });
+      });
+    });
+    return columns;
+  };
+
   return (
     <Fragment>
       <style>{`.acuity-calendar__time-grid { height: 500px }`}</style>
@@ -189,7 +203,8 @@ const CustomView = () => {
                   ColumnComponent,
                   events: mungedEvents,
                 }) => {
-                  return MOCK_TIMEZONE_COLUMNS.map(column => {
+                  const columns = getColumns(week);
+                  return columns.map(column => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const totalEventColumns = Object.keys(
                       get(mungedEvents, `${column.column_id}.${dateKey}`, {})
@@ -222,7 +237,8 @@ const CustomView = () => {
                   events: mungedEvents,
                   stepDetails: mungedStepDetails,
                 }) => {
-                  return MOCK_TIMEZONE_COLUMNS.map((column, index) => {
+                  const columns = getColumns(week);
+                  return columns.map((column, index) => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const columnId = `${dateKey}-${column.column_id}`;
 

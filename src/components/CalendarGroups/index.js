@@ -21,6 +21,7 @@ const CalendarGroups = ({
     <TimeGrid
       selectedDate={selectedDate}
       visibleEventGroups={visibleEventGroups}
+      withColumns={false}
       {...restProps}
       renderHeaders={({ ColumnComponent, eventsWithGroups }) => {
         return eventGroups.map(eventGroup => {

@@ -22,6 +22,7 @@ const getMungedEvents = ({
   events,
   stepMinutes = false,
   stepHeight = false,
+  withColumns = true,
 }) => {
   const expandedEvents = expandAllDayEvents(events);
   const sortedEvents = getSortedEvents(expandedEvents);
@@ -40,7 +41,7 @@ const getMungedEvents = ({
 
     // We're turning the event array into a nested object with the group id
     // and the date as separate keys so we can access the events quickly by key
-    return setNestedObject({ eventsKeyed, event: newEvent });
+    return setNestedObject({ eventsKeyed, event: newEvent, withColumns });
   }, {});
 };
 
@@ -199,14 +200,15 @@ const getEventPadding = ({ event, pixelsPerMinute }) => {
  * @param {Object} params
  * @param {Object} params.eventsKeyed - the last set of events in their keyed form
  * @param {Object} params.event - the new event with location
+ * @param {Object} params.withColumns - Should we include columns here?
  */
-const setNestedObject = ({ eventsKeyed, event }) => {
+const setNestedObject = ({ eventsKeyed, event, withColumns }) => {
   const newEventsKeyed = Object.assign({}, eventsKeyed);
 
   const thisDate = event.start.format('YYYY-MM-DD');
   const columnId = get(event, 'column_id', false);
   let eventsForDate = get(eventsKeyed, `${event.group_id}.${thisDate}`, []);
-  if (columnId) {
+  if (columnId && withColumns) {
     eventsForDate = get(
       eventsKeyed,
       `${event.group_id}.${columnId}.${thisDate}`,
@@ -216,7 +218,7 @@ const setNestedObject = ({ eventsKeyed, event }) => {
   eventsForDate.push(event);
 
   const dates = get(eventsKeyed, `${event.group_id}`, {});
-  if (columnId) {
+  if (columnId && withColumns) {
     if (!get(dates, columnId, false)) {
       dates[columnId] = {};
     }

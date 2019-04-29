@@ -61,6 +61,8 @@ const Column = React.forwardRef(
     const [isSlotClickable, setIsSlotClickable] = useState(true);
     const [clickedTime, setClickedTime] = useState(null);
 
+    const dateMoment = moment(date);
+
     const {
       selectRangeHandlers,
       isSelectRangeFinished,
@@ -72,7 +74,7 @@ const Column = React.forwardRef(
       isSelectable: isSlotClickable,
       stepMinutes,
       selectMinutes,
-      columnDate: date,
+      columnDate: dateMoment,
       stepHeight,
     });
 
@@ -81,7 +83,6 @@ const Column = React.forwardRef(
     const currentTimeIndicatorClass = makeClass(
       'time-grid__current-time-indicator'
     );
-    const dateMoment = moment(date);
 
     return (
       <div
@@ -316,7 +317,7 @@ Column.defaultProps = {
   onDragEnd: () => null,
   stepMinutes: STEP_MINUTES_DEFAULT,
   events: {},
-  date: moment(),
+  date: new Date(),
   onSelectEvent: () => null,
   onSelectSlot: () => null,
   selectMinutes: SELECT_MINUTES_DEFAULT,
@@ -343,7 +344,7 @@ Column.propTypes = {
   columnIndex: PropTypes.number.isRequired,
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
-  date: MOMENT_TYPE,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
   gridHeight: PropTypes.number.isRequired,

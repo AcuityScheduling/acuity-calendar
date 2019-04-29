@@ -118,6 +118,7 @@ const FullCalendar = ({
     renderSelectSlotIndicator,
     renderEvent: renderTimeGridEvent,
     scrollToTime,
+    withGroups: false,
   };
 
   const viewRenderMap = {

@@ -8,6 +8,7 @@ import { CALENDAR_VIEWS } from '../../Calendar/constants';
 const CalendarWeek = ({ renderHeader, ...restProps }) => {
   return (
     <TimeGrid
+      withColumns={false}
       {...restProps}
       renderHeaders={({ week, ColumnComponent, events }) => {
         return week.map(date => {
@@ -47,7 +48,7 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
           return (
             <ColumnComponent
               key={`weekColumn${dateMoment.day()}`}
-              date={dateMoment}
+              date={dateMoment.format()}
               columnKey={`weekColumn${dateMoment.day()}`}
               events={eventsForDay}
               columnIndex={index}

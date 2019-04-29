@@ -8,9 +8,10 @@ const useMungeData = ({
   stepHeight,
   visibleEventGroups,
   stepDetails,
+  withColumns = true,
 }) => {
   const mungedEvents = useMemo(
-    () => getMungedEvents({ events, stepMinutes, stepHeight }),
+    () => getMungedEvents({ events, stepMinutes, stepHeight, withColumns }),
     [events, stepMinutes]
   );
 

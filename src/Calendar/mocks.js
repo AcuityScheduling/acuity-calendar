@@ -162,25 +162,7 @@ export const MOCKED_STEP_DETAILS = [
 ];
 
 export const MOCK_TIMEZONE_COLUMNS = [
-  { date: moment(now), column_id: 'America/Los_Angeles' },
-  { date: moment(now), column_id: 'America/New_York' },
-  { date: moment(now), column_id: 'America/Phoenix' },
-  { date: moment(now).add(1, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(1, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(1, 'days'), column_id: 'America/Phoenix' },
-  { date: moment(now).add(2, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(2, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(2, 'days'), column_id: 'America/Phoenix' },
-  { date: moment(now).add(3, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(3, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(3, 'days'), column_id: 'America/Phoenix' },
-  { date: moment(now).add(4, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(4, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(4, 'days'), column_id: 'America/Phoenix' },
-  { date: moment(now).add(5, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(5, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(5, 'days'), column_id: 'America/Phoenix' },
-  { date: moment(now).add(6, 'days'), column_id: 'America/Los_Angeles' },
-  { date: moment(now).add(6, 'days'), column_id: 'America/New_York' },
-  { date: moment(now).add(6, 'days'), column_id: 'America/Phoenix' },
+  'America/Los_Angeles',
+  'America/New_York',
+  'America/Phoenix',
 ];

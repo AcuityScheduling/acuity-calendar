@@ -169,6 +169,14 @@ const CustomView = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const columns = [];
+  for (let i = 0; i < MOCK_TIMEZONE_COLUMNS.length * 7; i += 1) {
+    columns.push({
+      date: moment(selectedDate).add(i, 'days'),
+      column_id: MOCK_TIMEZONE_COLUMNS[i % MOCK_TIMEZONE_COLUMNS.length],
+    });
+  }
+
   return (
     <Fragment>
       <style>{`.acuity-calendar__time-grid { height: 500px }`}</style>
@@ -189,7 +197,7 @@ const CustomView = () => {
                   ColumnComponent,
                   events: mungedEvents,
                 }) => {
-                  return MOCK_TIMEZONE_COLUMNS.map(column => {
+                  return columns.map(column => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const totalEventColumns = Object.keys(
                       get(mungedEvents, `${column.column_id}.${dateKey}`, {})
@@ -222,7 +230,7 @@ const CustomView = () => {
                   events: mungedEvents,
                   stepDetails: mungedStepDetails,
                 }) => {
-                  return MOCK_TIMEZONE_COLUMNS.map((column, index) => {
+                  return columns.map((column, index) => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const columnId = `${dateKey}-${column.column_id}`;
 

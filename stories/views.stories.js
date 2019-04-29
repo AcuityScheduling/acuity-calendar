@@ -181,8 +181,6 @@ const CustomView = () => {
           {
             view: 'week',
             grid: 'time',
-            eventFilter: ({ event, column }) =>
-              event.timezone !== column.timezone,
             render: props => (
               <TimeGrid
                 {...props}

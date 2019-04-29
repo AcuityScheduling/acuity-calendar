@@ -8,7 +8,7 @@ import get from 'lodash.get';
  */
 const getEventColumns = events => {
   const newEvents = Object.assign({}, events);
-  const hasColumn = getHasColumn(events);
+  const hasColumn = getHasColumnNoGroups(events);
   if (!hasColumn) {
     return Object.keys(events).reduce((accumulator, date) => {
       return {
@@ -35,9 +35,21 @@ const getEventColumns = events => {
   }
 };
 
-const getHasColumn = events => {
-  if (Array.isArray(Object.keys(events)[0])) {
+const getHasColumnNoGroups = events => {
+  const column = Object.keys(events)[0];
+  if (Array.isArray(events[column])) {
     return false;
+  }
+  return true;
+};
+
+const getHasColumnGroups = events => {
+  const column = Object.keys(events)[0];
+  if (!Array.isArray(events[column])) {
+    const nextColumn = Object.keys(events[column])[0];
+    if (Array.isArray(events[column][nextColumn])) {
+      return false;
+    }
   }
   return true;
 };
@@ -50,7 +62,7 @@ const getHasColumn = events => {
  */
 export const getEventColumnsByGroup = events => {
   const newEvents = Object.assign({}, events);
-  const hasColumn = getHasColumn(events);
+  const hasColumn = getHasColumnGroups(events);
 
   if (!hasColumn) {
     return Object.keys(newEvents).reduce((accumulator, groupId) => {

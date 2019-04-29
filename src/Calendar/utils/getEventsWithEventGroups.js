@@ -57,6 +57,9 @@ const getEventsWithEventGroups = ({ mungedEvents, visibleEventGroups }) => {
 };
 
 const getHasColumn = mungedEvents => {
+  if (Object.keys(mungedEvents).length === 0) {
+    return false;
+  }
   const groupId = Object.keys(mungedEvents)[0];
   const columnIdOrDate = Object.keys(mungedEvents[groupId])[0];
   // If it is an array that means we got to event columns - which means it does NOT

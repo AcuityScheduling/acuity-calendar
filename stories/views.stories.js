@@ -19,6 +19,7 @@ import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import EventGroupSelect from '../src/EventGroupSelect';
 import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
+import { getWeekList } from '../src/components/CalendarWeek/utils';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -169,17 +170,18 @@ const CustomView = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const columns = [];
-  let currentDay = 0;
-  for (let i = 0; i < MOCK_TIMEZONE_COLUMNS.length * 7; i += 1) {
-    if (i !== 0 && i % 3 === 0) {
-      currentDay += 1;
-    }
-    columns.push({
-      date: moment(selectedDate).add(currentDay, 'days'),
-      column_id: MOCK_TIMEZONE_COLUMNS[i % MOCK_TIMEZONE_COLUMNS.length],
+  const getColumns = week => {
+    const columns = [];
+    week.forEach(day => {
+      MOCK_TIMEZONE_COLUMNS.forEach(timezone => {
+        columns.push({
+          date: moment(day),
+          column_id: timezone,
+        });
+      });
     });
-  }
+    return columns;
+  };
 
   return (
     <Fragment>
@@ -201,6 +203,7 @@ const CustomView = () => {
                   ColumnComponent,
                   events: mungedEvents,
                 }) => {
+                  const columns = getColumns(week);
                   return columns.map(column => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const totalEventColumns = Object.keys(
@@ -234,6 +237,7 @@ const CustomView = () => {
                   events: mungedEvents,
                   stepDetails: mungedStepDetails,
                 }) => {
+                  const columns = getColumns(week);
                   return columns.map((column, index) => {
                     const dateKey = column.date.format('YYYY-MM-DD');
                     const columnId = `${dateKey}-${column.column_id}`;

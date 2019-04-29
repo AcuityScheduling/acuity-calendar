@@ -24,6 +24,7 @@ const DayGrid = ({
   const { eventsWithSelectedEventGroups } = useMungeData({
     events,
     visibleEventGroups,
+    withColumns: false,
   });
   const {
     rowRef,

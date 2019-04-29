@@ -35,7 +35,7 @@ const getEventColumns = events => {
   }
 };
 
-const getHasColumnNoGroups = events => {
+export const getHasColumnNoGroups = events => {
   const column = Object.keys(events)[0];
   if (Array.isArray(events[column])) {
     return false;

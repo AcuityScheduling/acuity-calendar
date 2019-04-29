@@ -90,7 +90,7 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
-  const [selectedEventGroups, setSelectedEventGroups] = useState([]);
+  const [selectedEventGroups, setSelectedEventGroups] = useState([5]);
 
   return (
     <Fragment>

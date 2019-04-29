@@ -55,6 +55,7 @@ const TimeGridWrapper = ({
   stepHeight,
   scrollToTime,
   visibleEventGroups,
+  withColumns,
 }) => {
   let dateList = getWeekList({ date: moment(selectedDate), firstDay });
   dateList = dateList.map(date => new Date(date));
@@ -72,6 +73,7 @@ const TimeGridWrapper = ({
     stepHeight,
     stepDetails,
     visibleEventGroups,
+    withColumns,
   });
   const eventsWithColumns = useMemo(
     () => getEventColumns(eventsWithSelectedEventGroups),
@@ -223,6 +225,11 @@ TimeGridWrapper.defaultProps = {
   scrollToTime: SCROLL_TO_TIME_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
   visibleEventGroups: null,
+  // If there are no columns in the events withColumns can still
+  // be true. We only need them false if there IS a column_id on events
+  // but we don't want to include it in our munging of the data
+  // So it's going to be less common to set it to false
+  withColumns: true,
 };
 
 TimeGridWrapper.propTypes = {
@@ -254,6 +261,7 @@ TimeGridWrapper.propTypes = {
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
+  withColumns: PropTypes.bool,
 };
 
 export default TimeGridWrapper;

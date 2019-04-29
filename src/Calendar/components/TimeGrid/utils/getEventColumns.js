@@ -36,6 +36,7 @@ const getEventColumns = events => {
 };
 
 export const getHasColumnNoGroups = events => {
+  if (Object.keys(events).length === 0) return false;
   const column = Object.keys(events)[0];
   if (Array.isArray(events[column])) {
     return false;
@@ -44,6 +45,7 @@ export const getHasColumnNoGroups = events => {
 };
 
 const getHasColumnGroups = events => {
+  if (Object.keys(events).length === 0) return false;
   const column = Object.keys(events)[0];
   if (!Array.isArray(events[column])) {
     const nextColumn = Object.keys(events[column])[0];

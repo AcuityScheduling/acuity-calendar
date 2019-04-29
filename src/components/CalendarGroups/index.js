@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import get from 'lodash.get';
 import TimeGrid from '../../Calendar/components/TimeGrid/TimeGridWrapper';
-import { MOMENT_TYPE, EVENT_GROUP } from '../../Calendar/types';
+import { EVENT_GROUP, DATE_TYPE } from '../../Calendar/types';
 import { CALENDAR_VIEWS } from '../../Calendar/constants';
 
 const getEventsForDay = ({ events, groupId, selectedDate }) => {
-  return get(events, `${groupId}.${selectedDate.format('YYYY-MM-DD')}`, false);
+  return get(
+    events,
+    `${groupId}.${moment(selectedDate).format('YYYY-MM-DD')}`,
+    false
+  );
 };
 
 const CalendarGroups = ({
@@ -98,7 +102,7 @@ const CalendarGroups = ({
 };
 
 CalendarGroups.defaultProps = {
-  selectedDate: moment(),
+  selectedDate: new Date(),
   renderHeader: null,
   visibleEventGroups: null,
 };
@@ -106,7 +110,7 @@ CalendarGroups.defaultProps = {
 CalendarGroups.propTypes = {
   eventGroups: PropTypes.arrayOf(EVENT_GROUP).isRequired,
   renderHeader: PropTypes.func,
-  selectedDate: MOMENT_TYPE,
+  selectedDate: DATE_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),
 };
 

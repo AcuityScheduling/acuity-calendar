@@ -15,12 +15,14 @@
     "build-storybook": "build-storybook"
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint:fix --",
-      "git add",
-      "npm run prettier",
-      "git add"
-    ],
+    "linters": {
+      "*.js": [
+        "npm run lint:fix --",
+        "git add",
+        "npm run prettier",
+        "git add"
+      ]
+    },
     "ignore": ["node_modules", "build", "storybook-static"]
   },
   "jest": {

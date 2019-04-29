@@ -12,7 +12,7 @@ module.exports = {
     library: 'acuity-calendar',
     libraryTarget: 'umd',
   },
-  plugins: [new BundleAnalyzerPlugin()],
+  // plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       {

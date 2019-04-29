@@ -20,7 +20,8 @@
       "git add",
       "npm run prettier",
       "git add"
-    ]
+    ],
+    "ignore": ["node_modules", "build", "storybook-static"]
   },
   "jest": {
     "moduleNameMapper": {

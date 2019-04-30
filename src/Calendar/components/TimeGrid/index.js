@@ -61,7 +61,7 @@ const TimeGrid = React.forwardRef(
         (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
         (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
       );
-    }, [stepMinutes]);
+    }, [stepMinutes, stepHeight]);
 
     useEffect(() => {
       if (scrollToTime) {

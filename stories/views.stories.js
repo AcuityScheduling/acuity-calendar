@@ -54,14 +54,18 @@ const Month = props => {
 
 const Week = props => {
   const { events, handlers } = useEvents(props);
+  const [stepHeight, setStepHeight] = useState(50);
 
   return (
     <Fragment>
       <style>{styles}</style>
+      <button onClick={() => setStepHeight(25)}>Zoom .5</button>
+      <button onClick={() => setStepHeight(50)}>Zoom 1</button>
+      <button onClick={() => setStepHeight(62.5)}>Zoom 1.25</button>
       <CalendarWeek
         events={events}
         renderEvent={renderColorEvent}
-        stepHeight={30}
+        stepHeight={stepHeight}
         {...handlers}
       />
     </Fragment>

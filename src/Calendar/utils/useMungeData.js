@@ -12,7 +12,7 @@ const useMungeData = ({
 }) => {
   const mungedEvents = useMemo(
     () => getMungedEvents({ events, stepMinutes, stepHeight, withColumns }),
-    [events, stepMinutes]
+    [events, stepMinutes, stepHeight]
   );
 
   const eventsWithSelectedEventGroups = useMemo(
@@ -21,7 +21,7 @@ const useMungeData = ({
         mungedEvents,
         visibleEventGroups,
       }),
-    [mungedEvents, visibleEventGroups]
+    [mungedEvents, visibleEventGroups, stepHeight]
   );
 
   if (!stepDetails) {
@@ -33,7 +33,7 @@ const useMungeData = ({
 
   const mungedStepDetails = useMemo(
     () => getMungedEvents({ events: stepDetails, stepMinutes, stepHeight }),
-    [stepDetails, stepMinutes]
+    [stepDetails, stepMinutes, stepHeight]
   );
 
   const mungedStepDetailsGroups = useMemo(
@@ -42,7 +42,7 @@ const useMungeData = ({
         mungedEvents: mungedStepDetails,
         visibleEventGroups,
       }),
-    [mungedStepDetails, visibleEventGroups]
+    [mungedStepDetails, visibleEventGroups, stepHeight]
   );
 
   return {

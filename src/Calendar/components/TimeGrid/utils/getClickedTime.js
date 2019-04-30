@@ -1,4 +1,4 @@
-import { STEP_HEIGHTS } from '../constants';
+import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 
 const getClickedTime = ({
   stepMinutes,
@@ -9,8 +9,10 @@ const getClickedTime = ({
   const rect = e.currentTarget.getBoundingClientRect();
   const verticalClick = e.clientY - rect.top;
 
+  const totalStepsPerHour = 60 / stepMinutes;
   const pixelsPerMinute =
-    (stepHeight || STEP_HEIGHTS[stepMinutes]) / stepMinutes;
+    (stepHeight + STEP_BORDER_WIDTH / totalStepsPerHour ||
+      STEP_HEIGHTS[stepMinutes]) / stepMinutes;
   const minutesFromMidnight = verticalClick / pixelsPerMinute;
   const selectedTime = columnDate
     .clone()

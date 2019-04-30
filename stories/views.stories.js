@@ -19,7 +19,6 @@ import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import EventGroupSelect from '../src/EventGroupSelect';
 import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
-import { getWeekList } from '../src/components/CalendarWeek/utils';
 
 const getEventColor = groupId => {
   return MOCKED_CALENDARS.find(calendar => {
@@ -62,6 +61,7 @@ const Week = props => {
       <CalendarWeek
         events={events}
         renderEvent={renderColorEvent}
+        stepHeight={30}
         {...handlers}
       />
     </Fragment>

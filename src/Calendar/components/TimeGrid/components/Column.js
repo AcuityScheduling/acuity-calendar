@@ -138,7 +138,11 @@ const Column = React.forwardRef(
           <div
             className={makeClass('time-grid__select-slot-indicator')}
             style={{
-              top: `${getTopOffset({ stepMinutes, date: clickedTime })}px`,
+              top: `${getTopOffset({
+                stepMinutes,
+                date: clickedTime,
+                stepHeight,
+              })}px`,
             }}
           >
             {renderSelectSlotIndicator ? (

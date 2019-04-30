@@ -26,6 +26,7 @@ const useSelectRange = ({
   const selectMinutesHeight = getSelectMinutesHeight({
     stepMinutes,
     selectMinutes,
+    stepHeight,
   });
 
   const onMouseUp = e => {

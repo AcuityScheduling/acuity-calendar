@@ -11,8 +11,9 @@ const getClickedTime = ({
 
   const totalStepsPerHour = 60 / stepMinutes;
   const pixelsPerMinute =
-    (stepHeight + STEP_BORDER_WIDTH / totalStepsPerHour ||
-      STEP_HEIGHTS[stepMinutes]) / stepMinutes;
+    ((stepHeight || STEP_HEIGHTS[stepMinutes]) +
+      STEP_BORDER_WIDTH / totalStepsPerHour) /
+    stepMinutes;
   const minutesFromMidnight = verticalClick / pixelsPerMinute;
   const selectedTime = columnDate
     .clone()

@@ -13,8 +13,9 @@ import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from '../constants';
 const getTopOffset = ({ stepMinutes, date, stepHeight }) => {
   const totalStepsPerHour = 60 / stepMinutes;
   const pixelsPerMinute =
-    (stepHeight + STEP_BORDER_WIDTH / totalStepsPerHour ||
-      STEP_HEIGHTS[stepMinutes]) / stepMinutes;
+    ((stepHeight || STEP_HEIGHTS[stepMinutes]) +
+      STEP_BORDER_WIDTH / totalStepsPerHour) /
+    stepMinutes;
 
   const minutesSinceMidnight = getMinutesSinceMidnight(date);
 

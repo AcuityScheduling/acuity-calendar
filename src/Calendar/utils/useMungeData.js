@@ -32,7 +32,13 @@ const useMungeData = ({
   }
 
   const mungedStepDetails = useMemo(
-    () => getMungedEvents({ events: stepDetails, stepMinutes, stepHeight }),
+    () =>
+      getMungedEvents({
+        events: stepDetails,
+        stepMinutes,
+        stepHeight,
+        withColumns,
+      }),
     [stepDetails, stepMinutes, stepHeight]
   );
 

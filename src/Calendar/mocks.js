@@ -145,7 +145,7 @@ export const MOCKED_STEP_DETAILS = [
       .set({ hour: 17, minute: 0 })
       .format(dateFormat),
     availability: true,
-    // column_id: 'America/New_York',
+    column_id: 'America/New_York',
   },
   {
     id: 2,
@@ -153,7 +153,7 @@ export const MOCKED_STEP_DETAILS = [
     start: tomorrow.set({ hour: 10, minute: 0 }).format(dateFormat),
     end: tomorrow.set({ hour: 13, minute: 15 }).format(dateFormat),
     availability: true,
-    // column_id: 'America/Los_Angeles',
+    column_id: 'America/Los_Angeles',
   },
   {
     id: 3,
@@ -163,7 +163,7 @@ export const MOCKED_STEP_DETAILS = [
       .add(12, 'hours')
       .format('YYYY-MM-DD HH:mm:ss'),
     schedulingLimits: true,
-    // column_id: 'America/Los_Angeles',
+    column_id: 'America/Los_Angeles',
   },
 ];
 

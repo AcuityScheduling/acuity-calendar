@@ -38,7 +38,6 @@ const CalendarWeek = ({ renderHeader, ...restProps }) => {
             dateMoment.format('YYYY-MM-DD'),
             []
           );
-
           const eventsForDay = get(events, dateMoment.format('YYYY-MM-DD'), {});
 
           const columnId = new Date(

@@ -136,8 +136,14 @@ export const MOCKED_STEP_DETAILS = [
   {
     id: 1,
     group_id: 6,
-    start: today.set({ hour: 9, minute: 0 }).format(dateFormat),
-    end: today.set({ hour: 17, minute: 0 }).format(dateFormat),
+    start: today
+      .add(7, 'days')
+      .set({ hour: 14, minute: 0 })
+      .format(dateFormat),
+    end: today
+      .add(7, 'days')
+      .set({ hour: 17, minute: 0 })
+      .format(dateFormat),
     availability: true,
     // column_id: 'America/New_York',
   },

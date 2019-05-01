@@ -11,12 +11,7 @@ import moment from 'moment';
  * @param {boolean} params.hasGroups - does munged events include groups as the top level key?
  *                                     this will be true for calendarGroups view
  */
-const getFirstEventStart = ({
-  mungedEvents,
-  mungedStepDetails,
-  selectedDate,
-  hasGroups,
-}) => {
+const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
   const firstEvent = Object.keys(mungedEvents).reduce(
     (accumulator, firstKey) => {
       let eventArray = mungedEvents[firstKey];
@@ -67,11 +62,19 @@ const scrollToEvent = ({
   selectedDate,
   hasGroups,
 }) => {
-  const firstEventStart = getFirstEventStart({
+  let firstEventStart = getFirstEventStart({
     mungedEvents,
     selectedDate,
     hasGroups,
   });
+  // If there's no event on the day then try a step detail
+  if (!firstEventStart) {
+    firstEventStart = getFirstEventStart({
+      mungedEvents: mungedStepDetails,
+      selectedDate,
+      hasGroups,
+    });
+  }
 
   // This is the total minutes that we're going to pad our scroll by.
   // I think it's better to give a little padding before the event so

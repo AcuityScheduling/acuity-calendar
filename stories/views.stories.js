@@ -66,6 +66,7 @@ const Week = props => {
         events={events}
         renderEvent={renderColorEvent}
         stepHeight={stepHeight}
+        stepDetails={MOCKED_STEP_DETAILS}
         {...handlers}
       />
     </Fragment>

@@ -98,6 +98,7 @@ const TimeGridWrapper = ({
         scrollToTime === 'firstEvent'
           ? scrollToEvent({
               mungedEvents: eventsWithSelectedEventGroups,
+              mungedStepDetails: mungedStepDetailsGroups,
               selectedDate: moment(selectedDate),
               hasGroups: false,
             })

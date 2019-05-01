@@ -56,12 +56,25 @@ const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
  * @param {moment} params.selectedDate
  * @param {boolean} params.hasGroups
  */
-const scrollToEvent = ({ mungedEvents, selectedDate, hasGroups }) => {
-  const firstEventStart = getFirstEventStart({
+const scrollToEvent = ({
+  mungedEvents,
+  mungedStepDetails,
+  selectedDate,
+  hasGroups,
+}) => {
+  let firstEventStart = getFirstEventStart({
     mungedEvents,
     selectedDate,
     hasGroups,
   });
+  // If there's no event on the day then try a step detail
+  if (!firstEventStart) {
+    firstEventStart = getFirstEventStart({
+      mungedEvents: mungedStepDetails,
+      selectedDate,
+      hasGroups,
+    });
+  }
 
   // This is the total minutes that we're going to pad our scroll by.
   // I think it's better to give a little padding before the event so

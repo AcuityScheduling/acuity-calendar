@@ -66,6 +66,7 @@ const Week = props => {
         events={events}
         renderEvent={renderColorEvent}
         stepHeight={stepHeight}
+        stepDetails={MOCKED_STEP_DETAILS}
         {...handlers}
       />
     </Fragment>
@@ -94,7 +95,7 @@ const Full = props => {
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
-  const [selectedEventGroups, setSelectedEventGroups] = useState([5]);
+  const [selectedEventGroups, setSelectedEventGroups] = useState([5, 6, 7]);
 
   return (
     <Fragment>

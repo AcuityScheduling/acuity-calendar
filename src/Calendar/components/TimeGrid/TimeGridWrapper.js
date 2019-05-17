@@ -82,6 +82,7 @@ const TimeGridWrapper = ({
 
   const eventsWithColumnsGroups = getEventColumnsByGroup(mungedEvents);
 
+  console.log('elementWidths: ', elementWidths);
   return (
     <TimeGrid
       ref={TimeGridRef}

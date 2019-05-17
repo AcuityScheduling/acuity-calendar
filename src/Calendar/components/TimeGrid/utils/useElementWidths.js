@@ -15,16 +15,12 @@ const useElementWidths = props => {
   const getElementsMeasurements = () => {
     const widths = [];
     elementRefs.forEach((element, day) => {
-      console.log('element: ', element);
-      console.log('day: ', day);
       widths.push(element.offsetWidth);
     });
-    console.log('widths: ', widths);
     return widths;
   };
 
   const setAllWidths = () => {
-    console.log('elementWidths: ', elementWidths);
     if (!isEqual(getElementsMeasurements(), elementWidths)) {
       setElementWidths(getElementsMeasurements());
     }
@@ -35,7 +31,6 @@ const useElementWidths = props => {
   }, 300);
 
   useEffect(() => {
-    console.log('elementRefs: ', elementRefs);
     if (TimeGridRef.current) {
       addListener(TimeGridRef.current, resizable);
     }

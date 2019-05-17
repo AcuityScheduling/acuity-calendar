@@ -30,7 +30,6 @@ const TimeGrid = React.forwardRef(
     },
     ref
   ) => {
-    console.log('totalWidth: ', totalWidth);
     const [currentTime, setCurrentTime] = useState(moment());
     // Scrollbar width is usually 15 so let's use that as the default
     const [scrollbarWidth, setScrollbarWidth] = useState(15);

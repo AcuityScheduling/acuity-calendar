@@ -200,84 +200,81 @@ const CustomView = () => {
           {
             view: 'week',
             grid: 'time',
-            render: props => {
-              console.log('props: ', props);
-              return (
-                <TimeGrid
-                  {...props}
-                  renderHeaders={({
-                    week,
-                    ColumnComponent,
-                    events: mungedEvents,
-                  }) => {
-                    const columns = getColumns(week);
-                    return columns.map(column => {
-                      const dateKey = column.date.format('YYYY-MM-DD');
-                      const totalEventColumns = Object.keys(
-                        get(mungedEvents, `${column.column_id}.${dateKey}`, {})
-                      ).length;
-                      return (
-                        <ColumnComponent
-                          key={`${dateKey}${column.column_id}`}
-                          totalEventColumns={totalEventColumns}
-                          date={column.date.format()}
-                          columnClass="week"
-                        >
-                          <div className="time-grid__week-header__container">
-                            <div className={`time-grid__week-header__date`}>
-                              {moment(column.date).format('M/D')}
-                            </div>
-                            <div className={`time-grid__week-header__day`}>
-                              {moment(column.date).format('dddd')}
-                            </div>
-                            <div style={{ fontSize: '10px' }}>
-                              {column.column_id}
-                            </div>
+            render: props => (
+              <TimeGrid
+                {...props}
+                renderHeaders={({
+                  week,
+                  ColumnComponent,
+                  events: mungedEvents,
+                }) => {
+                  const columns = getColumns(week);
+                  return columns.map(column => {
+                    const dateKey = column.date.format('YYYY-MM-DD');
+                    const totalEventColumns = Object.keys(
+                      get(mungedEvents, `${column.column_id}.${dateKey}`, {})
+                    ).length;
+                    return (
+                      <ColumnComponent
+                        key={`${dateKey}${column.column_id}`}
+                        totalEventColumns={totalEventColumns}
+                        date={column.date.format()}
+                        columnClass="week"
+                      >
+                        <div className="time-grid__week-header__container">
+                          <div className={`time-grid__week-header__date`}>
+                            {moment(column.date).format('M/D')}
                           </div>
-                        </ColumnComponent>
-                      );
-                    });
-                  }}
-                  renderColumns={({
-                    ColumnComponent,
-                    week,
-                    events: mungedEvents,
-                    stepDetails: mungedStepDetails,
-                  }) => {
-                    const columns = getColumns(week);
-                    return columns.map((column, index) => {
-                      const dateKey = column.date.format('YYYY-MM-DD');
-                      const columnId = `${dateKey}-${column.column_id}`;
+                          <div className={`time-grid__week-header__day`}>
+                            {moment(column.date).format('dddd')}
+                          </div>
+                          <div style={{ fontSize: '10px' }}>
+                            {column.column_id}
+                          </div>
+                        </div>
+                      </ColumnComponent>
+                    );
+                  });
+                }}
+                renderColumns={({
+                  ColumnComponent,
+                  week,
+                  events: mungedEvents,
+                  stepDetails: mungedStepDetails,
+                }) => {
+                  const columns = getColumns(week);
+                  return columns.map((column, index) => {
+                    const dateKey = column.date.format('YYYY-MM-DD');
+                    const columnId = `${dateKey}-${column.column_id}`;
 
-                      const eventsForColumn = get(
-                        mungedEvents,
-                        `${column.column_id}.${dateKey}`,
-                        {}
-                      );
-                      const stepDetailsForColumn = get(
-                        mungedStepDetails,
-                        `${column.column_id}.${dateKey}`,
-                        []
-                      );
+                    const eventsForColumn = get(
+                      mungedEvents,
+                      `${column.column_id}.${dateKey}`,
+                      {}
+                    );
+                    const stepDetailsForColumn = get(
+                      mungedStepDetails,
+                      `${column.column_id}.${dateKey}`,
+                      []
+                    );
 
-                      return (
-                        <ColumnComponent
-                          key={`${column.date.format('YYYY-MM-DD')}${
-                            column.column_id
-                          }`}
-                          eventsForColumn={eventsForColumn}
-                          stepDetailsForColumn={stepDetailsForColumn}
-                          date={column.date.format()}
-                          columnKey={columnId}
-                          columnIndex={index}
-                          columnId={columnId}
-                        />
-                      );
-                    });
-                  }}
-                />
-              );
-            },
+                    return (
+                      <ColumnComponent
+                        key={`${column.date.format('YYYY-MM-DD')}${
+                          column.column_id
+                        }`}
+                        eventsForColumn={eventsForColumn}
+                        stepDetailsForColumn={stepDetailsForColumn}
+                        date={column.date.format()}
+                        columnKey={columnId}
+                        columnIndex={index}
+                        columnId={columnId}
+                      />
+                    );
+                  });
+                }}
+              />
+            ),
           },
         ]}
         events={MOCKED_EVENTS}

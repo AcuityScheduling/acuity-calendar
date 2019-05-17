@@ -47,6 +47,11 @@ const useTotalEventsToShow = () => {
 
   useEffect(() => {
     if (eventHeight > 0) {
+      console.log('----');
+      console.log('rowHeight: ', rowHeight);
+      console.log('eventWrapperMargin: ', eventWrapperMargin);
+      console.log('eventHeight: ', eventHeight);
+      console.log('----');
       setTotalEventsToShow(
         Math.floor((rowHeight - eventWrapperMargin) / eventHeight) - 1
       );

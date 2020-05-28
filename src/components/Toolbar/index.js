@@ -59,7 +59,7 @@ const Toolbar = ({
     onFetchEvents({
       fetchMoreRange: fetchMoreRange,
       fullRange: fullRange,
-      outsideRange: isOutsideRange ? true : false,
+      outsideRange: isOutsideRange,
     });
   }
 

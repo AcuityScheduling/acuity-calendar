@@ -155,11 +155,8 @@ const shouldExtendStart = ({ selectedDate, startDate, monthPadding }) =>
  */
 const getExtendedStartRange = ({ startDate, endDate, monthPadding }) => {
   const fetchMoreRange = {
-    start: startDate
-      .clone()
-      .subtract(monthPadding, 'months')
-      .subtract(1, 'milliseconds'),
-    end: startDate,
+    start: startDate.clone().subtract(monthPadding, 'months'),
+    end: startDate.subtract(1, 'milliseconds'),
   };
   let fullRange = false;
   if (fetchMoreRange) {
@@ -181,7 +178,7 @@ const shouldExtendEnd = ({ selectedDate, endDate, monthPadding }) =>
  */
 const getExtendedEndRange = ({ startDate, endDate, monthPadding }) => {
   const fetchMoreRange = {
-    start: endDate,
+    start: endDate.clone().add(1, 'millisecond'),
     end: endDate
       .clone()
       .startOf('month')

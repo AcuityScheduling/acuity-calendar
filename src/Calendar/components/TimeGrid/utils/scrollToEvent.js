@@ -11,7 +11,7 @@ import moment from 'moment';
  * @param {boolean} params.hasGroups - does munged events include groups as the top level key?
  *                                     this will be true for calendarGroups view
  */
-const getFirstEventStart = ({ mungedEvents, selectedDate, hasGroups }) => {
+const getFirstEventStart = ({ mungedEvents = {}, selectedDate, hasGroups }) => {
   const firstEvent = Object.keys(mungedEvents).reduce(
     (accumulator, firstKey) => {
       let eventArray = mungedEvents[firstKey];

@@ -16,8 +16,6 @@ const useTotalEventsToShow = () => {
   // even if there are no events show right away
   const [totalEventsToShow, setTotalEventsToShow] = useState(0);
 
-  console.log('rowHeight: ', rowHeight);
-  console.log('rowRef: ', rowRef);
   useEffect(() => {
     if (eventRef.current) {
       const currentEventHeight = eventRef.current.offsetHeight;
@@ -47,11 +45,6 @@ const useTotalEventsToShow = () => {
 
   useEffect(() => {
     if (eventHeight > 0) {
-      console.log('----');
-      console.log('rowHeight: ', rowHeight);
-      console.log('eventWrapperMargin: ', eventWrapperMargin);
-      console.log('eventHeight: ', eventHeight);
-      console.log('----');
       setTotalEventsToShow(
         Math.floor((rowHeight - eventWrapperMargin) / eventHeight) - 1
       );
@@ -64,7 +57,6 @@ const useTotalEventsToShow = () => {
     setEventWrapperMargin(newMargin);
   }, [get(eventWrapperRef, 'current.offsetTop', 0)]);
 
-  console.log('totalEventsToShow: ', totalEventsToShow);
   return {
     rowRef,
     eventRef,

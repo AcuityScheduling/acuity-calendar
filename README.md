@@ -2,12 +2,12 @@
 
 - [Acuity Calendar](#acuity-calendar)
   - [Installation](#installation)
+  - [Anatomy](#anatomy)
+  - [Datatypes](#datatypes)
+    - [Event](#event)
+    - [View](#view)
+    - [Date](#date)
   - [Usage](#usage)
-    - [Anatomy](#anatomy)
-    - [Datatypes](#datatypes)
-      - [Event](#event)
-      - [View](#view)
-      - [Date](#date)
     - [Components](#components)
       - [FullCalendar](#fullcalendar)
       - [CalendarGroups](#calendargroups)
@@ -30,21 +30,29 @@ Acuity calendar is an open source set of react calendar components used in the [
 
 TODO:
 
-## Usage
+## Anatomy
 
-TODO: 
+TODO:
 
-### Anatomy
+## Datatypes
 
-### Datatypes
+### Event
 
-#### Event
 TODO: Write about event structure
-#### View
+
+### View
+
 TODO: Write about view structure
 
-#### Date
+### Date
+
 TODO: Write about accepted date formats
+
+TODO:
+
+## Usage
+
+TODO:
 
 ### Components
 
@@ -53,18 +61,29 @@ For usage examples please refer to the supplied [Storybook](#storybook)
 
 #### FullCalendar
 
+TODO:
+
 #### CalendarGroups
+
+TODO:
   
 #### CalendarMonth
 
+TODO:
+
 #### CalendarMonthHeatmap
 
+TODO:
+
 #### CalendarWeek
+
+TODO:
 
 ---
 
 #### DayList
-TODO
+
+TODO:
 
 ```jsx
 import { DayList } from 'acuity-calendar';
@@ -92,8 +111,10 @@ const dayGridProps = {
 | ...rest      | `any`    |               | Any additional prop will be passed to the inner [DayGrid](#daygrid) component |
 
 ---
+
 #### DayGrid
-TODO
+
+TODO:
 
 ```jsx
 import { DayGrid } from 'acuity-calendar';
@@ -128,6 +149,7 @@ import { DayGrid } from 'acuity-calendar';
 | visibleEventGroups | `Number[]`       | `null`        |             |
 
 #### TimeGrid
+
 TODO
 
 ---

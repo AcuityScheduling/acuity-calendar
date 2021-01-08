@@ -6,11 +6,11 @@ import CalendarHeatmap from '../src/components/CalendarMonthHeatmap';
 import moment from 'moment';
 import DayList from '../src/components/DayList';
 
-const getDay = addDays => {
-  return moment()
+const getDay = addDays =>
+  moment()
     .add(addDays, 'days')
     .format('YYYY-MM-DD');
-};
+
 const eventCounts = {
   [getDay(-2)]: 2,
   [getDay(-6)]: 11,
@@ -22,11 +22,13 @@ const eventCounts = {
   [getDay(7)]: 3,
 };
 
-storiesOf('Calendar Utilities', module)
-  .add('Month Heatmap', () => (
-    <CalendarHeatmap
-      counts={eventCounts}
-      onSelectCell={result => console.log(result)}
-    />
-  ))
-  .add('Day List', () => <DayList />);
+export default { title: 'Calendar Utilities' };
+
+export const monthHeatmap = () => (
+  <CalendarHeatmap
+    counts={eventCounts}
+    onSelectCell={result => console.log(result)}
+  />
+);
+
+export const dayList = () => <DayList />;

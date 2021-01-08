@@ -2,8 +2,6 @@ import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 import get from 'lodash.get';
 
-import { storiesOf } from '@storybook/react';
-
 import {
   MOCKED_CALENDARS,
   MOCKED_STEP_DETAILS,
@@ -13,20 +11,16 @@ import {
 import CalendarMonth from '../src/components/CalendarMonth';
 import CalendarWeek from '../src/components/CalendarWeek';
 import CalendarGroups from '../src/components/CalendarGroups';
-import styles from './styles';
 import { useEvents } from './utils';
 import FullCalendar from '../src/components/FullCalendar';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import EventGroupSelect from '../src/EventGroupSelect';
 import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
 
-const getEventColor = groupId => {
-  return MOCKED_CALENDARS.find(calendar => {
-    return calendar.id === groupId;
-  }).color;
-};
+const getEventColor = groupId =>
+  MOCKED_CALENDARS.find(calendar => calendar.id === groupId).color;
 
-export const renderColorEvent = event => {
+const renderColorEvent = event => {
   return (
     <div
       style={{
@@ -41,24 +35,18 @@ export const renderColorEvent = event => {
   );
 };
 
-const Month = props => {
-  const { events, handlers } = useEvents(props);
+export const Month = () => {
+  const { events, handlers } = useEvents();
 
-  return (
-    <Fragment>
-      <style>{styles}</style>
-      <CalendarMonth events={events} {...handlers} />
-    </Fragment>
-  );
+  return <CalendarMonth events={events} {...handlers} />;
 };
 
-const Week = props => {
-  const { events, handlers } = useEvents(props);
+export const Week = () => {
+  const { events, handlers } = useEvents();
   const [stepHeight, setStepHeight] = useState(50);
 
   return (
     <Fragment>
-      <style>{styles}</style>
       <button onClick={() => setStepHeight(25)}>Zoom .5</button>
       <button onClick={() => setStepHeight(50)}>Zoom 1</button>
       <button onClick={() => setStepHeight(62.5)}>Zoom 1.25</button>
@@ -73,25 +61,22 @@ const Week = props => {
   );
 };
 
-const Groups = props => {
-  const { events, handlers } = useEvents(props);
+export const Groups = () => {
+  const { events, handlers } = useEvents();
 
   return (
-    <Fragment>
-      <style>{styles}</style>
-      <CalendarGroups
-        events={events}
-        eventGroups={MOCKED_CALENDARS}
-        visibleEventGroups={[5, 6, 7]}
-        renderEvent={renderColorEvent}
-        {...handlers}
-      />
-    </Fragment>
+    <CalendarGroups
+      events={events}
+      eventGroups={MOCKED_CALENDARS}
+      visibleEventGroups={[5, 6, 7]}
+      renderEvent={renderColorEvent}
+      {...handlers}
+    />
   );
 };
 
-const Full = props => {
-  const { events, handlers } = useEvents(props);
+export const Full = () => {
+  const { events, handlers } = useEvents();
   const [view, setView] = useState(CALENDAR_VIEWS.month);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [stepDetails, setStepDetails] = useState(MOCKED_STEP_DETAILS);
@@ -99,7 +84,6 @@ const Full = props => {
 
   return (
     <Fragment>
-      <style>{styles}</style>
       <EventGroupSelect
         eventGroups={MOCKED_CALENDARS}
         selectedEventGroups={selectedEventGroups}
@@ -171,7 +155,7 @@ const Full = props => {
   );
 };
 
-const CustomView = () => {
+export const CustomView = () => {
   const [view, setView] = useState(CALENDAR_VIEWS.week);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -285,9 +269,4 @@ const CustomView = () => {
   );
 };
 
-storiesOf('Calendar Views', module)
-  .add('Full Calendar', () => <Full />)
-  .add('Month', () => <Month />)
-  .add('Week', () => <Week />)
-  .add('Groups', () => <Groups />)
-  .add('Custom View', () => <CustomView />);
+export default { title: 'Views' };

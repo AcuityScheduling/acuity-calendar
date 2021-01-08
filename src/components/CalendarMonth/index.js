@@ -32,6 +32,8 @@ const CalendarMonth = ({
     forceSixWeeks,
   });
 
+  console.log(monthGrid);
+
   return (
     <DayGrid
       isEventDraggable={isEventDraggable}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MOCKED_EVENTS } from '../src/Calendar/mocks';
 
-export const useEvents = props => {
+export const useEvents = () => {
   const [events, setEvents] = useState(MOCKED_EVENTS);
   const updateEvent = event => {
     // Find the event key we're going to replace

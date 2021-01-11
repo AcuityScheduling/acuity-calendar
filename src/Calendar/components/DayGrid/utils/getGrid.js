@@ -7,7 +7,7 @@ import moment from 'moment';
  *
  * @param {Object} params
  * @param {moment} params.firstDate - the first date of the grid
- * @param {moment} params.lastDate - the first date of the grid
+ * @param {moment} params.lastDate - the last date of the grid
  * @param {number} params.totalColumns - the number of columns in the grid
  * @param {boolean} params.allowPartialRows - If false then days on a row without full "totalColumns"
  *                                            will be removed from the grid. e.g: [ [1,2,3], [4] ]

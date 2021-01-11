@@ -324,6 +324,7 @@ const Columns = ({ ColumnComponent, week, events, stepDetails }) => {
 ```
 
 The TimeGrid components allow users to specify custom views by defining callback functions to render headers and column based on event data input.
+Additionally, it's configuration allows for complete control on how selection, dragging, extension and events are handled and rendered.
 
 | Prop                      | Type                                         | Default value  | Description                                                                                                                                                                                           |
 | ------------------------- | -------------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

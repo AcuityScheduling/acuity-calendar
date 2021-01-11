@@ -4,9 +4,9 @@
   - [Installation](#installation)
   - [Anatomy](#anatomy)
   - [Datatypes](#datatypes)
+    - [Date](#date)
     - [Event](#event)
     - [View](#view)
-    - [Date](#date)
   - [Usage](#usage)
     - [Components](#components)
       - [FullCalendar](#fullcalendar)
@@ -19,8 +19,6 @@
       - [TimeGrid](#timegrid)
       - [Toolbar](#toolbar)
   - [Storybook](#storybook)
-
-
 
 _This package is not production ready. It will be changing extensively. Use at your own risk._
 
@@ -36,19 +34,125 @@ TODO:
 
 ## Datatypes
 
-### Event
-
-TODO: Write about event structure
-
-### View
-
-TODO: Write about view structure
+The Acuity calendar is a generalized appointment calendar with supports CRUD like operations. We defines a few key datatypes for working within the appointment space as presented below.
 
 ### Date
 
-TODO: Write about accepted date formats
+Naturally when working with appointments we are also working with representations of date and time.
 
-TODO:
+To allow maximum flexibility, most date fields, inputs and props in the calendar accepts data in one of the following formats
+
+```js
+const DATE_TYPE = PropTypes.oneOfType([
+  PropTypes.instanceOf(Date),
+  PropTypes.instanceOf(moment),
+  PropTypes.string,
+]);
+```
+
+meaning that the plain old JavaScript `Date` object instance as well as [`moment`](https://momentjs.com/) instances are accepted. Any `moment` parsable date-time string is also accepted.
+
+### Event
+
+An _event_ represents a single unit appointment within the calendar. Events are required to be of the following simple structure
+
+```js
+const EVENT_TYPE = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  title: PropTypes.string,
+  start: DATE_TYPE.isRequired,
+  end: DATE_TYPE.isRequired,
+});
+```
+
+The `id` field is required to be a unique idenfier for a particular event.
+The optional `group_id` field ties multiple event to a bundle, batch or specific calendar.
+The optional `title` of the event is what will be displayed on the rendered calendar event.
+Finally, the `start` and `end` dates are naturally required.
+
+### View
+
+A _view_ is a particular calendar representation of a date range. Think of these as the daily, monthly and yearly views found on most digital calendars.
+
+Custom views are specifiable if you, say, want to represent seperate columns for a list of appointment groups or columns for different timezones.
+
+Views are defined by the following structure
+
+```js
+const VIEWS_TYPE = PropTypes.arrayOf(
+  PropTypes.oneOfType([
+    PropTypes.oneOf(['groups', 'week', 'month']),
+    PropTypes.shape({
+      view: PropTypes.string.isRequired,
+      grid: PropTypes.oneOf(['time', 'day']),
+      render: PropTypes.func,
+      displayName: PropTypes.string,
+    }),
+  ])
+);
+```
+
+The built-in views consists of `groups`, `week` and `month`, where the latter two should be self-explanatory. The `groups` view can be considered a generalized "day" view in which one or more columns can display events for a single date in time.
+Note that the calender currently does not support a `year` view.
+
+For custom views, a view "template" has to be provided via the `view` field. The `grid` field in a matrix representation using nested arrays to represent how and where appointments should be positioned. The `render` field can be used to specify a custom render functions for events. The function is supplied a specific set of props depending on which type of grid is selected, either `time` or `day`.
+
+For `day` grids the list render function would look like:
+
+```jsx
+const render = ({isEventDraggable,
+  onDragEnd,
+  onSelectEvent,
+  onSelectSlot,
+  events,
+  selectedDate,
+  firstDay,
+  visibleEventGroups,
+  onSelectMore,
+  onSelectDate,
+  forceSixWeeks,
+  renderCell,
+  renderEvent,
+}) => {
+  return <div>...</div>
+}
+```
+
+and for `time` grids the render function would look like
+
+```jsx
+const render = ({isEventDraggable,
+  onDragEnd,
+  onSelectEvent,
+  onSelectSlot,
+  events,
+  selectedDate,
+  firstDay,
+  visibleEventGroups,
+  isEventExtendable,
+  onExtendEnd,
+  onCurrentTimeChange,
+  onSelectRangeEnd,
+  stepDetails,
+  minWidthColumn,
+  minWidthColumnEmpty,
+  renderCorner,
+  renderEventPaddingBottom,
+  renderEventPaddingTop,
+  renderSelectRange,
+  renderStepDetail,
+  selectMinutes,
+  stepHeight,
+  stepMinutes,
+  renderSelectSlotIndicator,
+  renderEvent,
+  scrollToTime,
+  withGroups,
+}) => {
+  return <div>...</div>
+}
+```
 
 ## Usage
 
@@ -195,7 +299,7 @@ const MyCustomToolbar = ({onNext, onPrev, onToday, title, eventsForView}) => {
 | -------------------------- | ---------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                        |
 | currentView                | `string`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                       |
-| events                     | `array`                      | `[]`          | Array of [events](#events)                                                                                                 |
+| events                     | `array`                      | `[]`          | Array of [Events](#event)                                                                                                  |
 | fetchEventInitialFullRange | `object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over |
 | fetchEventPadding          | `number`                     | `1`           | TODO: Ask Brian                                                                                                            |
 | firstDay                   | `Number`                     | `0`           | The first day of the week                                                                                                  |

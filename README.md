@@ -3,7 +3,12 @@ _This package is not production ready. It will be changing extensively. Use at y
 
 Acuity calendar is an open source set of react calendar components used in the [Acuity Scheduling](https://acuityscheduling.com) app.
 
+---
+
+## Table of contents
+
 - [Acuity Calendar](#acuity-calendar)
+  - [Table of contents](#table-of-contents)
   - [Installation](#installation)
   - [Anatomy](#anatomy)
   - [Datatypes](#datatypes)

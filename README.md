@@ -1,4 +1,7 @@
 # Acuity Calendar
+_This package is not production ready. It will be changing extensively. Use at your own risk._
+
+Acuity calendar is an open source set of react calendar components used in the [Acuity Scheduling](https://acuityscheduling.com) app.
 
 - [Acuity Calendar](#acuity-calendar)
   - [Installation](#installation)
@@ -20,17 +23,19 @@
       - [Toolbar](#toolbar)
   - [Storybook](#storybook)
 
-_This package is not production ready. It will be changing extensively. Use at your own risk._
-
-Acuity calendar is an open source set of react calendar components used in the [Acuity Scheduling](https://acuityscheduling.com) app.
+---
 
 ## Installation
 
 TODO:
 
+---
+
 ## Anatomy
 
 TODO:
+
+---
 
 ## Datatypes
 
@@ -101,7 +106,8 @@ For custom views, a view "template" has to be provided via the `view` field. The
 For `day` grids the list render function would look like:
 
 ```jsx
-const render = ({isEventDraggable,
+const render = ({
+  isEventDraggable,
   onDragEnd,
   onSelectEvent,
   onSelectSlot,
@@ -122,7 +128,8 @@ const render = ({isEventDraggable,
 and for `time` grids the render function would look like
 
 ```jsx
-const render = ({isEventDraggable,
+const render = ({
+  isEventDraggable,
   onDragEnd,
   onSelectEvent,
   onSelectSlot,
@@ -153,6 +160,8 @@ const render = ({isEventDraggable,
   return <div>...</div>
 }
 ```
+
+---
 
 ## Usage
 

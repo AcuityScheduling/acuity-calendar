@@ -16,6 +16,7 @@ Acuity calendar is an open source set of react calendar components used in the [
     - [Date](#date)
     - [Event](#event)
     - [View](#view)
+    - [Step details](#step-details)
   - [Usage](#usage)
     - [Components](#components)
       - [FullCalendar](#fullcalendar)
@@ -85,7 +86,7 @@ Finally, the `start` and `end` dates are naturally required.
 
 ### View
 
-A _view_ is a particular calendar representation of a date range. Think of these as the daily, monthly and yearly views found on most digital calendars.
+A _view_ is a particular calendar representation of a date range. Think of these as the daily, weekly and monthly views found on most digital calendars.
 
 Custom views are specifiable if you, say, want to represent seperate columns for a list of appointment groups or columns for different timezones.
 
@@ -169,6 +170,10 @@ const render = ({
 ```
 
 ---
+
+### Step details
+
+TODO: Define this
 
 ## Usage
 
@@ -254,23 +259,103 @@ import { DayGrid } from 'acuity-calendar';
 />
 ```
 
-| Prop               | Type             | Default value | Description |
-| ------------------ | ---------------- | ------------- | ----------- |
-| events             | `Event[]`        | `[]`          |             |
-| grid               | `DAY_GRID_TYPE`* |               |             |
-| isEventDraggable   | `func`           | `() => true`  |             |
-| onDragEnd          | `func`           | `() => null`  |             |
-| onSelectDate       | `func`           | `null`        |             |
-| onSelectEvent      | `func`           | `() => null`  |             |
-| onSelectMoreEvents | `func`           | `() => null`  |             |
-| onSelectSlot       | `func`           | `() => null`  |             |
-| renderCell         | `func`           | `null`        |             |
-| renderHeader       | `func`           | `null`        |             |
-| visibleEventGroups | `Number[]`       | `null`        |             |
+| Prop               | Type             | Default value | Description               |
+| ------------------ | ---------------- | ------------- | ------------------------- |
+| events             | `array`          | `[]`          | Array of [Events](#event) |
+| grid               | `DAY_GRID_TYPE`* |               |                           |
+| isEventDraggable   | `func`           | `() => true`  |                           |
+| onDragEnd          | `func`           | `() => null`  |                           |
+| onSelectDate       | `func`           | `null`        |                           |
+| onSelectEvent      | `func`           | `() => null`  |                           |
+| onSelectMoreEvents | `func`           | `() => null`  |                           |
+| onSelectSlot       | `func`           | `() => null`  |                           |
+| renderCell         | `func`           | `null`        |                           |
+| renderHeader       | `func`           | `null`        |                           |
+| visibleEventGroups | `Number[]`       | `null`        |                           |
 
 #### TimeGrid
 
-TODO
+```jsx
+import { TimeGrid } from 'acuity-calendar';
+
+const events = [...];
+
+const Header = ({ ColumnComponent, week, events }) => {
+  return (
+    {week.map(day => (
+      <ColumnComponent 
+        key={day.toISOString()}
+        totalEventColumns={week.length}  
+        date={day.toISOString()}
+        columnClass="week"
+      >
+        <div>
+          <div className={`time-grid__week-header__date`}>
+            {moment(date).format('M/D')}
+          </div>
+          <div className={`time-grid__week-header__day`}>
+            {moment(date).format('dddd')}
+          </div>
+        </div>
+      </ColumnComponent>
+    ))}
+  ):
+);
+
+const Columns = ({ ColumnComponent, week, events, stepDetails }) => {
+  return week.map((day, i) => {
+    const columnId = moment(day).format("YYYY-MM-DD");
+    return (
+      <ColumnComponent
+        key={columnId}
+        eventsForColumn={events[columnId]}
+        eventsForColumn={stepDetails[columnId]}
+        date={day.toISOString()}
+        columnKey={columnId}
+        columnIndex={index}
+        columnId={columnId}
+      />
+    );
+  });
+};
+
+
+<TimeGrid events={events} renderHeader={Header} renderColumns={Columns} />
+```
+
+The TimeGrid components allow users to specify custom views by defining callback functions to render headers and column based on event data input.
+
+| Prop                      | Type                                         | Default value  | Description                                                                                                                                                                                           |
+| ------------------------- | -------------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| events                    | `Array`                                      | `[]`           | Array of [Events](#event)                                                                                                                                                                             |
+| firstDay                  | `Number`                                     | `0`            | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in the time grid                                                                                                                    |
+| isEventDraggable          | `func`                                       | `() => null`   | Callback to determine if an event is draggable. The callback is given the `event`                                                                                                                     |
+| isEventExtendable         | `func`                                       | `() => null`   | Callback to determine if an event is extendable. The callback is given the `event`                                                                                                                    |
+| minWidthColumn            | `Number`                                     | `190`          | The minimum width in pixels that a column should span                                                                                                                                                 |
+| minWidthColumnEmpty       | `Number`                                     | `100`          | The minimum width in pixels that an empty column should span                                                                                                                                          |
+| onCurrentTimeChange       | `func`                                       | `() => null`   | Callback for when the current time changes. The callback is given an instance of `Date`                                                                                                               |
+| onDragEnd                 | `func`                                       | `() => null`   | Callback for when a drag event ends. The callback is given the the `event`                                                                                                                            |
+| onExtendEnd               | `func`                                       | `() => null`   | Callback for when an extend event ends. The callback is given the `event`                                                                                                                             |
+| onSelectEvent             | `func`                                       | `() => null`   | Callback for when an event is selected. The callback is given an object containing the synthetic event, `e`, and the selected `event`                                                                 |
+| onSelectRangeEnd          | `func`                                       | `() => null`   | Callback for when a range is selected in a column. The callback is given an object containign the sythetic event, `e`, the `start` and `end` of the range and the `columnId`                          |
+| onSelectSlot              | `func`                                       | `() => null`   | Callback for when an open slot in a column is clicked. The callback is given the sythentic event, `e`, the `date` of the clicked time and the `columnId`                                              |
+| renderColumns             | `func`                                       | `undefined`    | Required. Callback function to render each column. The callback function is given the object: `{ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }`               |
+| renderCorner              | `func`                                       | `() => null`   | Callback to render something, like a clock, in the top left corner of the time grid. The callback is given the an object with `currentTime`                                                           |
+| renderEvent               | `func`                                       | `null`         | Function to override the default render method for `events`. If passed, the callback is given `event`                                                                                                 |
+| renderEventPaddingBottom  | `func`                                       | `() => null`   | Callback to render bottom padding to an event. The callback is given `event`.                                                                                                                         |
+| renderEventPaddingTop     | `func`                                       | `() => null`   | Callback to render top padding to an event. The callback is given `event`.                                                                                                                            |
+| renderHeaders             | `func`                                       | `undefined`    | Required. Callback function to render the header of each column. The callback function is given the object: `{ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }` |
+| renderSelectRange         | `func`                                       | `null`         | Function to override the way selecting a range is rendered. The callback is given an object with `start` and `end`                                                                                    |
+| renderSelectSlotIndicator | `func`                                       | `null`         | Function to override the way the selected slot indicator is rendered. Given an object of `time` and `column`                                                                                          |
+| renderStepDetail          | `func`                                       | `() => null`   | Custom function to render [`StepDetails`](#stepDetails)                                                                                                                                               |
+| scrollToTime              | `'firstEvent'`, `String`, `moment` or `Date` | `'firstEvent'` | Either `'firstEvent'` or [Date](#date) type. Scrolls to either the first event or a particular moment in time                                                                                         |
+| selectedDate              | `Date`, `moment` or `string`                 | `new Date()`   | The currently selected date                                                                                                                                                                           |
+| selectMinutes             | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]` (TODO: Ask Brian)                                                                                                                                            |
+| stepDetails               | `Array`                                      | `null`         | Array of [`StepDetails`](#stepDetails)                                                                                                                                                                |
+| stepHeight                | `Number`                                     | `null`         | The height of each row in grid                                                                                                                                                                        |
+| stepMinutes               | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]` (TODO: Ask Brian)                                                                                                                                            |
+| visibleEventGroups        | `Number[]`                                   | `null`         | Determines which provided columns are rendered or hidden                                                                                                                                              |
+| withColumns               | `Bool`                                       | `true`         | TODO: Ask Brian                                                                                                                                                                                       |
 
 ---
 
@@ -314,16 +399,16 @@ const MyCustomToolbar = ({onNext, onPrev, onToday, title, eventsForView}) => {
 | Prop                       | Type                         | Default value | Description                                                                                                                |
 | -------------------------- | ---------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                        |
-| currentView                | `string`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                       |
-| events                     | `array`                      | `[]`          | Array of [Events](#event)                                                                                                  |
-| fetchEventInitialFullRange | `object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over |
-| fetchEventPadding          | `number`                     | `1`           | TODO: Ask Brian                                                                                                            |
+| currentView                | `String`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                       |
+| events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                  |
+| fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over |
+| fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                            |
 | firstDay                   | `Number`                     | `0`           | The first day of the week                                                                                                  |
 | onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events             |
 | onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed                                                                        |
 | onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed                                                                                     |
-| selectedDate               | `Date`, `moment` or `string` | `undefined`   | The selected date                                                                                                          |
-| views                      | `string[]` or `object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                    |
+| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date                                                                                                          |
+| views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                    |
 
 ---
 

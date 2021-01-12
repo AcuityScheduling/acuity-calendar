@@ -273,6 +273,8 @@ import { DayGrid } from 'acuity-calendar';
 | renderHeader       | `func`           | `null`        |                           |
 | visibleEventGroups | `Number[]`       | `null`        |                           |
 
+---
+
 #### TimeGrid
 
 ```jsx

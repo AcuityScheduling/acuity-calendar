@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
-
 import CalendarHeatmap from '../src/components/CalendarMonthHeatmap';
 import moment from 'moment';
 import DayList from '../src/components/DayList';

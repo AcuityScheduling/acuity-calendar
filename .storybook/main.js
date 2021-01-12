@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  addons: [],
   stories: ['../stories/*.stories.@(js|mdx)'],
   webpackFinal: async config => {
     config.module.rules.push({

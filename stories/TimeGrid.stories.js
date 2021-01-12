@@ -2,7 +2,13 @@ import React from 'react';
 import { TimeGrid } from '../src';
 import moment from 'moment';
 import { MOCKED_EVENTS } from '../src/Calendar/mocks';
-import { withKnobs, boolean, number, select } from '@storybook/addon-knobs';
+import {
+  withKnobs,
+  boolean,
+  number,
+  select,
+  object,
+} from '@storybook/addon-knobs';
 
 export const example = () => {
   const events = MOCKED_EVENTS;
@@ -44,7 +50,7 @@ export const example = () => {
 
   return (
     <TimeGrid
-      events={events}
+      events={object('events', events)}
       renderColumns={Columns}
       renderHeaders={Header}
       withColumns={boolean('withColumns', false)}

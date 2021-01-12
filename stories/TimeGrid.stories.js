@@ -2,7 +2,7 @@ import React from 'react';
 import { TimeGrid } from '../src';
 import moment from 'moment';
 import { MOCKED_EVENTS } from '../src/Calendar/mocks';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, boolean, number, select } from '@storybook/addon-knobs';
 
 export const example = () => {
   const events = MOCKED_EVENTS;
@@ -10,7 +10,6 @@ export const example = () => {
     return week.map(day => (
       <ColumnComponent
         key={day.toISOString()}
-        totalEventColumns={week.length}
         date={day.toISOString()}
         columnClass="week"
       >
@@ -49,6 +48,10 @@ export const example = () => {
       renderColumns={Columns}
       renderHeaders={Header}
       withColumns={boolean('withColumns', false)}
+      minWidthColumn={number('minWidthColumn', 190)}
+      minWidthColumnEmpty={number('minWidthColumnEmpty', 100)}
+      selectMinutes={select('selectMinutes', [5, 10, 15, 20, 30, 60], 15)}
+      stepMinutes={select('stepMinutes', [5, 10, 15, 20, 30, 60], 15)}
     />
   );
 };

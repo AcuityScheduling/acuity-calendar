@@ -23,6 +23,7 @@ Acuity calendar is an open source set of react calendar components used in the [
       - [CalendarGroups](#calendargroups)
       - [CalendarMonth](#calendarmonth)
       - [CalendarMonthHeatmap](#calendarmonthheatmap)
+      - [Column](#column)
       - [CalendarWeek](#calendarweek)
       - [DayList](#daylist)
       - [DayGrid](#daygrid)
@@ -199,6 +200,10 @@ TODO:
 #### CalendarMonthHeatmap
 
 TODO:
+
+#### Column
+
+TODO: Explain this internal component
 
 #### CalendarWeek
 

@@ -1,4 +1,3 @@
-import get from 'lodash.get';
 import throttle from 'lodash.throttle';
 import { useRef, useState, useEffect } from 'react';
 import { addListener, removeListener } from 'resize-detector';
@@ -23,25 +22,26 @@ const useTotalEventsToShow = () => {
         setEventHeight(currentEventHeight);
       }
     }
-  });
-
-  const rowHeightThrottled = throttle(() => {
-    setRowHeight(get(rowRef, 'current.offsetHeight', 0));
-    setCellWidth(get(rowRef, 'current.offsetWidth', 0));
-  }, 300);
+  }, [eventHeight]);
 
   useEffect(() => {
-    if (rowRef.current) {
-      setRowHeight(rowRef.current.offsetHeight);
+    const rowHeightThrottled = throttle(() => {
+      setRowHeight(rowRef?.current?.offsetHeight || 0);
+      setCellWidth(rowRef?.current?.offsetWidth || 0);
+    }, 300);
+
+    const currentRowRef = rowRef.current;
+    if (currentRowRef) {
+      setRowHeight(currentRowRef.offsetHeight);
       setCellWidth(cellRef.current.offsetWidth);
-      addListener(rowRef.current, rowHeightThrottled);
+      addListener(currentRowRef, rowHeightThrottled);
     }
     return () => {
-      if (rowRef.current) {
-        return removeListener(rowRef.current, rowHeightThrottled);
+      if (currentRowRef) {
+        return removeListener(currentRowRef, rowHeightThrottled);
       }
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (eventHeight > 0) {
@@ -49,13 +49,12 @@ const useTotalEventsToShow = () => {
         Math.floor((rowHeight - eventWrapperMargin) / eventHeight) - 1
       );
     }
-  }, [rowHeight, eventHeight]);
+  }, [rowHeight, eventHeight, eventWrapperMargin]);
 
   // Get the margin above all of the events
   useEffect(() => {
-    const newMargin = get(eventWrapperRef, 'current.offsetTop', 0);
-    setEventWrapperMargin(newMargin);
-  }, [get(eventWrapperRef, 'current.offsetTop', 0)]);
+    setEventWrapperMargin(eventWrapperRef?.current?.offsetTop || 0);
+  }, [eventWrapperRef?.current?.offsetTop]);
 
   return {
     rowRef,

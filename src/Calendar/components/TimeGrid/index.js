@@ -43,7 +43,7 @@ const TimeGrid = React.forwardRef(
       return () => {
         clearTimeout(timeout);
       };
-    });
+    }, [onCurrentTimeChange]);
 
     const {
       wrapperRef,
@@ -61,7 +61,7 @@ const TimeGrid = React.forwardRef(
         (stepHeight || STEP_HEIGHTS[stepMinutes]) * totalStepsPerBlock * 24 +
         (aggregateBorderHeight - 1 * STEP_BORDER_WIDTH * 25)
       );
-    }, [stepMinutes, stepHeight]);
+    }, [stepMinutes, stepHeight, totalStepsPerBlock]);
 
     useEffect(() => {
       if (scrollToTime) {
@@ -72,7 +72,7 @@ const TimeGrid = React.forwardRef(
         });
         wrapperRef.current.scrollTop = topOffset;
       }
-    }, [moment(selectedDate).format(), stepMinutes, stepHeight]);
+    }, [selectedDate, stepMinutes, stepHeight, scrollToTime, wrapperRef]);
 
     // Default to something sensible - but we're really getting the width from the element
     // so css can change the time gutter
@@ -82,9 +82,7 @@ const TimeGrid = React.forwardRef(
     }
 
     useEffect(() => {
-      if (scrollbarWidth === 0) {
-        setScrollbarWidth(getScrollbarWidth());
-      }
+      if (scrollbarWidth === 0) setScrollbarWidth(getScrollbarWidth());
     }, [scrollbarWidth]);
 
     const currentTimeIndicatorClass = makeClass(

@@ -10,7 +10,7 @@ import {
   object,
 } from '@storybook/addon-knobs';
 
-export const example = () => {
+export const basicExample = () => {
   const events = MOCKED_EVENTS;
   const Header = ({ ColumnComponent, week }) => {
     return week.map(day => (

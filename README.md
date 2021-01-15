@@ -174,7 +174,21 @@ const render = ({
 
 ### Step details
 
-TODO: Define this
+Step details can be considered generic _blocks_ that render on the calendar. These blocks can span over a number of time steps and contain details, hence the name "step details".
+Think of these as abstractions for blocking off periods of time on a calendar with an optional note.
+
+Semantically, step details and events are similar, but functionally you can consider step details as a non-interactable event, i.e. not extendable, dragable or selectable.
+
+The data model for step details is as follows:
+
+```js
+export const STEP_DETAILS_TYPE = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  group_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  start: DATE_TYPE.isRequired,
+  end: DATE_TYPE.isRequired,
+});
+```
 
 ## Usage
 
@@ -330,7 +344,8 @@ const Columns = ({ ColumnComponent, week, events, stepDetails }) => {
 <TimeGrid events={events} renderHeader={Header} renderColumns={Columns} />
 ```
 
-The TimeGrid components allow users to specify custom views by defining callback functions to render headers and column based on event data input.
+The TimeGrid component renders a grid consisting of time "steps" on the y-axis and any number of columns representing anything, depending on function defintions. These columns could represent days, calendars, user groups, etc.
+The grid allows user to completely customize time-related views by defining callback functions to render headers and column based on event data input.
 Additionally, it's configuration allows for complete control on how selection, dragging, extension and events are handled and rendered.
 
 | Prop                      | Type                                         | Default value  | Description                                                                                                                                                                                           |

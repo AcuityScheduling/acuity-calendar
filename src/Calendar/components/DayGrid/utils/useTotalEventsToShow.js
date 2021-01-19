@@ -3,9 +3,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { addListener, removeListener } from 'resize-detector';
 
 const useTotalEventsToShow = () => {
-  // const eventRef = useRef(null);
-  // const eventWrapperRef = useRef(null);
-  // const cellRef = useRef(null);
   const [rowNode, setRowNode] = useState(null);
   const [rowHeight, setRowHeight] = useState(0);
   const [cellWidth, setCellWidth] = useState(0);

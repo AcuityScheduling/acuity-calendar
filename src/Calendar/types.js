@@ -28,11 +28,14 @@ export const GROUP_TYPE = PropTypes.shape({
   id: PropTypes.number,
   name: PropTypes.string,
 });
-export const REF_TYPE = PropTypes.shape({
-  current: PropTypes.instanceOf(
-    typeof Element === 'undefined' ? function() {} : Element
-  ),
-});
+export const REF_TYPE = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({
+    current: PropTypes.instanceOf(
+      typeof Element === 'undefined' ? function() {} : Element
+    ),
+  }),
+]);
 export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
 
 export const VIEWS_TYPE = PropTypes.arrayOf(

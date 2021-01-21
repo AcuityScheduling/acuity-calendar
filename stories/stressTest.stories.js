@@ -7,7 +7,7 @@ import FullCalendar from '../src/components/FullCalendar';
 import EventGroupSelect from '../src/EventGroupSelect';
 import moment from 'moment';
 
-export const eventStressTest = () => {
+export const EventStressTest = () => {
   const numberOfEvents = number('numberOfEvents', 100);
   const spacing = number('eventSpacing', 0);
   const length = number('eventLength', 10);

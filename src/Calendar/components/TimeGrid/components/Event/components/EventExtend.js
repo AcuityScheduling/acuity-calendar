@@ -34,7 +34,7 @@ const EventExtend = ({
         selectMinutes,
         stepHeight,
       }),
-    [stepMinutes, selectMinutes]
+    [stepMinutes, selectMinutes, stepHeight]
   );
 
   const eventStartEnd = getDraggedEventStartEnd({

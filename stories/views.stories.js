@@ -43,13 +43,16 @@ export const Month = () => {
 
 export const Week = () => {
   const { events, handlers } = useEvents();
-  const [stepHeight, setStepHeight] = useState(50);
+  const [stepHeight, setStepHeight] = useState(42);
 
   return (
     <Fragment>
-      <button onClick={() => setStepHeight(25)}>Zoom .5</button>
-      <button onClick={() => setStepHeight(50)}>Zoom 1</button>
-      <button onClick={() => setStepHeight(62.5)}>Zoom 1.25</button>
+      <button onClick={() => setStepHeight(21)}>Zoom .5</button>
+      <button onClick={() => setStepHeight(31.5)}>Zoom .75</button>
+      <button onClick={() => setStepHeight(42)}>Zoom 1x</button>
+      <button onClick={() => setStepHeight(84)}>Zoom 2x</button>
+      <button onClick={() => setStepHeight(126)}>Zoom 3x</button>
+      <button onClick={() => setStepHeight(168)}>Zoom 4x</button>
       <CalendarWeek
         events={events}
         renderEvent={renderColorEvent}

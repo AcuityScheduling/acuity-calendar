@@ -1,13 +1,9 @@
-import get from 'lodash.get';
 import throttle from 'lodash.throttle';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { addListener, removeListener } from 'resize-detector';
 
 const useTotalEventsToShow = () => {
-  const rowRef = useRef(null);
-  const eventRef = useRef(null);
-  const eventWrapperRef = useRef(null);
-  const cellRef = useRef(null);
+  const [rowNode, setRowNode] = useState(null);
   const [rowHeight, setRowHeight] = useState(0);
   const [cellWidth, setCellWidth] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
@@ -16,32 +12,41 @@ const useTotalEventsToShow = () => {
   // even if there are no events show right away
   const [totalEventsToShow, setTotalEventsToShow] = useState(0);
 
-  useEffect(() => {
-    if (eventRef.current) {
-      const currentEventHeight = eventRef.current.offsetHeight;
-      if (currentEventHeight !== eventHeight) {
-        setEventHeight(currentEventHeight);
-      }
-    }
-  });
+  /**
+   * Using callbacks instead of refs as detailed here:
+   * https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
+   */
+  const eventRef = useCallback(node => {
+    if (node !== null) setEventHeight(node.offsetHeight);
+  }, []);
 
-  const rowHeightThrottled = throttle(() => {
-    setRowHeight(get(rowRef, 'current.offsetHeight', 0));
-    setCellWidth(get(rowRef, 'current.offsetWidth', 0));
-  }, 300);
+  const rowRef = useCallback(node => {
+    if (node !== null) {
+      setRowNode(node);
+      setRowHeight(node.offsetHeight);
+    }
+  }, []);
+
+  const cellRef = useCallback(node => {
+    if (node !== null) setCellWidth(node.offsetWidth);
+  }, []);
+
+  const eventWrapperRef = useCallback(node => {
+    if (node !== null) setEventWrapperMargin(node.offsetTop || 0);
+  }, []);
 
   useEffect(() => {
-    if (rowRef.current) {
-      setRowHeight(rowRef.current.offsetHeight);
-      setCellWidth(cellRef.current.offsetWidth);
-      addListener(rowRef.current, rowHeightThrottled);
-    }
+    const rowHeightThrottled = throttle(() => {
+      setRowHeight(rowNode.offsetHeight || 0);
+      setCellWidth(rowNode.offsetWidth || 0);
+    }, 300);
+
+    if (rowNode) addListener(rowNode, rowHeightThrottled);
+
     return () => {
-      if (rowRef.current) {
-        return removeListener(rowRef.current, rowHeightThrottled);
-      }
+      if (rowNode) removeListener(rowNode, rowHeightThrottled);
     };
-  });
+  }, [rowNode]);
 
   useEffect(() => {
     if (eventHeight > 0) {
@@ -49,13 +54,7 @@ const useTotalEventsToShow = () => {
         Math.floor((rowHeight - eventWrapperMargin) / eventHeight) - 1
       );
     }
-  }, [rowHeight, eventHeight]);
-
-  // Get the margin above all of the events
-  useEffect(() => {
-    const newMargin = get(eventWrapperRef, 'current.offsetTop', 0);
-    setEventWrapperMargin(newMargin);
-  }, [get(eventWrapperRef, 'current.offsetTop', 0)]);
+  }, [rowHeight, eventHeight, eventWrapperMargin]);
 
   return {
     rowRef,

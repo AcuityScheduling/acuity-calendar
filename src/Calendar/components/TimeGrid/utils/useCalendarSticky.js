@@ -41,23 +41,17 @@ const useCalendarSticky = totalWidth => {
 
   // Add listener to wrapper to update when needed
   useEffect(() => {
-    if (!wrapperWidth) {
-      setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
-    }
-
-    if (wrapperRef.current) {
-      addListener(wrapperRef.current, wrapperWidthThrottled);
-    }
-    return () => removeListener(wrapperRef.current, wrapperWidthThrottled);
-  });
+    const ref = wrapperRef.current;
+    if (!wrapperWidth) setWrapperWidth(get(wrapperRef, 'current.clientWidth'));
+    if (ref) addListener(ref, wrapperWidthThrottled);
+    return () => removeListener(ref, wrapperWidthThrottled);
+  }, [wrapperWidth, wrapperWidthThrottled]);
 
   useEffect(() => {
-    wrapperRef.current.addEventListener('scroll', onScroll, false);
-
-    return () => {
-      wrapperRef.current.removeEventListener('scroll', onScroll, false);
-    };
-  });
+    const ref = wrapperRef.current;
+    ref.addEventListener('scroll', onScroll, false);
+    return () => ref.removeEventListener('scroll', onScroll, false);
+  }, [onScroll]);
 
   return {
     wrapperRef,

@@ -1,7 +1,7 @@
 {
   "name": "acuity-calendar",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "build/main.js",
   "module": "src/index.js",
   "scripts": {
@@ -51,6 +51,7 @@
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
+    "date-fns": "^2.16.1",
     "eslint": "^5.15.3",
     "eslint-config-react-app": "^3.0.8",
     "eslint-plugin-flowtype": "^2.50.3",

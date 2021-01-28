@@ -207,7 +207,67 @@ For usage examples please refer to the supplied [Storybook](#storybook)
 
 #### FullCalendar
 
-TODO:
+```jsx
+import FullCalendar from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
+
+const now = new Date();
+
+const events = [
+  { id: 1, group_id: 4, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: 5, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: 6, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
+
+const eventGroups = [
+  { id: 4, title: 'Group A' },
+  { id: 5, title: 'Group B' },
+  { id: 6, title: 'Group C' },
+];
+
+const stepDetails = [
+  ...
+];
+
+const handlers = useMemo(() => {
+  return {
+    isEventDraggable: ({ event }) => { ... },
+    isEventExtendable: ({ event }) => { ... }, 
+    onCurrentTimeChange: date => { ... },
+    onDragEnd: ({ e, event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
+    onExtendEnd: ({ event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
+    onFetchEvents: ({ fetchMoreRange, fullRange, initialFetch, outsideRange }) => { ... },
+    onNavigate: date => { ... },
+    onSelectDate: ({ e, date, isInRange }) => { ... },
+    onSelectEvent: ({ e, event}) => { ... },
+    onSelectMore: ({ e, events, eventsMore }) => { ... },
+    onSelectRangeEnd: ({ e, start, end, column }) => { ... },
+    onSelectSlot: ({ e, date, isInRange }) => { ... },
+    onViewChange: view => { ... },
+  }
+}, []);
+
+const customRenderers = useMemo(() => {
+  return {
+    renderTimeGridEvent: event => { ... },
+    renderStepDetail: stepDetail => { ... },
+  }
+}, [])
+
+const [view, setView] = useState(CALENDAR_VIEWS.month);
+const [selectedDate, setSelectedDate] = useState(new Date());
+
+<FullCalendar
+  eventGroups={eventGroups}
+  events={events}
+  selectedDate={now}
+  stepDetails={}
+  views={['month', 'week', { view: 'groups', displayName: 'Day' }]}
+  visibleEventGroups={[4, 5, 6]}
+  {...handlers}
+  {...customRenderers}
+/>
+```
 
 #### CalendarGroups
 
@@ -227,7 +287,7 @@ const eventGroups = [
   { id: 4, title: 'Group A' },
   { id: 5, title: 'Group B' },
   { id: 6, title: 'Group C' },
-]
+];
 
 <CalendarGroups
   events={events}
@@ -237,7 +297,9 @@ const eventGroups = [
 />
 ```
 
-The `CalendarGroups` component makes it easy to render a daily view for a list of events where each column represents a separte event group.
+The `CalendarGroups` component makes it easy to render a daily view for a list of events where each column represents a common identifier for the events, like their date or group id. 
+If the shared identifier is the date, this view will simply be a daily view found on most calendars.
+
 Within our data model, event groups are not formally defined, but must at least have an `id` and a `title`.
 As with the [`CalendarWeek`](#calendarweek) component, the `CalendarGroups` is a shorthand for instantiating a partially preconfigured [`TimeGrid`](#timegrid) instance.
 
@@ -257,6 +319,8 @@ As with the [`CalendarWeek`](#calendarweek) component, the `CalendarGroups` is a
 ```jsx
 import { CalendarMonth } from 'acuity-calendar';
 import { addMinutes } from 'date-fns';
+
+const now = new Date();
 
 const events = [
   { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
@@ -308,6 +372,8 @@ Besides controlling start of week via `firstDay` and the number of week via `for
 ```jsx
 import { CalendarMonthHeatMap } from 'acuity-calendar';
 import { addMinutes } from 'date-fns';
+
+const now = new Date();
 
 const events = [
   { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
@@ -488,6 +554,8 @@ The `DayGrid` renders a fully customizable grid calendar view in which each cell
 import { TimeGrid } from 'acuity-calendar';
 import { addMinutes } from 'date-fns';
 
+const now = new Date();
+
 const events = [
     { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
     { id: 2, group_id: 1, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
@@ -533,8 +601,21 @@ const Columns = ({ ColumnComponent, week, events, stepDetails }) => {
   });
 };
 
+const handlers = useMemo(() => {
+  return {
+    isEventDraggable: () => { ... }, // TODO: Describe this
+    isEventExtendable: () => { ... }, // TODO: Describe this
+    onCurrentTimeChange: () => { ... }, // TODO: Describe this
+    onDragEnd: () => { ... }, // TODO: Describe this
+    onExtendEnd: () => { ... }, // TODO: Describe this
+    onSelectEvent: () => { ... }, // TODO: Describe this
+    onSelectRangeEnd: () => { ... }, // TODO: Describe this
+    onSelectSlot: () => { ... }, // TODO: Describe this
+  }
+}, [])
 
-<TimeGrid events={events} renderHeader={Header} renderColumns={Columns} />
+
+<TimeGrid events={events} renderHeader={Header} renderColumns={Columns} {...handlers} />
 ```
 
 The TimeGrid component renders a grid consisting of time "steps" on the y-axis and any number of columns representing anything, depending on function defintions. These columns could represent days, calendars, user groups, etc.
@@ -612,19 +693,19 @@ const MyCustomToolbar = ({onNext, onPrev, onToday, title, eventsForView}) => {
 <Toolbar currentView="month" views={['month', 'week', 'day']} children={MyCustomToolbar} />
 ```
 
-| Prop                       | Type                         | Default value | Description                                                                                                                |
-| -------------------------- | ---------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                        |
-| currentView                | `String`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                       |
-| events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                  |
-| fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over |
-| fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                            |
-| firstDay                   | `Number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`           |
-| onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events             |
-| onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed                                                                        |
-| onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed                                                                                     |
-| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date. See [Date](#date)                                                                                       |
-| views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                    |
+| Prop                       | Type                         | Default value | Description                                                                                                                             |
+| -------------------------- | ---------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                                     |
+| currentView                | `String`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                                    |
+| events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                               |
+| fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over              |
+| fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                                         |
+| firstDay                   | `Number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                        |
+| onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events. TODO: describe callback |
+| onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed. TODO: Describe callback structure                                                  |
+| onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed. TODO: describe callbacks structure                                                              |
+| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date. See [Date](#date)                                                                                                    |
+| views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                                 |
 
 ---
 

@@ -211,7 +211,44 @@ TODO:
 
 #### CalendarGroups
 
-TODO:
+```jsx
+import { CalendarGroups } from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
+
+const now = new Date();
+
+const events = [
+  { id: 1, group_id: 4, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: 5, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: 6, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
+
+const eventGroups = [
+  { id: 4, title: 'Group A' },
+  { id: 5, title: 'Group B' },
+  { id: 6, title: 'Group C' },
+]
+
+<CalendarGroups
+  events={events}
+  eventGroups={eventGroups}
+  visibleEventGroups={[4, 5, 6]}
+  selectedDate={now}
+/>
+```
+
+The `CalendarGroups` component makes it easy to render a daily view for a list of events where each column represents a separte event group.
+Within our data model, event groups are not formally defined, but must at least have an `id` and a `title`.
+As with the [`CalendarWeek`](#calendarweek) component, the `CalendarGroups` is a shorthand for instantiating a partially preconfigured [`TimeGrid`](#timegrid) instance.
+
+| Prop               | Type                         | Default value | Description                                                                              |
+| ------------------ | ---------------------------- | ------------- | ---------------------------------------------------------------------------------------- |
+| events             | `array`                      | `[]`          | Array of [Events](#event)                                                                |
+| eventGroups        | `array`                      | `undefined`   | Required. Array of event groups. An event group must at minimum contain `{ id, title }`. |
+| renderHeader       | `func`                       | `null`        | Custom render function for grid headers. Given `{ group, events }`.                      |
+| selectedDate       | `Date`, `moment` or `string` | `new Date()`  | The currently selected date. See [Date](#date)                                           |
+| visibleEventGroups | `number[]`                   | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.             |
+| ...rest            | `any`                        |               | Any additional prop will be passed to the inner [TimeGrid](#timegrid) component          |
 
 ---
 
@@ -219,8 +256,13 @@ TODO:
 
 ```jsx
 import { CalendarMonth } from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
 
-const events = [ ... ];
+const events = [
+  { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: 1, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: 1, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
 
 // Memoized handlers
 const handlers = useMemo(() => {
@@ -240,7 +282,7 @@ const handlers = useMemo(() => {
 />
 ```
 
-The `CalendarMonth` is along with the [`CalendarWeek`](#calendarweek) and [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure. 
+The `CalendarMonth` is along with the [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure. 
 Besides controlling start of week via `firstDay` and the number of week via `forceSixWeeks`, most of the configuration consists of various interaction event handlers.
 
 | Prop               | Type                         | Default value | Description                                                                                                                  |
@@ -265,8 +307,13 @@ Besides controlling start of week via `firstDay` and the number of week via `for
 
 ```jsx
 import { CalendarMonthHeatMap } from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
 
-const events = [ ... ];
+const events = [
+  { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: 1, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: 1, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
 
 const counts = useMemo(() => {
   return events.reduce((acc, event) => {
@@ -370,7 +417,7 @@ This component can be considered shorthand syntactic sugar for initializing a [`
 
 ```jsx
 import { DayGrid } from 'acuity-calendar';
-import { format } from 'date-fns';
+import { format, addMinutes } from 'date-fns';
 
 const now = new Date();
 
@@ -439,8 +486,13 @@ The `DayGrid` renders a fully customizable grid calendar view in which each cell
 
 ```jsx
 import { TimeGrid } from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
 
-const events = [...];
+const events = [
+    { id: 1, group_id: 1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+    { id: 2, group_id: 1, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+    { id: 3, group_id: 1, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
 
 const Header = ({ ColumnComponent, week, events }) => {
   return (

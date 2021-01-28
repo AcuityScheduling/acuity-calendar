@@ -25,8 +25,8 @@ Acuity calendar is an open source set of react calendar components used in the [
       - [CalendarGroups](#calendargroups)
       - [CalendarMonth](#calendarmonth)
       - [CalendarMonthHeatmap](#calendarmonthheatmap)
-      - [Column](#column)
       - [CalendarWeek](#calendarweek)
+      - [Column](#column)
       - [DayList](#daylist)
       - [DayGrid](#daygrid)
       - [TimeGrid](#timegrid)
@@ -212,10 +212,53 @@ TODO:
 #### CalendarGroups
 
 TODO:
-  
+
+---
+
 #### CalendarMonth
 
-TODO:
+```jsx
+import { CalendarMonth } from 'acuity-calendar';
+
+const events = [ ... ];
+
+// Memoized handlers
+const handlers = useMemo(() => {
+  return {
+    isEventDraggable: ({ event }) => { ... },
+    onDragEnd: ({ e, event }) => { ... },
+    onSelectDate: ({ e, date, isInRange }) => { ... },
+    onSelectEvent: ({ e, event}) => { ... },
+    onSelectMore: ({ e, events, eventsMore }) => { ... },
+    onSelectSlot: ({ e, date, isInRange }) => { ... },
+  }
+}, []);
+
+<CalendarMonth 
+  events={events}
+  {...handlers}
+/>
+```
+
+The `CalendarMonth` is along with the [`CalendarWeek`](#calendarweek) and [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure.
+
+| Prop               | Type                         | Default value | Description                                                                                                                  |
+| ------------------ | ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| events             | `array`                      | `[]`          | Array of [Events](#event)                                                                                                    |
+| firstDay           | `number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`             |
+| forceSixWeeks      | `bool`                       | `false`       | Forces the 6 weeks in the calendar for short months for consistant height while navigating                                   |
+| isEventDraggable   | `func`                       | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                            |
+| onDragEnd          | `func`                       | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                      |
+| onSelectDate       | `func`                       | `() => null`  | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                    |
+| onSelectEvent      | `func`                       | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                   |
+| onSelectMore       | `func`                       | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is |
+| onSelectSlot       | `func`                       | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                               |
+| renderCell         | `func`                       | `null`        | Custom render function for cell contents. Given `{ date, isInRange, events }`.                                               |
+| renderHeader       | `func`                       | `null`        | Custom render function for grid headers. Given `{ date }`.                                                                   |
+| selectedDate       | `Date`, `moment` or `string` | `new Date()`  | The currently selected date. See [Date](#date)                                                                               |
+| visibleEventGroups | `number[]`                   | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                 |
+
+---
 
 #### CalendarMonthHeatmap
 
@@ -243,19 +286,18 @@ The `CalendarMonthHeatMap` visuelizes the _weight_ of each day in a monthly view
 The weight of day is specified by passing the `counts` object mapping `YYYY-MM-DD` formatted dates to a value between 0 and 100. 
 The heavier the weight, the deeper the day will be colored.
 
-| Prop          | Type                         | Default value | Description                                                                                |
-| ------------- | ---------------------------- | ------------- | ------------------------------------------------------------------------------------------ |
-| counts        | `object`                     | `{}`          | Object mapping the "heat" a `YYYY-MM-DD` formatted date to an opacity value (0-100).       |
-| firstDay      | `number`                     | `0`           | Must be member of `[0, 1, 2, 3, 4, 5, 6]`.                                                 |
-| forceSixWeeks | `bool`                       | `true`        | Forces the 6 weeks in the calendar for short months for consistant height while navigating |
-| onSelectCell  | `func`                       | `() => null`  | Callback when selecting a date. Given `{ e, date, isInRange, weight, count }`.             |
-| renderCell    | `func`                       | `undefined`   | Custom render function for cells. Given `{ date, isInRange, events, weight, count }`.      |
-| renderHeader  | `func`                       | `undefined`   | Custom render function for headers. Given `{ date }`.                                      |
-| selectedDate  | `Date`, `moment` or `string` | `new Date()`  | The currently selected date.                                                               |
+| Prop          | Type                         | Default value | Description                                                                                                      |
+| ------------- | ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| counts        | `object`                     | `{}`          | Object mapping the "heat" a `YYYY-MM-DD` formatted date to an opacity value (0-100).                             |
+| events        | `array`                      | `[]`          | Array of [Events](#event)                                                                                        |
+| firstDay      | `number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0` |
+| forceSixWeeks | `bool`                       | `true`        | Forces the 6 weeks in the calendar for short months for consistant height while navigating                       |
+| onSelectCell  | `func`                       | `() => null`  | Callback when selecting a date. Given `{ e, date, isInRange, weight, count }`.                                   |
+| renderCell    | `func`                       | `undefined`   | Custom render function for cells. Given `{ date, isInRange, events, weight, count }`.                            |
+| renderHeader  | `func`                       | `undefined`   | Custom render function for headers. Given `{ date }`.                                                            |
+| selectedDate  | `Date`, `moment` or `string` | `new Date()`  | The currently selected date. See [Date](#date)                                                                   |
 
-#### Column
-
-TODO: Explain this internal component
+---
 
 #### CalendarWeek
 
@@ -280,6 +322,12 @@ Analogous to the [`DayList`](#daylist) component, the `CalendarWeek` is a shorth
 | ------------ | ------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | renderHeader | `func` | `null`        | Callback to render the header. Given `{  date, events }`. See [Column](#column) for more details on configuration of the internal Column component |
 | ...rest      | `any`  |               | Any additional prop will be passed to the inner [TimeGrid](#timegrid) component                                                                    |
+
+---
+
+#### Column
+
+TODO: Explain this internal component
 
 ---
 
@@ -309,7 +357,7 @@ This component can be considered shorthand syntactic sugar for initializing a [`
 | ------------ | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | renderCell   | `func`   | `() => null`  | Callback to render the cell contents. The callback is given the following object `{ full: date.format('dddd'), small: date.format('ddd'), min: date.format('dd'), int: Number(date.format('d')) }`. See [`moment.js` formatting](https://momentjs.com/docs/#/displaying/format/) and [Anatomy](#anatomy) for more details. |
 | renderHeader | `func`   | `null`        | Callback to render the header. Given the same object as `renderCell`. See [Anatomy](#anatomy) for more details                                                                                                                                                                                                             |
-| firstDay     | `Number` | `0`           | The first day of the week in numerical form. 0 represents Sunday                                                                                                                                                                                                                                                           |
+| firstDay     | `Number` | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                                                                                                                                                                                                           |
 | totalDays    | `Number` | `7`           | The total days in the week                                                                                                                                                                                                                                                                                                 |
 | ...rest      | `any`    |               | Any additional prop will be passed to the inner [DayGrid](#daygrid) component                                                                                                                                                                                                                                              |
 
@@ -378,8 +426,8 @@ The `DayGrid` renders a fully customizable grid calendar view in which each cell
 | onSelectEvent      | `func`                | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                                                                                                            |
 | onSelectMoreEvents | `func`                | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is                                                                                          |
 | onSelectSlot       | `func`                | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                                                                                                                        |
-| renderCell         | `func`                | `null`        | Callback to render the cell contents. Given `{ date, isInRange, events }`.                                                                                                                                            |
-| renderHeader       | `func`                | `null`        | Callback to render the grid headers. Given `{ date }`.                                                                                                                                                                |
+| renderCell         | `func`                | `null`        | Custom render function for cell contents. Given `{ date, isInRange, events }`.                                                                                                                                        |
+| renderHeader       | `func`                | `null`        | Custom render function for grid headers. Given `{ date }`.                                                                                                                                                            |
 | visibleEventGroups | `Number[]`            | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                                                                                                          |
 
 ---
@@ -441,7 +489,7 @@ Additionally, it's configuration allows for complete control on how selection, d
 | Prop                      | Type                                         | Default value  | Description                                                                                                                                                                                           |
 | ------------------------- | -------------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | events                    | `Array`                                      | `[]`           | Array of [Events](#event)                                                                                                                                                                             |
-| firstDay                  | `Number`                                     | `0`            | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in the time grid                                                                                                                    |
+| firstDay                  | `Number`                                     | `0`            | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                                                                                      |
 | isEventDraggable          | `func`                                       | `() => null`   | Callback to determine if an event is draggable. The callback is given the `event`                                                                                                                     |
 | isEventExtendable         | `func`                                       | `() => null`   | Callback to determine if an event is extendable. The callback is given the `event`                                                                                                                    |
 | minWidthColumn            | `Number`                                     | `190`          | The minimum width in pixels that a column should span                                                                                                                                                 |
@@ -462,7 +510,7 @@ Additionally, it's configuration allows for complete control on how selection, d
 | renderSelectSlotIndicator | `func`                                       | `null`         | Function to override the way the selected slot indicator is rendered. Given an object of `time` and `column`                                                                                          |
 | renderStepDetail          | `func`                                       | `() => null`   | Custom function to render [`StepDetails`](#stepDetails)                                                                                                                                               |
 | scrollToTime              | `'firstEvent'`, `String`, `moment` or `Date` | `'firstEvent'` | Either `'firstEvent'` or [Date](#date) type. Scrolls to either the first event or a particular moment in time                                                                                         |
-| selectedDate              | `Date`, `moment` or `string`                 | `new Date()`   | The currently selected date                                                                                                                                                                           |
+| selectedDate              | `Date`, `moment` or `String`                 | `new Date()`   | The currently selected date. See [Date](#date)                                                                                                                                                        |
 | selectMinutes             | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]` (TODO: Ask Brian)                                                                                                                                            |
 | stepDetails               | `Array`                                      | `null`         | Array of [`StepDetails`](#stepDetails)                                                                                                                                                                |
 | stepHeight                | `Number`                                     | `null`         | The height of each row in grid                                                                                                                                                                        |
@@ -516,11 +564,11 @@ const MyCustomToolbar = ({onNext, onPrev, onToday, title, eventsForView}) => {
 | events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                  |
 | fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over |
 | fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                            |
-| firstDay                   | `Number`                     | `0`           | The first day of the week                                                                                                  |
+| firstDay                   | `Number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`           |
 | onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events             |
 | onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed                                                                        |
 | onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed                                                                                     |
-| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date                                                                                                          |
+| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date. See [Date](#date)                                                                                       |
 | views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                    |
 
 ---

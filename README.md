@@ -12,8 +12,8 @@ Acuity calendar is an open source set of react calendar components used in the [
   - [Table of contents](#table-of-contents)
   - [Installation](#installation)
   - [Anatomy](#anatomy)
-    - [Grid views (Monthly)](#grid-views-monthly)
-    - [Column views (Daily/Weekly)](#column-views-dailyweekly)
+    - [DayGrid views (Monthly)](#daygrid-views-monthly)
+    - [TimeGrid views (Daily/Weekly)](#timegrid-views-dailyweekly)
   - [Datatypes](#datatypes)
     - [Date](#date)
     - [Event](#event)
@@ -46,20 +46,20 @@ TODO:
 
 TODO:
 
-### Grid views (Monthly)
+### DayGrid views (Monthly)
 
-### Column views (Daily/Weekly)
+### TimeGrid views (Daily/Weekly)
 
 ---
 
 ## Datatypes
 
-The Acuity calendar is a generalized appointment calendar with supports CRUD like operations. We defines a few key datatypes for working within the appointment space as presented below.
+The Acuity calendar is a generalized event calendar with support for read and update-like operations. 
+We define a few key datatypes for working within the event calendar space as presented below.
 
 ### Date
 
-Naturally when working with appointments we are also working with representations of date and time.
-
+Naturally when working with events we are also working with representations of date and time.
 To allow maximum flexibility, most date fields, inputs and props in the calendar accepts data in one of the following formats
 
 ```js
@@ -240,7 +240,8 @@ const handlers = useMemo(() => {
 />
 ```
 
-The `CalendarMonth` is along with the [`CalendarWeek`](#calendarweek) and [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure.
+The `CalendarMonth` is along with the [`CalendarWeek`](#calendarweek) and [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure. 
+Besides controlling start of week via `firstDay` and the number of week via `forceSixWeeks`, most of the configuration consists of various interaction event handlers.
 
 | Prop               | Type                         | Default value | Description                                                                                                                  |
 | ------------------ | ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -317,6 +318,8 @@ const renderHeader = useCallback(({  date, events }) => {
 ```
 
 Analogous to the [`DayList`](#daylist) component, the `CalendarWeek` is a shorthand for initializing a [`TimeGrid`](#timegrid).
+Note that the `renderHeader` custom render function differs from that of [`CalendarMonth`](#calendarmonth) as it also is given the full list of `events`.
+This is useful if, say, you want to render the amount of appointments in each column directly in the column header.
 
 | Prop         | Type   | Default value | Description                                                                                                                                        |
 | ------------ | ------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |

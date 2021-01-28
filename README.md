@@ -219,7 +219,39 @@ TODO:
 
 #### CalendarMonthHeatmap
 
-TODO:
+```jsx
+import { CalendarMonthHeatMap } from 'acuity-calendar';
+
+const events = [ ... ];
+
+const counts = useMemo(() => {
+  return events.reduce((acc, event) => {
+    if (!acc[event.start])a acc[event.start] = 0
+    acc[event.start] = (acc[event.start] + 1) % 100
+    return acc;
+  }, {})
+}, [events])
+
+<CalendarMonthHeatMap 
+  counts={counts}
+  events={events}
+  selectedDate={events[0].start}
+/>
+```
+
+The `CalendarMonthHeatMap` visuelizes the _weight_ of each day in a monthly view. 
+The weight of day is specified by passing the `counts` object mapping `YYYY-MM-DD` formatted dates to a value between 0 and 100. 
+The heavier the weight, the deeper the day will be colored.
+
+| Prop          | Type                         | Default value | Description                                                                                |
+| ------------- | ---------------------------- | ------------- | ------------------------------------------------------------------------------------------ |
+| counts        | `object`                     | `{}`          | Object mapping the "heat" a `YYYY-MM-DD` formatted date to an opacity value (0-100).       |
+| firstDay      | `number`                     | `0`           | Must be member of `[0, 1, 2, 3, 4, 5, 6]`.                                                 |
+| forceSixWeeks | `bool`                       | `true`        | Forces the 6 weeks in the calendar for short months for consistant height while navigating |
+| onSelectCell  | `func`                       | `() => null`  | Callback when selecting a date. Given `{ e, date, isInRange, weight, count }`.             |
+| renderCell    | `func`                       | `undefined`   | Custom render function for cells. Given `{ date, isInRange, events, weight, count }`.      |
+| renderHeader  | `func`                       | `undefined`   | Custom render function for headers. Given `{ date }`.                                      |
+| selectedDate  | `Date`, `moment` or `string` | `new Date()`  | The currently selected date.                                                               |
 
 #### Column
 
@@ -336,19 +368,19 @@ const renderCell = useCallback(({ date, isInRange, events }) => (
 
 The `DayGrid` renders a fully customizable grid calendar view in which each cells represents a day. Individual handlers can be specified to handle day/event selection and dragging. See [Anatomy](#anatomy) for more information about grids, headers, cells and events.
 
-| Prop               | Type             | Default value | Description                                                                                                                  |
-| ------------------ | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| events             | `array`          | `[]`          | Array of [Events](#event)                                                                                                    |
-| grid               | `DAY_GRID_TYPE`* |               |                                                                                                                              |
-| isEventDraggable   | `func`           | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                            |
-| onDragEnd          | `func`           | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                      |
-| onSelectDate       | `func`           | `null`        | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                    |
-| onSelectEvent      | `func`           | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                   |
-| onSelectMoreEvents | `func`           | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is |
-| onSelectSlot       | `func`           | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                               |
-| renderCell         | `func`           | `null`        | Callback to render the cell contents. Given `{ date, isInRange, events }`.                                                   |
-| renderHeader       | `func`           | `null`        | Callback to render the grid headers. Given `{ date }`.                                                                       |
-| visibleEventGroups | `Number[]`       | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                 |
+| Prop               | Type                  | Default value | Description                                                                                                                                                                                                           |
+| ------------------ | --------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| events             | `array`               | `[]`          | Array of [Events](#event)                                                                                                                                                                                             |
+| grid               | `array[]` or `object` | `undefined`   | Required. Accepts a `grid` constisting of an array of arrays of `{ isInRange, date}` or a grid configuration in the shape of `{ firstDate, lastDate, totalColumns, allowPartialRows, getExcludedDates, getIsInRange}` |
+| isEventDraggable   | `func`                | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                                                                                                                     |
+| onDragEnd          | `func`                | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                                                                                                               |
+| onSelectDate       | `func`                | `null`        | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                                                                                                             |
+| onSelectEvent      | `func`                | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                                                                                                            |
+| onSelectMoreEvents | `func`                | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is                                                                                          |
+| onSelectSlot       | `func`                | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                                                                                                                        |
+| renderCell         | `func`                | `null`        | Callback to render the cell contents. Given `{ date, isInRange, events }`.                                                                                                                                            |
+| renderHeader       | `func`                | `null`        | Callback to render the grid headers. Given `{ date }`.                                                                                                                                                                |
+| visibleEventGroups | `Number[]`            | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                                                                                                          |
 
 ---
 

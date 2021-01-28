@@ -232,9 +232,9 @@ import { CalendarWeek } from 'acuity-calendar';
 
 const timeGridProps = { ... }
 
-const renderHeader = ({  date, events }) => {
+const renderHeader = useCallback(({  date, events }) => {
   ...
-};
+}, []);
 
 <CalendarWeek
   renderHeader={renderHeader}

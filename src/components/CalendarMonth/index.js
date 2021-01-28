@@ -15,16 +15,15 @@ const CalendarMonth = ({
   firstDay,
   forceSixWeeks,
   isEventDraggable,
-  selectedDate,
   onDragEnd,
-  onSelectMore,
   onSelectDate,
-  onSelectSlot,
   onSelectEvent,
-  visibleEventGroups,
-  renderHeader,
+  onSelectMore,
+  onSelectSlot,
   renderCell,
-  renderEvent,
+  renderHeader,
+  selectedDate,
+  visibleEventGroups,
 }) => {
   const monthGrid = getMonthGrid({
     date: moment(selectedDate),
@@ -34,37 +33,33 @@ const CalendarMonth = ({
 
   return (
     <DayGrid
-      isEventDraggable={isEventDraggable}
-      grid={monthGrid}
       events={events}
+      grid={monthGrid}
+      isEventDraggable={isEventDraggable}
       onDragEnd={onDragEnd}
-      onSelectMoreEvents={onSelectMore}
       onSelectDate={onSelectDate}
       onSelectEvent={onSelectEvent}
+      onSelectMoreEvents={onSelectMore}
       onSelectSlot={onSelectSlot}
-      visibleEventGroups={visibleEventGroups}
-      renderEvent={renderEvent}
-      renderHeader={renderHeader}
       renderCell={renderCell}
+      renderHeader={renderHeader}
+      visibleEventGroups={visibleEventGroups}
     />
   );
 };
 
 CalendarMonth.defaultProps = {
   events: [],
-  isEventDraggable: () => true,
-  forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
   firstDay: FIRST_DAY_DEFAULT,
-  selectedDate: SELECTED_DATE_DEFAULT,
+  forceSixWeeks: FORCE_SIX_WEEKS_DEFAULT,
+  isEventDraggable: () => true,
   onDragEnd: () => null,
   onSelectDate: null,
-  onSelectMore: () => null,
   onSelectEvent: () => null,
+  onSelectMore: () => null,
   onSelectSlot: () => null,
+  selectedDate: SELECTED_DATE_DEFAULT,
   visibleEventGroups: null,
-  renderCell: null,
-  renderEvent: null,
-  renderHeader: null,
 };
 
 CalendarMonth.propTypes = {
@@ -78,7 +73,6 @@ CalendarMonth.propTypes = {
   onSelectMore: PropTypes.func,
   onSelectSlot: PropTypes.func,
   renderCell: PropTypes.func,
-  renderEvent: PropTypes.func,
   renderHeader: PropTypes.func,
   selectedDate: DATE_TYPE,
   visibleEventGroups: PropTypes.arrayOf(PropTypes.number),

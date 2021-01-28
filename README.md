@@ -227,7 +227,27 @@ TODO: Explain this internal component
 
 #### CalendarWeek
 
-TODO:
+```jsx
+import { CalendarWeek } from 'acuity-calendar';
+
+const timeGridProps = { ... }
+
+const renderHeader = ({  date, events }) => {
+  ...
+};
+
+<CalendarWeek
+  renderHeader={renderHeader}
+  {...timeGridProps}
+/>
+```
+
+Analogous to the [`DayList`](#daylist) component, the `CalendarWeek` is a shorthand for initializing a [`TimeGrid`](#timegrid).
+
+| Prop         | Type   | Default value | Description                                                                                                                                        |
+| ------------ | ------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| renderHeader | `func` | `null`        | Callback to render the header. Given `{  date, events }`. See [Column](#column) for more details on configuration of the internal Column component |
+| ...rest      | `any`  |               | Any additional prop will be passed to the inner [TimeGrid](#timegrid) component                                                                    |
 
 ---
 
@@ -250,7 +270,8 @@ const dayGridProps = {
 />
 ```
 
-The `DayList` renders a monthly view and can be considered syntactic sugar for initializing a [`DayGrid`](#daygrid).
+The `DayList` renders a grid view of at least one row where each cell represents a day, which commonly is used for monthly calendar views or weekly views where events aren't ordered horizontally with respect to their starting time.
+This component can be considered shorthand syntactic sugar for initializing a [`DayGrid`](#daygrid) with an easier interface for controlling the first day of the week and the number of cells in the grid.
 
 | Prop         | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                |
 | ------------ | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -313,7 +334,7 @@ const renderCell = useCallback(({ date, isInRange, events }) => (
 />
 ```
 
-The `DayGrid` renders a fully customizable monthly calendar view. Individual handlers can be specified to handle day/event selection and dragging. See [Anatomy](#anatomy) for more information about grids, headers, cells and events.
+The `DayGrid` renders a fully customizable grid calendar view in which each cells represents a day. Individual handlers can be specified to handle day/event selection and dragging. See [Anatomy](#anatomy) for more information about grids, headers, cells and events.
 
 | Prop               | Type             | Default value | Description                                                                                                                  |
 | ------------------ | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |

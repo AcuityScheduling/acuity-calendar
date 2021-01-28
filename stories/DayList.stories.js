@@ -17,4 +17,5 @@ export default {
   title: 'DayList',
   component: DayList,
   decorators: [withKnobs],
+  argTypes: { onClick: { action: 'clicked' } },
 };

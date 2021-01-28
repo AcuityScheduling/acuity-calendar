@@ -12,6 +12,8 @@ Acuity calendar is an open source set of react calendar components used in the [
   - [Table of contents](#table-of-contents)
   - [Installation](#installation)
   - [Anatomy](#anatomy)
+    - [Grid views (Monthly)](#grid-views-monthly)
+    - [Column views (Daily/Weekly)](#column-views-dailyweekly)
   - [Datatypes](#datatypes)
     - [Date](#date)
     - [Event](#event)
@@ -43,6 +45,10 @@ TODO:
 ## Anatomy
 
 TODO:
+
+### Grid views (Monthly)
+
+### Column views (Daily/Weekly)
 
 ---
 
@@ -227,8 +233,6 @@ TODO:
 
 #### DayList
 
-TODO:
-
 ```jsx
 import { DayList } from 'acuity-calendar';
 
@@ -240,57 +244,90 @@ const dayGridProps = {
 <DayList
   firstDay={2}
   totalDays={5}
-  renderCell={() => <div>Cell</div>}
-  renderHeader={() => <div>Header</div>}
+  renderCell={({ full, small, min, int }) => <div>Cell</div>}
+  renderHeader={({ full, small, min, int }) => <div>Header</div>}
   {...dayGridProps}
 />
 ```
 
-| Prop         | Type     | Default value | Description                                                                   |
-| ------------ | -------- | ------------- | ----------------------------------------------------------------------------- |
-| renderCell   | `func`   | `() => null`  |                                                                               |
-| renderHeader | `func`   | `null`        |                                                                               |
-| firstDay     | `Number` | `0`           |                                                                               |
-| totalDays    | `Number` | `7`           |                                                                               |
-| ...rest      | `any`    |               | Any additional prop will be passed to the inner [DayGrid](#daygrid) component |
+The `DayList` renders a monthly view and can be considered syntactic sugar for initializing a [`DayGrid`](#daygrid).
+
+| Prop         | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                |
+| ------------ | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| renderCell   | `func`   | `() => null`  | Callback to render the cell contents. The callback is given the following object `{ full: date.format('dddd'), small: date.format('ddd'), min: date.format('dd'), int: Number(date.format('d')) }`. See [`moment.js` formatting](https://momentjs.com/docs/#/displaying/format/) and [Anatomy](#anatomy) for more details. |
+| renderHeader | `func`   | `null`        | Callback to render the header. Given the same object as `renderCell`. See [Anatomy](#anatomy) for more details                                                                                                                                                                                                             |
+| firstDay     | `Number` | `0`           | The first day of the week in numerical form. 0 represents Sunday                                                                                                                                                                                                                                                           |
+| totalDays    | `Number` | `7`           | The total days in the week                                                                                                                                                                                                                                                                                                 |
+| ...rest      | `any`    |               | Any additional prop will be passed to the inner [DayGrid](#daygrid) component                                                                                                                                                                                                                                              |
 
 ---
 
 #### DayGrid
 
-TODO:
-
 ```jsx
 import { DayGrid } from 'acuity-calendar';
+import { format } from 'date-fns';
+
+const now = new Date();
+
+const GROUP_1 = 1;
+const GROUP_2 = 2;
+const GROUP_3 = 3;
+
+const events = [
+  { id: 1, group_id: GROUP_1, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: GROUP_2, title: 'Some other event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: GROUP_3, title: 'Some third event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
+
+const SUNDAY_INDEX = 0;
+
+const grid = {
+  firstDate: moment().day(SUNDAY_INDEX),
+  lastDate: moment().day(SUNDAY_INDEX).add(7, 'days'),
+  totalColumns: 7,
+};
+
+const renderCell = useCallback(({ date, isInRange, events }) => (
+  <div>
+    {events.map(event => isInRange && (
+       <div key={event.id}>
+        <small>{event.start.format('HH:mm')}:</small> {event.title}
+      </div>}
+    ))}
+  </div>
+), []);
 
 <DayGrid 
-    events={}
-    isEventDraggable={}
-    grid={}
-    renderCell={() => <div>Cell</div>}
-    renderHeader={() => <div>Header</div>}
-    onDragEnd={}
-    onSelectSlot={}
-    onSelectDate={}
-    onSelectMoreEvents={}
-    onSelectEvent={}
-    visibleEventGroups={}
+  events={events}
+  isEventDraggable={({ event }) => { ... }}
+  grid={grid}
+  renderCell={renderCell}
+  renderHeader={({ date }) => <div>{format(date, 'dddd')}</div>}
+  onDragEnd={({ e, event }) => { ... }}
+  onSelectSlot={({ e, date, isInRange }) => { ... }}
+  onSelectDate={({ e, date, isInRange }) => { ... }}
+  onSelectMoreEvents={({ e, events, eventsMore }) => { ... }}
+  onSelectEvent={({ e, event}) => { ... }}
+  visibleEventGroups={[ GROUP_1, GROUP_2, GROUP_3 ]}
 />
 ```
 
-| Prop               | Type             | Default value | Description               |
-| ------------------ | ---------------- | ------------- | ------------------------- |
-| events             | `array`          | `[]`          | Array of [Events](#event) |
-| grid               | `DAY_GRID_TYPE`* |               |                           |
-| isEventDraggable   | `func`           | `() => true`  |                           |
-| onDragEnd          | `func`           | `() => null`  |                           |
-| onSelectDate       | `func`           | `null`        |                           |
-| onSelectEvent      | `func`           | `() => null`  |                           |
-| onSelectMoreEvents | `func`           | `() => null`  |                           |
-| onSelectSlot       | `func`           | `() => null`  |                           |
-| renderCell         | `func`           | `null`        |                           |
-| renderHeader       | `func`           | `null`        |                           |
-| visibleEventGroups | `Number[]`       | `null`        |                           |
+The `DayGrid` renders a fully customizable monthly calendar view. Individual handlers can be specified to handle day/event selection and dragging. See [Anatomy](#anatomy) for more information about grids, headers, cells and events.
+
+| Prop               | Type             | Default value | Description                                                                                                                  |
+| ------------------ | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| events             | `array`          | `[]`          | Array of [Events](#event)                                                                                                    |
+| grid               | `DAY_GRID_TYPE`* |               |                                                                                                                              |
+| isEventDraggable   | `func`           | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                            |
+| onDragEnd          | `func`           | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                      |
+| onSelectDate       | `func`           | `null`        | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                    |
+| onSelectEvent      | `func`           | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                   |
+| onSelectMoreEvents | `func`           | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is |
+| onSelectSlot       | `func`           | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                               |
+| renderCell         | `func`           | `null`        | Callback to render the cell contents. Given `{ date, isInRange, events }`.                                                   |
+| renderHeader       | `func`           | `null`        | Callback to render the grid headers. Given `{ date }`.                                                                       |
+| visibleEventGroups | `Number[]`       | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                 |
 
 ---
 

@@ -50,11 +50,34 @@ In the future, we will be migrating to a semvar system and using git tagging to 
 
 ## Anatomy
 
-TODO:
+Before we dig into the exposed components and data types, it's important to establish a shared visual languages
+In this library all our views are based on two base layouts - the [`DayGrid`](#daygrid) and the [`TimeGrid`](#timegrid).
 
 ### DayGrid views (Monthly)
 
+![DayGrid anatomy](docs/DayGrid%20anatomy.png)
+
+1. A cell. Custom render function available through the `renderCell` prop.
+2. A cell date. Clicking triggers `onSelectDate` prop if specified.
+3. A header. Custom render function availble through the `renderHeader` prop.
+4. An [`event`](#event)
+5. The "More event" button. Triggers `onSelectMoreEvents` prop if specified.
+
+---
+
 ### TimeGrid views (Daily/Weekly)
+
+![TimeGrid anatomy](docs/TimeGrid%20anatomy.png)
+
+1. The `stepMinute` subdivision between each step in the grid
+2. The `stepHeight` spacing between each step
+3. A grid header. Custom render function available through the `renderHeader` prop.
+4. A grid column. Custom render function available through the `renderColumns` prop.
+5. An [`event`](#event)
+6. The current time indicator
+7. A [`stepDetail`](#step-details)
+8. The `selectMinute` subdivision for selecting on the calendar
+9. The Select Slot indicator. Custom render function available through `renderSelectSlotIndicator` 
 
 ---
 
@@ -202,16 +225,51 @@ export const STEP_DETAILS_TYPE = PropTypes.shape({
 });
 ```
 
+---
+
 ## Usage
 
-TODO:
+In general, a fully wired calendar is available as the default export
+
+```jsx
+import Calendar from 'acuity-calendar';
+```
+
+for a description of its props and configuration, please see [`FullCalendar`](#fullcalendar).
+
+A number of other components are available as named exports via
+
+```jsx
+import {
+  CalendarGroups,
+  CalendarMonth,
+  CalendarMonthHeatmap,
+  CalendarWeek,
+  DayList,
+  DayGrid,
+  TimeGrid,
+  Toolbar,
+} from 'acuity-calendar';
+```
+
+For descriptions and props please see each individual component.
+These components will generally be used to build custom calendar views.
+
+* [CalendarGroups](#calendargroups)
+* [CalendarMonth](#calendarmonth)
+* [CalendarMonthHeatmap](#calendarmonthheatmap)
+* [CalendarWeek](#calendarweek)
+* [DayList](#daylist)
+* [DayGrid](#daygrid)
+* [TimeGrid](#timegrid)
+* [Toolbar](#toolbar)
+
+---
 
 ### Components
 
 The following components are exposed in this package.
 For usage examples please refer to the supplied [Storybook](#storybook)
-
-
 
 #### CalendarGroups
 

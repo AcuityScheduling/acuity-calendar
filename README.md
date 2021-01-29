@@ -21,12 +21,12 @@ Acuity calendar is an open source set of react calendar components used in the [
     - [Step details](#step-details)
   - [Usage](#usage)
     - [Components](#components)
-      - [FullCalendar](#fullcalendar)
       - [CalendarGroups](#calendargroups)
       - [CalendarMonth](#calendarmonth)
       - [CalendarMonthHeatmap](#calendarmonthheatmap)
       - [CalendarWeek](#calendarweek)
       - [Column](#column)
+      - [FullCalendar](#fullcalendar)
       - [DayList](#daylist)
       - [DayGrid](#daygrid)
       - [TimeGrid](#timegrid)
@@ -205,69 +205,7 @@ TODO:
 The following components are exposed in this package.
 For usage examples please refer to the supplied [Storybook](#storybook)
 
-#### FullCalendar
 
-```jsx
-import FullCalendar from 'acuity-calendar';
-import { addMinutes } from 'date-fns';
-
-const now = new Date();
-
-const events = [
-  { id: 1, group_id: 4, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
-  { id: 2, group_id: 5, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
-  { id: 3, group_id: 6, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
-];
-
-const eventGroups = [
-  { id: 4, title: 'Group A' },
-  { id: 5, title: 'Group B' },
-  { id: 6, title: 'Group C' },
-];
-
-const stepDetails = [
-  ...
-];
-
-const handlers = useMemo(() => {
-  return {
-    isEventDraggable: ({ event }) => { ... },
-    isEventExtendable: ({ event }) => { ... }, 
-    onCurrentTimeChange: date => { ... },
-    onDragEnd: ({ e, event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
-    onExtendEnd: ({ event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
-    onFetchEvents: ({ fetchMoreRange, fullRange, initialFetch, outsideRange }) => { ... },
-    onNavigate: date => { ... },
-    onSelectDate: ({ e, date, isInRange }) => { ... },
-    onSelectEvent: ({ e, event}) => { ... },
-    onSelectMore: ({ e, events, eventsMore }) => { ... },
-    onSelectRangeEnd: ({ e, start, end, column }) => { ... },
-    onSelectSlot: ({ e, date, isInRange }) => { ... },
-    onViewChange: view => { ... },
-  }
-}, []);
-
-const customRenderers = useMemo(() => {
-  return {
-    renderTimeGridEvent: event => { ... },
-    renderStepDetail: stepDetail => { ... },
-  }
-}, [])
-
-const [view, setView] = useState(CALENDAR_VIEWS.month);
-const [selectedDate, setSelectedDate] = useState(new Date());
-
-<FullCalendar
-  eventGroups={eventGroups}
-  events={events}
-  selectedDate={now}
-  stepDetails={}
-  views={['month', 'week', { view: 'groups', displayName: 'Day' }]}
-  visibleEventGroups={[4, 5, 6]}
-  {...handlers}
-  {...customRenderers}
-/>
-```
 
 #### CalendarGroups
 
@@ -443,7 +381,192 @@ This is useful if, say, you want to render the amount of appointments in each co
 
 #### Column
 
-TODO: Explain this internal component
+```jsx
+
+const handlers = useMemo(() => {
+  return {
+    getUpdatedDraggedEvent: ({ event, start, end, columnMoves }) => { ... },
+    isEventDraggable: ({ event }) => { ... },
+    isEventExtendable: ({ event }) => { ... },
+    onDragEnd: ({ e, event }) => { ... },
+    onExtendEnd: event => { ... },
+    onSelectEvent: ({ e, event }) => { ... },
+    onSelectRangeEnd: ({ e, start, end, column }) => { ... },
+    onSelectSlot: ({ e, date, column }) => { ... },
+  }
+}, []);
+
+const renderers = useMemo(() => {
+  return {
+    renderEvent: event => { ... },
+    renderEventPaddingTop: event => { ... },
+    renderEventPaddingBottom: event => { ... },
+    renderSelectRange: ({ start, end }) => { ... },
+    renderSelectSlotIndicator: ({ time, column }) => { ... },
+    renderStepDetail: stepDetail => { ... },
+  }
+}, []);
+
+const events = {
+  '2021-01-01': [ ... ]
+}
+
+<Column
+  columnId={1}
+  columnIndex={1}
+  columnWidths={[190]}
+  { ...handlers }
+  { ...renderers }
+  events={events}
+  date="2021-01-01"
+/>
+
+```
+
+While the `Column` component is not publically exposed in this package, it is an important component for when custom render functions are defined for for [`TimeGrid`](#timegrid) utilizing views, such as the [`weekly`](#calendarweek) and [`group`](#calendargroups) views.
+In particular, the `renderHeader` and `renderColumns` prop on [`TimeGrid`](#timegrid) are required to define their markup via an instanced `Column`.
+
+| Prop                      | Type                         | Default value | Description                                                                                                                 |
+| ------------------------- | ---------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| columnId                  | `Date`, `number` or `string` | `undefined`   | Required. The unique identifier for the column                                                                              |
+| columnIndex               | `number`                     | `undefined`   | Required. The column index for the current column group                                                                     |
+| columnWidths              | `number[]`                   | `undefined`   | Required. Array mapping `columnIndex` to a pixel width                                                                      |
+| currentTime               | `moment`                     | `null`        | The current time as a [`moment`](momentjs.com) instance                                                                     |
+| date                      | `Date` or `string`           | `new Date()`  | The date which the column represents                                                                                        |
+| events                    | `object`                     | `{}`          | Unlike the exposed components in this package, this `events` prop is a map `'YYYY-MM-DD'` formatted date keys to grid cells |
+| getUpdatedDraggedEvent    | `func`                       |               | Callback to obtain the event after a drag event. Given `{ event, start, end, columnMoves }`                                 |
+| gridHeight                | `number`                     |               | Required. The height of the grid                                                                                            |
+| isEventDraggable          | `func`                       | `() => trur`  | Callback to determine if an event is dragable. Given `{ event }`                                                            |
+| isEventExtendable         | `func`                       | `() => true`  | Callback to determine if an event is extendable. Given `{ event }`                                                          |
+| minWidth                  | `number`                     | `190`         | The width a non-empty column should expand to                                                                               |
+| minWidthEmpty             | `number`                     | `100`         | The min width an empty column should expand to                                                                              |
+| onDragEnd                 | `func`                       | `() => null`  | Callback when a drag event ends. Given `{ e, event }`                                                                       |
+| onExtendEnd               | `func`                       | `() => null`  | Callback when an extend event ends. Given `event`                                                                           |
+| onSelectEvent             | `func`                       | `() => null`  | Callback when a select event occurs. Given `{ e, event }`                                                                   |
+| onSelectRangeEnd          | `func`                       | `() => null`  | Callback when a range selection event ends. Given `{ e, start, end, column }`                                               |
+| onSelectSlot              | `func`                       | `() => null`  | Callback when selecting a slot. Given `{ e, date, column }`                                                                 |
+| renderEvent               | `func`                       | `null`        | Render function for events. Given `event`                                                                                   |
+| renderEventPaddingTop     | `func`                       | `() => null`  | Render function to render the padding above events in the column. Given `event`                                             |
+| renderEventPaddingBottom  | `func`                       | `() => null`  | Render function to render the padding below events in the column. Given `event`                                             |
+| renderSelectRange         | `func`                       | `null`        | Render function for the range selection. Given `{ start, end }`                                                             |
+| renderSelectSlotIndicator | `func`                       | `null`        | Render function for the selected slot indicator. Given `{ time, column }`                                                   |
+| renderStepDetail          | `func`                       | `() => null`  | Render function for [`Step details`](#step-details). Given `stepDetail`.                                                    |
+| selectMinutes             | `number`                     | `15`          | Must be one of `[5, 10, 15, 20, 30, 60]`. The minute interval in which selecting clicking the calendar should occur in      |
+| stepDetails               | `array`                      | `[]`          | Array of [`StepDetails`](#stepDetails)                                                                                      |
+| stepHeight                | `number`                     | `null`        | The pixel value height between each step in the TimeGrid                                                                    |
+| stepMinutes               | `number`                     | `30`          | Must be one of `[5, 10, 15, 20, 30, 60]`. The minute interval between each horizontal line in the column                    |
+
+---
+
+#### FullCalendar
+
+```jsx
+import FullCalendar from 'acuity-calendar';
+import { addMinutes } from 'date-fns';
+
+const now = new Date();
+
+const events = [
+  { id: 1, group_id: 4, title: 'Some event', start: addMinutes(now, 10), end: addMinutes(now, 20)},
+  { id: 2, group_id: 5, title: 'Some event', start: addMinutes(now, 20), end: addMinutes(now, 30)},
+  { id: 3, group_id: 6, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
+];
+
+const eventGroups = [
+  { id: 4, title: 'Group A' },
+  { id: 5, title: 'Group B' },
+  { id: 6, title: 'Group C' },
+];
+
+const stepDetails = [
+  { id: 1, group_id: 6, title: 'Blocked off time', start: addMinutes(now, 40), end: addMinutes(now, 50)},
+];
+
+const customRenderers = useMemo(() => {
+  return {
+    renderTimeGridEvent: event => { ... },
+    renderStepDetail: stepDetail => { ... },
+  }
+}, [])
+
+const handlers = useMemo(() => {
+  return {
+    isEventDraggable: ({ event }) => { ... },
+    isEventExtendable: ({ event }) => { ... }, 
+    onCurrentTimeChange: date => { ... },
+    onDragEnd: ({ e, event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
+    onExtendEnd: ({ event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
+    onFetchEvents: ({ fetchMoreRange, fullRange, initialFetch, outsideRange }) => { ... },
+    onNavigate: date => { ... },
+    onSelectDate: ({ e, date, isInRange }) => { ... },
+    onSelectEvent: ({ e, event}) => { ... },
+    onSelectMore: ({ e, events, eventsMore }) => { ... },
+    onSelectRangeEnd: ({ e, start, end, column }) => { ... },
+    onSelectSlot: ({ e, date, isInRange }) => { ... },
+    onViewChange: view => { ... },
+  }
+}, []);
+
+<FullCalendar
+  currentView="month"
+  eventGroups={eventGroups}
+  events={events}
+  selectedDate={now}
+  stepDetails={stepDetails}
+  views={['month', 'week', { view: 'groups', displayName: 'Day' }]}
+  visibleEventGroups={[4, 5, 6]}
+  {...handlers}
+  {...customRenderers}
+/>
+```
+
+The `FullCalendar` is a composite component, providing a fully fledged calendar consisting of a [`Toolbar`](#toolbar) and three default views; [`monthly`](#calendarmonth), [`weekly`](#calendarweek) and [`daily`](#calendargroups).
+Under the hood it is orchestrates wiring between the lowest level of exposed components in this library, in particular the  [`TimeGrid`](#timegrid) and [`DayGrid`](#daygrid).
+
+| Prop                       | Type                         | Default value                 | Description                                                                                                      |
+| -------------------------- | ---------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| currentView                | `string`                     | `undefined`                   | Required. The currently showing view                                                                             |
+| eventGroups                | `array`                      | `undefined`                   | Required. Array of event groups. An event group must at minimum contain `{ id, title }`.                         |
+| events                     | `array`                      | `[]`                          | Array of [Events](#event)                                                                                        |
+| fetchEventInitialFullRange | `object`                     | `null`                        | Passed to the inner [`Toolbar`](#toolbar)                                                                        |
+| firstDay                   | `number`                     | `0`                           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0` |
+| forceSixWeeks              | `bool`                       | `false`                       | Passed to the inner [`DayGrid`](#daygrid)                                                                        |
+| isEventDraggable           | `func`                       | `() => true`                  | Passed to the inner [`DayGrid`](#daygrid) and [`TimeGrid`](#timegrid)                                            |
+| isEventExtendable          | `func`                       | `() => true`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| minWidthColumn             | `number`                     | `190`                         | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| minWidthColumnEmpty        | `number`                     | `100`                         | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| onCurrentTimeChange        | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| onDragEnd                  | `func`                       | `() => null`                  | Passed to the inner [`DayGrid`](#daygrid) and [`TimeGrid`](#timegrid)                                            |
+| onExtendEnd                | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| onFetchEvents              | `func`                       | `() => null`                  | Passed to the inner [`Toolbar`](#toolbar)                                                                        |
+| onNavigate                 | `func`                       | `null`                        | Passed to the inner [`Toolbar`](#toolbar)                                                                        |
+| onSelectDate               | `func`                       | `undefined`                   | Passed to the inner [`DayGrid`](#daygrid)                                                                        |
+| onSelectEvent              | `func`                       | `() => null`                  | Passed to the inner [`DayGrid`](#daygrid) and [`TimeGrid`](#timegrid)                                            |
+| onSelectMore               | `func`                       | `() => null`                  | Passed to the inner [`DayGrid`](#daygrid)                                                                        |
+| onSelectRangeEnd           | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| onSelectSlot               | `func`                       | `() => null`                  | Passed to the inner [`DayGrid`](#daygrid) and [`TimeGrid`](#timegrid)                                            |
+| onViewChange               | `func`                       | `() => null`                  | Passed to the inner [`Toolbar`](#toolbar)                                                                        |
+| renderCell                 | `func`                       | `null`                        | Passed to the inner [`DayGrid`](#daygrid)                                                                        |
+| renderCorner               | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderEventPaddingBottom   | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderEventPaddingTop      | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderGroupsHeader         | `func`                       | `null`                        | Custom daily view header render function. See `renderHeader` prop for [`CalendarGroups`](#calendargroups)        |
+| renderMonthHeader          | `func`                       | `null`                        | Custom monthly view header render function. See `renderHeader` prop for [`CalendarMonth`](#calendarmonth)        |
+| renderSelectRange          | `func`                       | `null`                        | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderSelectSlotIndicator  | `func`                       | `null`                        | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderStepDetail           | `func`                       | `() => null`                  | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderTimeGridEvent        | `func`                       | `null`                        | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| renderToolbar              | `func`                       | `null`                        | Custom Toolbar render function. See `children` prop for [`Toolbar`](#toolbar)                                    |
+| renderWeekHeader           | `func`                       | `null`                        | Custom weekly view header render function. See `renderHeader` prop for [`CalendarWeek`](#calendarweek)           |
+| scrollToTime               | `String`, `moment` or `Date` | `'firstEvent'`                | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| selectMinutes              | `number`                     | `15`                          | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| selectedDate               | `Date`, `moment` or `string` | `new Date()`                  | The currently selected date. See [Date](#date)                                                                   |
+| stepDetails                | `array`                      | `null`                        | Array of [Step details](#step-details)                                                                           |
+| stepHeight                 | `number`                     | `null`                        | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| stepMinutes                | `number`                     | `30`                          | Passed to the inner [`TimeGrid`](#timegrid)                                                                      |
+| style                      | `object`                     | `{}`                          | Object to pass custom styles to the calendar                                                                     |
+| views                      | `array`                      | `['month', 'week', 'groups']` | The list of views supported by the calendar instance. See [View](#view)                                          |
+| visibleEventGroups         | `number[]`                   | `null`                        | Passed to the inner [`DayGrid`](#daygrid) and [`TimeGrid`](#timegrid)                                            |
 
 ---
 

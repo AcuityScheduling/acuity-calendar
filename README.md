@@ -38,7 +38,13 @@ Acuity calendar is an open source set of react calendar components used in the [
 
 ## Installation
 
-TODO:
+Currently, this package is only hosted on Github and can be installed by invoking
+
+```bash
+npm i github:AcuityScheduling/acuity-calendar#<commit sha>
+```
+
+In the future, we will be migrating to a semvar system and using git tagging to reference releases.
 
 ---
 

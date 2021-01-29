@@ -287,21 +287,21 @@ const handlers = useMemo(() => {
 The `CalendarMonth` is along with the [`DayList`](#daylist) a shorthand to render a specified [`DayGrid`](#daygrid), in this case for a monthly view in a grid structure. 
 Besides controlling start of week via `firstDay` and the number of week via `forceSixWeeks`, most of the configuration consists of various interaction event handlers.
 
-| Prop               | Type                         | Default value | Description                                                                                                                  |
-| ------------------ | ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| events             | `array`                      | `[]`          | Array of [Events](#event)                                                                                                    |
-| firstDay           | `number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`             |
-| forceSixWeeks      | `bool`                       | `false`       | Forces the 6 weeks in the calendar for short months for consistant height while navigating                                   |
-| isEventDraggable   | `func`                       | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                            |
-| onDragEnd          | `func`                       | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                      |
-| onSelectDate       | `func`                       | `() => null`  | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                    |
-| onSelectEvent      | `func`                       | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                   |
-| onSelectMore       | `func`                       | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is |
-| onSelectSlot       | `func`                       | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                               |
-| renderCell         | `func`                       | `null`        | Custom render function for cell contents. Given `{ date, isInRange, events }`.                                               |
-| renderHeader       | `func`                       | `null`        | Custom render function for grid headers. Given `{ date }`.                                                                   |
-| selectedDate       | `Date`, `moment` or `string` | `new Date()`  | The currently selected date. See [Date](#date)                                                                               |
-| visibleEventGroups | `number[]`                   | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                 |
+| Prop               | Type                         | Default value | Description                                                                                                                                                              |
+| ------------------ | ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| events             | `array`                      | `[]`          | Array of [Events](#event)                                                                                                                                                |
+| firstDay           | `number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                                                         |
+| forceSixWeeks      | `bool`                       | `false`       | Forces the 6 weeks in the calendar for short months for consistant height while navigating                                                                               |
+| isEventDraggable   | `func`                       | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                                                                        |
+| onDragEnd          | `func`                       | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                                                                  |
+| onSelectDate       | `func`                       | `() => null`  | Callback when a date is clicked. Given `{e, date, isInRange }`.                                                                                                          |
+| onSelectEvent      | `func`                       | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`.                                                                                                         |
+| onSelectMore       | `func`                       | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`, where `eventsMore` is a boolean denoting if there are more events after clicking |
+| onSelectSlot       | `func`                       | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`.                                                                                                     |
+| renderCell         | `func`                       | `null`        | Custom render function for cell contents. Given `{ date, isInRange, events }`.                                                                                           |
+| renderHeader       | `func`                       | `null`        | Custom render function for grid headers. Given `{ date }`.                                                                                                               |
+| selectedDate       | `Date`, `moment` or `string` | `new Date()`  | The currently selected date. See [Date](#date)                                                                                                                           |
+| visibleEventGroups | `number[]`                   | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                                                             |
 
 ---
 
@@ -389,7 +389,7 @@ const handlers = useMemo(() => {
     isEventDraggable: ({ event }) => { ... },
     isEventExtendable: ({ event }) => { ... },
     onDragEnd: ({ e, event }) => { ... },
-    onExtendEnd: event => { ... },
+    onExtendEnd: ({ e, ui, event }) => { ... },
     onSelectEvent: ({ e, event }) => { ... },
     onSelectRangeEnd: ({ e, start, end, column }) => { ... },
     onSelectSlot: ({ e, date, column }) => { ... },
@@ -494,8 +494,8 @@ const handlers = useMemo(() => {
     isEventDraggable: ({ event }) => { ... },
     isEventExtendable: ({ event }) => { ... }, 
     onCurrentTimeChange: date => { ... },
-    onDragEnd: ({ e, event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
-    onExtendEnd: ({ event }) => { ... }, // TODO: VERIFY THESE ARGUMENTS
+    onDragEnd: ({ e, event }) => { ... },
+    onExtendEnd: ({ e, ui, event }) => { ... },
     onFetchEvents: ({ fetchMoreRange, fullRange, initialFetch, outsideRange }) => { ... },
     onNavigate: date => { ... },
     onSelectDate: ({ e, date, isInRange }) => { ... },
@@ -661,10 +661,10 @@ The `DayGrid` renders a fully customizable grid calendar view in which each cell
 | grid               | `array[]` or `object` | `undefined`   | Required. Accepts a `grid` constisting of an array of arrays of `{ isInRange, date}` or a grid configuration in the shape of `{ firstDate, lastDate, totalColumns, allowPartialRows, getExcludedDates, getIsInRange}` |
 | isEventDraggable   | `func`                | `() => true`  | Callback to determine if an even is draggable. Given `{ event }`.                                                                                                                                                     |
 | onDragEnd          | `func`                | `() => null`  | Callback when a drag event ends. Given `{ e, event }`, where `e` is the synthetic event                                                                                                                               |
-| onSelectDate       | `func`                | `null`        | Callback when a date is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                                                                                                             |
-| onSelectEvent      | `func`                | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`. TODO: what is isInRange??                                                                                                                            |
-| onSelectMoreEvents | `func`                | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`. TODO: determine what `eventsMore` is                                                                                          |
-| onSelectSlot       | `func`                | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`. TODO: what is isInRange??                                                                                                                        |
+| onSelectDate       | `func`                | `null`        | Callback when a date is clicked. Given `{e, date, isInRange }`.                                                                                                                                                       |
+| onSelectEvent      | `func`                | `() => null`  | Callback when a event is clicked. Given `{e, date, isInRange }`.                                                                                                                                                      |
+| onSelectMoreEvents | `func`                | `() => null`  | Callback when the "see more events" text is clicked. Given `{ e, events, eventsMore }`, where `eventsMore` is a boolean denoting if there are more events after clicking the button                                   |
+| onSelectSlot       | `func`                | `() => null`  | Callback for when a cell is clicked. Given `{ e, date, isInRange }`.                                                                                                                                                  |
 | renderCell         | `func`                | `null`        | Custom render function for cell contents. Given `{ date, isInRange, events }`.                                                                                                                                        |
 | renderHeader       | `func`                | `null`        | Custom render function for grid headers. Given `{ date }`.                                                                                                                                                            |
 | visibleEventGroups | `Number[]`            | `null`        | Array of visible `group_id`. Controls which groups are rendered on the view.                                                                                                                                          |
@@ -726,19 +726,33 @@ const Columns = ({ ColumnComponent, week, events, stepDetails }) => {
 
 const handlers = useMemo(() => {
   return {
-    isEventDraggable: () => { ... }, // TODO: Describe this
-    isEventExtendable: () => { ... }, // TODO: Describe this
-    onCurrentTimeChange: () => { ... }, // TODO: Describe this
-    onDragEnd: () => { ... }, // TODO: Describe this
-    onExtendEnd: () => { ... }, // TODO: Describe this
-    onSelectEvent: () => { ... }, // TODO: Describe this
-    onSelectRangeEnd: () => { ... }, // TODO: Describe this
-    onSelectSlot: () => { ... }, // TODO: Describe this
+    isEventDraggable: ({ event }) => { ... },
+    isEventExtendable: ({ event }) => { ... },
+    onCurrentTimeChange: date => { ... },
+    onDragEnd: ({ e, event }) => { ... },
+    onExtendEnd: ({ e, ui, event }) => { ... },
+    onSelectEvent: ({ e, event }) => { ... },
+    onSelectRangeEnd: ({ e, start, end, column }) => { ... },
+    onSelectSlot: ({ e, date, column }) => { ... },
   }
-}, [])
+}, []);
+
+const renderers = useMemo(() => {
+  return {
+    renderColumns: ({ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }) => { ... },
+    renderCorner: { currentTime } => { ... },
+    renderEvent: event => { ... },
+    renderEventPaddingBottom: event => { ... },
+    renderEventPaddingTop: event => { ... },
+    renderHeaders: ({ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }) => { ... },
+    renderSelectRange: ({ start, end }) => { ... },
+    renderSelectSlotIndicator: ({ time, column }) => { ... },
+    renderStepDetail: stepDetails => { ... },
+  }
+}, []);
 
 
-<TimeGrid events={events} renderHeader={Header} renderColumns={Columns} {...handlers} />
+<TimeGrid events={events} renderHeader={Header} renderColumns={Columns} {...handlers} {...renderers} />
 ```
 
 The TimeGrid component renders a grid consisting of time "steps" on the y-axis and any number of columns representing anything, depending on function defintions. These columns could represent days, calendars, user groups, etc.
@@ -756,24 +770,24 @@ Additionally, it's configuration allows for complete control on how selection, d
 | onCurrentTimeChange       | `func`                                       | `() => null`   | Callback for when the current time changes. The callback is given an instance of `Date`                                                                                                               |
 | onDragEnd                 | `func`                                       | `() => null`   | Callback for when a drag event ends. The callback is given the the `event`                                                                                                                            |
 | onExtendEnd               | `func`                                       | `() => null`   | Callback for when an extend event ends. The callback is given the `event`                                                                                                                             |
-| onSelectEvent             | `func`                                       | `() => null`   | Callback for when an event is selected. The callback is given an object containing the synthetic event, `e`, and the selected `event`                                                                 |
-| onSelectRangeEnd          | `func`                                       | `() => null`   | Callback for when a range is selected in a column. The callback is given an object containign the sythetic event, `e`, the `start` and `end` of the range and the `columnId`                          |
-| onSelectSlot              | `func`                                       | `() => null`   | Callback for when an open slot in a column is clicked. The callback is given the sythentic event, `e`, the `date` of the clicked time and the `columnId`                                              |
+| onSelectEvent             | `func`                                       | `() => null`   | Callback for when an event is selected. The callback is given `{ e, event }`                                                                                                                          |
+| onSelectRangeEnd          | `func`                                       | `() => null`   | Callback for when a range is selected in a column. The callback is given `{ e, start, end, column }`                                                                                                  |
+| onSelectSlot              | `func`                                       | `() => null`   | Callback for when an open slot in a column is clicked. The callback is given `{ e, date, column }`                                                                                                    |
 | renderColumns             | `func`                                       | `undefined`    | Required. Callback function to render each column. The callback function is given the object: `{ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }`               |
-| renderCorner              | `func`                                       | `() => null`   | Callback to render something, like a clock, in the top left corner of the time grid. The callback is given the an object with `currentTime`                                                           |
+| renderCorner              | `func`                                       | `() => null`   | Callback to render something, like a clock, in the top left corner of the time grid. The callback is given `{ currentTime }`                                                                          |
 | renderEvent               | `func`                                       | `null`         | Function to override the default render method for `events`. If passed, the callback is given `event`                                                                                                 |
 | renderEventPaddingBottom  | `func`                                       | `() => null`   | Callback to render bottom padding to an event. The callback is given `event`.                                                                                                                         |
 | renderEventPaddingTop     | `func`                                       | `() => null`   | Callback to render top padding to an event. The callback is given `event`.                                                                                                                            |
 | renderHeaders             | `func`                                       | `undefined`    | Required. Callback function to render the header of each column. The callback function is given the object: `{ ColumnComponent, week, events, eventsWithGroups, stepDetails, stepDetailsWithGroups }` |
-| renderSelectRange         | `func`                                       | `null`         | Function to override the way selecting a range is rendered. The callback is given an object with `start` and `end`                                                                                    |
-| renderSelectSlotIndicator | `func`                                       | `null`         | Function to override the way the selected slot indicator is rendered. Given an object of `time` and `column`                                                                                          |
-| renderStepDetail          | `func`                                       | `() => null`   | Custom function to render [`StepDetails`](#stepDetails)                                                                                                                                               |
+| renderSelectRange         | `func`                                       | `null`         | Function to override the way selecting a range is rendered. The callback is given `{ start, end }`                                                                                                    |
+| renderSelectSlotIndicator | `func`                                       | `null`         | Function to override the way the selected slot indicator is rendered. Given `{ time, column }`                                                                                                        |
+| renderStepDetail          | `func`                                       | `() => null`   | Custom function to render [`StepDetails`](#stepDetails). Given `stepDetails`                                                                                                                          |
 | scrollToTime              | `'firstEvent'`, `String`, `moment` or `Date` | `'firstEvent'` | Either `'firstEvent'` or [Date](#date) type. Scrolls to either the first event or a particular moment in time                                                                                         |
 | selectedDate              | `Date`, `moment` or `String`                 | `new Date()`   | The currently selected date. See [Date](#date)                                                                                                                                                        |
-| selectMinutes             | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]` (TODO: Ask Brian)                                                                                                                                            |
+| selectMinutes             | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]`. The minute interval in which selecting clicking the calendar should occur in                                                                                |
 | stepDetails               | `Array`                                      | `null`         | Array of [`StepDetails`](#stepDetails)                                                                                                                                                                |
 | stepHeight                | `Number`                                     | `null`         | The height of each row in grid                                                                                                                                                                        |
-| stepMinutes               | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]` (TODO: Ask Brian)                                                                                                                                            |
+| stepMinutes               | `Number`                                     | `15`           | Must be one of `[5, 10, 15, 20, 30, 60]`. The minute interval between each horizontal line in the column                                                                                              |
 | visibleEventGroups        | `Number[]`                                   | `null`         | Determines which provided columns are rendered or hidden                                                                                                                                              |
 | withColumns               | `Bool`                                       | `true`         | TODO: Ask Brian                                                                                                                                                                                       |
 
@@ -793,7 +807,21 @@ const events = [
     { id: 3, group_id: 1, title: 'Some event', start: addMinutes(now, 30), end: addMinutes(now, 40)},
 ];
 
-<Toolbar currentView="month" views={['month', 'week', 'day']} events={events} />
+
+const handlers = useMemo(() => {
+  return {
+    onFetchEvents: ({ fetchMoreRange, fullRange, initialFetch, outsideRange }) => { ... },
+    onNavigate: date => { ... },
+    onViewChange: view => { ... },
+  }
+}, []);
+
+<Toolbar 
+  currentView="month" 
+  views={['month', 'week', 'day']} 
+  events={events} 
+  {...handlers}
+/>
 ```
 
 The Toolbar component provides control over the calendar by allowing users to switch between views and change the current date selection.
@@ -816,19 +844,19 @@ const MyCustomToolbar = ({onNext, onPrev, onToday, title, eventsForView}) => {
 <Toolbar currentView="month" views={['month', 'week', 'day']} children={MyCustomToolbar} />
 ```
 
-| Prop                       | Type                         | Default value | Description                                                                                                                             |
-| -------------------------- | ---------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                                     |
-| currentView                | `String`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                                    |
-| events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                               |
-| fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over              |
-| fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                                         |
-| firstDay                   | `Number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                        |
-| onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events. TODO: describe callback |
-| onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed. TODO: Describe callback structure                                                  |
-| onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed. TODO: describe callbacks structure                                                              |
-| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date. See [Date](#date)                                                                                                    |
-| views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                                 |
+| Prop                       | Type                         | Default value | Description                                                                                                                                                                       |
+| -------------------------- | ---------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| children                   | `func`                       | `null`        | Optional. If no custom Toolbar is passed a default will be rendered                                                                                                               |
+| currentView                | `String`                     | `undefined`   | Specifies the current view. Should be member of the provided `views`                                                                                                              |
+| events                     | `Array`                      | `[]`          | Array of [Events](#event)                                                                                                                                                         |
+| fetchEventInitialFullRange | `Object`                     | `null`        | Object containing `start` and `end` [Dates](#date) key. Specifies the range of which the first full fetch should span over                                                        |
+| fetchEventPadding          | `Number`                     | `1`           | TODO: Ask Brian                                                                                                                                                                   |
+| firstDay                   | `Number`                     | `0`           | Must be one of `[0, 1, 2, 3, 4, 5, 6]`. The first day of the week in numerical form, starting with Sunday as `0`                                                                  |
+| onFetchEvents              | `func`                       | `() => null`  | Callback triggered when toolbar navigation is exceeds currently fetched window and we should fetch more events. Given `{ fetchMoreRange, fullRange, initialFetch, outsideRange }` |
+| onNavigate                 | `func`                       | `undefined`   | Callback triggered when the current date is changed. Given the new `date`                                                                                                         |
+| onViewChange               | `func`                       | `undefined`   | Callback triggered the view is changed. Given the new `view`                                                                                                                      |
+| selectedDate               | `Date`, `moment` or `String` | `undefined`   | The selected date. See [Date](#date)                                                                                                                                              |
+| views                      | `String[]` or `Object[]`     | `undefined`   | The list of views supported by the calendar instance. See [View](#view)                                                                                                           |
 
 ---
 

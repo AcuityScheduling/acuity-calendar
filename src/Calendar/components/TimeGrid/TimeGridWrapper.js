@@ -28,32 +28,32 @@ import { getEventColumnsByGroup } from './utils/getEventColumns';
 
 const TimeGridWrapper = ({
   events,
-  selectedDate,
   firstDay,
   isEventDraggable,
   isEventExtendable,
   minWidthColumn,
   minWidthColumnEmpty,
-  stepMinutes,
+  onCurrentTimeChange,
   onDragEnd,
   onExtendEnd,
   onSelectEvent,
-  onSelectSlot,
-  onCurrentTimeChange,
   onSelectRangeEnd,
-  selectMinutes,
-  renderEvent,
-  stepDetails,
-  renderCorner,
-  renderStepDetail,
-  renderSelectSlotIndicator,
-  renderSelectRange,
-  renderEventPaddingTop,
-  renderEventPaddingBottom,
-  renderHeaders,
+  onSelectSlot,
   renderColumns,
-  stepHeight,
+  renderCorner,
+  renderEvent,
+  renderEventPaddingBottom,
+  renderEventPaddingTop,
+  renderHeaders,
+  renderSelectRange,
+  renderSelectSlotIndicator,
+  renderStepDetail,
   scrollToTime,
+  selectedDate,
+  selectMinutes,
+  stepDetails,
+  stepHeight,
+  stepMinutes,
   visibleEventGroups,
   withColumns,
 }) => {
@@ -155,34 +155,34 @@ const TimeGridWrapper = ({
         }) => (
           <Column
             ref={assignRef(columnKey)}
-            key={`weekColumn${columnKey}`}
-            events={eventsForColumn}
-            stepDetails={stepDetailsForColumn}
-            date={date}
             columnId={columnId}
-            columnWidths={elementWidths}
             columnIndex={columnIndex}
+            columnWidths={elementWidths}
+            currentTime={currentTime}
+            date={date}
+            events={eventsForColumn}
+            getUpdatedDraggedEvent={getUpdatedDraggedEvent}
+            gridHeight={totalGridHeight}
             isEventDraggable={isEventDraggable}
             isEventExtendable={isEventExtendable}
+            key={`weekColumn${columnKey}`}
             minWidth={minWidthColumn}
             minWidthEmpty={minWidthColumnEmpty}
             onDragEnd={onDragEnd}
             onExtendEnd={onExtendEnd}
             onSelectEvent={onSelectEvent}
-            onSelectSlot={onSelectSlot}
             onSelectRangeEnd={onSelectRangeEnd}
-            renderSelectRange={renderSelectRange}
-            stepMinutes={stepMinutes}
-            selectMinutes={selectMinutes}
-            stepHeight={stepHeight}
-            gridHeight={totalGridHeight}
-            currentTime={currentTime}
+            onSelectSlot={onSelectSlot}
             renderEvent={renderEvent}
-            renderEventPaddingTop={renderEventPaddingTop}
             renderEventPaddingBottom={renderEventPaddingBottom}
-            getUpdatedDraggedEvent={getUpdatedDraggedEvent}
-            renderStepDetail={renderStepDetail}
+            renderEventPaddingTop={renderEventPaddingTop}
+            renderSelectRange={renderSelectRange}
             renderSelectSlotIndicator={renderSelectSlotIndicator}
+            renderStepDetail={renderStepDetail}
+            selectMinutes={selectMinutes}
+            stepDetails={stepDetailsForColumn}
+            stepHeight={stepHeight}
+            stepMinutes={stepMinutes}
           />
         );
         return renderColumns({
@@ -200,31 +200,31 @@ const TimeGridWrapper = ({
 
 TimeGridWrapper.defaultProps = {
   events: [],
+  firstDay: FIRST_DAY_DEFAULT,
   isEventDraggable: () => true,
   isEventExtendable: () => true,
-  renderEvent: null,
-  render: () => null,
-  renderCorner: () => null,
-  stepDetails: null,
-  onExtendEnd: () => null,
-  onCurrentTimeChange: () => null,
-  onDragEnd: () => null,
-  onSelectEvent: () => null,
-  onSelectSlot: () => null,
-  onSelectRangeEnd: () => null,
   minWidthColumn: MIN_WIDTH_COLUMN_DEFAULT,
   minWidthColumnEmpty: MIN_WIDTH_COLUMN_EMPTY_DEFAULT,
-  renderStepDetail: () => null,
-  renderSelectSlotIndicator: null,
-  renderSelectRange: null,
-  renderEventPaddingTop: () => null,
+  onCurrentTimeChange: () => null,
+  onDragEnd: () => null,
+  onExtendEnd: () => null,
+  onSelectEvent: () => null,
+  onSelectRangeEnd: () => null,
+  onSelectSlot: () => null,
+  render: () => null,
+  renderCorner: () => null,
+  renderEvent: null,
   renderEventPaddingBottom: () => null,
-  stepHeight: null,
-  stepMinutes: STEP_MINUTES_DEFAULT,
+  renderEventPaddingTop: () => null,
+  renderSelectRange: null,
+  renderSelectSlotIndicator: null,
+  renderStepDetail: () => null,
+  scrollToTime: SCROLL_TO_TIME_DEFAULT,
   selectedDate: SELECTED_DATE_DEFAULT,
   selectMinutes: SELECT_MINUTES_DEFAULT,
-  scrollToTime: SCROLL_TO_TIME_DEFAULT,
-  firstDay: FIRST_DAY_DEFAULT,
+  stepDetails: null,
+  stepHeight: null,
+  stepMinutes: STEP_MINUTES_DEFAULT,
   visibleEventGroups: null,
   // If there are no columns in the events withColumns can still
   // be true. We only need them false if there IS a column_id on events

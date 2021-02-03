@@ -1,7 +1,6 @@
 {
   "extends": ["react-app", "plugin:react-hooks/recommended"],
   "rules": {
-    "react/require-default-props": 2,
     "react/prop-types": 2,
     "react/sort-prop-types": 2
   }

@@ -40,7 +40,7 @@ export const COLUMN_WIDTHS_TYPE = PropTypes.arrayOf(PropTypes.number);
 
 export const VIEWS_TYPE = PropTypes.arrayOf(
   PropTypes.oneOfType([
-    PropTypes.string,
+    PropTypes.oneOf(Object.values(CALENDAR_VIEWS)),
     PropTypes.shape({
       view: PropTypes.string.isRequired,
       grid: PropTypes.oneOf(['time', 'day']),

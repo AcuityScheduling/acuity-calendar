@@ -26,10 +26,7 @@ const CalendarMonthHeatmap = ({
     const count = get(counts, key, 0);
     const weight = totalDates > 0 ? Math.round((count / max) * 100) / 100 : 0;
 
-    return {
-      count,
-      weight,
-    };
+    return { count, weight };
   };
 
   return (
@@ -42,7 +39,15 @@ const CalendarMonthHeatmap = ({
           const { weight, count } = getWeight(data.date);
           onSelectCell({ ...data, weight, count });
         }}
-        renderHeader={renderHeader}
+        renderHeader={({ date }) =>
+          renderHeader ? (
+            renderHeader({ date })
+          ) : (
+            <span className={makeClass('heatmap-header')}>
+              {date.format('dd')}
+            </span>
+          )
+        }
         renderCell={data => {
           const { weight, count } = getWeight(data.date);
           return (
@@ -69,13 +74,6 @@ CalendarMonthHeatmap.defaultProps = {
   firstDay: FIRST_DAY_DEFAULT,
   forceSixWeeks: true,
   onSelectCell: () => null,
-  renderCell: null,
-  // eslint-disable-next-line react/prop-types
-  renderHeader: ({ date }) => {
-    return (
-      <span className={makeClass('heatmap-header')}>{date.format('dd')}</span>
-    );
-  },
   selectedDate: new Date(),
 };
 

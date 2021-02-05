@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import DayGrid from '../../Calendar/components/DayGrid';
+import DayGrid from '../../Calendar/components/DayGrid/DayGrid';
 import { EVENT_TYPE, DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
 import {
   SELECTED_DATE_DEFAULT,
   FIRST_DAY_DEFAULT,
   FORCE_SIX_WEEKS_DEFAULT,
 } from '../../Calendar/defaultProps';
-import { getMonthGrid } from './utils';
+import { getMonthGrid } from './utils/getMonthGrid';
 
 const CalendarMonth = ({
   events,

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import CalendarHeatmap from '../src/components/CalendarMonthHeatmap';
+import { CalendarMonthHeatmap, DayList } from '../src';
 import moment from 'moment';
-import DayList from '../src/components/DayList';
 
 const getDay = addDays =>
   moment()
@@ -23,7 +22,7 @@ const eventCounts = {
 export default { title: 'Calendar Utilities' };
 
 export const monthHeatmap = () => (
-  <CalendarHeatmap
+  <CalendarMonthHeatmap
     counts={eventCounts}
     onSelectCell={result => console.log(result)}
   />

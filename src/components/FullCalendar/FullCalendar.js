@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import moment from 'moment';
-import CalendarMonth from '../CalendarMonth';
-import CalendarGroups from '../CalendarGroups';
-import CalendarWeek from '../CalendarWeek';
-import Toolbar from '../Toolbar';
+import CalendarMonth from '../CalendarMonth/CalendarMonth';
+import CalendarGroups from '../CalendarGroups/CalendarGroups';
+import CalendarWeek from '../CalendarWeek/CalendarWeek';
+import Toolbar from '../Toolbar/Toolbar';
 import { CALENDAR_VIEWS, CLASS_PREFIX } from '../../Calendar/constants';
 import {
   FIRST_DAY_DEFAULT,

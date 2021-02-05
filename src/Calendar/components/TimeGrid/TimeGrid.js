@@ -11,7 +11,7 @@ import {
   STEP_MINUTES_DEFAULT,
   SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
-import './index.scss';
+import './TimeGrid.scss';
 
 const TimeGrid = React.forwardRef(
   (

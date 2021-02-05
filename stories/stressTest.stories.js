@@ -3,8 +3,8 @@ import { eventGenerator, useEvents } from './utils';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
 import { MOCKED_CALENDARS, MOCKED_STEP_DETAILS } from '../src/Calendar/mocks';
-import FullCalendar from '../src/components/FullCalendar';
-import EventGroupSelect from '../src/EventGroupSelect';
+import FullCalendar from '../src';
+import EventGroupSelect from '../src/EventGroupSelect/EventGroupSelect';
 import moment from 'moment';
 
 export const EventStressTest = () => {

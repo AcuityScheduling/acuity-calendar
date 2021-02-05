@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import moment from 'moment';
 import { COUNT_TYPE } from './types';
-import CalendarMonth from '../CalendarMonth';
+import CalendarMonth from '../CalendarMonth/CalendarMonth';
 import { DATE_TYPE, FIRST_DAY_TYPE } from '../../Calendar/types';
 import { FIRST_DAY_DEFAULT } from '../../Calendar/defaultProps';
 import { makeClass } from '../../Calendar/utils';

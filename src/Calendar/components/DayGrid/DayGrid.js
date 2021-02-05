@@ -4,7 +4,7 @@ import get from 'lodash.get';
 import { useTotalEventsToShow, getGrid } from './utils';
 import { makeClass } from '../../utils';
 import DayCell from './components/DayCell';
-import './index.scss';
+import './DayGrid.scss';
 import { DAY_GRID_TYPE, EVENT_TYPE } from '../../types';
 import useMungeData from '../../utils/useMungeData';
 

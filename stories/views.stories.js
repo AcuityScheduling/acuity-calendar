@@ -8,13 +8,15 @@ import {
   MOCKED_EVENTS,
   MOCK_TIMEZONE_COLUMNS,
 } from '../src/Calendar/mocks';
-import CalendarMonth from '../src/components/CalendarMonth';
-import CalendarWeek from '../src/components/CalendarWeek';
-import CalendarGroups from '../src/components/CalendarGroups';
+
 import { useEvents } from './utils';
-import FullCalendar from '../src/components/FullCalendar';
+import FullCalendar, {
+  CalendarGroups,
+  CalendarWeek,
+  CalendarMonth,
+} from '../src';
 import { CALENDAR_VIEWS } from '../src/Calendar/constants';
-import EventGroupSelect from '../src/EventGroupSelect';
+import EventGroupSelect from '../src/EventGroupSelect/EventGroupSelect';
 import TimeGrid from '../src/Calendar/components/TimeGrid/TimeGridWrapper';
 
 const getEventColor = groupId =>

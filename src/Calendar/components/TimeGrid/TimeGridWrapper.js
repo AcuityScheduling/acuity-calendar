@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import TimeGrid from './';
+import TimeGrid from './TimeGrid';
 import Column from './components/Column';
 import { getWeekList } from '../../../components/CalendarWeek/utils';
 import { useElementWidths, getEventColumns, scrollToEvent } from './utils';

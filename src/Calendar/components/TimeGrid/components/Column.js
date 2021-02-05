@@ -15,7 +15,7 @@ import {
   getDisplayTime,
 } from '../utils';
 import { makeClass } from '../../../utils';
-import Event from './Event';
+import Event from './Event/Event';
 import EventDragDrop from './Event/components/EventDragDrop';
 import EventExtend from './Event/components/EventExtend';
 import {

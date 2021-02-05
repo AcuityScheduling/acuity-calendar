@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import { CalendarMonth } from '../src';
 import { MOCKED_EVENTS } from '../src/Calendar/mocks';
-import { format } from 'date-fns';
 
 export const basicExample = () => {
   return (
@@ -12,7 +11,7 @@ export const basicExample = () => {
 
 export const WithCustomHeaderRender = () => {
   const renderHeader = useCallback(({ date, events }) => {
-    const key = format(date, 'yyyy-MM-dd');
+    const key = date.format('YYYY-MM-DD');
     return <header key={key}>{key}</header>;
   }, []);
 

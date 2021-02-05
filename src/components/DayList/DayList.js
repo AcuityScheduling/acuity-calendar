@@ -1,11 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { DayGrid } from '../../Calendar';
+import DayGrid from '../../Calendar/components/DayGrid/DayGrid';
 import { FIRST_DAY_TYPE } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
 import { FIRST_DAY_DEFAULT } from '../../Calendar/defaultProps';
-import './index.scss';
+import './DayList.scss';
 
 const DayList = ({
   renderCell,

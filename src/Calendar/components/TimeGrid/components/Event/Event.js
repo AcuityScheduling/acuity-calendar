@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './index.scss';
+import './Event.scss';
 import EventWrapper from '../../../EventWrapper';
 import { getDisplayTime } from '../../utils';
 import { makeClass } from '../../../../utils';

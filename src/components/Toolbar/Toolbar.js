@@ -11,7 +11,7 @@ import {
   VIEWS_TYPE,
 } from '../../Calendar/types';
 import { makeClass } from '../../Calendar/utils';
-import './index.scss';
+import './Toolbar.scss';
 import {
   getNavigateDate,
   getRangeTitle,

@@ -45,12 +45,12 @@ const TimeGrid = React.forwardRef(
     }, [onCurrentTimeChange]);
 
     const {
-      wrapperRef,
-      timeGutterRef,
-      headerRef,
       cornerRef,
-      timeIndicatorRef,
+      headerRef,
       stepLinesRef,
+      timeGutterRef,
+      timeIndicatorRef,
+      wrapperRef,
     } = useCalendarSticky(totalWidth);
 
     const totalStepsPerBlock = 60 / stepMinutes;

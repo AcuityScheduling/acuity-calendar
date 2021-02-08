@@ -13,13 +13,13 @@ const useCalendarSticky = totalWidth => {
   const [wrapperWidth, setWrapperWidth] = useState(0);
 
   const onScroll = getOnScroll({
-    wrapperRef,
-    headerRef,
-    timeGutterRef,
     cornerRef,
-    timeIndicatorRef,
+    headerRef,
     stepLinesRef,
+    timeGutterRef,
+    timeIndicatorRef,
     timeIndicatorWidth: totalWidth,
+    wrapperRef,
   });
 
   // Make sure stepLines and time indicator are the full width of the scroll
@@ -89,11 +89,13 @@ const update = ({
   headerRef.current.style.transform = `translateX(-${latestKnownScrollX}px)`;
   timeGutterRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
 
-  // Make sure the time indicator stays in the right place while scrolling horiz
-  timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
-  if (timeIndicatorWidth) {
-    timeIndicatorRef.current.style.width = `${timeIndicatorWidth -
-      latestKnownScrollX}px`;
+  if (timeIndicatorRef.current) {
+    // Make sure the time indicator stays in the right place while scrolling horiz
+    timeIndicatorRef.current.style.transform = `translateX(${latestKnownScrollX}px)`;
+    if (timeIndicatorWidth) {
+      timeIndicatorRef.current.style.width = `${timeIndicatorWidth -
+        latestKnownScrollX}px`;
+    }
   }
 };
 

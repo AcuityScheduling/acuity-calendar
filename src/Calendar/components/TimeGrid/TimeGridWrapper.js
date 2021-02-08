@@ -28,7 +28,6 @@ import { getEventColumnsByGroup } from './utils/getEventColumns';
 
 const TimeGridWrapper = ({
   events,
-  disableCurrentTimeIndicator,
   firstDay,
   isEventDraggable,
   isEventExtendable,
@@ -52,6 +51,7 @@ const TimeGridWrapper = ({
   scrollToTime,
   selectedDate,
   selectMinutes,
+  showCurrentTimeIndicator = true,
   stepDetails,
   stepHeight,
   stepMinutes,
@@ -86,7 +86,7 @@ const TimeGridWrapper = ({
   return (
     <TimeGrid
       ref={TimeGridRef}
-      disableCurrentTimeIndicator={disableCurrentTimeIndicator}
+      showCurrentTimeIndicator={showCurrentTimeIndicator}
       selectedDate={selectedDate}
       totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
       stepMinutes={stepMinutes}
@@ -161,7 +161,7 @@ const TimeGridWrapper = ({
             columnWidths={elementWidths}
             currentTime={currentTime}
             date={date}
-            disableCurrentTimeIndicator={disableCurrentTimeIndicator}
+            showCurrentTimeIndicator={showCurrentTimeIndicator}
             events={eventsForColumn}
             getUpdatedDraggedEvent={getUpdatedDraggedEvent}
             gridHeight={totalGridHeight}
@@ -236,7 +236,6 @@ TimeGridWrapper.defaultProps = {
 };
 
 TimeGridWrapper.propTypes = {
-  disableCurrentTimeIndicator: PropTypes.bool,
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   isEventDraggable: PropTypes.func,
@@ -261,6 +260,7 @@ TimeGridWrapper.propTypes = {
   scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

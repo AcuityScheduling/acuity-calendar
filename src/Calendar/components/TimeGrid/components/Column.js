@@ -33,29 +33,29 @@ const Column = React.forwardRef(
       columnWidths,
       currentTime,
       date,
-      disableCurrentTimeIndicator,
       events,
+      getUpdatedDraggedEvent,
+      gridHeight,
       isEventDraggable,
       isEventExtendable,
-      gridHeight,
-      stepMinutes,
+      minWidth,
+      minWidthEmpty,
       onDragEnd,
       onExtendEnd,
       onSelectEvent,
-      onSelectSlot,
       onSelectRangeEnd,
-      selectMinutes,
-      stepDetails,
+      onSelectSlot,
       renderEvent,
-      getUpdatedDraggedEvent,
-      minWidth,
-      minWidthEmpty,
-      renderStepDetail,
-      renderSelectSlotIndicator,
-      renderSelectRange,
-      renderEventPaddingTop,
       renderEventPaddingBottom,
+      renderEventPaddingTop,
+      renderSelectRange,
+      renderSelectSlotIndicator,
+      renderStepDetail,
+      selectMinutes,
+      showCurrentTimeIndicator = true,
+      stepDetails,
       stepHeight,
+      stepMinutes,
     },
     ref
   ) => {
@@ -123,7 +123,7 @@ const Column = React.forwardRef(
       >
         {dateMoment.isSame(moment(), 'day') &&
           currentTime &&
-          !disableCurrentTimeIndicator && (
+          showCurrentTimeIndicator && (
             <div
               className={currentTimeIndicatorClass}
               style={{
@@ -352,7 +352,6 @@ Column.propTypes = {
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-  disableCurrentTimeIndicator: PropTypes.bool,
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
   gridHeight: PropTypes.number.isRequired,
@@ -372,6 +371,7 @@ Column.propTypes = {
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepDetails: PropTypes.array,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

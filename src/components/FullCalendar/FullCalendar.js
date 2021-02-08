@@ -32,9 +32,9 @@ import {
 } from '../../Calendar/types';
 
 const FullCalendar = ({
-  disableCurrentTimeIndicator,
-  events,
+  currentView,
   eventGroups,
+  events,
   fetchEventInitialFullRange,
   firstDay,
   forceSixWeeks,
@@ -42,15 +42,15 @@ const FullCalendar = ({
   isEventExtendable,
   minWidthColumn,
   minWidthColumnEmpty,
+  onCurrentTimeChange,
   onDragEnd,
   onExtendEnd,
   onFetchEvents,
   onNavigate,
-  onSelectMore,
   onSelectDate,
   onSelectEvent,
+  onSelectMore,
   onSelectRangeEnd,
-  onCurrentTimeChange,
   onSelectSlot,
   onViewChange,
   renderCell,
@@ -62,17 +62,17 @@ const FullCalendar = ({
   renderSelectRange,
   renderSelectSlotIndicator,
   renderStepDetail,
-  renderWeekHeader,
   renderTimeGridEvent,
   renderToolbar,
+  renderWeekHeader,
   scrollToTime,
   selectedDate,
   selectMinutes,
+  showCurrentTimeIndicator,
   stepDetails,
   stepHeight,
   stepMinutes,
   style,
-  currentView,
   views,
   visibleEventGroups,
 }) => {
@@ -97,7 +97,7 @@ const FullCalendar = ({
   };
 
   const timeGridProps = {
-    disableCurrentTimeIndicator,
+    showCurrentTimeIndicator,
     isEventExtendable,
     minWidthColumn,
     minWidthColumnEmpty,
@@ -248,7 +248,6 @@ FullCalendar.defaultProps = {
 
 FullCalendar.propTypes = {
   currentView: CALENDAR_VIEW_TYPE.isRequired,
-  disableCurrentTimeIndicator: PropTypes.bool,
   eventGroups: PropTypes.arrayOf(EVENT_GROUP),
   events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,
@@ -284,6 +283,7 @@ FullCalendar.propTypes = {
   scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

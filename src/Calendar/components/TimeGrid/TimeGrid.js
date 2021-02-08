@@ -14,13 +14,13 @@ import './TimeGrid.scss';
 const TimeGrid = React.forwardRef(
   (
     {
-      disableCurrentTimeIndicator,
       onCurrentTimeChange,
       renderColumns,
       renderCorner = () => null,
       renderHeader,
       scrollToTime = STEP_MINUTES_DEFAULT,
       selectedDate = SELECTED_DATE_DEFAULT,
+      showCurrentTimeIndicator = true,
       stepHeight = null,
       stepMinutes,
       totalWidth,
@@ -180,7 +180,7 @@ const TimeGrid = React.forwardRef(
             {renderTimes()}
           </div>
           <div className={makeClass('time-grid__grid')}>
-            {!disableCurrentTimeIndicator && (
+            {showCurrentTimeIndicator && (
               <div
                 className={currentTimeIndicatorClass}
                 style={{
@@ -209,13 +209,13 @@ const TimeGrid = React.forwardRef(
 TimeGrid.displayName = 'TimeGrid';
 
 TimeGrid.propTypes = {
-  disableCurrentTimeIndicator: PropTypes.bool,
   onCurrentTimeChange: PropTypes.func,
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
   scrollToTime: DATE_TYPE,
   selectedDate: DATE_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   totalWidth: PropTypes.number.isRequired,

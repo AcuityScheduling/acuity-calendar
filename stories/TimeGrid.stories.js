@@ -58,10 +58,7 @@ export const basicExample = () => {
       minWidthColumnEmpty={number('minWidthColumnEmpty', 100)}
       selectMinutes={select('selectMinutes', [5, 10, 15, 20, 30, 60], 15)}
       stepMinutes={select('stepMinutes', [5, 10, 15, 20, 30, 60], 15)}
-      disableCurrentTimeIndicator={boolean(
-        'disableCurrentTimeIndicator',
-        false
-      )}
+      showCurrentTimeIndicator={boolean('showCurrentTimeIndicator', true)}
     />
   );
 };

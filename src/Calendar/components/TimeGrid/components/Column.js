@@ -33,6 +33,7 @@ const Column = React.forwardRef(
       columnWidths,
       currentTime,
       date,
+      disableCurrentTimeIndicator,
       events,
       isEventDraggable,
       isEventExtendable,
@@ -120,20 +121,22 @@ const Column = React.forwardRef(
         {...selectRangeHandlers}
         ref={ref}
       >
-        {dateMoment.isSame(moment(), 'day') && currentTime && (
-          <div
-            className={currentTimeIndicatorClass}
-            style={{
-              top: `${getTopOffset({
-                stepMinutes,
-                date: currentTime,
-                stepHeight,
-              })}px`,
-            }}
-          >
-            <div className={`${currentTimeIndicatorClass}__line-today`} />
-          </div>
-        )}
+        {dateMoment.isSame(moment(), 'day') &&
+          currentTime &&
+          !disableCurrentTimeIndicator && (
+            <div
+              className={currentTimeIndicatorClass}
+              style={{
+                top: `${getTopOffset({
+                  stepMinutes,
+                  date: currentTime,
+                  stepHeight,
+                })}px`,
+              }}
+            >
+              <div className={`${currentTimeIndicatorClass}__line-today`} />
+            </div>
+          )}
         {clickedTime && (
           <div
             className={makeClass('time-grid__select-slot-indicator')}
@@ -349,6 +352,7 @@ Column.propTypes = {
   columnWidths: COLUMN_WIDTHS_TYPE.isRequired,
   currentTime: MOMENT_TYPE,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+  disableCurrentTimeIndicator: PropTypes.bool,
   events: PropTypes.object,
   getUpdatedDraggedEvent: PropTypes.func,
   gridHeight: PropTypes.number.isRequired,

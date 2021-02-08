@@ -28,6 +28,7 @@ import { getEventColumnsByGroup } from './utils/getEventColumns';
 
 const TimeGridWrapper = ({
   events,
+  disableCurrentTimeIndicator,
   firstDay,
   isEventDraggable,
   isEventExtendable,
@@ -85,9 +86,9 @@ const TimeGridWrapper = ({
   return (
     <TimeGrid
       ref={TimeGridRef}
+      disableCurrentTimeIndicator={disableCurrentTimeIndicator}
       selectedDate={selectedDate}
       totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
-      firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
@@ -160,6 +161,7 @@ const TimeGridWrapper = ({
             columnWidths={elementWidths}
             currentTime={currentTime}
             date={date}
+            disableCurrentTimeIndicator={disableCurrentTimeIndicator}
             events={eventsForColumn}
             getUpdatedDraggedEvent={getUpdatedDraggedEvent}
             gridHeight={totalGridHeight}
@@ -234,6 +236,7 @@ TimeGridWrapper.defaultProps = {
 };
 
 TimeGridWrapper.propTypes = {
+  disableCurrentTimeIndicator: PropTypes.bool,
   events: PropTypes.arrayOf(EVENT_TYPE),
   firstDay: FIRST_DAY_TYPE,
   isEventDraggable: PropTypes.func,

@@ -32,6 +32,7 @@ import {
 } from '../../Calendar/types';
 
 const FullCalendar = ({
+  disableCurrentTimeIndicator,
   events,
   eventGroups,
   fetchEventInitialFullRange,
@@ -96,6 +97,7 @@ const FullCalendar = ({
   };
 
   const timeGridProps = {
+    disableCurrentTimeIndicator,
     isEventExtendable,
     minWidthColumn,
     minWidthColumnEmpty,
@@ -246,6 +248,7 @@ FullCalendar.defaultProps = {
 
 FullCalendar.propTypes = {
   currentView: CALENDAR_VIEW_TYPE.isRequired,
+  disableCurrentTimeIndicator: PropTypes.bool,
   eventGroups: PropTypes.arrayOf(EVENT_GROUP),
   events: PropTypes.arrayOf(EVENT_TYPE),
   fetchEventInitialFullRange: FETCH_EVENT_INITIAL_FULL_RANGE,

@@ -51,6 +51,7 @@ const TimeGridWrapper = ({
   scrollToTime,
   selectedDate,
   selectMinutes,
+  showCurrentTimeIndicator = true,
   stepDetails,
   stepHeight,
   stepMinutes,
@@ -85,9 +86,9 @@ const TimeGridWrapper = ({
   return (
     <TimeGrid
       ref={TimeGridRef}
+      showCurrentTimeIndicator={showCurrentTimeIndicator}
       selectedDate={selectedDate}
       totalWidth={elementWidths.reduce((total, value) => total + value, 0)}
-      firstDay={firstDay}
       stepMinutes={stepMinutes}
       onSelectEvent={onSelectEvent}
       onSelectSlot={onSelectSlot}
@@ -160,6 +161,7 @@ const TimeGridWrapper = ({
             columnWidths={elementWidths}
             currentTime={currentTime}
             date={date}
+            showCurrentTimeIndicator={showCurrentTimeIndicator}
             events={eventsForColumn}
             getUpdatedDraggedEvent={getUpdatedDraggedEvent}
             gridHeight={totalGridHeight}
@@ -258,6 +260,7 @@ TimeGridWrapper.propTypes = {
   scrollToTime: SCROLL_TO_TIME_TYPE,
   selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepDetails: PropTypes.arrayOf(STEP_DETAILS_TYPE),
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

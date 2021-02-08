@@ -3,30 +3,27 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { STEP_HEIGHTS, STEP_BORDER_WIDTH } from './constants';
 import { useCalendarSticky, getScrollbarWidth, getTopOffset } from './utils';
-import { FIRST_DAY_TYPE, STEP_MINUTES_TYPE, DATE_TYPE } from '../../types';
+import { STEP_MINUTES_TYPE, DATE_TYPE } from '../../types';
 import { makeClass } from '../../utils';
 import {
   SELECTED_DATE_DEFAULT,
-  FIRST_DAY_DEFAULT,
   STEP_MINUTES_DEFAULT,
-  SELECT_MINUTES_DEFAULT,
 } from '../../defaultProps';
 import './TimeGrid.scss';
 
 const TimeGrid = React.forwardRef(
   (
     {
-      selectedDate,
-      firstDay,
-      stepMinutes,
-      stepHeight,
-      selectMinutes,
       onCurrentTimeChange,
-      renderHeader,
       renderColumns,
-      renderCorner,
+      renderCorner = () => null,
+      renderHeader,
+      scrollToTime = STEP_MINUTES_DEFAULT,
+      selectedDate = SELECTED_DATE_DEFAULT,
+      showCurrentTimeIndicator = true,
+      stepHeight = null,
+      stepMinutes,
       totalWidth,
-      scrollToTime,
     },
     ref
   ) => {
@@ -38,7 +35,9 @@ const TimeGrid = React.forwardRef(
       const timeout = setTimeout(() => {
         const now = moment();
         setCurrentTime(now);
-        onCurrentTimeChange(new Date(now.format('YYYY-MM-DD HH:mm:ss')));
+        if (onCurrentTimeChange) {
+          onCurrentTimeChange(new Date(now.format('YYYY-MM-DD HH:mm:ss')));
+        }
       }, 1000 * 60);
       return () => {
         clearTimeout(timeout);
@@ -181,22 +180,24 @@ const TimeGrid = React.forwardRef(
             {renderTimes()}
           </div>
           <div className={makeClass('time-grid__grid')}>
-            <div
-              className={currentTimeIndicatorClass}
-              style={{
-                top: `${getTopOffset({
-                  stepMinutes,
-                  date: currentTime,
-                  stepHeight,
-                })}px`,
-              }}
-              ref={timeIndicatorRef}
-            >
-              <span className={`${currentTimeIndicatorClass}__time`}>
-                {moment().format('h:mma')}
-              </span>
-              <div className={`${currentTimeIndicatorClass}__line`} />
-            </div>
+            {showCurrentTimeIndicator && (
+              <div
+                className={currentTimeIndicatorClass}
+                style={{
+                  top: `${getTopOffset({
+                    stepMinutes,
+                    date: currentTime,
+                    stepHeight,
+                  })}px`,
+                }}
+                ref={timeIndicatorRef}
+              >
+                <span className={`${currentTimeIndicatorClass}__time`}>
+                  {moment().format('h:mma')}
+                </span>
+                <div className={`${currentTimeIndicatorClass}__line`} />
+              </div>
+            )}
             {renderColumns({ currentTime, totalGridHeight })}
           </div>
         </div>
@@ -207,26 +208,14 @@ const TimeGrid = React.forwardRef(
 
 TimeGrid.displayName = 'TimeGrid';
 
-TimeGrid.defaultProps = {
-  renderCorner: () => null,
-  selectedDate: SELECTED_DATE_DEFAULT,
-  firstDay: FIRST_DAY_DEFAULT,
-  scrollToTime: null,
-  selectMinutes: SELECT_MINUTES_DEFAULT,
-  stepMinutes: STEP_MINUTES_DEFAULT,
-  stepHeight: null,
-  onCurrentTimeChange: () => null,
-};
-
 TimeGrid.propTypes = {
-  firstDay: FIRST_DAY_TYPE,
   onCurrentTimeChange: PropTypes.func,
   renderColumns: PropTypes.func.isRequired,
   renderCorner: PropTypes.func,
   renderHeader: PropTypes.func.isRequired,
   scrollToTime: DATE_TYPE,
-  selectMinutes: STEP_MINUTES_TYPE,
   selectedDate: DATE_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,
   totalWidth: PropTypes.number.isRequired,

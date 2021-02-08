@@ -34,27 +34,28 @@ const Column = React.forwardRef(
       currentTime,
       date,
       events,
+      getUpdatedDraggedEvent,
+      gridHeight,
       isEventDraggable,
       isEventExtendable,
-      gridHeight,
-      stepMinutes,
+      minWidth,
+      minWidthEmpty,
       onDragEnd,
       onExtendEnd,
       onSelectEvent,
-      onSelectSlot,
       onSelectRangeEnd,
-      selectMinutes,
-      stepDetails,
+      onSelectSlot,
       renderEvent,
-      getUpdatedDraggedEvent,
-      minWidth,
-      minWidthEmpty,
-      renderStepDetail,
-      renderSelectSlotIndicator,
-      renderSelectRange,
-      renderEventPaddingTop,
       renderEventPaddingBottom,
+      renderEventPaddingTop,
+      renderSelectRange,
+      renderSelectSlotIndicator,
+      renderStepDetail,
+      selectMinutes,
+      showCurrentTimeIndicator = true,
+      stepDetails,
       stepHeight,
+      stepMinutes,
     },
     ref
   ) => {
@@ -120,20 +121,22 @@ const Column = React.forwardRef(
         {...selectRangeHandlers}
         ref={ref}
       >
-        {dateMoment.isSame(moment(), 'day') && currentTime && (
-          <div
-            className={currentTimeIndicatorClass}
-            style={{
-              top: `${getTopOffset({
-                stepMinutes,
-                date: currentTime,
-                stepHeight,
-              })}px`,
-            }}
-          >
-            <div className={`${currentTimeIndicatorClass}__line-today`} />
-          </div>
-        )}
+        {dateMoment.isSame(moment(), 'day') &&
+          currentTime &&
+          showCurrentTimeIndicator && (
+            <div
+              className={currentTimeIndicatorClass}
+              style={{
+                top: `${getTopOffset({
+                  stepMinutes,
+                  date: currentTime,
+                  stepHeight,
+                })}px`,
+              }}
+            >
+              <div className={`${currentTimeIndicatorClass}__line-today`} />
+            </div>
+          )}
         {clickedTime && (
           <div
             className={makeClass('time-grid__select-slot-indicator')}
@@ -368,6 +371,7 @@ Column.propTypes = {
   renderSelectSlotIndicator: PropTypes.func,
   renderStepDetail: PropTypes.func,
   selectMinutes: STEP_MINUTES_TYPE,
+  showCurrentTimeIndicator: PropTypes.bool,
   stepDetails: PropTypes.array,
   stepHeight: PropTypes.number,
   stepMinutes: STEP_MINUTES_TYPE,

@@ -51,7 +51,7 @@ const TimeGrid = React.forwardRef(
       timeGutterRef,
       timeIndicatorRef,
       wrapperRef,
-    } = useCalendarSticky({ totalWidth, showCurrentTimeIndicator });
+    } = useCalendarSticky(totalWidth);
 
     const totalStepsPerBlock = 60 / stepMinutes;
     const totalGridHeight = useMemo(() => {

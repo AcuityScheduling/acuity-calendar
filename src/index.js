@@ -7,6 +7,7 @@ import DayList from './components/DayList/DayList';
 import DayGrid from './Calendar/components/DayGrid/DayGrid';
 import TimeGrid from './Calendar/components/TimeGrid/TimeGridWrapper';
 import Toolbar from './components/Toolbar/Toolbar';
+import { getEventsForView } from './components/Toolbar/utils';
 
 export default FullCalendar;
 
@@ -19,4 +20,5 @@ export {
   DayGrid,
   TimeGrid,
   Toolbar,
+  getEventsForView,
 };

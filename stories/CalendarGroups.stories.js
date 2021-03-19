@@ -17,7 +17,7 @@ export const basicExample = () => {
 
 export const onlyWithNonEmptyGroupsExample = () => {
   const visibleEventGroups = MOCKED_EVENTS.reduce((acc, event) => {
-    acc[event.group_id] = event.group_id;
+    acc[event.group_id] = parseInt(event.group_id, 10);
     return acc;
   }, {});
   return (

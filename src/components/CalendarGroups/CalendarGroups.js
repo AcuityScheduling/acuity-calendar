@@ -61,9 +61,11 @@ const CalendarGroups = ({
         eventsWithGroups,
         stepDetailsWithGroups,
       }) => {
+        let columnIndex = -1;
         return eventGroups.map((eventGroup, index) => {
           if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
             return null;
+          columnIndex += 1;
           const eventsForDay =
             getEventsForDay({
               events: eventsWithGroups,
@@ -82,12 +84,23 @@ const CalendarGroups = ({
               date={selectedDate}
               key={`groupColumn${index}`}
               columnKey={`groupColumn${index}`}
-              columnIndex={index}
+              columnIndex={columnIndex}
               columnId={eventGroup.id}
               eventsForColumn={eventsForDay}
               stepDetailsForColumn={stepDetailsForDay}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
-                const newIndex = index + columnMoves;
+                let newIndex = index + columnMoves;
+
+                if (visibleEventGroups) {
+                  let count = 1;
+                  while (
+                    !visibleEventGroups.includes(eventGroups[newIndex].id)
+                  ) {
+                    newIndex = index + columnMoves * count;
+                    count += 1;
+                  }
+                }
+
                 return {
                   ...event,
                   group_id: eventGroups[newIndex].id,

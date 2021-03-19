@@ -93,11 +93,18 @@ const CalendarGroups = ({
 
                 if (visibleEventGroups) {
                   let count = 1;
+                  if (columnMoves < 0) {
+                    count = -1;
+                  }
                   while (
                     !visibleEventGroups.includes(eventGroups[newIndex].id)
                   ) {
-                    newIndex = index + columnMoves * count;
-                    count += 1;
+                    newIndex = index + columnMoves + count;
+                    if (columnMoves < 0) {
+                      count -= 1;
+                    } else {
+                      count += 1;
+                    }
                   }
                 }
 

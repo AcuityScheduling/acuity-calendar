@@ -92,10 +92,7 @@ const CalendarGroups = ({
                 let newIndex = index + columnMoves;
 
                 if (visibleEventGroups) {
-                  let count = 1;
-                  if (columnMoves < 0) {
-                    count = -1;
-                  }
+                  let count = columnMoves < 0 ? -1 : 1;
                   while (
                     !visibleEventGroups.includes(eventGroups[newIndex].id)
                   ) {

@@ -91,7 +91,11 @@ const CalendarGroups = ({
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
                 let newIndex = index + columnMoves;
 
-                if (visibleEventGroups) {
+                if (
+                  visibleEventGroups &&
+                  Array.isArray(visibleEventGroups) &&
+                  visibleEventGroups.length > 0
+                ) {
                   let count = columnMoves < 0 ? -1 : 1;
                   while (
                     !visibleEventGroups.includes(eventGroups[newIndex].id)

@@ -71,7 +71,7 @@ const TimeGrid = React.forwardRef(
         });
         wrapperRef.current.scrollTop = topOffset;
       }
-    }, [selectedDate, stepMinutes, stepHeight, scrollToTime, wrapperRef]);
+    }, [selectedDate, stepMinutes, stepHeight, scrollToTime]);
 
     // Default to something sensible - but we're really getting the width from the element
     // so css can change the time gutter

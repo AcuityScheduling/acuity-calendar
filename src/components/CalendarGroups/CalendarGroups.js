@@ -97,11 +97,11 @@ const CalendarGroups = ({
                     !visibleEventGroups.includes(eventGroups[newIndex].id)
                   ) {
                     newIndex = index + columnMoves + count;
-                    if (columnMoves < 0) {
-                      count -= 1;
-                    } else {
-                      count += 1;
-                    }
+                    // We want to continue moving in the eventGroups array
+                    // until we find the correct index. We have to move in
+                    // the correct direction depending on if columnMoves is
+                    // positive or negative
+                    count = columnMoves < 0 ? count - 1 : count + 1;
                   }
                 }
 

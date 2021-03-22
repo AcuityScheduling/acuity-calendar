@@ -4,7 +4,11 @@ import { getWeekList } from '../../CalendarWeek/utils';
 const { groups, week, month } = CALENDAR_VIEWS;
 
 const getEventsForView = ({ events, view, selectedDate, firstDay }) => {
-  const { start, end } = getRange({ view, selectedDate, firstDay });
+  const { start, end } = getRange({
+    view,
+    selectedDate: moment(selectedDate),
+    firstDay,
+  });
   return events.filter(event => {
     const eventStart = moment(event.start);
     return eventStart.isBetween(start, end, 'minutes', '[]');

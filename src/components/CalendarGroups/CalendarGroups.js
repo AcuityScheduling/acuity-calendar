@@ -61,9 +61,11 @@ const CalendarGroups = ({
         eventsWithGroups,
         stepDetailsWithGroups,
       }) => {
+        let columnIndex = -1;
         return eventGroups.map((eventGroup, index) => {
           if (visibleEventGroups && !visibleEventGroups.includes(eventGroup.id))
             return null;
+          columnIndex += 1;
           const eventsForDay =
             getEventsForDay({
               events: eventsWithGroups,
@@ -82,12 +84,31 @@ const CalendarGroups = ({
               date={selectedDate}
               key={`groupColumn${index}`}
               columnKey={`groupColumn${index}`}
-              columnIndex={index}
+              columnIndex={columnIndex}
               columnId={eventGroup.id}
               eventsForColumn={eventsForDay}
               stepDetailsForColumn={stepDetailsForDay}
               getUpdatedDraggedEvent={({ event, columnMoves }) => {
-                const newIndex = index + columnMoves;
+                let newIndex = index + columnMoves;
+
+                if (
+                  visibleEventGroups &&
+                  Array.isArray(visibleEventGroups) &&
+                  visibleEventGroups.length > 0
+                ) {
+                  let count = columnMoves < 0 ? -1 : 1;
+                  while (
+                    !visibleEventGroups.includes(eventGroups[newIndex].id)
+                  ) {
+                    newIndex = index + columnMoves + count;
+                    // We want to continue moving in the eventGroups array
+                    // until we find the correct index. We have to move in
+                    // the correct direction depending on if columnMoves is
+                    // positive or negative
+                    count = columnMoves < 0 ? count - 1 : count + 1;
+                  }
+                }
+
                 return {
                   ...event,
                   group_id: eventGroups[newIndex].id,

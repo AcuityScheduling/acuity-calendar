@@ -30,7 +30,7 @@ const Event = ({
         setDragHandleCenterHeight(height);
       }
     }
-  }, [dragHandleCenterHeight]);
+  });
 
   return (
     <EventWrapper

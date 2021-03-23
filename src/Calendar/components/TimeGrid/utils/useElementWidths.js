@@ -12,28 +12,33 @@ const useElementWidths = props => {
   const TimeGridRef = useRef(null);
   const [elementWidths, setElementWidths] = useState([]);
 
-  useEffect(() => {
-    const getElementsMeasurements = () => {
-      const widths = [];
-      elementRefs.forEach((element, day) => {
-        widths.push(element.offsetWidth);
-      });
-      return widths;
-    };
+  const getElementsMeasurements = () => {
+    const widths = [];
+    elementRefs.forEach((element, day) => {
+      widths.push(element.offsetWidth);
+    });
+    return widths;
+  };
 
-    const setAllWidths = () => {
-      if (!isEqual(getElementsMeasurements(), elementWidths)) {
-        setElementWidths(getElementsMeasurements());
-      }
-    };
+  const setAllWidths = () => {
+    if (!isEqual(getElementsMeasurements(), elementWidths)) {
+      setElementWidths(getElementsMeasurements());
+    }
+  };
 
-    const resizable = throttle(() => setAllWidths(), 300);
-    const ref = TimeGridRef.current;
-
-    if (ref) addListener(ref, resizable);
+  const resizable = throttle(() => {
     setAllWidths();
-    return () => removeListener(ref, resizable);
-  }, [elementRefs, elementWidths]);
+  }, 300);
+
+  useEffect(() => {
+    if (TimeGridRef.current) {
+      addListener(TimeGridRef.current, resizable);
+    }
+    setAllWidths();
+    return () => {
+      removeListener(TimeGridRef.current, resizable);
+    };
+  });
 
   // A function used to assign to the element for multiple refs
   // used like this ref={assignRef(key)}

@@ -38,7 +38,7 @@ const useElementWidths = props => {
     return () => {
       removeListener(TimeGridRef.current, resizable);
     };
-  });
+  }, [resizable]);
 
   // A function used to assign to the element for multiple refs
   // used like this ref={assignRef(key)}

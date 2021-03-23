@@ -49,7 +49,7 @@ const useCalendarSticky = totalWidth => {
       addListener(wrapperRef.current, wrapperWidthThrottled);
     }
     return () => removeListener(wrapperRef.current, wrapperWidthThrottled);
-  });
+  }, [wrapperWidth, wrapperRef]);
 
   useEffect(() => {
     wrapperRef.current.addEventListener('scroll', onScroll, false);
@@ -57,7 +57,7 @@ const useCalendarSticky = totalWidth => {
     return () => {
       wrapperRef.current.removeEventListener('scroll', onScroll, false);
     };
-  });
+  }, [onScroll, wrapperRef]);
 
   return {
     wrapperRef,

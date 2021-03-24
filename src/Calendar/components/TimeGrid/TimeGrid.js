@@ -42,7 +42,7 @@ const TimeGrid = React.forwardRef(
       return () => {
         clearTimeout(timeout);
       };
-    }, []);
+    }, [currentTime]);
 
     const {
       cornerRef,

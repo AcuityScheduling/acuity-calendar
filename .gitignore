@@ -3,3 +3,4 @@ storybook-static
 *.sublime-workspace
 *.sublime-project
 .DS_Store
+.idea

@@ -94,6 +94,8 @@ const EventDragDrop = ({
     selectMinutesHeight,
   });
 
+  console.log('currentColumn', currentColumn);
+  console.log('columnIndex', columnIndex);
   const columnMoves = currentColumn - columnIndex;
 
   const changeColumn = () => {
@@ -107,6 +109,7 @@ const EventDragDrop = ({
       columnWidths,
       columnIndex,
     });
+    console.log('leftPosition', leftPosition);
 
     // Make sure the leftChange is up to date with the position
     if (leftPosition !== leftChange) {
@@ -134,6 +137,9 @@ const EventDragDrop = ({
    * @param {number} left - total left pixels we're moving
    */
   const setNewColumn = ({ direction, left }) => {
+    console.log('direction', direction);
+    console.log('left', left);
+    console.log('columnWidths', columnWidths);
     setLeftChange(left);
     setCurrentColumnWidth(columnWidths[currentColumn + direction]);
     setCurrentColumn(currentColumn + direction);
